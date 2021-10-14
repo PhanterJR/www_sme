@@ -174,11 +174,28 @@ class ControleDeAtividades():
             self.proximo = json.proximo
             self.rotulo_mes_ano = json.rotulo_mes_ano
             self.disciplina = json.disciplina
+            self.lista_de_meses = json.lista_de_meses
             self.turma = json.turma
             self.meses_calendario = json.meses_calendario
             self.processar_controle_de_atividades(controle_de_atividades)
 
     def processar_controle_de_atividades(self, controle_de_atividades):
+        xway_meses_referencia = []
+        for x in self.lista_de_meses:
+            xway = [
+                "controle-de-atividades",
+                self.id_escola,
+                self.ano_letivo,
+                self.id_turma,
+                self.id_disciplina,
+                x
+            ]
+
+            op = widgets.MenuOption(x, **{
+                "_class": "botao_meses_referencia wave_on_click",
+                "_href": window.PhanterPWA.XWAY(*xway),
+            })
+            xway_meses_referencia.append(op)
         html = CONCATENATE(
             DIV(
                 DIV(
@@ -327,6 +344,12 @@ class ControleDeAtividades():
                     DIV(
                         botao_mes_anterior,
                         botao_proximo_mes,
+                        widgets.MenuBox(
+                            "drop_{0}_{0}".format(self.id_turma, self.id_disciplina),
+                            I(_class="fas fa-calendar-week"),
+                            *xway_meses_referencia
+                            # onOpen=lambda: self.binds_menu_aluno()
+                        ),
                         _class="phanterpwa-card-panel-control-buttons"
                     ),
                     _class="phanterpwa-card-panel-control-wrapper has_buttons"
