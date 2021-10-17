@@ -333,7 +333,7 @@ class VinculosUsuarioSME(helpers.XmlConstructor):
                                 widgets.MenuBox(
                                     "menu_funcionario_turmas_{0}".format(cd.id),
                                     I(cd.disciplinas_turmas.length, _class="phanterpwa-icon_numb"),
-                                    *[widgets.MenuOption(t_e_d) for t_e_d in cd.disciplinas_turmas],
+                                    *[widgets.MenuOption(t_e_d[0], _href=window.PhanterPWA.XWAY("turmas", t_e_d[1], t_e_d[2], "especifico", t_e_d[3])) for t_e_d in cd.disciplinas_turmas],
                                 ),
                                 widgets.MenuBox(
                                     "menu_funcionario_vinculado_{0}".format(cd.id),
@@ -973,7 +973,7 @@ class VinculosEscola(helpers.XmlConstructor):
                                 widgets.MenuBox(
                                     "menu_funcionario_turmas_{0}".format(cd.id),
                                     I(cd.disciplinas_turmas.length, _class="phanterpwa-icon_numb"),
-                                    *[widgets.MenuOption(t_e_d) for t_e_d in cd.disciplinas_turmas],
+                                    *[widgets.MenuOption(t_e_d[0], _href=window.PhanterPWA.XWAY("turmas", t_e_d[1], t_e_d[2], "especifico", t_e_d[3])) for t_e_d in cd.disciplinas_turmas],
                                 ),
                                 widgets.MenuBox(
                                     "menu_funcionario_vinculado_{0}".format(cd.id),

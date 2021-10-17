@@ -206,13 +206,15 @@ class ConselhoDeClasse():
     def after_get(self, data, ajax_status):
         if ajax_status == "success":
             json = data.responseJSON
-            conselho_de_classe = json.conselho_de_classe
+            self.conselho_de_classe = json.conselho_de_classe
             self.disciplinas = json.disciplinas
             self.turma = json.turma
-            self.processar_conselho(conselho_de_classe)
+            self.conselho_por_disciplina = json.conselho_por_disciplina
+            self.matriculas = dict()
+            self.processar_conselho()
 
 
-    def processar_conselho(self, conselho_de_classe):
+    def processar_conselho(self):
         tur = DIV(self.turma, _class="phanterpwa-breadcrumb")
 
         html = CONCATENATE(
@@ -246,15 +248,20 @@ class ConselhoDeClasse():
         html.html_to("#main-container")
 
         tabela = TABLE(
-            TR(TH("ALUNO"), TH("DISCIPLINA"), TH("AV1"), TH("AV2"), TH("AV3"), TH("AV4"), TH("AV5"), TH("MÉDIA")),
+            TR(TH("ALUNO(A)"), TH("DISCIPLINA"), TH("AV1"), TH("AV2"), TH("AV3"), TH("AV4"), TH("AV5"), TH("MÉDIA")),
             _class='tabela_conselho_de_classe',
             _style="margin: auto; width: 200mm;"
         )
-
-        for x in conselho_de_classe:
+        tabela2 = TABLE(
+            TR(TH("ALUNO(A)"), TH("DISCIPLINA(S) DO CONSELHO")),
+            _class='tabela_conselho_de_classe',
+            _style="margin: auto; width: 200mm;"
+        )
+        for x in self.conselho_de_classe:
             tr = TR(
                 TH(x.aluno, _rowspan=len(x.notas_disciplinas) + 1)
             )
+            self.matriculas[x.id] = x.aluno
             linha = TBODY(tr, _class="dont_cut_inside")
             if len(x.notas_disciplinas) > 0:
                 for y in x.notas_disciplinas:
@@ -275,9 +282,51 @@ class ConselhoDeClasse():
                         trdis
                     )
             tabela.append(linha)
+            if len(x.reprovado_em) > 0:
+                cc2 = 0
+                body2 = TBODY(_class="dont_cut_inside")
+                for y in x.reprovado_em:
+                    cc2 += 1
+                    if cc2 == 1:
+                        body2.append(
+                            TR(TH(x.aluno, _rowspan=len(x.reprovado_em)), TD(self.disciplinas[y]))
+                        )
+                    else:
+                        body2.append(
+                            TR(TD(self.disciplinas[y]))
+                        )
+                tabela2.append(body2)
 
+        tabela3 = TABLE(
+            TR(TH("DISCIPLINAS"), TH("ALUNOS(AS) DO CONSELHO")),
+            _class='tabela_conselho_de_classe',
+            _style="margin: auto; width: 200mm;"
+        )
+        for x in dict(self.conselho_por_disciplina).keys():
+            cc2 = 0
+            body2 = TBODY(_class="dont_cut_inside")
+            for y in self.conselho_por_disciplina[x]:
+                cc2 += 1
+                if cc2 == 1:
+                    body2.append(
+                        TR(TH(self.disciplinas[x], _rowspan=len(self.conselho_por_disciplina[x])), TD(self.matriculas[y]))
+                    )
+                else:
+                    body2.append(
+                        TR(TD(self.matriculas[y]))
+                    )
+            tabela3.append(body2)
 
-        tabela.html_to("#content-conselho_de_classe")
+        html_conselho = DIV(
+            H3("NOTAS DOS ALUNOS DA UNIDADE ", self.unidade),
+            tabela,
+            H3("LISTA DE ALUNOS E DISCIPLINAS A QUAL VÃO PARA O CONSELHO DA UNIDADE ", self.unidade),
+            tabela2,
+            H3("LISTA DE DISCIPLINAS E ALUNOS A QUAL VÃO PARA O CONSELHO DA UNIDADE ", self.unidade),
+            tabela3,
+        )
+
+        html_conselho.html_to("#content-conselho_de_classe")
 
 
 
