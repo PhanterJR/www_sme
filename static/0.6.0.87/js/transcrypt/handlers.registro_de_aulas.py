@@ -209,6 +209,7 @@ class RegistroDeAulas():
             self.disciplinas = json.disciplinas
             self.disciplina = json.disciplina
             self.turma = json.turma
+            self.meses_referencia = json.meses_referencia
             self.eh_educacao_infantil = json.eh_educacao_infantil
             self.processar_registro_de_aulas(registro_de_aulas)
 
@@ -241,6 +242,22 @@ class RegistroDeAulas():
         return ch
 
     def processar_registro_de_aulas(self, registro_de_aulas):
+        xway_meses_referencia = []
+        for x in self.meses_referencia:
+            xway = [
+                "controle-de-atividades",
+                self.id_escola,
+                self.ano_letivo,
+                self.id_turma,
+                self.id_disciplina,
+                x
+            ]
+
+            op = widgets.MenuOption(x, **{
+                "_class": "botao_meses_referencia wave_on_click",
+                "_href": window.PhanterPWA.XWAY(*xway),
+            })
+            xway_meses_referencia.append(op)
         html = CONCATENATE(
             DIV(
                 DIV(
@@ -450,6 +467,12 @@ class RegistroDeAulas():
                     DIV(
                         botao_mes_anterior,
                         botao_proximo_mes,
+                        widgets.MenuBox(
+                            "drop_{0}_{0}".format(self.id_turma, self.id_disciplina),
+                            I(_class="fas fa-calendar-week"),
+                            *xway_meses_referencia
+                            # onOpen=lambda: self.binds_menu_aluno()
+                        ),
                         _class="phanterpwa-card-panel-control-buttons"
                     ),
                     _class="phanterpwa-card-panel-control-wrapper has_buttons"

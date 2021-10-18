@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2021-10-17 17:07:56
+// Transcrypt'ed from Python, 2021-10-18 13:53:18
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import * as anos_letivos from './handlers.anos_letivos.js';
 import * as escolas from './handlers.escolas.js';
@@ -38,6 +38,8 @@ export var LABEL = helpers.XmlConstructor.tagger ('label');
 export var TEXTAREA = helpers.XmlConstructor.tagger ('textarea');
 export var INPUT = helpers.XmlConstructor.tagger ('input', true);
 export var TABLE = helpers.XmlConstructor.tagger ('table');
+export var THEAD = helpers.XmlConstructor.tagger ('thead');
+export var TFOOT = helpers.XmlConstructor.tagger ('tfoot');
 export var TBODY = helpers.XmlConstructor.tagger ('tbody');
 var TR = helpers.XmlConstructor.tagger ('tr');
 var TH = helpers.XmlConstructor.tagger ('th');
@@ -191,6 +193,7 @@ export var ConselhoDeClasse =  __class__ ('ConselhoDeClasse', [object], {
 			self.conselho_de_classe = json.conselho_de_classe;
 			self.disciplinas = json.disciplinas;
 			self.turma = json.turma;
+			self.quantidade_de_avaliacoes = json.quantidade_de_avaliacoes;
 			self.conselho_por_disciplina = json.conselho_por_disciplina;
 			self.matriculas = dict ();
 			self.processar_conselho ();
@@ -213,8 +216,13 @@ export var ConselhoDeClasse =  __class__ ('ConselhoDeClasse', [object], {
 		var tur = DIV (self.turma, __kwargtrans__ ({_class: 'phanterpwa-breadcrumb'}));
 		var html = CONCATENATE (DIV (DIV (DIV (DIV ('CONSELHO DE CLASSE', __kwargtrans__ ({_class: 'phanterpwa-breadcrumb'})), tur, DIV ('UNIDADE ', window.PhanterPWA.Request.get_arg (3), __kwargtrans__ ({_class: 'phanterpwa-breadcrumb'})), __kwargtrans__ ({_class: 'phanterpwa-breadcrumb-wrapper'})), __kwargtrans__ ({_class: 'p-container extend'})), __kwargtrans__ ({_class: 'title_page_container card'})), DIV (DIV (DIV (DIV (DIV (preloaders.android, __kwargtrans__ ({_style: 'width: 300px; height: 300px; overflow: hidden; margin: auto;'})), __kwargtrans__ ({_style: 'text-align:center; padding: 50px 0;'})), __kwargtrans__ ({_id: 'content-conselho_de_classe', _class: 'p-row card e-padding_auto continuos'})), __kwargtrans__ ({_class: 'phanterpwa-media-print-container'})), DIV (__kwargtrans__ ({_id: 'modal_cmp_curriculares_container'})), __kwargtrans__ ({_class: 'phanterpwa-container p-container extend'})));
 		html.html_to ('#main-container');
-		var tabela = TABLE (TR (TH ('ALUNO(A)'), TH ('DISCIPLINA'), TH ('AV1'), TH ('AV2'), TH ('AV3'), TH ('AV4'), TH ('AV5'), TH ('MÉDIA')), __kwargtrans__ ({_class: 'tabela_conselho_de_classe', _style: 'margin: auto; width: 200mm;'}));
-		var tabela2 = TABLE (TR (TH ('ALUNO(A)'), TH ('DISCIPLINA(S) DO CONSELHO')), __kwargtrans__ ({_class: 'tabela_conselho_de_classe', _style: 'margin: auto; width: 200mm;'}));
+		var htmls_avals = CONCATENATE ();
+		for (var x = 0; x < self.quantidade_de_avaliacoes; x++) {
+			htmls_avals.append (TH ('AV{0}'.format (x + 1)));
+		}
+		var tabela = TABLE (TR (TH ('ALUNO(A)'), TH ('DISCIPLINA'), htmls_avals, TH ('MÉDIA')), __kwargtrans__ ({_class: 'tabela_conselho_de_classe', _style: 'margin: auto; width: 200mm;'}));
+		var tabela2 = TABLE (THEAD (TR (TH (XML ('&#160;'), __kwargtrans__ ({_colspan: 2, _style: 'border-top: hidden; border-left: hidden; border-right: hidden;'})))), TFOOT (TR (TH (XML ('&#160;'), __kwargtrans__ ({_colspan: 2, _style: 'border-bottom: hidden; border-left: hidden; border-right: hidden;'})))), TR (TH ('ALUNO(A)'), TH ('DISCIPLINA(S) DO CONSELHO')), __kwargtrans__ ({_class: 'tabela_conselho_de_classe', _style: 'margin: auto; width: 200mm;'}));
+		var has_tabela2 = false;
 		for (var x of self.conselho_de_classe) {
 			var tr = TR (TH (x.aluno, __kwargtrans__ ({_rowspan: len (x.notas_disciplinas) + 1})));
 			self.matriculas [x.id] = x.aluno;
@@ -224,6 +232,7 @@ export var ConselhoDeClasse =  __class__ ('ConselhoDeClasse', [object], {
 					var trdis = TR ();
 					var ccc = 0;
 					for (var n of y) {
+						var has_tabela2 = true;
 						ccc++;
 						if (ccc == 1) {
 							trdis.append (CONCATENATE (TD (n [0]), TD (n [2], __kwargtrans__ (n [3]))));
@@ -251,11 +260,14 @@ export var ConselhoDeClasse =  __class__ ('ConselhoDeClasse', [object], {
 				tabela2.append (body2);
 			}
 		}
-		var tabela3 = TABLE (TR (TH ('DISCIPLINAS'), TH ('ALUNOS(AS) DO CONSELHO')), __kwargtrans__ ({_class: 'tabela_conselho_de_classe', _style: 'margin: auto; width: 200mm;'}));
+		tabela.append (CONCATENATE (THEAD (TR (TH (XML ('&#160;'), __kwargtrans__ ({_colspan: 3 + self.quantidade_de_avaliacoes, _style: 'border-top: hidden; border-left: hidden; border-right: hidden;'})))), TFOOT (TR (TH (XML ('&#160;'), __kwargtrans__ ({_colspan: 3 + self.quantidade_de_avaliacoes, _style: 'border-bottom: hidden; border-left: hidden; border-right: hidden;'}))))));
+		var tabela3 = TABLE (THEAD (TR (TH (XML ('&#160;'), __kwargtrans__ ({_colspan: 2, _style: 'border-top: hidden; border-left: hidden; border-right: hidden;'})))), TFOOT (TR (TH (XML ('&#160;'), __kwargtrans__ ({_colspan: 2, _style: 'border-bottom: hidden; border-left: hidden; border-right: hidden;'})))), TR (TH ('DISCIPLINAS'), TH ('ALUNOS(AS) DO CONSELHO')), __kwargtrans__ ({_class: 'tabela_conselho_de_classe', _style: 'margin: auto; width: 200mm;'}));
+		var has_tabela3 = false;
 		for (var x of dict (self.conselho_por_disciplina).py_keys ()) {
 			var cc2 = 0;
 			var body2 = TBODY (__kwargtrans__ ({_class: 'dont_cut_inside'}));
 			for (var y of self.conselho_por_disciplina [x]) {
+				var has_tabela3 = true;
 				cc2++;
 				if (cc2 == 1) {
 					body2.append (TR (TH (self.disciplinas [x], __kwargtrans__ ({_rowspan: len (self.conselho_por_disciplina [x])})), TD (self.matriculas [y])));
@@ -266,7 +278,15 @@ export var ConselhoDeClasse =  __class__ ('ConselhoDeClasse', [object], {
 			}
 			tabela3.append (body2);
 		}
-		var html_conselho = DIV (H3 ('NOTAS DOS ALUNOS DA UNIDADE ', self.unidade), tabela, H3 ('LISTA DE ALUNOS E DISCIPLINAS A QUAL VÃO PARA O CONSELHO DA UNIDADE ', self.unidade), tabela2, H3 ('LISTA DE DISCIPLINAS E ALUNOS A QUAL VÃO PARA O CONSELHO DA UNIDADE ', self.unidade), tabela3);
+		var html_tabela2 = '';
+		if (has_tabela2) {
+			var html_tabela2 = CONCATENATE (H3 ('LISTA DE ALUNOS E DISCIPLINAS A QUAL VÃO PARA O CONSELHO DA UNIDADE ', self.unidade), tabela2);
+		}
+		var html_tabela3 = '';
+		if (has_tabela3) {
+			var html_tabela3 = CONCATENATE (H3 ('LISTA DE DISCIPLINAS E ALUNOS A QUAL VÃO PARA O CONSELHO DA UNIDADE ', self.unidade), tabela3);
+		}
+		var html_conselho = DIV (H3 ('NOTAS DOS ALUNOS DA UNIDADE ', self.unidade), tabela, html_tabela2, html_tabela3);
 		html_conselho.html_to ('#content-conselho_de_classe');
 	});},
 	get abrir_diario () {return __get__ (this, function (self, url) {

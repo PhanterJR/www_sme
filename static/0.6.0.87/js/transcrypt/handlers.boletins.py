@@ -180,6 +180,7 @@ class Boletins():
                     _class="phanterpwa-media-print-container"
                 ),
                 DIV(_id="modal_cmp_curriculares_container"),
+                DIV(I(_class="fas fa-marker"), _class="exibir_media_final_switch fixed_button"),
                 _class="phanterpwa-container p-container extend"
             )
         )
@@ -234,9 +235,29 @@ class Boletins():
                 html_boletins.append(html_ficha)
 
         html_boletins.html_to("#content-boletins")
+        self.binds()
 
     def abrir_diario(self, url):
         window.location = url
 
+    def binds(self):
+        jQuery(
+            ".exibir_media_final_switch"
+        ).off(
+            "click.medfin"
+        ).on(
+            "click.medfin",
+            lambda: self.ocultar_mostrar_media_e_rec_final(this)
+        )
+
+    def ocultar_mostrar_media_e_rec_final(self, el):
+        console.log(el)
+        element = jQuery(el)
+        if element.hasClass("actived"):
+            element.removeClass("actived")
+            jQuery("#content-boletins").removeClass("ocultar_medias")
+        else:
+            element.addClass("actived")
+            jQuery("#content-boletins").addClass("ocultar_medias")
 
 __pragma__('nokwargs')

@@ -43,6 +43,8 @@ LABEL = helpers.XmlConstructor.tagger("label")
 TEXTAREA = helpers.XmlConstructor.tagger("textarea")
 INPUT = helpers.XmlConstructor.tagger("input", True)
 TABLE = helpers.XmlConstructor.tagger('table')
+THEAD = helpers.XmlConstructor.tagger('thead')
+TFOOT = helpers.XmlConstructor.tagger('tfoot')
 TBODY = helpers.XmlConstructor.tagger('tbody')
 TR = helpers.XmlConstructor.tagger('tr')
 TH = helpers.XmlConstructor.tagger('th')
@@ -209,6 +211,7 @@ class ConselhoDeClasse():
             self.conselho_de_classe = json.conselho_de_classe
             self.disciplinas = json.disciplinas
             self.turma = json.turma
+            self.quantidade_de_avaliacoes = json.quantidade_de_avaliacoes
             self.conselho_por_disciplina = json.conselho_por_disciplina
             self.matriculas = dict()
             self.processar_conselho()
@@ -246,17 +249,24 @@ class ConselhoDeClasse():
             )
         )
         html.html_to("#main-container")
+        htmls_avals = CONCATENATE()
+        for x in range(self.quantidade_de_avaliacoes):
+            htmls_avals.append(TH("AV{0}".format(x + 1)))
 
         tabela = TABLE(
-            TR(TH("ALUNO(A)"), TH("DISCIPLINA"), TH("AV1"), TH("AV2"), TH("AV3"), TH("AV4"), TH("AV5"), TH("MÉDIA")),
+
+            TR(TH("ALUNO(A)"), TH("DISCIPLINA"), htmls_avals, TH("MÉDIA")),
             _class='tabela_conselho_de_classe',
             _style="margin: auto; width: 200mm;"
         )
         tabela2 = TABLE(
+            THEAD(TR(TH(XML("&#160;"), _colspan=2, _style="border-top: hidden; border-left: hidden; border-right: hidden;"))),
+            TFOOT(TR(TH(XML("&#160;"), _colspan=2, _style="border-bottom: hidden; border-left: hidden; border-right: hidden;"))),
             TR(TH("ALUNO(A)"), TH("DISCIPLINA(S) DO CONSELHO")),
             _class='tabela_conselho_de_classe',
             _style="margin: auto; width: 200mm;"
         )
+        has_tabela2 = False
         for x in self.conselho_de_classe:
             tr = TR(
                 TH(x.aluno, _rowspan=len(x.notas_disciplinas) + 1)
@@ -268,6 +278,7 @@ class ConselhoDeClasse():
                     trdis = TR()
                     ccc = 0
                     for n in y:
+                        has_tabela2 = True
                         ccc += 1
                         if ccc == 1:
                             trdis.append(CONCATENATE(
@@ -296,16 +307,24 @@ class ConselhoDeClasse():
                             TR(TD(self.disciplinas[y]))
                         )
                 tabela2.append(body2)
+        tabela.append(CONCATENATE(
+            THEAD(TR(TH(XML("&#160;"), _colspan=3 + self.quantidade_de_avaliacoes, _style="border-top: hidden; border-left: hidden; border-right: hidden;"))),
+            TFOOT(TR(TH(XML("&#160;"), _colspan=3 + self.quantidade_de_avaliacoes, _style="border-bottom: hidden; border-left: hidden; border-right: hidden;"))),
+        ))
 
         tabela3 = TABLE(
+            THEAD(TR(TH(XML("&#160;"), _colspan=2, _style="border-top: hidden; border-left: hidden; border-right: hidden;"))),
+            TFOOT(TR(TH(XML("&#160;"), _colspan=2, _style="border-bottom: hidden; border-left: hidden; border-right: hidden;"))),
             TR(TH("DISCIPLINAS"), TH("ALUNOS(AS) DO CONSELHO")),
             _class='tabela_conselho_de_classe',
             _style="margin: auto; width: 200mm;"
         )
+        has_tabela3 = False
         for x in dict(self.conselho_por_disciplina).keys():
             cc2 = 0
             body2 = TBODY(_class="dont_cut_inside")
             for y in self.conselho_por_disciplina[x]:
+                has_tabela3 = True
                 cc2 += 1
                 if cc2 == 1:
                     body2.append(
@@ -316,14 +335,23 @@ class ConselhoDeClasse():
                         TR(TD(self.matriculas[y]))
                     )
             tabela3.append(body2)
-
+        html_tabela2 = ""
+        if has_tabela2:
+            html_tabela2 = CONCATENATE(
+                H3("LISTA DE ALUNOS E DISCIPLINAS A QUAL VÃO PARA O CONSELHO DA UNIDADE ", self.unidade),
+                tabela2
+            )
+        html_tabela3 = ""
+        if has_tabela3:
+            html_tabela3 = CONCATENATE(
+                H3("LISTA DE DISCIPLINAS E ALUNOS A QUAL VÃO PARA O CONSELHO DA UNIDADE ", self.unidade),
+                tabela3
+            )
         html_conselho = DIV(
             H3("NOTAS DOS ALUNOS DA UNIDADE ", self.unidade),
             tabela,
-            H3("LISTA DE ALUNOS E DISCIPLINAS A QUAL VÃO PARA O CONSELHO DA UNIDADE ", self.unidade),
-            tabela2,
-            H3("LISTA DE DISCIPLINAS E ALUNOS A QUAL VÃO PARA O CONSELHO DA UNIDADE ", self.unidade),
-            tabela3,
+            html_tabela2,
+            html_tabela3
         )
 
         html_conselho.html_to("#content-conselho_de_classe")

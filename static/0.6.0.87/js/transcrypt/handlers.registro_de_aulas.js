@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2021-09-23 20:26:43
+// Transcrypt'ed from Python, 2021-10-18 13:53:18
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import * as anos_letivos from './handlers.anos_letivos.js';
 import * as escolas from './handlers.escolas.js';
@@ -219,6 +219,7 @@ export var RegistroDeAulas =  __class__ ('RegistroDeAulas', [object], {
 			self.disciplinas = json.disciplinas;
 			self.disciplina = json.disciplina;
 			self.turma = json.turma;
+			self.meses_referencia = json.meses_referencia;
 			self.eh_educacao_infantil = json.eh_educacao_infantil;
 			self.processar_registro_de_aulas (registro_de_aulas);
 		}
@@ -278,6 +279,12 @@ export var RegistroDeAulas =  __class__ ('RegistroDeAulas', [object], {
 			}
 		}
 		else {
+		}
+		var xway_meses_referencia = [];
+		for (var x of self.meses_referencia) {
+			var xway = ['controle-de-atividades', self.id_escola, self.ano_letivo, self.id_turma, self.id_disciplina, x];
+			var op = widgets.MenuOption (x, __kwargtrans__ (dict ({'_class': 'botao_meses_referencia wave_on_click', '_href': window.PhanterPWA.XWAY (...xway)})));
+			xway_meses_referencia.append (op);
 		}
 		var html = CONCATENATE (DIV (DIV (DIV (DIV ('REGISTRO DE AULAS', __kwargtrans__ ({_class: 'phanterpwa-breadcrumb'})), __kwargtrans__ ({_class: 'phanterpwa-breadcrumb-wrapper'})), __kwargtrans__ ({_class: 'p-container extend'})), __kwargtrans__ ({_class: 'title_page_container card'})), DIV (DIV (DIV (DIV (preloaders.android, __kwargtrans__ ({_style: 'width: 300px; height: 300px; overflow: hidden; margin: auto;'})), __kwargtrans__ ({_style: 'text-align:center; padding: 50px 0;'})), __kwargtrans__ ({_id: 'content-registro_de_aulas', _class: 'p-row card e-padding_auto'})), DIV (__kwargtrans__ ({_id: 'modal_cmp_curriculares_container'})), __kwargtrans__ ({_class: 'phanterpwa-container p-container extend'})));
 		html.html_to ('#main-container');
@@ -364,7 +371,7 @@ export var RegistroDeAulas =  __class__ ('RegistroDeAulas', [object], {
 				var ch = 'Você deu {0} aulas extras. {1} de {2}.'.format (extra, self.carga_horaria_dada, self.carga_horaria);
 			}
 		}
-		var painel = DIV (LABEL (self.rotulo_mes_ano, SPAN (self.calc_dias_dados (), __kwargtrans__ ({_id: 'total_aulas'}))), DIV (DIV (DIV (DIV (DIV (DIV (tabela, __kwargtrans__ ({_class: 'diario-registro_de_aulas-container'})), __kwargtrans__ ({_class: 'diario-registro_de_aulas-wrapper'})), __kwargtrans__ ({_class: 'p-row e-padding_auto'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-content'})), DIV (botao_mes_anterior, botao_proximo_mes, __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-buttons'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-wrapper has_buttons'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-container'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control'}));
+		var painel = DIV (LABEL (self.rotulo_mes_ano, SPAN (self.calc_dias_dados (), __kwargtrans__ ({_id: 'total_aulas'}))), DIV (DIV (DIV (DIV (DIV (DIV (tabela, __kwargtrans__ ({_class: 'diario-registro_de_aulas-container'})), __kwargtrans__ ({_class: 'diario-registro_de_aulas-wrapper'})), __kwargtrans__ ({_class: 'p-row e-padding_auto'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-content'})), DIV (botao_mes_anterior, botao_proximo_mes, widgets.MenuBox ('drop_{0}_{0}'.format (self.id_turma, self.id_disciplina), I (__kwargtrans__ ({_class: 'fas fa-calendar-week'})), ...xway_meses_referencia), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-buttons'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-wrapper has_buttons'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-container'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control'}));
 		html.append (painel);
 		html.html_to ('#content-registro_de_aulas');
 		self.diario_binds ();

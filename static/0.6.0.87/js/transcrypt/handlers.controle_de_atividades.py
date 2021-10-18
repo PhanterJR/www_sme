@@ -174,14 +174,14 @@ class ControleDeAtividades():
             self.proximo = json.proximo
             self.rotulo_mes_ano = json.rotulo_mes_ano
             self.disciplina = json.disciplina
-            self.lista_de_meses = json.lista_de_meses
+            self.meses_referencia = json.meses_referencia
             self.turma = json.turma
             self.meses_calendario = json.meses_calendario
             self.processar_controle_de_atividades(controle_de_atividades)
 
     def processar_controle_de_atividades(self, controle_de_atividades):
         xway_meses_referencia = []
-        for x in self.lista_de_meses:
+        for x in self.meses_referencia:
             xway = [
                 "controle-de-atividades",
                 self.id_escola,
