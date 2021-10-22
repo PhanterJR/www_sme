@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2021-09-23 20:26:44
+// Transcrypt'ed from Python, 2021-10-19 14:07:42
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import * as anos_letivos from './handlers.anos_letivos.js';
 import * as escolas from './handlers.escolas.js';
@@ -1260,6 +1260,7 @@ export var Alunos =  __class__ ('Alunos', [helpers.XmlConstructor], {
 		var cont_alunos = 0;
 		var table = XTABLE ('alunos-table', XTRH ('alunos-table-head', 'ID', 'Nome', 'Data de Nascimento', 'Endereço'));
 		var lista_turmas = [];
+		var lista_serie = [];
 		if (self.alunos !== undefined) {
 			for (var x of self.alunos) {
 				var data_de_nascimento_formated = '';
@@ -1269,8 +1270,15 @@ export var Alunos =  __class__ ('Alunos', [helpers.XmlConstructor], {
 				var ano_letivo = '';
 				var id_escola = '';
 				if (!__in__ (x.turmas.id, lista_turmas)) {
+					var lista_serie = [];
 					lista_turmas.append (x.turmas.id);
 					table.append (TR (TH (x.turmas.turma, __kwargtrans__ ({_colspan: 5, _style: 'color:white; background-color:grey; text-align:center;'}))));
+				}
+				if (x.eh_multisseriado) {
+					if (!__in__ (x.series.serie, lista_serie)) {
+						lista_serie.append (x.series.serie);
+						table.append (TR (TH (x.series.serie, __kwargtrans__ ({_colspan: 5, _style: 'color:orange; text-align:center;'}))));
+					}
 				}
 				table.append (XTRD ('alunos-table-data-{0}'.format (x.alunos.id), x.matriculas.id, x.alunos.aluno, data_de_nascimento_formated, x.alunos.endereco, widgets.MenuBox ('drop_{0}'.format (x.alunos.id), I (__kwargtrans__ ({_class: 'fas fa-ellipsis-v'})), widgets.MenuOption ('Visualizar', __kwargtrans__ (dict ({'_class': 'botao_visualizar_aluno wave_on_click', '_data-id_aluno': x.alunos.id}))), __kwargtrans__ ({onOpen: (function __lambda__ () {
 					if (arguments.length) {

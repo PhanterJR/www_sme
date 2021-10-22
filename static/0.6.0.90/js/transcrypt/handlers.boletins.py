@@ -180,7 +180,11 @@ class Boletins():
                     _class="phanterpwa-media-print-container"
                 ),
                 DIV(_id="modal_cmp_curriculares_container"),
-                DIV(I(_class="fas fa-marker"), _class="exibir_media_final_switch fixed_button"),
+                DIV(
+                    I(_class="fas fa-marker"),
+                    _class="exibir_media_final_switch fixed_button",
+                    _title="Ocultar Recuperação e Média Final"
+                ),
                 _class="phanterpwa-container p-container extend"
             )
         )
@@ -230,7 +234,7 @@ class Boletins():
                             ),
                             _class="p-row"
                         ),
-                        _class="p-col w1p50 dont_cut_inside"
+                        _class="p-col w1p100 w4p50 dont_cut_inside"
                     )
                 html_boletins.append(html_ficha)
 

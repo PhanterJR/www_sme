@@ -1215,6 +1215,7 @@ class Alunos(helpers.XmlConstructor):
             )
         )
         lista_turmas = []
+        lista_serie = []
         if self.alunos is not js_undefined:
             for x in self.alunos:
                 data_de_nascimento_formated = ""
@@ -1225,10 +1226,17 @@ class Alunos(helpers.XmlConstructor):
                 ano_letivo = ""
                 id_escola = ""
                 if x.turmas.id not in lista_turmas:
+                    lista_serie = []
                     lista_turmas.append(x.turmas.id)
                     table.append(
                         TR(TH(x.turmas.turma, _colspan=5, _style='color:white; background-color:grey; text-align:center;'))
                     )
+                if x.eh_multisseriado:
+                    if x.series.serie not in lista_serie:
+                        lista_serie.append(x.series.serie)
+                        table.append(
+                            TR(TH(x.series.serie, _colspan=5, _style='color:orange; text-align:center;'))
+                        )
 
                 table.append(
                     XTRD(

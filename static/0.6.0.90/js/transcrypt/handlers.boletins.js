@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2021-10-18 15:44:11
+// Transcrypt'ed from Python, 2021-10-19 14:07:41
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import * as anos_letivos from './handlers.anos_letivos.js';
 import * as escolas from './handlers.escolas.js';
@@ -177,7 +177,7 @@ export var Boletins =  __class__ ('Boletins', [object], {
 		else {
 		}
 		var tur = DIV (self.turma, __kwargtrans__ ({_class: 'phanterpwa-breadcrumb'}));
-		var html = CONCATENATE (DIV (DIV (DIV (DIV ('BOLETINS', __kwargtrans__ ({_class: 'phanterpwa-breadcrumb'})), tur, __kwargtrans__ ({_class: 'phanterpwa-breadcrumb-wrapper'})), __kwargtrans__ ({_class: 'p-container extend'})), __kwargtrans__ ({_class: 'title_page_container card'})), DIV (DIV (DIV (DIV (DIV (preloaders.android, __kwargtrans__ ({_style: 'width: 300px; height: 300px; overflow: hidden; margin: auto;'})), __kwargtrans__ ({_style: 'text-align:center; padding: 50px 0;'})), __kwargtrans__ ({_id: 'content-boletins', _class: 'p-row card e-padding_auto continuos'})), __kwargtrans__ ({_class: 'phanterpwa-media-print-container'})), DIV (__kwargtrans__ ({_id: 'modal_cmp_curriculares_container'})), DIV (I (__kwargtrans__ ({_class: 'fas fa-marker'})), __kwargtrans__ ({_class: 'exibir_media_final_switch fixed_button'})), __kwargtrans__ ({_class: 'phanterpwa-container p-container extend'})));
+		var html = CONCATENATE (DIV (DIV (DIV (DIV ('BOLETINS', __kwargtrans__ ({_class: 'phanterpwa-breadcrumb'})), tur, __kwargtrans__ ({_class: 'phanterpwa-breadcrumb-wrapper'})), __kwargtrans__ ({_class: 'p-container extend'})), __kwargtrans__ ({_class: 'title_page_container card'})), DIV (DIV (DIV (DIV (DIV (preloaders.android, __kwargtrans__ ({_style: 'width: 300px; height: 300px; overflow: hidden; margin: auto;'})), __kwargtrans__ ({_style: 'text-align:center; padding: 50px 0;'})), __kwargtrans__ ({_id: 'content-boletins', _class: 'p-row card e-padding_auto continuos'})), __kwargtrans__ ({_class: 'phanterpwa-media-print-container'})), DIV (__kwargtrans__ ({_id: 'modal_cmp_curriculares_container'})), DIV (I (__kwargtrans__ ({_class: 'fas fa-marker'})), __kwargtrans__ ({_class: 'exibir_media_final_switch fixed_button', _title: 'Ocultar Recuperação e Média Final'})), __kwargtrans__ ({_class: 'phanterpwa-container p-container extend'})));
 		html.html_to ('#main-container');
 		var html_boletins = DIV (DIV ('BOLETINS', __kwargtrans__ ({_class: 'p-col w1p100 phanterpwa-widget-form-separator'})), __kwargtrans__ ({_class: 'historicos-conteudo'}));
 		if (boletins !== null && boletins !== undefined) {
@@ -207,7 +207,7 @@ export var Boletins =  __class__ ('Boletins', [object], {
 						}
 						tabela.append (linha);
 					}
-					var html_ficha = DIV (DIV (DIV (tabela_rotulo, tabela, __kwargtrans__ ({_style: 'padding: 10px;'})), __kwargtrans__ ({_class: 'p-row'})), __kwargtrans__ ({_class: 'p-col w1p50 dont_cut_inside'}));
+					var html_ficha = DIV (DIV (DIV (tabela_rotulo, tabela, __kwargtrans__ ({_style: 'padding: 10px;'})), __kwargtrans__ ({_class: 'p-row'})), __kwargtrans__ ({_class: 'p-col w1p100 w4p50 dont_cut_inside'}));
 				}
 				html_boletins.append (html_ficha);
 			}

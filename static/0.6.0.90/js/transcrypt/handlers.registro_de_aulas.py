@@ -245,7 +245,7 @@ class RegistroDeAulas():
         xway_meses_referencia = []
         for x in self.meses_referencia:
             xway = [
-                "controle-de-atividades",
+                "registro-de-aulas",
                 self.id_escola,
                 self.ano_letivo,
                 self.id_turma,
