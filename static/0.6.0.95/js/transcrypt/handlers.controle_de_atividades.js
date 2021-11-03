@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2021-10-27 01:57:56
+// Transcrypt'ed from Python, 2021-11-03 12:19:39
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import * as anos_letivos from './handlers.anos_letivos.js';
 import * as escolas from './handlers.escolas.js';
@@ -131,7 +131,7 @@ export var Index =  __class__ ('Index', [gatehandler.Handler], {
 });
 export var ControleDeAtividades =  __class__ ('ControleDeAtividades', [object], {
 	__module__: __name__,
-	get __init__ () {return __get__ (this, function (self, index_instance, escola, ano_letivo, turma, id_disciplina, rotulo_mes_ano) {
+	get __init__ () {return __get__ (this, function (self, index_instance, escola, ano_letivo, turma, id_disciplina, mes_referencia) {
 		if (arguments.length) {
 			var __ilastarg0__ = arguments.length - 1;
 			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
@@ -144,7 +144,7 @@ export var ControleDeAtividades =  __class__ ('ControleDeAtividades', [object], 
 						case 'ano_letivo': var ano_letivo = __allkwargs0__ [__attrib0__]; break;
 						case 'turma': var turma = __allkwargs0__ [__attrib0__]; break;
 						case 'id_disciplina': var id_disciplina = __allkwargs0__ [__attrib0__]; break;
-						case 'rotulo_mes_ano': var rotulo_mes_ano = __allkwargs0__ [__attrib0__]; break;
+						case 'mes_referencia': var mes_referencia = __allkwargs0__ [__attrib0__]; break;
 					}
 				}
 			}
@@ -154,7 +154,7 @@ export var ControleDeAtividades =  __class__ ('ControleDeAtividades', [object], 
 		self.id_escola = escola;
 		self.ano_letivo = ano_letivo;
 		self.id_turma = turma;
-		self.rotulo_mes_ano = rotulo_mes_ano;
+		self.mes_referencia = mes_referencia;
 		self.id_disciplina = id_disciplina;
 		self.index_instance = index_instance;
 		self._get_controle_de_atividades ();
@@ -175,8 +175,8 @@ export var ControleDeAtividades =  __class__ ('ControleDeAtividades', [object], 
 		else {
 		}
 		if (self.id_disciplina !== null && self.id_disciplina !== undefined) {
-			if (self.rotulo_mes_ano !== null && self.rotulo_mes_ano !== undefined) {
-				window.PhanterPWA.GET ('api', 'controle-de-atividades', self.id_escola, self.ano_letivo, self.id_turma, self.id_disciplina, self.rotulo_mes_ano, __kwargtrans__ ({onComplete: self.after_get}));
+			if (self.mes_referencia !== null && self.mes_referencia !== undefined) {
+				window.PhanterPWA.GET ('api', 'controle-de-atividades', self.id_escola, self.ano_letivo, self.id_turma, self.id_disciplina, self.mes_referencia, __kwargtrans__ ({onComplete: self.after_get}));
 			}
 			else {
 				window.PhanterPWA.GET ('api', 'controle-de-atividades', self.id_escola, self.ano_letivo, self.id_turma, self.id_disciplina, __kwargtrans__ ({onComplete: self.after_get}));
@@ -210,13 +210,12 @@ export var ControleDeAtividades =  __class__ ('ControleDeAtividades', [object], 
 			self.quant_dias = json.quant_dias;
 			self.proximo = json.proximo;
 			self.mes_referencia = json.mes_referencia;
-			self.meses_referencia = json.meses_referencia;
-			self.rotulo_mes_ano = json.rotulo_mes_ano;
 			self.disciplina = json.disciplina;
 			self.meses_referencia = json.meses_referencia;
 			self.dias_letivos = json.dias_letivos;
 			self.total_de_dias = json.total_de_dias;
 			self.turma = json.turma;
+			self.eh_multisseriado = json.eh_multisseriado;
 			self.meses_calendario = json.meses_calendario;
 			self.processar_controle_de_atividades (controle_de_atividades);
 		}
@@ -259,7 +258,12 @@ export var ControleDeAtividades =  __class__ ('ControleDeAtividades', [object], 
 		}) ()), __kwargtrans__ ({_class: 'tabela_controle_de_atividades'}));
 		self.data_controle_de_atividades_keys = [];
 		self.data_controle_de_atividades = dict ({});
+		var l_series = [];
 		for (var x of controle_de_atividades) {
+			if (self.eh_multisseriado && !__in__ (x.serie, l_series)) {
+				l_series.append (x.serie);
+				tabela.append (TBODY (TR (TH (x.serie, __kwargtrans__ ({_colspan: 2 + len (self.dias_letivos)}))), __kwargtrans__ ({_style: 'background-color: #dfbf84'})));
+			}
 			var linha = TR (TH (x.numero, __kwargtrans__ ({_rowspan: x.tot_disciplinas, _class: 'rotulo'})), TH (x.nome, __kwargtrans__ ({_rowspan: x.tot_disciplinas, _class: 'rotulo'})));
 			var body = TBODY (linha, __kwargtrans__ ({_class: 'tbody_controle_de_atividades'}));
 			var proximas_linhas = [];
@@ -321,7 +325,7 @@ export var ControleDeAtividades =  __class__ ('ControleDeAtividades', [object], 
 			way.append (self.proximo);
 			var botao_proximo_mes = A (I (__kwargtrans__ ({_class: 'fas fa-angle-double-right'})), __kwargtrans__ (dict ({'_class': 'botao_proximo_mes icon_button', '_title': 'Próximo mês', '_href': window.PhanterPWA.XWAY (...way)})));
 		}
-		var painel = DIV (LABEL (self.rotulo_mes_ano), DIV (DIV (DIV (DIV (DIV (DIV (tabela, __kwargtrans__ ({_class: 'diario-controle_de_atividades-container'})), __kwargtrans__ ({_class: 'diario-controle_de_atividades-wrapper'})), __kwargtrans__ ({_class: 'p-row e-padding_auto'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-content'})), DIV (botao_mes_anterior, botao_proximo_mes, widgets.MenuBox ('drop_{0}_{0}'.format (self.id_turma, self.id_disciplina), I (__kwargtrans__ ({_class: 'fas fa-calendar-week'})), ...xway_meses_referencia), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-buttons'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-wrapper has_buttons'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-container'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control'}));
+		var painel = DIV (LABEL (self.mes_referencia), DIV (DIV (DIV (DIV (DIV (DIV (tabela, __kwargtrans__ ({_class: 'diario-controle_de_atividades-container'})), __kwargtrans__ ({_class: 'diario-controle_de_atividades-wrapper'})), __kwargtrans__ ({_class: 'p-row e-padding_auto'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-content'})), DIV (botao_mes_anterior, botao_proximo_mes, widgets.MenuBox ('drop_{0}_{0}'.format (self.id_turma, self.id_disciplina), I (__kwargtrans__ ({_class: 'fas fa-calendar-week'})), ...xway_meses_referencia), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-buttons'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-wrapper has_buttons'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-container'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control'}));
 		html.append (painel);
 		html.html_to ('#content-controle_de_atividades');
 		self.diario_binds ();

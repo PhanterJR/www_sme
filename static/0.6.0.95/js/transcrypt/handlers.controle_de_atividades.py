@@ -109,11 +109,11 @@ class Index(gatehandler.Handler):
 
 
 class ControleDeAtividades():
-    def __init__(self, index_instance, escola, ano_letivo, turma, id_disciplina, rotulo_mes_ano):
+    def __init__(self, index_instance, escola, ano_letivo, turma, id_disciplina, mes_referencia):
         self.id_escola = escola
         self.ano_letivo = ano_letivo
         self.id_turma = turma
-        self.rotulo_mes_ano = rotulo_mes_ano
+        self.mes_referencia = mes_referencia
         self.id_disciplina = id_disciplina
         self.index_instance = index_instance
         self._get_controle_de_atividades()
@@ -135,7 +135,7 @@ class ControleDeAtividades():
     def _get_controle_de_atividades(self):
 
         if self.id_disciplina is not None and self.id_disciplina is not js_undefined:
-            if self.rotulo_mes_ano is not None and self.rotulo_mes_ano is not js_undefined:
+            if self.mes_referencia is not None and self.mes_referencia is not js_undefined:
                 window.PhanterPWA.GET(
                     "api",
                     "controle-de-atividades",
@@ -143,7 +143,7 @@ class ControleDeAtividades():
                     self.ano_letivo,
                     self.id_turma,
                     self.id_disciplina,
-                    self.rotulo_mes_ano,
+                    self.mes_referencia,
                     onComplete=self.after_get
                 )
             else:
@@ -175,13 +175,13 @@ class ControleDeAtividades():
             self.quant_dias = json.quant_dias
             self.proximo = json.proximo
             self.mes_referencia = json.mes_referencia
-            self.meses_referencia = json.meses_referencia
-            self.rotulo_mes_ano = json.rotulo_mes_ano
+            #self.rotulo_mes_ano = json.rotulo_mes_ano
             self.disciplina = json.disciplina
             self.meses_referencia = json.meses_referencia
             self.dias_letivos = json.dias_letivos
             self.total_de_dias = json.total_de_dias
             self.turma = json.turma
+            self.eh_multisseriado = json.eh_multisseriado
             self.meses_calendario = json.meses_calendario
             self.processar_controle_de_atividades(controle_de_atividades)
 
@@ -283,7 +283,11 @@ class ControleDeAtividades():
         #     )
         self.data_controle_de_atividades_keys = []
         self.data_controle_de_atividades = {}
+        l_series = []
         for x in controle_de_atividades:
+            if self.eh_multisseriado and x.serie not in l_series:
+                l_series.append(x.serie)
+                tabela.append(TBODY(TR(TH(x.serie, _colspan=2 + len(self.dias_letivos))), _style="background-color: #dfbf84"))
             linha = TR(TH(x.numero, _rowspan=x.tot_disciplinas, _class="rotulo"), TH(x.nome, _rowspan=x.tot_disciplinas, _class="rotulo"))
             body = TBODY(linha, _class="tbody_controle_de_atividades")
             proximas_linhas = []
@@ -291,6 +295,7 @@ class ControleDeAtividades():
             self.data_controle_de_atividades[x.id] = x
             self.data_controle_de_atividades_keys.append(x.id)
             for y in x.disciplinas:
+
                 cont += 1
                 if cont == 1:
                     # linha.append(TH(self.disciplinas[y[0]]))
@@ -419,7 +424,7 @@ class ControleDeAtividades():
                 }
             )
         painel = DIV(
-            LABEL(self.rotulo_mes_ano),
+            LABEL(self.mes_referencia),
             DIV(
                 DIV(
                     DIV(
