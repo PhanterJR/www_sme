@@ -463,6 +463,8 @@ class EditarCalendario():
             window.PhanterPWA.flash("{0} Dias Letivos".format(dias_letivos))
             self.data_inicial = json.data_inicial
             self.data_final = json.data_final
+            self.periodo_unidades = json.periodo_unidades
+            self.quant_unidades = json.quant_unidades
             if self.id_escola is None or self.id_escola is js_undefined:
                 logo_principal = "{0}/api/escolas/12/image".format(
                     window.PhanterPWA.ApiServer.remote_address
@@ -488,7 +490,6 @@ class EditarCalendario():
                         I(_class="fas fa-calendar")," e ", I(_class="fas fa-calendar-alt"),
                         ". Para outros eventos, como definir se o dia é letivo ou não letivo é só acessar os dias.")
                 )
-
 
             html = DIV(
                 DIV(
@@ -544,6 +545,13 @@ class EditarCalendario():
                     "_title": "Definir data final das aulas",
                 }
             )
+            botao_data_unidades = DIV(
+                I(_class="fab fa-delicious"),
+                **{
+                    "_class": "definir_datas_unidades icon_button",
+                    "_title": "Definir inícios das unidades das aulas",
+                }
+            )
             html_legenda = DIV(_class="calendario_legenda p-row")
             for x in json.legenda:
                 html_legenda.append(
@@ -579,6 +587,7 @@ class EditarCalendario():
                             DIV(
                                 botao_data_inicial,
                                 botao_data_final,
+                                botao_data_unidades,
                                 _class="phanterpwa-card-panel-control-buttons"
                             ),
                             _class="phanterpwa-card-panel-control-wrapper has_buttons"
@@ -613,6 +622,14 @@ class EditarCalendario():
         ).on(
             'click.definir_data_final',
             lambda: self.modal_data_inicial_e_final("data_final")
+        )
+        jQuery(
+            '.definir_datas_unidades'
+        ).off(
+            'click.definir_datas_unidades'
+        ).on(
+            'click.definir_datas_unidades',
+            lambda: self.modal_data_unidades()
         )
         jQuery(
             '.celula_dias'
@@ -841,5 +858,172 @@ class EditarCalendario():
                 onComplete=self.after_get
             )
         self.modal_eventos.close()
+
+    def iso_br(self, data_iso):
+        ano, mes, dia = data_iso.split("-")
+        return "{0}/{1}/{2}".format(dia, mes, ano)
+
+    def xml_modal_unidade(self):
+        tabela = TABLE(
+            TR(TH("Unidade"), TH("Data Inicial"), TH("Data Final (auto)")),
+            _style="margin: auto;"
+        )
+        romanos = [
+            "I",
+            "II",
+            "III",
+            "IV",
+            "V",
+            "VI",
+            "VII",
+            "VIII"
+        ]
+        dict_periodo_unidades = {x[0]: x for x in self.periodo_unidades}
+        proximo_key = 2
+        for x in range(self.quant_unidades):
+            key = x + 1
+            console.log(key, dict_periodo_unidades.keys(), key in dict_periodo_unidades.keys())
+            
+            if str(key) in dict_periodo_unidades.keys():
+                if x == 0:
+                    input_data = widgets.Inert("df_unidade_{0}".format(x + 1), **{
+                        "value": self.iso_br(dict_periodo_unidades[x + 1][1])
+                    })
+                else:
+                    proximo_key = x + 2
+                    input_data = forms.FormWidget(
+                        "calendario_unidade",
+                        "unidade_{0}".format(x + 1),
+                        **{
+                            "value": dict_periodo_unidades[x + 1][1],
+                            "label": "Data Inicial",
+                            "type": "date",
+                            "validators": ["IS_EMPTY_OR", "IS_DATE:dd/MM/yyyy"],
+                            "validator_format": "%d/%m/%Y",
+                            "mask": "dd/MM/yyyy",
+                            "format": "dd/MM/yyyy",
+                            "_placeholder": "Data Inicial",
+                            "_class": "p-col w1p100 input_data_unidade",
+                            "_data-unidade": x + 1
+                        }
+                    )
+
+                linha = TR(
+                    TH("Unidade {0}".format(romanos[x])),
+                    TD(
+                        input_data
+                    ),
+                    TD(widgets.Inert("df_unidade_{0}".format(x + 1), **{
+                        "value": self.iso_br(dict_periodo_unidades[x + 1][2])
+                    }))
+                )
+            else:
+                if x == 0:
+                    input_data = widgets.Inert("df_unidade_{0}".format(x + 1), **{
+                        "value": ""
+                    })
+                elif proximo_key == x + 1:
+                    input_data = forms.FormWidget(
+                        "calendario_unidade",
+                        "unidade_{0}".format(x + 1),
+                        **{
+                            "value": "",
+                            "label": "Data Inicial",
+                            "type": "date",
+                            "validators": ["IS_EMPTY_OR", "IS_DATE:dd/MM/yyyy"],
+                            "validator_format": "%d/%m/%Y",
+                            "mask": "dd/MM/yyyy",
+                            "format": "dd/MM/yyyy",
+                            "_placeholder": "Data Inicial",
+                            "_class": "p-col w1p100 input_data_unidade",
+                            "_data-unidade": x + 1
+                        }
+                    )
+                else:
+                    input_data = widgets.Inert("df_unidade_{0}".format(x + 1), **{
+                        "value": ""
+                    })
+                linha = TR(
+                    TH("Unidade {0}".format(romanos[x])),
+                    TD(
+                        input_data
+                    ),
+                    TD(widgets.Inert("df_unidade_{0}".format(x + 1), **{
+                        "value": ""
+                    }))
+                )
+            tabela.append(linha)
+        tabela.html_to("#content_modal_unidades")
+        jQuery(".input_data_unidade").find("input").off(
+            "change.input_data_unidade"
+        ).on(
+            "change.input_data_unidade",
+            lambda: (self._definir_unidade(this), console.log(this))
+        )
+
+    def modal_data_unidades(self):
+        footer = DIV(
+            forms.SubmitButton(
+                "fechar",
+                "Fechar",
+                _class="btn-autoresize wave_on_click waves-phanterpwa"
+            ),
+            _class='phanterpwa-form-buttons-container'
+        )
+        self.modal_periodo_unidades = modal.Modal(
+            "#modais_calendario",
+            **{
+                "title": "Periodo das Unidades",
+                "content": DIV(_id="content_modal_unidades"),
+                "form": "calendario_unidade",
+                'footer': footer
+            }
+        )
+        self.modal_periodo_unidades.open()
+        self.xml_modal_unidade()
+        jQuery("#phanterpwa-widget-form-submit_button-fechar").off("click.fechar_modal_unidades").on(
+            "click.fechar_modal_unidades",
+            lambda: self.modal_periodo_unidades.close()
+        )
+
+    def _definir_unidade(self, el):
+        element = jQuery(el)
+        unidade = element.parent().parent().parent().data("unidade")
+        nova_data = element.val()
+        formdata = __new__(FormData())
+        formdata.append(
+            "data_inicial",
+            nova_data
+        )
+
+        formdata.append(
+            "unidade",
+            unidade
+        )
+        if self.id_escola is None or self.id_escola is js_undefined:
+            window.PhanterPWA.PUT(
+                "api",
+                "calendario",
+                "unidade",
+                self.ano_letivo,
+                form_data=formdata,
+                onComplete=self.after_get_definir_unidade
+            )
+        else:
+            window.PhanterPWA.PUT(
+                "api",
+                "calendario",
+                "unidade",
+                self.ano_letivo,
+                self.id_escola,
+                form_data=formdata,
+                onComplete=self.after_get_definir_unidade
+            )
+
+    def after_get_definir_unidade(self, data, ajax_status):
+        if ajax_status == "success":
+            json = data.responseJSON
+            self.periodo_unidades = json.periodo_unidades
+            self.xml_modal_unidade()
 
 __pragma__('nokwargs')

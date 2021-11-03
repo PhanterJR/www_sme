@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2021-08-18 02:15:21
+// Transcrypt'ed from Python, 2021-11-03 19:37:52
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import * as anos_letivos from './handlers.anos_letivos.js';
 import * as escolas from './handlers.escolas.js';
@@ -392,6 +392,8 @@ export var EditarCalendario =  __class__ ('EditarCalendario', [object], {
 			window.PhanterPWA.flash ('{0} Dias Letivos'.format (dias_letivos));
 			self.data_inicial = json.data_inicial;
 			self.data_final = json.data_final;
+			self.periodo_unidades = json.periodo_unidades;
+			self.quant_unidades = json.quant_unidades;
 			if (self.id_escola === null || self.id_escola === undefined) {
 				var logo_principal = '{0}/api/escolas/12/image'.format (window.PhanterPWA.ApiServer.remote_address);
 				var titulo = CONCATENATE (H2 ('EDITAR CALENDÁRIO BASE ', self.ano_letivo), P ('O seguinte calendário será usado como base para cada escola', ' desenvolver seu próprio calendário.'), P ('É necessário definir a data inicial e a data final nos respectivos botões: ', I (__kwargtrans__ ({_class: 'fas fa-calendar'})), ' e ', I (__kwargtrans__ ({_class: 'fas fa-calendar-alt'})), '. Para outros eventos, como definir se o dia é letivo ou não letivo é só acessar os dias.'));
@@ -420,11 +422,12 @@ export var EditarCalendario =  __class__ ('EditarCalendario', [object], {
 			}
 			var botao_data_inicial = DIV (I (__kwargtrans__ ({_class: 'fas fa-calendar'})), __kwargtrans__ (dict ({'_class': 'definir_data_inicial icon_button', '_title': 'Definir data inicial das aulas'})));
 			var botao_data_final = DIV (I (__kwargtrans__ ({_class: 'fas fa-calendar-alt'})), __kwargtrans__ (dict ({'_class': 'definir_data_final icon_button', '_title': 'Definir data final das aulas'})));
+			var botao_data_unidades = DIV (I (__kwargtrans__ ({_class: 'fab fa-delicious'})), __kwargtrans__ (dict ({'_class': 'definir_datas_unidades icon_button', '_title': 'Definir inícios das unidades das aulas'})));
 			var html_legenda = DIV (__kwargtrans__ ({_class: 'calendario_legenda p-row'}));
 			for (var x of json.legenda) {
 				html_legenda.append (DIV (DIV (DIV (DIV ('#', __kwargtrans__ ({_class: 'hashtag_legenda'})), SPAN (x [0]), __kwargtrans__ (x [1])), __kwargtrans__ ({_class: 'linha_legenda'})), __kwargtrans__ ({_class: 'p-col w1p100 w5p50'})));
 			}
-			html.append (DIV (LABEL ('Calendário Escolar - {0} Dias Letivos'.format (dias_letivos)), DIV (DIV (DIV (DIV (DIV (DIV (DIV (html_content, __kwargtrans__ ({_class: 'calendario_wrapper editar'})), __kwargtrans__ ({_class: 'diario-ficha_avaliativa-container'})), __kwargtrans__ ({_class: 'diario-ficha_avaliativa-wrapper'})), __kwargtrans__ ({_class: 'p-row e-padding_auto'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-content'})), DIV (botao_data_inicial, botao_data_final, __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-buttons'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-wrapper has_buttons'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-container'})), DIV (DIV ('LEGENDA', __kwargtrans__ ({_class: 'titulo_legenda'})), html_legenda, __kwargtrans__ ({_class: 'legenda_container'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control'})));
+			html.append (DIV (LABEL ('Calendário Escolar - {0} Dias Letivos'.format (dias_letivos)), DIV (DIV (DIV (DIV (DIV (DIV (DIV (html_content, __kwargtrans__ ({_class: 'calendario_wrapper editar'})), __kwargtrans__ ({_class: 'diario-ficha_avaliativa-container'})), __kwargtrans__ ({_class: 'diario-ficha_avaliativa-wrapper'})), __kwargtrans__ ({_class: 'p-row e-padding_auto'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-content'})), DIV (botao_data_inicial, botao_data_final, botao_data_unidades, __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-buttons'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-wrapper has_buttons'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-container'})), DIV (DIV ('LEGENDA', __kwargtrans__ ({_class: 'titulo_legenda'})), html_legenda, __kwargtrans__ ({_class: 'legenda_container'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control'})));
 			html.html_to ('#content-calendario');
 			self.binds ();
 		}
@@ -468,6 +471,19 @@ export var EditarCalendario =  __class__ ('EditarCalendario', [object], {
 			else {
 			}
 			return self.modal_data_inicial_e_final ('data_final');
+		}));
+		$ ('.definir_datas_unidades').off ('click.definir_datas_unidades').on ('click.definir_datas_unidades', (function __lambda__ () {
+			if (arguments.length) {
+				var __ilastarg0__ = arguments.length - 1;
+				if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+					var __allkwargs0__ = arguments [__ilastarg0__--];
+					for (var __attrib0__ in __allkwargs0__) {
+					}
+				}
+			}
+			else {
+			}
+			return self.modal_data_unidades ();
 		}));
 		$ ('.celula_dias').off ('click.celula_dias').on ('click.celula_dias', (function __lambda__ () {
 			if (arguments.length) {
@@ -637,6 +653,175 @@ export var EditarCalendario =  __class__ ('EditarCalendario', [object], {
 			window.PhanterPWA.PUT ('api', 'calendario', self.ano_letivo, self.id_escola, __kwargtrans__ ({form_data: formdata, onComplete: self.after_get}));
 		}
 		self.modal_eventos.close ();
+	});},
+	get iso_br () {return __get__ (this, function (self, data_iso) {
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+					switch (__attrib0__) {
+						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+						case 'data_iso': var data_iso = __allkwargs0__ [__attrib0__]; break;
+					}
+				}
+			}
+		}
+		else {
+		}
+		var __left0__ = data_iso.py_split ('-');
+		var ano = __left0__ [0];
+		var mes = __left0__ [1];
+		var dia = __left0__ [2];
+		return '{0}/{1}/{2}'.format (dia, mes, ano);
+	});},
+	get xml_modal_unidade () {return __get__ (this, function (self) {
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+					switch (__attrib0__) {
+						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+					}
+				}
+			}
+		}
+		else {
+		}
+		var tabela = TABLE (TR (TH ('Unidade'), TH ('Data Inicial'), TH ('Data Final (auto)')), __kwargtrans__ ({_style: 'margin: auto;'}));
+		var romanos = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'];
+		var dict_periodo_unidades = (function () {
+			var __accu0__ = [];
+			for (var x of self.periodo_unidades) {
+				__accu0__.append ([x [0], x]);
+			}
+			return dict (__accu0__);
+		}) ();
+		var proximo_key = 2;
+		for (var x = 0; x < self.quant_unidades; x++) {
+			var key = x + 1;
+			console.log (key, dict_periodo_unidades.py_keys (), __in__ (key, dict_periodo_unidades.py_keys ()));
+			if (__in__ (str (key), dict_periodo_unidades.py_keys ())) {
+				if (x == 0) {
+					var input_data = widgets.Inert ('df_unidade_{0}'.format (x + 1), __kwargtrans__ (dict ({'value': self.iso_br (dict_periodo_unidades [x + 1] [1])})));
+				}
+				else {
+					var proximo_key = x + 2;
+					var input_data = forms.FormWidget ('calendario_unidade', 'unidade_{0}'.format (x + 1), __kwargtrans__ (dict ({'value': dict_periodo_unidades [x + 1] [1], 'label': 'Data Inicial', 'type': 'date', 'validators': ['IS_EMPTY_OR', 'IS_DATE:dd/MM/yyyy'], 'validator_format': '%d/%m/%Y', 'mask': 'dd/MM/yyyy', 'format': 'dd/MM/yyyy', '_placeholder': 'Data Inicial', '_class': 'p-col w1p100 input_data_unidade', '_data-unidade': x + 1})));
+				}
+				var linha = TR (TH ('Unidade {0}'.format (romanos [x])), TD (input_data), TD (widgets.Inert ('df_unidade_{0}'.format (x + 1), __kwargtrans__ (dict ({'value': self.iso_br (dict_periodo_unidades [x + 1] [2])})))));
+			}
+			else {
+				if (x == 0) {
+					var input_data = widgets.Inert ('df_unidade_{0}'.format (x + 1), __kwargtrans__ (dict ({'value': ''})));
+				}
+				else if (proximo_key == x + 1) {
+					var input_data = forms.FormWidget ('calendario_unidade', 'unidade_{0}'.format (x + 1), __kwargtrans__ (dict ({'value': '', 'label': 'Data Inicial', 'type': 'date', 'validators': ['IS_EMPTY_OR', 'IS_DATE:dd/MM/yyyy'], 'validator_format': '%d/%m/%Y', 'mask': 'dd/MM/yyyy', 'format': 'dd/MM/yyyy', '_placeholder': 'Data Inicial', '_class': 'p-col w1p100 input_data_unidade', '_data-unidade': x + 1})));
+				}
+				else {
+					var input_data = widgets.Inert ('df_unidade_{0}'.format (x + 1), __kwargtrans__ (dict ({'value': ''})));
+				}
+				var linha = TR (TH ('Unidade {0}'.format (romanos [x])), TD (input_data), TD (widgets.Inert ('df_unidade_{0}'.format (x + 1), __kwargtrans__ (dict ({'value': ''})))));
+			}
+			tabela.append (linha);
+		}
+		tabela.html_to ('#content_modal_unidades');
+		$ ('.input_data_unidade').find ('input').off ('change.input_data_unidade').on ('change.input_data_unidade', (function __lambda__ () {
+			if (arguments.length) {
+				var __ilastarg0__ = arguments.length - 1;
+				if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+					var __allkwargs0__ = arguments [__ilastarg0__--];
+					for (var __attrib0__ in __allkwargs0__) {
+					}
+				}
+			}
+			else {
+			}
+			return tuple ([self._definir_unidade (this), console.log (this)]);
+		}));
+	});},
+	get modal_data_unidades () {return __get__ (this, function (self) {
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+					switch (__attrib0__) {
+						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+					}
+				}
+			}
+		}
+		else {
+		}
+		var footer = DIV (forms.SubmitButton ('fechar', 'Fechar', __kwargtrans__ ({_class: 'btn-autoresize wave_on_click waves-phanterpwa'})), __kwargtrans__ ({_class: 'phanterpwa-form-buttons-container'}));
+		self.modal_periodo_unidades = modal.Modal ('#modais_calendario', __kwargtrans__ (dict ({'title': 'Periodo das Unidades', 'content': DIV (__kwargtrans__ ({_id: 'content_modal_unidades'})), 'form': 'calendario_unidade', 'footer': footer})));
+		self.modal_periodo_unidades.open ();
+		self.xml_modal_unidade ();
+		$ ('#phanterpwa-widget-form-submit_button-fechar').off ('click.fechar_modal_unidades').on ('click.fechar_modal_unidades', (function __lambda__ () {
+			if (arguments.length) {
+				var __ilastarg0__ = arguments.length - 1;
+				if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+					var __allkwargs0__ = arguments [__ilastarg0__--];
+					for (var __attrib0__ in __allkwargs0__) {
+					}
+				}
+			}
+			else {
+			}
+			return self.modal_periodo_unidades.close ();
+		}));
+	});},
+	get _definir_unidade () {return __get__ (this, function (self, el) {
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+					switch (__attrib0__) {
+						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+						case 'el': var el = __allkwargs0__ [__attrib0__]; break;
+					}
+				}
+			}
+		}
+		else {
+		}
+		var element = $ (el);
+		var unidade = element.parent ().parent ().parent ().data ('unidade');
+		var nova_data = element.val ();
+		var formdata = new FormData ();
+		formdata.append ('data_inicial', nova_data);
+		formdata.append ('unidade', unidade);
+		if (self.id_escola === null || self.id_escola === undefined) {
+			window.PhanterPWA.PUT ('api', 'calendario', 'unidade', self.ano_letivo, __kwargtrans__ ({form_data: formdata, onComplete: self.after_get_definir_unidade}));
+		}
+		else {
+			window.PhanterPWA.PUT ('api', 'calendario', 'unidade', self.ano_letivo, self.id_escola, __kwargtrans__ ({form_data: formdata, onComplete: self.after_get_definir_unidade}));
+		}
+	});},
+	get after_get_definir_unidade () {return __get__ (this, function (self, data, ajax_status) {
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+					switch (__attrib0__) {
+						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+						case 'data': var data = __allkwargs0__ [__attrib0__]; break;
+						case 'ajax_status': var ajax_status = __allkwargs0__ [__attrib0__]; break;
+					}
+				}
+			}
+		}
+		else {
+		}
+		if (ajax_status == 'success') {
+			var json = data.responseJSON;
+			self.periodo_unidades = json.periodo_unidades;
+			self.xml_modal_unidade ();
+		}
 	});}
 });
 
