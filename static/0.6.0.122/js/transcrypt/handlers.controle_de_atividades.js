@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2021-11-03 19:37:51
+// Transcrypt'ed from Python, 2021-11-08 00:50:05
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import * as anos_letivos from './handlers.anos_letivos.js';
 import * as escolas from './handlers.escolas.js';
@@ -131,7 +131,7 @@ export var Index =  __class__ ('Index', [gatehandler.Handler], {
 });
 export var ControleDeAtividades =  __class__ ('ControleDeAtividades', [object], {
 	__module__: __name__,
-	get __init__ () {return __get__ (this, function (self, index_instance, escola, ano_letivo, turma, id_disciplina, mes_referencia) {
+	get __init__ () {return __get__ (this, function (self, index_instance, escola, ano_letivo, id_turma, id_disciplina, mes_referencia) {
 		if (arguments.length) {
 			var __ilastarg0__ = arguments.length - 1;
 			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
@@ -142,7 +142,7 @@ export var ControleDeAtividades =  __class__ ('ControleDeAtividades', [object], 
 						case 'index_instance': var index_instance = __allkwargs0__ [__attrib0__]; break;
 						case 'escola': var escola = __allkwargs0__ [__attrib0__]; break;
 						case 'ano_letivo': var ano_letivo = __allkwargs0__ [__attrib0__]; break;
-						case 'turma': var turma = __allkwargs0__ [__attrib0__]; break;
+						case 'id_turma': var id_turma = __allkwargs0__ [__attrib0__]; break;
 						case 'id_disciplina': var id_disciplina = __allkwargs0__ [__attrib0__]; break;
 						case 'mes_referencia': var mes_referencia = __allkwargs0__ [__attrib0__]; break;
 					}
@@ -153,12 +153,13 @@ export var ControleDeAtividades =  __class__ ('ControleDeAtividades', [object], 
 		}
 		self.id_escola = escola;
 		self.ano_letivo = ano_letivo;
-		self.id_turma = turma;
-		self.mes_referencia = mes_referencia;
+		self.id_turma = id_turma;
 		self.id_disciplina = id_disciplina;
+		self.mes_referencia = mes_referencia;
 		self.index_instance = index_instance;
 		self._get_controle_de_atividades ();
 		self.meses = dict ({'01': 'Janeiro', '02': 'Fevereiro', '03': 'Março', '04': 'Abril', '05': 'Maio', '06': 'Junho', '07': 'Julho', '08': 'Agosto', '09': 'Setembro', '10': 'Outubro', '11': 'Novembro', '12': 'Dezembro'});
+		self.romanos = dict ({'0': 'Ano inteiro', '1': 'Unidade I', '2': 'Unidade II', '3': 'Unidade III', '4': 'Unidade IV', '5': 'Unidade V', '6': 'Unidade VI', '7': 'Unidade VII', '8': 'Unidade VIII'});
 	});},
 	get _get_controle_de_atividades () {return __get__ (this, function (self) {
 		if (arguments.length) {
@@ -210,6 +211,7 @@ export var ControleDeAtividades =  __class__ ('ControleDeAtividades', [object], 
 			self.quant_dias = json.quant_dias;
 			self.proximo = json.proximo;
 			self.mes_referencia = json.mes_referencia;
+			self.periodo_unidades = json.periodo_unidades;
 			self.disciplina = json.disciplina;
 			self.meses_referencia = json.meses_referencia;
 			self.dias_letivos = json.dias_letivos;
@@ -241,7 +243,7 @@ export var ControleDeAtividades =  __class__ ('ControleDeAtividades', [object], 
 			var op = widgets.MenuOption (x, __kwargtrans__ (dict ({'_class': 'botao_meses_referencia wave_on_click', '_href': window.PhanterPWA.XWAY (...xway)})));
 			xway_meses_referencia.append (op);
 		}
-		var html = CONCATENATE (DIV (DIV (DIV (DIV ('CONTROLE DE ATIVIDADES', __kwargtrans__ ({_class: 'phanterpwa-breadcrumb'})), __kwargtrans__ ({_class: 'phanterpwa-breadcrumb-wrapper'})), __kwargtrans__ ({_class: 'p-container extend'})), __kwargtrans__ ({_class: 'title_page_container card'})), DIV (DIV (DIV (DIV (preloaders.android, __kwargtrans__ ({_style: 'width: 300px; height: 300px; overflow: hidden; margin: auto;'})), __kwargtrans__ ({_style: 'text-align:center; padding: 50px 0;'})), __kwargtrans__ ({_id: 'content-controle_de_atividades', _class: 'p-row card e-padding_auto'})), DIV (__kwargtrans__ ({_id: 'modal_controle_de_atividades_container'})), DIV (__kwargtrans__ ({_id: 'modal_dia_controle_de_atividades_container'})), __kwargtrans__ ({_class: 'phanterpwa-container p-container extend'})));
+		var html = CONCATENATE (DIV (DIV (DIV (DIV ('CONTROLE DE ATIVIDADES', __kwargtrans__ ({_class: 'phanterpwa-breadcrumb'})), __kwargtrans__ ({_class: 'phanterpwa-breadcrumb-wrapper'})), __kwargtrans__ ({_class: 'p-container extend'})), __kwargtrans__ ({_class: 'title_page_container card'})), DIV (DIV (DIV (DIV (preloaders.android, __kwargtrans__ ({_style: 'width: 300px; height: 300px; overflow: hidden; margin: auto;'})), __kwargtrans__ ({_style: 'text-align:center; padding: 50px 0;'})), __kwargtrans__ ({_id: 'content-controle_de_atividades', _class: 'p-row card e-padding_auto'})), DIV (__kwargtrans__ ({_id: 'modal_controle_de_atividades_container'})), DIV (__kwargtrans__ ({_id: 'modal_dia_controle_de_atividades_container'})), DIV (__kwargtrans__ ({_id: 'modal_estatisticas_unidades_controle_de_atividades'})), __kwargtrans__ ({_class: 'phanterpwa-container p-container extend'})));
 		html.html_to ('#main-container');
 		if (self.disciplina !== null && self.disciplina !== undefined) {
 			var html = DIV (H2 ('Controle de atividades da disciplina de ', self.disciplina, ' da turma ', self.turma), __kwargtrans__ ({_class: 'controle_de_atividades_container'}));
@@ -321,11 +323,12 @@ export var ControleDeAtividades =  __class__ ('ControleDeAtividades', [object], 
 			nway.append (self.anterior);
 			var botao_mes_anterior = A (I (__kwargtrans__ ({_class: 'fas fa-angle-double-left'})), __kwargtrans__ (dict ({'_class': 'botao_mes_anterior icon_button', '_title': 'Mês anterior', '_href': window.PhanterPWA.XWAY (...nway)})));
 		}
+		var botao_estatistica = A (I (__kwargtrans__ ({_class: 'fas fa-chart-pie'})), __kwargtrans__ (dict ({'_class': 'botao_estatistica icon_button', '_title': 'Estastíticas'})));
 		if (self.proximo !== null && self.proximo !== undefined) {
 			way.append (self.proximo);
 			var botao_proximo_mes = A (I (__kwargtrans__ ({_class: 'fas fa-angle-double-right'})), __kwargtrans__ (dict ({'_class': 'botao_proximo_mes icon_button', '_title': 'Próximo mês', '_href': window.PhanterPWA.XWAY (...way)})));
 		}
-		var painel = DIV (LABEL (self.mes_referencia), DIV (DIV (DIV (DIV (DIV (DIV (tabela, __kwargtrans__ ({_class: 'diario-controle_de_atividades-container'})), __kwargtrans__ ({_class: 'diario-controle_de_atividades-wrapper'})), __kwargtrans__ ({_class: 'p-row e-padding_auto'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-content'})), DIV (botao_mes_anterior, botao_proximo_mes, widgets.MenuBox ('drop_{0}_{0}'.format (self.id_turma, self.id_disciplina), I (__kwargtrans__ ({_class: 'fas fa-calendar-week'})), ...xway_meses_referencia), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-buttons'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-wrapper has_buttons'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-container'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control'}));
+		var painel = DIV (LABEL (self.mes_referencia), DIV (DIV (DIV (DIV (DIV (DIV (tabela, __kwargtrans__ ({_class: 'diario-controle_de_atividades-container'})), __kwargtrans__ ({_class: 'diario-controle_de_atividades-wrapper'})), __kwargtrans__ ({_class: 'p-row e-padding_auto'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-content'})), DIV (botao_mes_anterior, botao_proximo_mes, widgets.MenuBox ('drop_{0}_{0}'.format (self.id_turma, self.id_disciplina), I (__kwargtrans__ ({_class: 'fas fa-calendar-week'})), ...xway_meses_referencia), botao_estatistica, __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-buttons'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-wrapper has_buttons'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-container'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control'}));
 		html.append (painel);
 		html.html_to ('#content-controle_de_atividades');
 		self.diario_binds ();
@@ -369,6 +372,19 @@ export var ControleDeAtividades =  __class__ ('ControleDeAtividades', [object], 
 			else {
 			}
 			return self.modal_controle_de_atividades_por_dia (this);
+		}));
+		$ ('.botao_estatistica').off ('click.botao_estatistica').on ('click.botao_estatistica', (function __lambda__ () {
+			if (arguments.length) {
+				var __ilastarg0__ = arguments.length - 1;
+				if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+					var __allkwargs0__ = arguments [__ilastarg0__--];
+					for (var __attrib0__ in __allkwargs0__) {
+					}
+				}
+			}
+			else {
+			}
+			return self.modal_estatisticas_unidades ();
 		}));
 	});},
 	get abrir_diario () {return __get__ (this, function (self, url) {
@@ -869,6 +885,63 @@ export var ControleDeAtividades =  __class__ ('ControleDeAtividades', [object], 
 				self.diario_binds ();
 			}
 		}
+	});},
+	get iso_br () {return __get__ (this, function (self, data_iso) {
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+					switch (__attrib0__) {
+						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+						case 'data_iso': var data_iso = __allkwargs0__ [__attrib0__]; break;
+					}
+				}
+			}
+		}
+		else {
+		}
+		var __left0__ = data_iso.py_split ('-');
+		var ano = __left0__ [0];
+		var mes = __left0__ [1];
+		var dia = __left0__ [2];
+		return '{0}/{1}/{2}'.format (dia, mes, ano);
+	});},
+	get modal_estatisticas_unidades () {return __get__ (this, function (self) {
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+					switch (__attrib0__) {
+						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+					}
+				}
+			}
+		}
+		else {
+		}
+		self.periodo_unidades;
+		var unidades_disponiveis = DIV (__kwargtrans__ ({_class: 'unidades_disponiveis'}));
+		for (var x of self.periodo_unidades) {
+			unidades_disponiveis.append (DIV (A ('{0} - {1} à {2}'.format (self.romanos [str (x [0])], self.iso_br (x [1]), self.iso_br (x [2])), __kwargtrans__ ({_href: window.PhanterPWA.XWAY ('estatistica-controle-de-atividades', self.id_escola, self.ano_letivo, self.id_turma, str (x [0]), self.id_disciplina), _class: 'btn e-link'})), __kwargtrans__ ({_class: 'botao_estatistica_unidades'})));
+		}
+		unidades_disponiveis.append (DIV (A ('Todas as unidades', __kwargtrans__ ({_href: window.PhanterPWA.XWAY ('estatistica-controle-de-atividades', self.id_escola, self.ano_letivo, self.id_turma, '0', self.id_disciplina), _class: 'btn e-link'})), __kwargtrans__ ({_class: 'botao_estatistica_unidades'})));
+		self.modal_estatisticas = modal.Modal ('#modal_estatisticas_unidades_controle_de_atividades', __kwargtrans__ (dict ({'title': 'Escolha a Unidade', 'content': unidades_disponiveis})));
+		self.modal_estatisticas.open ();
+		$ ('.botao_estatistica_unidades').off ('click.ests').on ('click.ests', (function __lambda__ () {
+			if (arguments.length) {
+				var __ilastarg0__ = arguments.length - 1;
+				if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+					var __allkwargs0__ = arguments [__ilastarg0__--];
+					for (var __attrib0__ in __allkwargs0__) {
+					}
+				}
+			}
+			else {
+			}
+			return self.modal_estatisticas.close ();
+		}));
 	});}
 });
 

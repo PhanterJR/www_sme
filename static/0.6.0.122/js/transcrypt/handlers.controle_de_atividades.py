@@ -109,12 +109,12 @@ class Index(gatehandler.Handler):
 
 
 class ControleDeAtividades():
-    def __init__(self, index_instance, escola, ano_letivo, turma, id_disciplina, mes_referencia):
+    def __init__(self, index_instance, escola, ano_letivo, id_turma, id_disciplina, mes_referencia):
         self.id_escola = escola
         self.ano_letivo = ano_letivo
-        self.id_turma = turma
-        self.mes_referencia = mes_referencia
+        self.id_turma = id_turma
         self.id_disciplina = id_disciplina
+        self.mes_referencia = mes_referencia
         self.index_instance = index_instance
         self._get_controle_de_atividades()
         self.meses = {
@@ -131,7 +131,17 @@ class ControleDeAtividades():
             "11": "Novembro",
             "12": "Dezembro"
         }
-
+        self.romanos = {
+            "0": "Ano inteiro",
+            "1": "Unidade I",
+            "2": "Unidade II",
+            "3": "Unidade III",
+            "4": "Unidade IV",
+            "5": "Unidade V",
+            "6": "Unidade VI",
+            "7": "Unidade VII",
+            "8": "Unidade VIII"
+        }
     def _get_controle_de_atividades(self):
 
         if self.id_disciplina is not None and self.id_disciplina is not js_undefined:
@@ -175,7 +185,7 @@ class ControleDeAtividades():
             self.quant_dias = json.quant_dias
             self.proximo = json.proximo
             self.mes_referencia = json.mes_referencia
-            #self.rotulo_mes_ano = json.rotulo_mes_ano
+            self.periodo_unidades = json.periodo_unidades
             self.disciplina = json.disciplina
             self.meses_referencia = json.meses_referencia
             self.dias_letivos = json.dias_letivos
@@ -183,6 +193,7 @@ class ControleDeAtividades():
             self.turma = json.turma
             self.eh_multisseriado = json.eh_multisseriado
             self.meses_calendario = json.meses_calendario
+
             self.processar_controle_de_atividades(controle_de_atividades)
 
     def processar_controle_de_atividades(self, controle_de_atividades):
@@ -223,6 +234,7 @@ class ControleDeAtividades():
                 ),
                 DIV(_id="modal_controle_de_atividades_container"),
                 DIV(_id="modal_dia_controle_de_atividades_container"),
+                DIV(_id="modal_estatisticas_unidades_controle_de_atividades"),
                 _class="phanterpwa-container p-container extend"
             )
         )
@@ -237,50 +249,11 @@ class ControleDeAtividades():
                 H2("Controle de atividades da turma ", self.turma),
                 _class="controle_de_atividades_container"
             )
-        # tabela = TABLE(
-        #     TR(TH("Nº", _class="rotulo", _rowspan=2), TH("NOME ALUNO(A)", _class="rotulo", _rowspan=2), TH("DIAS LETIVOS", _colspan=self.quant_dias, _class="rotulo")),
-        #     _class='tabela_controle_de_atividades'
-        # )
         tabela = TABLE(
             TR(TH("Nº", _class="rotulo", _rowspan=2), TH("NOME ALUNO(A)", _class="rotulo cabecalho_aluno", _rowspan=2), TH("DIAS LETIVOS", _colspan=self.total_de_dias, _class="rotulo")),
             TR(*[TH(DIV(dat[-2:], _class="modal_dia_control"), _class="rotulo tabela_coluna_modal", **{"_data-dia_mes_e_ano": dat}) for dat in self.dias_letivos]),
             _class='tabela_controle_de_atividades'
         )
-        # for x in controle_de_atividades:
-        #     # data = x[0][0]
-        #     # ano, mes, dia = data.split("-")
-        #     # mes_ext = self.meses[mes]
-        #     # data_ext = "{0} de {1} de {2}".format(dia, mes_ext, ano)
-        #     linha = TR()
-        #     for y in x:
-        #         if y[1]['tipo'] == "cabecalho":
-        #             celula = TH(
-        #                 DIV(y[0], _class="controle_de_atividades_rotulo_dia"),
-        #                 **y[1]
-        #             )
-        #         elif y[1]['tipo'] == "botao":
-
-        #             if y[1]['_data-status'] == "Não fez a atividade":
-        #                 bas_nas = I(_class="fas fa-check-circle", _style="color:red;")
-        #             elif y[1]['_data-status'] == "Fez toda a atividade":
-        #                 bas_nas = I(_class="fas fa-check-circle", _style="color:green;")
-        #             elif y[1]['_data-status'] == "Fez parcialmente a atividade":
-        #                 bas_nas = I(_class="fas fa-check-circle", _style="color:#d28a06;") if y[0] is True or y[0] == "true" else ""
-        #             else:
-        #                 bas_nas = DIV(y[1]['_placeholder'], _class="apagadinho")
-        #             celula = TD(
-        #                 bas_nas,
-        #                 **y[1]
-        #             )
-        #         else:
-        #             celula = TD(
-        #                 y[0],
-        #                 **y[1]
-        #             )
-        #         linha.append(celula)
-        #     tabela.append(
-        #         linha
-        #     )
         self.data_controle_de_atividades_keys = []
         self.data_controle_de_atividades = {}
         l_series = []
@@ -409,6 +382,13 @@ class ControleDeAtividades():
                     )
                 }
             )
+        botao_estatistica = A(
+            I(_class="fas fa-chart-pie"),
+            **{
+                "_class": "botao_estatistica icon_button",
+                "_title": "Estastíticas"
+            }
+        )
         if self.proximo is not None and self.proximo is not js_undefined:
             way.append(
                 self.proximo
@@ -449,6 +429,7 @@ class ControleDeAtividades():
                             *xway_meses_referencia
                             # onOpen=lambda: self.binds_menu_aluno()
                         ),
+                        botao_estatistica,
                         _class="phanterpwa-card-panel-control-buttons"
                     ),
                     _class="phanterpwa-card-panel-control-wrapper has_buttons"
@@ -477,6 +458,12 @@ class ControleDeAtividades():
             "click.tabela_coluna_modal",
             lambda: self.modal_controle_de_atividades_por_dia(this)
         )
+        jQuery(".botao_estatistica").off(
+            "click.botao_estatistica"
+        ).on(
+            "click.botao_estatistica",
+            lambda: self.modal_estatisticas_unidades()
+        )
 
     def abrir_diario(self, url):
         window.location = url
@@ -490,38 +477,7 @@ class ControleDeAtividades():
         id_disciplina = self.id_disciplina
         if id_disciplina is None or id_disciplina is js_undefined:
             id_disciplina = None
-        # if tem_atividade is True or tem_atividade == "true":
-        #     if foi_parcial is True or foi_parcial == "true":
-        #         complement = " remoção da Atividade"
-        #         atividade = False
-        #         content = DIV(
-        #             P(STRONG("O(A) presente aluno(a) fez a atividade proposta?")),
-        #             P("Pode-se observar que o(a) aluno(a) fez a atividade em ", STRONG(data_ext), ", porém ", STRONG("parcialmente"),
-        #                 ", se ele fez completamente ou de forma satisfatória, você pode mudar para ", STRONG("FEZ", _style="color: green"),
-        #                 ". Caso o(a) aluno(a) não tenha feito, é só mudar para ", STRONG("NÃO FEZ", _style="color: red"), "."),
-        #             _class="p-row"
-        #         )
-        #     else:
-        #         complement = " remoção da Atividade"
-        #         atividade = False
-        #         content = DIV(
-        #             P(STRONG("O(A) presente aluno(a) fez a atividade proposta?")),
-        #             P("Pode-se observar que o(a) aluno(a) fez a atividade em ", STRONG(data_ext), " completamente ou de forma satisfatória.",
-        #                 " Se ele fez a atividade parcialmente, você pode mudar para ", STRONG("FEZ PARCIALMENTE", _style="color: #d28a06"),
-        #                 ". Caso o(a) aluno(a) não tenha feito, é só mudar para ", STRONG("NÃO FEZ", _style="color: red"), "."),
-        #             _class="p-row"
-        #         )
-        # else:
-        #     complement = " Atividade"
-        #     atividade = True
-        #     content = DIV(
-        #         P(STRONG("O(A) presente aluno(a) fez a atividade proposta?")),
-        #         P("No registro consta que o(a) aluno(a) não fez a atividade em ", STRONG(data_ext), ". Se o(a) aluno(a) fez completamente ou de forma satisfatória, ",
-        #             " mude para ", STRONG("FEZ", _style="color: green"),
-        #             ". Caso tenha feito a atividade parcialmente, você pode mudar para ", STRONG("FEZ PARCIALMENTE", _style="color: #d28a06"),
-        #             "."),
-        #         _class="p-row"
-        #     )
+
         atividade = False
         nome_aluno = self.data_controle_de_atividades[int(id_matricula)]["nome"]
         status = self.data_controle_de_atividades[int(id_matricula)]["atividades"][data]
@@ -561,8 +517,7 @@ class ControleDeAtividades():
                 _class="p-row"
             )
         else:
-            # complement = " remoção da Atividade"
-            # atividade = False
+
             content = DIV(
                 P(STRONG("O(A) presente aluno(a) fez a atividade proposta?")),
                 P("Ainda não foi definido o status da atividade no dia ", STRONG(data_ext),
@@ -858,7 +813,6 @@ class ControleDeAtividades():
             )
         self.modal_dia_controle_de_atividades.close()
 
-
     def depois_de_enviar_registro_modal(self, data, ajax_status):
         if ajax_status == "success":
             json = data.responseJSON
@@ -884,7 +838,64 @@ class ControleDeAtividades():
                         del self.data_controle_de_atividades[int(id_matricula)]["atividades"][str(data)]
                 self.diario_binds()
 
+    def iso_br(self, data_iso):
+        ano, mes, dia = data_iso.split("-")
+        return "{0}/{1}/{2}".format(dia, mes, ano)
 
+    def modal_estatisticas_unidades(self):
+        self.periodo_unidades
+        unidades_disponiveis = DIV(_class="unidades_disponiveis")
+        for x in self.periodo_unidades:
+            unidades_disponiveis.append(
+                DIV(
+                    A(
+                        "{0} - {1} à {2}".format(
+                            self.romanos[str(x[0])],
+                            self.iso_br(x[1]),
+                            self.iso_br(x[2])
+                        ),
+                        _href=window.PhanterPWA.XWAY(
+                            "estatistica-controle-de-atividades",
+                            self.id_escola,
+                            self.ano_letivo,
+                            self.id_turma,
+                            str(x[0]),
+                            self.id_disciplina
+                        ),
+                        _class="btn e-link"
+                    ),
+                    _class="botao_estatistica_unidades",
+                )
+            )
+        unidades_disponiveis.append(
+            DIV(
+                A(
+                    "Todas as unidades",
+                    _href=window.PhanterPWA.XWAY(
+                        "estatistica-controle-de-atividades",
+                        self.id_escola,
+                        self.ano_letivo,
+                        self.id_turma,
+                        "0",
+                        self.id_disciplina
+                    ),
+                    _class="btn e-link"
+                ), 
+                _class="botao_estatistica_unidades",
+            )
+        )
+        self.modal_estatisticas = modal.Modal(
+            "#modal_estatisticas_unidades_controle_de_atividades",
+            **{
+                "title": "Escolha a Unidade",
+                "content": unidades_disponiveis
+            }
+        )
+        self.modal_estatisticas.open()
+        jQuery(".botao_estatistica_unidades").off("click.ests").on(
+            "click.ests",
+            lambda: self.modal_estatisticas.close()
+        )
 
 
 __pragma__('nokwargs')

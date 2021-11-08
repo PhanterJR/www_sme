@@ -187,6 +187,7 @@ class ProcurarAluno(helpers.XmlConstructor):
         )
 
     def _pre_clicagem(self, el, ano_letivo):
+        widgets = window.PhanterPWA.Request.widgets
         aluno = widgets["search_matriculas"].value()
         params = ""
         if aluno != "":

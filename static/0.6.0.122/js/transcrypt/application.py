@@ -7,8 +7,10 @@ import handlers.matricula as matricula
 import handlers.matriculas as matriculas
 import handlers.vinculos as vinculos
 import handlers.alunos as alunos
+import handlers.artigos as artigos
 import handlers.identificar_servidor as identificar_servidor
 import handlers.administrar_escola as administrar_escola
+import handlers.estatisticas as estatisticas
 import handlers.pais_e_alunos as pais_e_alunos
 import handlers.servidores as servidores
 import handlers.funcionarios as funcionarios
@@ -47,10 +49,12 @@ gates = {
     'home': home.Index,
     'admin': admin.Administration,
     'profile': auth_user.Profile,
+    'artigos': artigos.Index,
     'oauth': auth_user.Oauth,
     'two_factor': auth_user.TwoFactor,
     'lock': auth_user.Lock,
     'administrar-escola': administrar_escola.Index,
+    'estatistica-controle-de-atividades': estatisticas.ControleDeAtividades,
     'pais-e-alunos': pais_e_alunos.Index,
     'area-do-servidor': servidores.Index,
     'identificar-servidor': identificar_servidor.Index,
