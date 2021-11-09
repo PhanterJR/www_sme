@@ -1696,7 +1696,7 @@ class TurmaEspecifica():
                     ),
                     _class="p-row"
                 ),
-                self.xml_card(json.data.turma),
+                DIV(self.xml_card(json.data.turma), _id="turma_e_turmas_{0}".format(json.data.turma.id)),
                 DIV(_id="modal_turma_case"),
                 DIV(_id="modal_disciplinas_professores"),
                 DIV(_id="modal_visualizar_aluno"),

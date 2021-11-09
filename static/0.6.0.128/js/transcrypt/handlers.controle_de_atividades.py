@@ -843,7 +843,6 @@ class ControleDeAtividades():
         return "{0}/{1}/{2}".format(dia, mes, ano)
 
     def modal_estatisticas_unidades(self):
-        self.periodo_unidades
         unidades_disponiveis = DIV(_class="unidades_disponiveis")
         for x in self.periodo_unidades:
             unidades_disponiveis.append(

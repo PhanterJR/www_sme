@@ -55,6 +55,7 @@ gates = {
     'lock': auth_user.Lock,
     'administrar-escola': administrar_escola.Index,
     'estatistica-controle-de-atividades': estatisticas.ControleDeAtividades,
+    'estatistica-registro-de-atividades': estatisticas.RegistroDeAtividades,
     'pais-e-alunos': pais_e_alunos.Index,
     'area-do-servidor': servidores.Index,
     'identificar-servidor': identificar_servidor.Index,

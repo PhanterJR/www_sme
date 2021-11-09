@@ -129,7 +129,17 @@ class RegistroDeAtividades():
             "11": "Novembro",
             "12": "Dezembro"
         }
-
+        self.romanos = {
+            "0": "Ano inteiro",
+            "1": "Unidade I",
+            "2": "Unidade II",
+            "3": "Unidade III",
+            "4": "Unidade IV",
+            "5": "Unidade V",
+            "6": "Unidade VI",
+            "7": "Unidade VII",
+            "8": "Unidade VIII"
+        }
     def _get_registro_de_atividades(self):
         if self.rotulo_mes_ano is not None and self.rotulo_mes_ano is not js_undefined:
             window.PhanterPWA.GET(
@@ -164,6 +174,7 @@ class RegistroDeAtividades():
             self.dias_letivos = json.dias_letivos
             self.total_de_dias = json.total_de_dias
             self.turma = json.turma
+            self.periodo_unidades = json.periodo_unidades
             self.processar_registro_de_atividades(registro_de_atividades)
 
     def processar_registro_de_atividades(self, registro_de_atividades):
@@ -204,6 +215,7 @@ class RegistroDeAtividades():
                     _class='p-row card e-padding_auto'
                 ),
                 DIV(_id="modal_registro_de_atividades_container"),
+                DIV(_id="modal_estatisticas_unidades_registro_de_atividades"),
                 _class="phanterpwa-container p-container extend"
             )
         )
@@ -324,6 +336,13 @@ class RegistroDeAtividades():
                     )
                 }
             )
+        botao_estatistica = A(
+            I(_class="fas fa-chart-pie"),
+            **{
+                "_class": "botao_estatistica icon_button",
+                "_title": "Estastíticas"
+            }
+        )
         if self.proximo is not None and self.proximo is not js_undefined:
             way.append(
                 self.proximo
@@ -364,6 +383,7 @@ class RegistroDeAtividades():
                             *xway_meses_referencia
                             # onOpen=lambda: self.binds_menu_aluno()
                         ),
+                        botao_estatistica,
                         _class="phanterpwa-card-panel-control-buttons"
                     ),
                     _class="phanterpwa-card-panel-control-wrapper has_buttons"
@@ -386,8 +406,74 @@ class RegistroDeAtividades():
             "click.enviar_registro_de_atividades",
             lambda: self.modal_confirmar_registro_de_atividades(jQuery(this))
         )
+        jQuery(".botao_estatistica").off(
+            "click.botao_estatistica"
+        ).on(
+            "click.botao_estatistica",
+            lambda: self.modal_estatisticas_unidades()
+        )
 
     def abrir_diario(self, url):
         window.location = url
+
+    def iso_br(self, data_iso):
+        ano, mes, dia = data_iso.split("-")
+        return "{0}/{1}/{2}".format(dia, mes, ano)
+
+    def modal_estatisticas_unidades(self):
+        unidades_disponiveis = DIV(_class="unidades_disponiveis")
+        for x in self.periodo_unidades:
+            unidades_disponiveis.append(
+                DIV(
+                    A(
+                        "{0} - {1} à {2}".format(
+                            self.romanos[str(x[0])],
+                            self.iso_br(x[1]),
+                            self.iso_br(x[2])
+                        ),
+                        _href=window.PhanterPWA.XWAY(
+                            "estatistica-registro-de-atividades",
+                            self.id_escola,
+                            self.ano_letivo,
+                            self.id_turma,
+                            str(x[0]),
+                            self.id_disciplina
+                        ),
+                        _class="btn e-link"
+                    ),
+                    _class="botao_estatistica_unidades",
+                )
+            )
+        unidades_disponiveis.append(
+            DIV(
+                A(
+                    "Todas as unidades",
+                    _href=window.PhanterPWA.XWAY(
+                        "estatistica-registro-de-atividades",
+                        self.id_escola,
+                        self.ano_letivo,
+                        self.id_turma,
+                        "0",
+                        self.id_disciplina
+                    ),
+                    _class="btn e-link"
+                ), 
+                _class="botao_estatistica_unidades",
+            )
+        )
+        self.modal_estatisticas = modal.Modal(
+            "#modal_estatisticas_unidades_registro_de_atividades",
+            **{
+                "title": "Escolha a Unidade",
+                "content": unidades_disponiveis
+            }
+        )
+        self.modal_estatisticas.open()
+        jQuery(".botao_estatistica_unidades").off("click.ests").on(
+            "click.ests",
+            lambda: self.modal_estatisticas.close()
+        )
+
+
 
 __pragma__('nokwargs')
