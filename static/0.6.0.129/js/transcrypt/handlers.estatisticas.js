@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2021-11-09 16:43:36
+// Transcrypt'ed from Python, 2021-11-10 02:06:18
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import * as highcharts from './plugins.highcharts.js';
 import * as anos_letivos from './handlers.anos_letivos.js';
@@ -288,6 +288,35 @@ export var ControleDeAtividades =  __class__ ('ControleDeAtividades', [gatehandl
 			self.criar_estatisticas ();
 		}
 	});},
+	get porcentagem () {return __get__ (this, function (self, valor, total) {
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+					switch (__attrib0__) {
+						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+						case 'valor': var valor = __allkwargs0__ [__attrib0__]; break;
+						case 'total': var total = __allkwargs0__ [__attrib0__]; break;
+					}
+				}
+			}
+		}
+		else {
+		}
+		console.log (valor, total);
+		if (str (valor).isdigit () && str (total).isdigit ()) {
+			var valor = int (valor);
+			var total = int (total);
+			if (valor == 0) {
+				return ' (0%)';
+			}
+			else {
+				return ' ({0}%)'.format (((valor / total) * 100).toFixed (2));
+			}
+		}
+		return '';
+	});},
 	get criar_estatisticas () {return __get__ (this, function (self) {
 		if (arguments.length) {
 			var __ilastarg0__ = arguments.length - 1;
@@ -311,19 +340,19 @@ export var ControleDeAtividades =  __class__ ('ControleDeAtividades', [gatehandl
 		else {
 			var html = DIV (H2 ('Estatísticas do Controle de atividades da turma ', self.turma), H2 (titulo_painel), __kwargtrans__ ({_class: 'controle_de_atividades_container'}));
 		}
-		var tabela_geral = TABLE (TR (TH ('NOME', __kwargtrans__ ({_class: 'phanterpwa-widget-table-head-th'})), TH ('FEZ', __kwargtrans__ ({_class: 'phanterpwa-widget-table-head-th centralizado'})), TH ('FEZ PARCIALMENTE', __kwargtrans__ ({_class: 'phanterpwa-widget-table-head-th centralizado'})), TH ('NÃO FEZ', __kwargtrans__ ({_class: 'phanterpwa-widget-table-head-th centralizado'})), TH ('TOTAL', __kwargtrans__ ({_class: 'phanterpwa-widget-table-head-th centralizado'})), __kwargtrans__ ({_class: 'phanterpwa-widget-table-head phanterpwa-widget'})), __kwargtrans__ ({_class: 'phanterpwa-widget-table p-row'}));
+		var tabela_geral = TABLE (TR (TH ('NOME', __kwargtrans__ ({_class: 'phanterpwa-widget-table-head-th'})), TH ('FEZ (%)', __kwargtrans__ ({_class: 'phanterpwa-widget-table-head-th centralizado'})), TH ('FEZ PARCIALMENTE (%)', __kwargtrans__ ({_class: 'phanterpwa-widget-table-head-th centralizado'})), TH ('NÃO FEZ (%)', __kwargtrans__ ({_class: 'phanterpwa-widget-table-head-th centralizado'})), TH ('TOTAL (100%)', __kwargtrans__ ({_class: 'phanterpwa-widget-table-head-th centralizado'})), __kwargtrans__ ({_class: 'phanterpwa-widget-table-head phanterpwa-widget'})), __kwargtrans__ ({_class: 'phanterpwa-widget-table p-row'}));
 		var tabela_tur = TABLE (TR (TH ('FEZ'), TH ('FEZ PARCIALMENTE'), TH ('NÃO FEZ'), TH ('TOTAL')), TR (TD (self.estatistica_da_turma ['F']), TD (self.estatistica_da_turma ['FP']), TD (self.estatistica_da_turma ['NF']), TD (self.estatistica_da_turma ['T'])));
 		var chart_turma = highcharts.Pie ('grafico_turma', __kwargtrans__ ({title: self.turma}));
 		chart_turma.add_serie ('Fez', self.estatistica_da_turma ['F'], __kwargtrans__ ({color: 'green'}));
 		chart_turma.add_serie ('Fez Parcialmente', self.estatistica_da_turma ['FP'], __kwargtrans__ ({color: '#d28a06'}));
 		chart_turma.add_serie ('Não Fez', self.estatistica_da_turma ['NF'], __kwargtrans__ ({color: 'red'}));
 		var chats_alunos = CONCATENATE ();
-		var painel_turma = DIV (LABEL ('Desempenho da Turma'), DIV (DIV (DIV (DIV (DIV (DIV (chart_turma, tabela_tur, __kwargtrans__ ({_class: 'estatisticas-turma-container'})), __kwargtrans__ ({_class: 'estatisticas-turma-wrapper'})), __kwargtrans__ ({_class: 'p-row e-padding_auto'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-content'})), DIV (__kwargtrans__ ({_class: 'phanterpwa-card-panel-control-buttons'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-wrapper'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-container'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control'}));
-		var painel_alunos = DIV (LABEL ('Desempenho por aluno'), DIV (DIV (DIV (DIV (chats_alunos, __kwargtrans__ ({_class: 'p-row e-padding_auto'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-content'})), DIV (__kwargtrans__ ({_class: 'phanterpwa-card-panel-control-buttons'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-wrapper'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-container'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control'}));
+		var painel_turma = DIV (LABEL ('Gráfico da Turma'), DIV (DIV (DIV (DIV (DIV (DIV (chart_turma, tabela_tur, __kwargtrans__ ({_class: 'estatisticas-turma-container'})), __kwargtrans__ ({_class: 'estatisticas-turma-wrapper'})), __kwargtrans__ ({_class: 'p-row e-padding_auto'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-content'})), DIV (__kwargtrans__ ({_class: 'phanterpwa-card-panel-control-buttons'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-wrapper'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-container'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control'}));
+		var painel_alunos = DIV (LABEL ('Gráficos dos Alunos'), DIV (DIV (DIV (DIV (chats_alunos, __kwargtrans__ ({_class: 'p-row e-padding_auto'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-content'})), DIV (__kwargtrans__ ({_class: 'phanterpwa-card-panel-control-buttons'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-wrapper'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-container'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control'}));
 		var painel_geral = DIV (LABEL ('Resumo'), DIV (DIV (DIV (DIV (DIV (DIV (tabela_geral, __kwargtrans__ ({_class: 'estatisticas-geral-container phanterpwa-widget-table-container phanterpwa-widget'})), __kwargtrans__ ({_class: 'estatisticas-geral-wrapper'})), __kwargtrans__ ({_class: 'p-row e-padding_auto'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-content'})), DIV (__kwargtrans__ ({_class: 'phanterpwa-card-panel-control-buttons'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-wrapper'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-container'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control'}));
 		var html_estatisticas = CONCATENATE (painel_geral, painel_turma, painel_alunos);
 		for (var aln of self.estatistica_por_aluno) {
-			tabela_geral.append (TR (TD (STRONG (aln.nome), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td'})), TD (aln ['atividades'] ['F'], __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), TD (aln ['atividades'] ['FP'], __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), TD (aln ['atividades'] ['NF'], __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), TD (aln ['atividades'] ['T'], __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data phanterpwa-widget'})));
+			tabela_geral.append (TR (TD (STRONG (aln.nome), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td'})), TD (aln ['atividades'] ['F'], self.porcentagem (aln ['atividades'] ['F'], aln ['atividades'] ['T']), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), TD (aln ['atividades'] ['FP'], self.porcentagem (aln ['atividades'] ['FP'], aln ['atividades'] ['T']), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), TD (aln ['atividades'] ['NF'], self.porcentagem (aln ['atividades'] ['NF'], aln ['atividades'] ['T']), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), TD (aln ['atividades'] ['T'], __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data phanterpwa-widget'})));
 			var tabela_aln = TABLE (TR (TH ('FEZ'), TH ('FEZ PARCIALMENTE'), TH ('NÃO FEZ'), TH ('TOTAL')), TR (TD (aln ['atividades'] ['F']), TD (aln ['atividades'] ['FP']), TD (aln ['atividades'] ['NF']), TD (aln ['atividades'] ['T'])));
 			var chart_aluno = highcharts.Pie ('grafico_aluno_{0}'.format (aln.id), __kwargtrans__ ({title: aln.nome}));
 			chart_aluno.add_serie ('Fez', aln ['atividades'] ['F'], __kwargtrans__ ({color: 'green'}));
@@ -332,7 +361,7 @@ export var ControleDeAtividades =  __class__ ('ControleDeAtividades', [gatehandl
 			var html_chart_aluno = DIV (DIV (chart_aluno, tabela_aln, __kwargtrans__ ({_class: 'estatisticas-alunos-container'})), __kwargtrans__ ({_class: 'estatisticas-alunos-wrapper p-col w1p100  w5p50  w7p33  w8p25'}));
 			chats_alunos.append (html_chart_aluno);
 		}
-		tabela_geral.append (TR (TD (STRONG ('TOTAL TURMA'), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td'})), TD (STRONG (self.estatistica_da_turma ['F']), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), TD (STRONG (self.estatistica_da_turma ['FP']), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), TD (STRONG (self.estatistica_da_turma ['NF']), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), TD (STRONG (self.estatistica_da_turma ['T']), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data'})));
+		tabela_geral.append (TR (TD (STRONG ('TOTAL TURMA'), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td'})), TD (STRONG (self.estatistica_da_turma ['F'], self.porcentagem (self.estatistica_da_turma ['F'], self.estatistica_da_turma ['T'])), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), TD (STRONG (self.estatistica_da_turma ['FP'], self.porcentagem (self.estatistica_da_turma ['FP'], self.estatistica_da_turma ['T'])), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), TD (STRONG (self.estatistica_da_turma ['NF'], self.porcentagem (self.estatistica_da_turma ['NF'], self.estatistica_da_turma ['T'])), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), TD (STRONG (self.estatistica_da_turma ['T']), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data'})));
 		html.append (html_estatisticas);
 		html.html_to ('#content-controle_de_atividades');
 		self.diario_binds ();
@@ -1033,8 +1062,38 @@ export var RegistroDeAtividades =  __class__ ('RegistroDeAtividades', [gatehandl
 			self.turma = json.turma;
 			self.disciplina = json.disciplina;
 			self.estatistica_da_turma = json.totais_turma;
+			self.data_disciplinas = json.data_disciplinas;
 			self.criar_estatisticas ();
 		}
+	});},
+	get porcentagem () {return __get__ (this, function (self, valor, total) {
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+					switch (__attrib0__) {
+						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+						case 'valor': var valor = __allkwargs0__ [__attrib0__]; break;
+						case 'total': var total = __allkwargs0__ [__attrib0__]; break;
+					}
+				}
+			}
+		}
+		else {
+		}
+		console.log (valor, total);
+		if (str (valor).isdigit () && str (total).isdigit ()) {
+			var valor = int (valor);
+			var total = int (total);
+			if (valor == 0) {
+				return ' (0%)';
+			}
+			else {
+				return ' ({0}%)'.format (((valor / total) * 100).toFixed (2));
+			}
+		}
+		return '';
 	});},
 	get criar_estatisticas () {return __get__ (this, function (self) {
 		if (arguments.length) {
@@ -1059,28 +1118,59 @@ export var RegistroDeAtividades =  __class__ ('RegistroDeAtividades', [gatehandl
 		else {
 			var html = DIV (H2 ('Estatísticas do Controle de atividades da turma ', self.turma), H2 (titulo_painel), __kwargtrans__ ({_class: 'registro_de_atividades_container'}));
 		}
-		var tabela_geral = TABLE (TR (TH ('NOME', __kwargtrans__ ({_class: 'phanterpwa-widget-table-head-th'})), TH ('FEZ', __kwargtrans__ ({_class: 'phanterpwa-widget-table-head-th centralizado'})), TH ('FEZ PARCIALMENTE', __kwargtrans__ ({_class: 'phanterpwa-widget-table-head-th centralizado'})), TH ('NÃO FEZ', __kwargtrans__ ({_class: 'phanterpwa-widget-table-head-th centralizado'})), TH ('TOTAL', __kwargtrans__ ({_class: 'phanterpwa-widget-table-head-th centralizado'})), __kwargtrans__ ({_class: 'phanterpwa-widget-table-head phanterpwa-widget'})), __kwargtrans__ ({_class: 'phanterpwa-widget-table p-row'}));
+		var tabela_geral = TABLE (TR (TH ('NOME', __kwargtrans__ ({_class: 'phanterpwa-widget-table-head-th'})), TH ('FEZ (%)', __kwargtrans__ ({_class: 'phanterpwa-widget-table-head-th centralizado'})), TH ('FEZ PARCIALMENTE (%)', __kwargtrans__ ({_class: 'phanterpwa-widget-table-head-th centralizado'})), TH ('NÃO FEZ (%)', __kwargtrans__ ({_class: 'phanterpwa-widget-table-head-th centralizado'})), TH ('TOTAL (100%)', __kwargtrans__ ({_class: 'phanterpwa-widget-table-head-th centralizado'})), __kwargtrans__ ({_class: 'phanterpwa-widget-table-head phanterpwa-widget'})), __kwargtrans__ ({_class: 'phanterpwa-widget-table p-row'}));
+		var tabela_disciplinas = TABLE (TR (TH ('NOME', __kwargtrans__ ({_class: 'phanterpwa-widget-table-head-th centralizado'})), TH ('DISCIPLINAS', __kwargtrans__ ({_class: 'phanterpwa-widget-table-head-th centralizado'})), TH ('FEZ (%)', __kwargtrans__ ({_class: 'phanterpwa-widget-table-head-th centralizado'})), TH ('FEZ PARCIALMENTE (%)', __kwargtrans__ ({_class: 'phanterpwa-widget-table-head-th centralizado'})), TH ('NÃO FEZ (%)', __kwargtrans__ ({_class: 'phanterpwa-widget-table-head-th centralizado'})), TH ('TOTAL (100%)', __kwargtrans__ ({_class: 'phanterpwa-widget-table-head-th centralizado'})), __kwargtrans__ ({_class: 'phanterpwa-widget-table-head phanterpwa-widget'})), __kwargtrans__ ({_class: 'phanterpwa-widget-table p-row'}));
 		var tabela_tur = TABLE (TR (TH ('FEZ'), TH ('FEZ PARCIALMENTE'), TH ('NÃO FEZ'), TH ('TOTAL')), TR (TD (self.estatistica_da_turma ['F']), TD (self.estatistica_da_turma ['FP']), TD (self.estatistica_da_turma ['NF']), TD (self.estatistica_da_turma ['T'])));
 		var chart_turma = highcharts.Pie ('grafico_turma', __kwargtrans__ ({title: self.turma}));
 		chart_turma.add_serie ('Fez', self.estatistica_da_turma ['F'], __kwargtrans__ ({color: 'green'}));
 		chart_turma.add_serie ('Fez Parcialmente', self.estatistica_da_turma ['FP'], __kwargtrans__ ({color: '#d28a06'}));
 		chart_turma.add_serie ('Não Fez', self.estatistica_da_turma ['NF'], __kwargtrans__ ({color: 'red'}));
 		var chats_alunos = CONCATENATE ();
-		var painel_turma = DIV (LABEL ('Desempenho da Turma'), DIV (DIV (DIV (DIV (DIV (DIV (chart_turma, tabela_tur, __kwargtrans__ ({_class: 'estatisticas-turma-container'})), __kwargtrans__ ({_class: 'estatisticas-turma-wrapper'})), __kwargtrans__ ({_class: 'p-row e-padding_auto'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-content'})), DIV (__kwargtrans__ ({_class: 'phanterpwa-card-panel-control-buttons'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-wrapper'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-container'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control'}));
-		var painel_alunos = DIV (LABEL ('Desempenho por aluno'), DIV (DIV (DIV (DIV (chats_alunos, __kwargtrans__ ({_class: 'p-row e-padding_auto'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-content'})), DIV (__kwargtrans__ ({_class: 'phanterpwa-card-panel-control-buttons'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-wrapper'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-container'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control'}));
+		var painel_turma = DIV (LABEL ('Gráfico da Turma'), DIV (DIV (DIV (DIV (DIV (DIV (chart_turma, tabela_tur, __kwargtrans__ ({_class: 'estatisticas-turma-container'})), __kwargtrans__ ({_class: 'estatisticas-turma-wrapper'})), __kwargtrans__ ({_class: 'p-row e-padding_auto'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-content'})), DIV (__kwargtrans__ ({_class: 'phanterpwa-card-panel-control-buttons'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-wrapper'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-container'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control'}));
+		var painel_alunos = DIV (LABEL ('Gráficos dos Alunos'), DIV (DIV (DIV (DIV (chats_alunos, __kwargtrans__ ({_class: 'p-row e-padding_auto'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-content'})), DIV (__kwargtrans__ ({_class: 'phanterpwa-card-panel-control-buttons'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-wrapper'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-container'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control'}));
 		var painel_geral = DIV (LABEL ('Resumo'), DIV (DIV (DIV (DIV (DIV (DIV (tabela_geral, __kwargtrans__ ({_class: 'estatisticas-geral-container phanterpwa-widget-table-container phanterpwa-widget'})), __kwargtrans__ ({_class: 'estatisticas-geral-wrapper'})), __kwargtrans__ ({_class: 'p-row e-padding_auto'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-content'})), DIV (__kwargtrans__ ({_class: 'phanterpwa-card-panel-control-buttons'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-wrapper'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-container'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control'}));
-		var html_estatisticas = CONCATENATE (painel_geral, painel_turma, painel_alunos);
+		var painel_disciplinas = DIV (LABEL ('Dados distribuídos pelas disciplinas'), DIV (DIV (DIV (DIV (DIV (DIV (tabela_disciplinas, __kwargtrans__ ({_class: 'estatisticas-geral-container phanterpwa-widget-table-container phanterpwa-widget'})), __kwargtrans__ ({_class: 'estatisticas-geral-wrapper'})), __kwargtrans__ ({_class: 'p-row e-padding_auto'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-content'})), DIV (__kwargtrans__ ({_class: 'phanterpwa-card-panel-control-buttons'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-wrapper'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-container'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control'}));
+		var html_estatisticas = CONCATENATE (painel_geral, painel_disciplinas, painel_turma, painel_alunos);
 		for (var aln of self.estatistica_por_aluno) {
-			tabela_geral.append (TR (TD (STRONG (aln.nome), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td'})), TD (aln ['atividades'] ['F'], __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), TD (aln ['atividades'] ['FP'], __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), TD (aln ['atividades'] ['NF'], __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), TD (aln ['atividades'] ['T'], __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data phanterpwa-widget'})));
+			tabela_geral.append (TR (TD (STRONG (aln.nome), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td '})), TD (aln ['atividades'] ['F'], self.porcentagem (aln ['atividades'] ['F'], aln ['atividades'] ['T']), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), TD (aln ['atividades'] ['FP'], self.porcentagem (aln ['atividades'] ['FP'], aln ['atividades'] ['T']), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), TD (aln ['atividades'] ['NF'], self.porcentagem (aln ['atividades'] ['NF'], aln ['atividades'] ['T']), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), TD (aln ['atividades'] ['T'], __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data phanterpwa-widget'})));
+			var tbody = TBODY (__kwargtrans__ ({_style: 'border: 2px solid #d2d2d2 !important;'}));
+			var cont_dis = 0;
+			var chart_disciplinas = highcharts.BarStacked ('grafico_disciplinas_aluno_{0}'.format (aln.id), ...(function () {
+				var __accu0__ = [];
+				for (var ndis of aln ['disciplinas']) {
+					__accu0__.append (self.data_disciplinas [ndis [0]]);
+				}
+				return __accu0__;
+			}) (), __kwargtrans__ ({title: 'Distribuido pelas disciplinas'}));
+			var cf = [];
+			var cfp = [];
+			var cnf = [];
+			for (var dis of aln ['disciplinas']) {
+				cont_dis++;
+				cf.append (dis [1] ['F']);
+				cfp.append (dis [1] ['FP']);
+				cnf.append (dis [1] ['NF']);
+				if (cont_dis == 1) {
+					var tr_disciplinas = TR (TD (STRONG (aln.nome), __kwargtrans__ ({_rowspan: len (aln ['disciplinas']), _class: 'phanterpwa-widget-table-data-td', _style: 'border: 1px solid #C1C1C1;text-align: center;'})), TD (self.data_disciplinas [dis [0]], __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), TD (dis [1] ['F'], self.porcentagem (dis [1] ['F'], dis [1] ['T']), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), TD (dis [1] ['FP'], self.porcentagem (dis [1] ['FP'], dis [1] ['T']), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), TD (dis [1] ['NF'], self.porcentagem (dis [1] ['NF'], dis [1] ['T']), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), TD (dis [1] ['T'], __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data phanterpwa-widget'}));
+				}
+				else {
+					var tr_disciplinas = TR (TD (self.data_disciplinas [dis [0]], __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), TD (dis [1] ['F'], self.porcentagem (dis [1] ['F'], dis [1] ['T']), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), TD (dis [1] ['FP'], self.porcentagem (dis [1] ['FP'], dis [1] ['T']), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), TD (dis [1] ['NF'], self.porcentagem (dis [1] ['NF'], dis [1] ['T']), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), TD (dis [1] ['T'], __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data phanterpwa-widget'}));
+				}
+				tbody.append (tr_disciplinas);
+			}
+			chart_disciplinas.add_serie ('Fez', ...cf, __kwargtrans__ ({color: 'green'}));
+			chart_disciplinas.add_serie ('Fez Parcialmente', ...cfp, __kwargtrans__ ({color: '#d28a06'}));
+			chart_disciplinas.add_serie ('Não Fez', ...cnf, __kwargtrans__ ({color: 'red'}));
+			tabela_disciplinas.append (tbody);
 			var tabela_aln = TABLE (TR (TH ('FEZ'), TH ('FEZ PARCIALMENTE'), TH ('NÃO FEZ'), TH ('TOTAL')), TR (TD (aln ['atividades'] ['F']), TD (aln ['atividades'] ['FP']), TD (aln ['atividades'] ['NF']), TD (aln ['atividades'] ['T'])));
 			var chart_aluno = highcharts.Pie ('grafico_aluno_{0}'.format (aln.id), __kwargtrans__ ({title: aln.nome}));
 			chart_aluno.add_serie ('Fez', aln ['atividades'] ['F'], __kwargtrans__ ({color: 'green'}));
 			chart_aluno.add_serie ('Fez Parcialmente', aln ['atividades'] ['FP'], __kwargtrans__ ({color: '#d28a06'}));
 			chart_aluno.add_serie ('Não Fez', aln ['atividades'] ['NF'], __kwargtrans__ ({color: 'red'}));
-			var html_chart_aluno = DIV (DIV (chart_aluno, tabela_aln, __kwargtrans__ ({_class: 'estatisticas-alunos-container'})), __kwargtrans__ ({_class: 'estatisticas-alunos-wrapper p-col w1p100  w5p50  w7p33  w8p25'}));
+			var html_chart_aluno = DIV (DIV (chart_aluno, chart_disciplinas, tabela_aln, __kwargtrans__ ({_class: 'estatisticas-alunos-container', _style: 'background-color: white !important;'})), __kwargtrans__ ({_class: 'estatisticas-alunos-wrapper p-col w1p100  w5p50  w7p33  w8p25'}));
 			chats_alunos.append (html_chart_aluno);
 		}
-		tabela_geral.append (TR (TD (STRONG ('TOTAL TURMA'), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td'})), TD (STRONG (self.estatistica_da_turma ['F']), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), TD (STRONG (self.estatistica_da_turma ['FP']), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), TD (STRONG (self.estatistica_da_turma ['NF']), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), TD (STRONG (self.estatistica_da_turma ['T']), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data'})));
+		tabela_geral.append (TR (TD (STRONG ('TOTAL TURMA'), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td'})), TD (STRONG (self.estatistica_da_turma ['F'], self.porcentagem (self.estatistica_da_turma ['F'], self.estatistica_da_turma ['T'])), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), TD (STRONG (self.estatistica_da_turma ['FP'], self.porcentagem (self.estatistica_da_turma ['FP'], self.estatistica_da_turma ['T'])), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), TD (STRONG (self.estatistica_da_turma ['NF'], self.porcentagem (self.estatistica_da_turma ['NF'], self.estatistica_da_turma ['T'])), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), TD (STRONG (self.estatistica_da_turma ['T']), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data-td centralizado'})), __kwargtrans__ ({_class: 'phanterpwa-widget-table-data'})));
 		html.append (html_estatisticas);
 		html.html_to ('#content-registro_de_atividades');
 		self.diario_binds ();

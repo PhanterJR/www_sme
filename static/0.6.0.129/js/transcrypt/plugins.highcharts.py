@@ -16,10 +16,6 @@ __pragma__('kwargs')
 
 class Pie(widgets.Widget):
     def __init__(self, identifier, **parameters):
-        self.code_mirror_parameters = dict()
-        for x in parameters.keys():
-            if not x.startswith("_"):
-                self.code_mirror_parameters[x] = parameters[x]
         parameters["_id"] = identifier
         if "_class" in parameters:
             parameters["_class"] = "{0}{1}".format(
@@ -115,5 +111,93 @@ class Pie(widgets.Widget):
             }]
         })
 
+class BarStacked(widgets.Widget):
+    def __init__(self, identifier, *categories, **parameters):
+        self.categories = categories
+        parameters["_id"] = identifier
+        if "_class" in parameters:
+            parameters["_class"] = "{0}{1}".format(
+                parameters["_class"].strip(),
+                " phanterpwa-plugin-highcharts-barstacked"
+            )
+        else:
+            parameters["_class"] = "phanterpwa-plugin-highcharts-barstacked"
+        self.title = parameters.get("title", "")
+        self.showLegend = parameters.get("showLegend", True)
+        self.showLabels = parameters.get("showLabels", False)
+        self.series_name = parameters.get("series_name", None)
+        if self.series_name is None:
+            self.series_name = "Total"
+        self.pointFormat = parameters.get("pointFormat", "{series.name} (%): <b>{point.y} ({point.percentage:.1f}%)</b>")
+        self._chart_target = window.PhanterPWA.get_id(identifier)
+        self._series = parameters.get("series", [])
+
+        html = DIV(_id=self._chart_target, _class="phanterpwa-plugin-highcharts-wrapper")
+        widgets.Widget.__init__(self, identifier, html, **parameters)
+
+
+    def _series_validator(self):
+        new_serie = {}
+        ordem = []
+        for x in self._series:
+            field = x["field"]
+            if field not in ordem:
+                ordem.append(field)
+                value = x["values"]
+                new_serie[field] = {
+                    "name": field,
+                    "data": value,
+                }
+                if "color" in x:
+                    new_serie[field]["color"] = x["color"]
+        self.data_serie = [new_serie[y] for y in ordem]
+
+    def add_serie(self, field_name, *values, **kargs):
+        if len(values) == len(self.categories) and field_name:
+            if field_name:
+                p = dict(kargs)
+                p["field"] = field_name
+                p["values"] = [float(x) for x in values]
+                self._series.append(p)
+
+    def reload(self):
+        self.start()
+
+    def start(self):
+        self._series_validator()
+        Highcharts.chart("{0}".format(self._chart_target), {
+            "chart": {
+                "plotBackgroundColor": None,
+                "plotBorderWidth": None,
+                "plotShadow": False,
+                "type": 'bar'
+            },
+            "title": {
+                "text": self.title
+            },
+            "tooltip": {
+                "pointFormat": self.pointFormat
+            },
+            "xAxis": {
+                "categories": self.categories
+            },
+            "yAxis": {
+                "min": 0,
+                "title": {
+                    "text": self.series_name
+                }
+            },
+            "credits": False,
+            "plotOptions": {
+                "series": {
+                    "stacking": "normal",
+                    "dataLabels": {
+                        "enabled": self.showLabels
+                    },
+                    "showInLegend": self.showLegend
+                }
+            },
+            "series": self.data_serie
+        })
 
 __pragma__('nokwargs')

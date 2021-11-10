@@ -242,6 +242,17 @@ class ControleDeAtividades(gatehandler.Handler):
             self.estatistica_da_turma = json.totais_turma
             self.criar_estatisticas()
 
+    def porcentagem(self, valor, total):
+        console.log(valor, total)
+        if str(valor).isdigit() and str(total).isdigit():
+            valor = int(valor)
+            total = int(total)
+            if valor == 0:
+                return " (0%)"
+            else:
+                return " ({0}%)".format(((valor / total) * 100).toFixed(2))
+        return ""
+
     def criar_estatisticas(self):
         html = CONCATENATE(
             DIV(
@@ -290,10 +301,10 @@ class ControleDeAtividades(gatehandler.Handler):
         tabela_geral = TABLE(
             TR(
                 TH("NOME", _class="phanterpwa-widget-table-head-th"), 
-                TH("FEZ", _class="phanterpwa-widget-table-head-th centralizado"), 
-                TH("FEZ PARCIALMENTE", _class="phanterpwa-widget-table-head-th centralizado"), 
-                TH("NÃO FEZ", _class="phanterpwa-widget-table-head-th centralizado"), 
-                TH("TOTAL", _class="phanterpwa-widget-table-head-th centralizado"),
+                TH("FEZ (%)", _class="phanterpwa-widget-table-head-th centralizado"), 
+                TH("FEZ PARCIALMENTE (%)", _class="phanterpwa-widget-table-head-th centralizado"), 
+                TH("NÃO FEZ (%)", _class="phanterpwa-widget-table-head-th centralizado"), 
+                TH("TOTAL (100%)", _class="phanterpwa-widget-table-head-th centralizado"),
                 _class="phanterpwa-widget-table-head phanterpwa-widget"
             ),
             _class="phanterpwa-widget-table p-row"
@@ -322,7 +333,7 @@ class ControleDeAtividades(gatehandler.Handler):
         )
         chats_alunos = CONCATENATE()
         painel_turma = DIV(
-            LABEL("Desempenho da Turma"),
+            LABEL("Gráfico da Turma"),
             DIV(
                 DIV(
                     DIV(
@@ -349,7 +360,7 @@ class ControleDeAtividades(gatehandler.Handler):
             _class="phanterpwa-card-panel-control"
         )
         painel_alunos = DIV(
-            LABEL("Desempenho por aluno"),
+            LABEL("Gráficos dos Alunos"),
             DIV(
                 DIV(
                     DIV(
@@ -404,10 +415,10 @@ class ControleDeAtividades(gatehandler.Handler):
             tabela_geral.append(
                 TR(
                     TD(STRONG(aln.nome), _class="phanterpwa-widget-table-data-td"),
-                    TD(aln["atividades"]["F"], _class="phanterpwa-widget-table-data-td centralizado"),
-                    TD(aln["atividades"]["FP"], _class="phanterpwa-widget-table-data-td centralizado"),
-                    TD(aln["atividades"]["NF"], _class="phanterpwa-widget-table-data-td centralizado"),
-                    TD(aln["atividades"]["T"], _class="phanterpwa-widget-table-data-td centralizado"),
+                    TD(aln["atividades"]["F"], self.porcentagem(aln["atividades"]["F"], aln["atividades"]["T"]), _class="phanterpwa-widget-table-data-td centralizado"),
+                    TD(aln["atividades"]["FP"], self.porcentagem(aln["atividades"]["FP"], aln["atividades"]["T"]), _class="phanterpwa-widget-table-data-td centralizado"),
+                    TD(aln["atividades"]["NF"], self.porcentagem(aln["atividades"]["NF"], aln["atividades"]["T"]), _class="phanterpwa-widget-table-data-td centralizado"),
+                    TD(aln["atividades"]["T"],_class="phanterpwa-widget-table-data-td centralizado"),
                     _class="phanterpwa-widget-table-data phanterpwa-widget"
                 )
             )
@@ -420,6 +431,7 @@ class ControleDeAtividades(gatehandler.Handler):
                     TD(aln["atividades"]["T"])
                 )
             )
+
             chart_aluno = highcharts.Pie(
                 "grafico_aluno_{0}".format(aln.id),
                 title=aln.nome
@@ -446,9 +458,9 @@ class ControleDeAtividades(gatehandler.Handler):
         tabela_geral.append(
             TR(
                 TD(STRONG("TOTAL TURMA"), _class="phanterpwa-widget-table-data-td"),
-                TD(STRONG(self.estatistica_da_turma["F"]), _class="phanterpwa-widget-table-data-td centralizado"),
-                TD(STRONG(self.estatistica_da_turma["FP"]), _class="phanterpwa-widget-table-data-td centralizado"),
-                TD(STRONG(self.estatistica_da_turma["NF"]), _class="phanterpwa-widget-table-data-td centralizado"),
+                TD(STRONG(self.estatistica_da_turma["F"], self.porcentagem(self.estatistica_da_turma["F"], self.estatistica_da_turma["T"])), _class="phanterpwa-widget-table-data-td centralizado"),
+                TD(STRONG(self.estatistica_da_turma["FP"], self.porcentagem(self.estatistica_da_turma["FP"], self.estatistica_da_turma["T"])), _class="phanterpwa-widget-table-data-td centralizado"),
+                TD(STRONG(self.estatistica_da_turma["NF"], self.porcentagem(self.estatistica_da_turma["NF"], self.estatistica_da_turma["T"])), _class="phanterpwa-widget-table-data-td centralizado"),
                 TD(STRONG(self.estatistica_da_turma["T"]), _class="phanterpwa-widget-table-data-td centralizado"),
                 _class="phanterpwa-widget-table-data"
             )
@@ -973,7 +985,19 @@ class RegistroDeAtividades(gatehandler.Handler):
             self.turma = json.turma
             self.disciplina = json.disciplina
             self.estatistica_da_turma = json.totais_turma
+            self.data_disciplinas = json.data_disciplinas
             self.criar_estatisticas()
+
+    def porcentagem(self, valor, total):
+        console.log(valor, total)
+        if str(valor).isdigit() and str(total).isdigit():
+            valor = int(valor)
+            total = int(total)
+            if valor == 0:
+                return " (0%)"
+            else:
+                return " ({0}%)".format(((valor / total) * 100).toFixed(2))
+        return ""
 
     def criar_estatisticas(self):
         html = CONCATENATE(
@@ -1022,11 +1046,23 @@ class RegistroDeAtividades(gatehandler.Handler):
             )
         tabela_geral = TABLE(
             TR(
-                TH("NOME", _class="phanterpwa-widget-table-head-th"), 
-                TH("FEZ", _class="phanterpwa-widget-table-head-th centralizado"), 
-                TH("FEZ PARCIALMENTE", _class="phanterpwa-widget-table-head-th centralizado"), 
-                TH("NÃO FEZ", _class="phanterpwa-widget-table-head-th centralizado"), 
-                TH("TOTAL", _class="phanterpwa-widget-table-head-th centralizado"),
+                TH("NOME", _class="phanterpwa-widget-table-head-th"),
+                TH("FEZ (%)", _class="phanterpwa-widget-table-head-th centralizado"),
+                TH("FEZ PARCIALMENTE (%)", _class="phanterpwa-widget-table-head-th centralizado"),
+                TH("NÃO FEZ (%)", _class="phanterpwa-widget-table-head-th centralizado"),
+                TH("TOTAL (100%)", _class="phanterpwa-widget-table-head-th centralizado"),
+                _class="phanterpwa-widget-table-head phanterpwa-widget"
+            ),
+            _class="phanterpwa-widget-table p-row"
+        )
+        tabela_disciplinas = TABLE(
+            TR(
+                TH("NOME", _class="phanterpwa-widget-table-head-th centralizado"),
+                TH("DISCIPLINAS", _class="phanterpwa-widget-table-head-th centralizado"),
+                TH("FEZ (%)", _class="phanterpwa-widget-table-head-th centralizado"),
+                TH("FEZ PARCIALMENTE (%)", _class="phanterpwa-widget-table-head-th centralizado"),
+                TH("NÃO FEZ (%)", _class="phanterpwa-widget-table-head-th centralizado"),
+                TH("TOTAL (100%)", _class="phanterpwa-widget-table-head-th centralizado"),
                 _class="phanterpwa-widget-table-head phanterpwa-widget"
             ),
             _class="phanterpwa-widget-table p-row"
@@ -1055,7 +1091,7 @@ class RegistroDeAtividades(gatehandler.Handler):
         )
         chats_alunos = CONCATENATE()
         painel_turma = DIV(
-            LABEL("Desempenho da Turma"),
+            LABEL("Gráfico da Turma"),
             DIV(
                 DIV(
                     DIV(
@@ -1082,7 +1118,7 @@ class RegistroDeAtividades(gatehandler.Handler):
             _class="phanterpwa-card-panel-control"
         )
         painel_alunos = DIV(
-            LABEL("Desempenho por aluno"),
+            LABEL("Gráficos dos Alunos"),
             DIV(
                 DIV(
                     DIV(
@@ -1127,8 +1163,35 @@ class RegistroDeAtividades(gatehandler.Handler):
             ),
             _class="phanterpwa-card-panel-control"
         )
+        painel_disciplinas = DIV(
+            LABEL("Dados distribuídos pelas disciplinas"),
+            DIV(
+                DIV(
+                    DIV(
+                        DIV(
+                            DIV(
+                                DIV(
+                                    tabela_disciplinas,
+                                    _class="estatisticas-geral-container phanterpwa-widget-table-container phanterpwa-widget"
+                                ),
+                                _class="estatisticas-geral-wrapper"
+                            ),
+                            _class="p-row e-padding_auto",
+                        ),
+                        _class="phanterpwa-card-panel-control-content"
+                    ),
+                    DIV(
+                        _class="phanterpwa-card-panel-control-buttons"
+                    ),
+                    _class="phanterpwa-card-panel-control-wrapper"
+                ),
+                _class="phanterpwa-card-panel-control-container"
+            ),
+            _class="phanterpwa-card-panel-control"
+        )
         html_estatisticas = CONCATENATE(
             painel_geral,
+            painel_disciplinas,
             painel_turma,
             painel_alunos
         )
@@ -1136,14 +1199,59 @@ class RegistroDeAtividades(gatehandler.Handler):
         for aln in self.estatistica_por_aluno:
             tabela_geral.append(
                 TR(
-                    TD(STRONG(aln.nome), _class="phanterpwa-widget-table-data-td"),
-                    TD(aln["atividades"]["F"], _class="phanterpwa-widget-table-data-td centralizado"),
-                    TD(aln["atividades"]["FP"], _class="phanterpwa-widget-table-data-td centralizado"),
-                    TD(aln["atividades"]["NF"], _class="phanterpwa-widget-table-data-td centralizado"),
+                    TD(STRONG(aln.nome), _class="phanterpwa-widget-table-data-td "),
+                    TD(aln["atividades"]["F"], self.porcentagem(aln["atividades"]["F"], aln["atividades"]["T"]), _class="phanterpwa-widget-table-data-td centralizado"),
+                    TD(aln["atividades"]["FP"], self.porcentagem(aln["atividades"]["FP"], aln["atividades"]["T"]), _class="phanterpwa-widget-table-data-td centralizado"),
+                    TD(aln["atividades"]["NF"], self.porcentagem(aln["atividades"]["NF"], aln["atividades"]["T"]), _class="phanterpwa-widget-table-data-td centralizado"),
                     TD(aln["atividades"]["T"], _class="phanterpwa-widget-table-data-td centralizado"),
                     _class="phanterpwa-widget-table-data phanterpwa-widget"
                 )
             )
+            tbody = TBODY(_style="border: 2px solid #d2d2d2 !important;")
+            cont_dis = 0
+
+            chart_disciplinas = highcharts.BarStacked(
+                "grafico_disciplinas_aluno_{0}".format(aln.id),
+                title="Distribuido pelas disciplinas",
+                *[self.data_disciplinas[ndis[0]] for ndis in aln["disciplinas"]]
+            )
+            cf = []
+            cfp = []
+            cnf = []
+
+            for dis in aln["disciplinas"]:
+                cont_dis += 1
+                cf.append(dis[1]["F"])
+                cfp.append(dis[1]["FP"])
+                cnf.append(dis[1]["NF"])
+                if cont_dis == 1:
+                    tr_disciplinas = TR(
+                        TD(STRONG(aln.nome), _rowspan=len(aln["disciplinas"]), _class="phanterpwa-widget-table-data-td", _style="border: 1px solid #C1C1C1;text-align: center;"),
+                        TD(self.data_disciplinas[dis[0]], _class="phanterpwa-widget-table-data-td centralizado"),
+                        TD(dis[1]["F"], self.porcentagem(dis[1]["F"], dis[1]["T"]), _class="phanterpwa-widget-table-data-td centralizado"),
+                        TD(dis[1]["FP"], self.porcentagem(dis[1]["FP"], dis[1]["T"]), _class="phanterpwa-widget-table-data-td centralizado"),
+                        TD(dis[1]["NF"], self.porcentagem(dis[1]["NF"], dis[1]["T"]), _class="phanterpwa-widget-table-data-td centralizado"),
+                        TD(dis[1]["T"], _class="phanterpwa-widget-table-data-td centralizado"),
+                        _class="phanterpwa-widget-table-data phanterpwa-widget"
+                    )
+                else:
+                    tr_disciplinas = TR(
+                        TD(self.data_disciplinas[dis[0]], _class="phanterpwa-widget-table-data-td centralizado"),
+                        TD(dis[1]["F"], self.porcentagem(dis[1]["F"], dis[1]["T"]), _class="phanterpwa-widget-table-data-td centralizado"),
+                        TD(dis[1]["FP"], self.porcentagem(dis[1]["FP"], dis[1]["T"]), _class="phanterpwa-widget-table-data-td centralizado"),
+                        TD(dis[1]["NF"], self.porcentagem(dis[1]["NF"], dis[1]["T"]), _class="phanterpwa-widget-table-data-td centralizado"),
+                        TD(dis[1]["T"], _class="phanterpwa-widget-table-data-td centralizado"),
+                        _class="phanterpwa-widget-table-data phanterpwa-widget"
+                    )
+                tbody.append(tr_disciplinas)
+
+            chart_disciplinas.add_serie("Fez", *cf, color="green")
+            chart_disciplinas.add_serie("Fez Parcialmente", *cfp, color="#d28a06")
+            chart_disciplinas.add_serie("Não Fez", *cnf, color="red")
+            tabela_disciplinas.append(
+                tbody
+            )
+
             tabela_aln = TABLE(
                 TR(TH("FEZ"), TH("FEZ PARCIALMENTE"), TH("NÃO FEZ"), TH("TOTAL")),
                 TR(
@@ -1169,8 +1277,10 @@ class RegistroDeAtividades(gatehandler.Handler):
             html_chart_aluno = DIV(
                 DIV(
                     chart_aluno,
+                    chart_disciplinas,
                     tabela_aln,
-                    _class="estatisticas-alunos-container"
+                    _class="estatisticas-alunos-container",
+                    _style="background-color: white !important;"
                 ),
                 _class="estatisticas-alunos-wrapper p-col w1p100  w5p50  w7p33  w8p25"
             )
@@ -1179,9 +1289,9 @@ class RegistroDeAtividades(gatehandler.Handler):
         tabela_geral.append(
             TR(
                 TD(STRONG("TOTAL TURMA"), _class="phanterpwa-widget-table-data-td"),
-                TD(STRONG(self.estatistica_da_turma["F"]), _class="phanterpwa-widget-table-data-td centralizado"),
-                TD(STRONG(self.estatistica_da_turma["FP"]), _class="phanterpwa-widget-table-data-td centralizado"),
-                TD(STRONG(self.estatistica_da_turma["NF"]), _class="phanterpwa-widget-table-data-td centralizado"),
+                TD(STRONG(self.estatistica_da_turma["F"], self.porcentagem(self.estatistica_da_turma["F"], self.estatistica_da_turma["T"])), _class="phanterpwa-widget-table-data-td centralizado"),
+                TD(STRONG(self.estatistica_da_turma["FP"], self.porcentagem(self.estatistica_da_turma["FP"], self.estatistica_da_turma["T"])), _class="phanterpwa-widget-table-data-td centralizado"),
+                TD(STRONG(self.estatistica_da_turma["NF"], self.porcentagem(self.estatistica_da_turma["NF"], self.estatistica_da_turma["T"])), _class="phanterpwa-widget-table-data-td centralizado"),
                 TD(STRONG(self.estatistica_da_turma["T"]), _class="phanterpwa-widget-table-data-td centralizado"),
                 _class="phanterpwa-widget-table-data"
             )
