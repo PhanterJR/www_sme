@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2021-10-13 22:13:35
+// Transcrypt'ed from Python, 2021-11-18 07:05:16
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import * as anos_letivos from './handlers.anos_letivos.js';
 import * as escolas from './handlers.escolas.js';
@@ -231,6 +231,8 @@ export var Diario =  __class__ ('Diario', [object], {
 		var tabela = TABLE (__kwargtrans__ ({_class: 'tabela_diario_de_notas'}));
 		self.limites_verticais = [];
 		self.limites_horizontais = [];
+		self.max_h = 0;
+		self.max_v = 0;
 		var limit_v = 0;
 		var limit_h = 0;
 		for (var x of diario_de_notas.diario) {
@@ -286,8 +288,8 @@ export var Diario =  __class__ ('Diario', [object], {
 		}
 		self.limites_verticais.append (limit_v);
 		self.limites_horizontais.append (limit_h);
-		console.log (self.limites_verticais);
-		console.log (self.limites_horizontais);
+		self.max_h = limit_h;
+		self.max_v = limit_v;
 		var tabela_lista_alunos = XTABLE ('lista_alunos_diario_{0}'.format (self.id_turma), XTRH ('lista_alunos_diario_cabecalho_{0}'.format (self.id_turma), 'Nº', 'Aluno', 'Resultado Automático', 'Resultado Final'));
 		for (var x of diario_de_notas.lista_alunos) {
 			var add_class = 'link linha_aluno_abrir_diario';
@@ -768,95 +770,104 @@ export var Diario =  __class__ ('Diario', [object], {
 		var h = __left0__ [1];
 		var v = int (v);
 		var h = int (h);
+		var max_interations = 200;
 		if (code == 37) {
-			if (self.limites_horizontais [0] == h) {
-				var h = self.limites_horizontais [1];
-				$ ("td[coor='{0}x{1}']".format (v, h)).find ('input').focus ().select ();
-			}
-			else {
-				while (true) {
-					h--;
-					if (self.limites_horizontais [1] == h) {
-						var h = self.limites_horizontais [1];
-						$ ("td[coor='{0}x{1}']".format (v, h)).find ('input').focus ().select ();
-						break;
-					}
-					else {
-						var nl = $ ("td[coor='{0}x{1}']".format (v, h)).find ('input');
-						if (nl.length > 0) {
-							$ ("td[coor='{0}x{1}']".format (v, h)).find ('input').focus ().select ();
-							break;
-						}
-					}
+			while (true) {
+				max_interations--;
+				if (max_interations < 0) {
+					var max_interations = 200;
+					console.error ('Parada inesperada!');
+					break;
+				}
+				h--;
+				if (h <= 0) {
+					var h = self.max_h;
+				}
+				var nl = $ ("td[coor='{0}x{1}']".format (v, h)).find ('input');
+				if (nl.length > 0) {
+					$ ("td[coor='{0}x{1}']".format (v, h)).find ('input').focus ().select ();
+					break;
 				}
 			}
 		}
 		else if (code == 39) {
-			if (self.limites_horizontais [1] == h) {
-				var h = self.limites_horizontais [1];
-				$ ("td[coor='{0}x{1}']".format (v, h)).find ('input').focus ().select ();
-			}
-			else {
-				while (true) {
-					h++;
-					if (self.limites_horizontais [1] == h) {
-						var h = self.limites_horizontais [1];
-						$ ("td[coor='{0}x{1}']".format (v, h)).find ('input').focus ().select ();
-						break;
-					}
-					else {
-						var nl = $ ("td[coor='{0}x{1}']".format (v, h)).find ('input');
-						if (nl.length > 0) {
-							$ ("td[coor='{0}x{1}']".format (v, h)).find ('input').focus ().select ();
-							break;
-						}
-					}
+			while (true) {
+				max_interations--;
+				if (max_interations < 0) {
+					var max_interations = 200;
+					console.error ('Parada inesperada!');
+					break;
+				}
+				h++;
+				if (h > self.max_h) {
+					var h = 0;
+				}
+				var nl = $ ("td[coor='{0}x{1}']".format (v, h)).find ('input');
+				if (nl.length > 0) {
+					$ ("td[coor='{0}x{1}']".format (v, h)).find ('input').focus ().select ();
+					break;
 				}
 			}
 		}
 		if (code == 38) {
-			if (self.limites_verticais [0] == v) {
-				var v = self.limites_verticais [1];
-				$ ("td[coor='{0}x{1}']".format (v, h)).find ('input').focus ().select ();
-			}
-			else {
-				while (true) {
-					v--;
-					if (self.limites_verticais [1] == v) {
-						var v = self.limites_verticais [1];
-						$ ("td[coor='{0}x{1}']".format (v, h)).find ('input').focus ().select ();
-						break;
-					}
-					else {
-						var nl = $ ("td[coor='{0}x{1}']".format (v, h)).find ('input');
-						if (nl.length > 0) {
-							$ ("td[coor='{0}x{1}']".format (v, h)).find ('input').focus ().select ();
-							break;
-						}
-					}
+			while (true) {
+				max_interations--;
+				if (max_interations < 0) {
+					var max_interations = 200;
+					console.error ('Parada inesperada!');
+					break;
+				}
+				v--;
+				if (v <= 0) {
+					var v = self.max_v;
+				}
+				var nl = $ ("td[coor='{0}x{1}']".format (v, h)).find ('input');
+				if (nl.length > 0) {
+					$ ("td[coor='{0}x{1}']".format (v, h)).find ('input').focus ().select ();
+					break;
 				}
 			}
 		}
-		else if (code == 40 || code == 13) {
-			if (self.limites_verticais [1] == v) {
-				var v = self.limites_verticais [1];
-				$ ("td[coor='{0}x{1}']".format (v, h)).find ('input').focus ().select ();
+		else if (code == 40) {
+			while (true) {
+				max_interations--;
+				if (max_interations < 0) {
+					var max_interations = 200;
+					console.error ('Parada inesperada!');
+					break;
+				}
+				v++;
+				if (v > self.max_v) {
+					var v = 0;
+				}
+				var nl = $ ("td[coor='{0}x{1}']".format (v, h)).find ('input');
+				if (nl.length > 0) {
+					$ ("td[coor='{0}x{1}']".format (v, h)).find ('input').focus ().select ();
+					break;
+				}
 			}
-			else {
-				while (true) {
-					v++;
-					if (self.limites_verticais [1] == v) {
-						var v = self.limites_verticais [1];
-						$ ("td[coor='{0}x{1}']".format (v, h)).find ('input').focus ().select ();
-						break;
-					}
-					else {
-						var nl = $ ("td[coor='{0}x{1}']".format (v, h)).find ('input');
-						if (nl.length > 0) {
-							$ ("td[coor='{0}x{1}']".format (v, h)).find ('input').focus ().select ();
-							break;
-						}
-					}
+		}
+		else if (code == 13) {
+			while (true) {
+				max_interations--;
+				if (max_interations < 0) {
+					var max_interations = 200;
+					$ ("td[coor='1x1']").find ('input').focus ().select ();
+					console.error ('Parada inesperada!');
+					break;
+				}
+				v++;
+				if (v > self.max_v) {
+					h++;
+					var v = 0;
+				}
+				if (h > self.max_h) {
+					var h = 0;
+				}
+				var nl = $ ("td[coor='{0}x{1}']".format (v, h)).find ('input');
+				if (nl.length > 0) {
+					$ ("td[coor='{0}x{1}']".format (v, h)).find ('input').focus ().select ();
+					break;
 				}
 			}
 		}

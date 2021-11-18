@@ -186,6 +186,8 @@ class Diario():
         tabela = TABLE(_class='tabela_diario_de_notas')
         self.limites_verticais = []
         self.limites_horizontais = []
+        self.max_h = 0
+        self.max_v = 0
         limit_v = 0
         limit_h = 0
         for x in diario_de_notas.diario:
@@ -263,8 +265,8 @@ class Diario():
             )
         self.limites_verticais.append(limit_v)
         self.limites_horizontais.append(limit_h)
-        console.log(self.limites_verticais)
-        console.log(self.limites_horizontais)
+        self.max_h = limit_h
+        self.max_v = limit_v
         tabela_lista_alunos = XTABLE(
             "lista_alunos_diario_{0}".format(self.id_turma),
             XTRH(
@@ -636,77 +638,89 @@ class Diario():
         v, h = coor.split("x")
         v = int(v)
         h = int(h)
+        max_interations = 200
         if code == 37: #vertical_negativo
-            if self.limites_horizontais[0] == h:
-                h = self.limites_horizontais[1]
-                jQuery("td[coor='{0}x{1}']".format(v, h)).find("input").focus().select()
-            else:
-                while True:
-                    h -= 1
-                    if self.limites_horizontais[1] == h:
-                        h = self.limites_horizontais[1]
-                        jQuery("td[coor='{0}x{1}']".format(v, h)).find("input").focus().select()
-                        break
-                    else:
-                        nl = jQuery("td[coor='{0}x{1}']".format(v, h)).find("input")
-                        if nl.length > 0:
-                            jQuery("td[coor='{0}x{1}']".format(v, h)).find("input").focus().select()
-                            break
+            while True:
+                max_interations -= 1
+                if max_interations < 0:
+                    max_interations = 200
+                    console.error("Parada inesperada!")
+                    break
+
+                h -= 1
+                if h <= 0:
+                    h = self.max_h
+                nl = jQuery("td[coor='{0}x{1}']".format(v, h)).find("input")
+                if nl.length > 0:
+                    jQuery("td[coor='{0}x{1}']".format(v, h)).find("input").focus().select()
+                    break
 
         elif code == 39: #vertical_positivo
-            if self.limites_horizontais[1] == h:
-                h = self.limites_horizontais[1]
-                jQuery("td[coor='{0}x{1}']".format(v, h)).find("input").focus().select()
-            else:
-                while True:
-                    h += 1
-                    if self.limites_horizontais[1] == h:
-                        h = self.limites_horizontais[1]
-                        jQuery("td[coor='{0}x{1}']".format(v, h)).find("input").focus().select()
-                        break
-                    else:
-                        nl = jQuery("td[coor='{0}x{1}']".format(v, h)).find("input")
-                        if nl.length > 0:
-                            jQuery("td[coor='{0}x{1}']".format(v, h)).find("input").focus().select()
-                            break
+            while True:
+                max_interations -= 1
+                if max_interations < 0:
+                    max_interations = 200
+                    console.error("Parada inesperada!")
+                    break
+                h += 1
+                if h > self.max_h:
+                    h = 0
+                nl = jQuery("td[coor='{0}x{1}']".format(v, h)).find("input")
+                if nl.length > 0:
+                    jQuery("td[coor='{0}x{1}']".format(v, h)).find("input").focus().select()
+                    break
 
         if code == 38: #vertical_negativo
-            if self.limites_verticais[0] == v:
-                v = self.limites_verticais[1]
-                jQuery("td[coor='{0}x{1}']".format(v, h)).find("input").focus().select()
-            else:
-                while True:
-                    v -= 1
-                    if self.limites_verticais[1] == v:
-                        v = self.limites_verticais[1]
-                        jQuery("td[coor='{0}x{1}']".format(v, h)).find("input").focus().select()
-                        break
-                    else:
-                        nl = jQuery("td[coor='{0}x{1}']".format(v, h)).find("input")
-                        if nl.length > 0:
-                            jQuery("td[coor='{0}x{1}']".format(v, h)).find("input").focus().select()
-                            break
+            while True:
+                max_interations -= 1
+                if max_interations < 0:
+                    max_interations = 200
+                    console.error("Parada inesperada!")
+                    break
 
-        elif code == 40 or code == 13: #vertical_positivo
-            if self.limites_verticais[1] == v:
-                v = self.limites_verticais[1]
-                jQuery("td[coor='{0}x{1}']".format(v, h)).find("input").focus().select()
-            else:
-                while True:
-                    v += 1
-                    if self.limites_verticais[1] == v:
-                        v = self.limites_verticais[1]
-                        jQuery("td[coor='{0}x{1}']".format(v, h)).find("input").focus().select()
-                        break
-                    else:
-                        nl = jQuery("td[coor='{0}x{1}']".format(v, h)).find("input")
-                        if nl.length > 0:
-                            jQuery("td[coor='{0}x{1}']".format(v, h)).find("input").focus().select()
-                            break
+                v -= 1
+                if v <= 0:
+                    v = self.max_v
+                nl = jQuery("td[coor='{0}x{1}']".format(v, h)).find("input")
+                if nl.length > 0:
+                    jQuery("td[coor='{0}x{1}']".format(v, h)).find("input").focus().select()
+                    break
 
-        # if code == 13:
-        #     proximo_campo = element.parent().data("proximo_campo")
-        #     jQuery("#{0}".format(proximo_campo)).find("input").focus().select()
+        elif code == 40: #vertical_positivo
+            while True:
+                max_interations -= 1
+                if max_interations < 0:
+                    max_interations = 200
+                    console.error("Parada inesperada!")
+                    break
+
+                v += 1
+                if v > self.max_v:
+                    v = 0
+                nl = jQuery("td[coor='{0}x{1}']".format(v, h)).find("input")
+                if nl.length > 0:
+                    jQuery("td[coor='{0}x{1}']".format(v, h)).find("input").focus().select()
+                    break
+
+        elif code == 13: #vertical_positivo <Enter>
+            while True:
+                max_interations -= 1
+                if max_interations < 0:
+                    max_interations = 200
+                    jQuery("td[coor='1x1']").find("input").focus().select()
+                    console.error("Parada inesperada!")
+                    break
+
+                v += 1
+                if v > self.max_v:
+                    h += 1
+                    v = 0
+                if h > self.max_h:
+                    h = 0
+                nl = jQuery("td[coor='{0}x{1}']".format(v, h)).find("input")
+                if nl.length > 0:
+                    jQuery("td[coor='{0}x{1}']".format(v, h)).find("input").focus().select()
+                    break
 
 
 
