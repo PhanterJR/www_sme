@@ -96,7 +96,6 @@ class IndicadoresDeDesempenho():
         self._get_turmas()
 
     def porcentagem(self, valor, total):
-        console.log(valor, total)
         if str(valor).isdigit() and str(total).isdigit():
             valor = int(valor)
             total = int(total)
@@ -121,10 +120,10 @@ class IndicadoresDeDesempenho():
             json = data.responseJSON
             self.turmas = json.data.turmas
             self.unidades = json.unidades
-            self.processar_conselho()
+            self.processar_turmas()
 
 
-    def processar_conselho(self):
+    def processar_turmas(self):
 
         tr_inicial = TBODY(
             TR(
