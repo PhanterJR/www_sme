@@ -182,7 +182,6 @@ class FichaAvaliativa():
                     )
                 elif y[1]['tipo'] == "input":
                     if "_coor" in y[1]:
-                        console.log(y[1]["_coor"])
                         seps = y[1]["_coor"].split("x")
                         v = int(seps[0])
                         h = int(seps[1])
@@ -446,7 +445,10 @@ class FichaAvaliativa():
                     celula = ""
                     if updates[x][1]['tipo'] == "input":
                         celula = TD(
-                            INPUT(_value=updates[x][0]),
+                            DIV(
+                                INPUT(_value=updates[x][0], _coordenadas=updates[x][1]["_coor"]),
+                                _class="ficha_avaliativa_content_input_textarea"
+                            ),
                             DIV(I(_class="fas fa-cloud-upload-alt"), _class="botao_enviar_nota"),
                             **updates[x][1]
                         )
