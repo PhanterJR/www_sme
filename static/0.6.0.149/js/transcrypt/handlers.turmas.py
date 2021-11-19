@@ -151,6 +151,31 @@ class TurmasSimples(helpers.XmlConstructor):
         self.tem_turma = True
         self.ano_letivo = ano_letivo
         self.index_instance = index_instance
+        self.meses = {
+            "01": "Janeiro",
+            "02": "Fevereiro",
+            "03": "Março",
+            "04": "Abril",
+            "05": "Maio",
+            "06": "Junho",
+            "07": "Julho",
+            "08": "Agosto",
+            "09": "Setembro",
+            "10": "Outubro",
+            "11": "Novembro",
+            "12": "Dezembro"
+        }
+        self.romanos = {
+            "0": "Ano inteiro",
+            "1": "Unidade I",
+            "2": "Unidade II",
+            "3": "Unidade III",
+            "4": "Unidade IV",
+            "5": "Unidade V",
+            "6": "Unidade VI",
+            "7": "Unidade VII",
+            "8": "Unidade VIII"
+        }
         helpers.XmlConstructor.__init__(self, "div", False, self.initial_xml(), _class="lista_de_turmas_simples")
         self._get_turmas()
 
@@ -175,7 +200,7 @@ class TurmasSimples(helpers.XmlConstructor):
                     _id="content-turmas",
                     _class='p-row card e-padding_20'
                 ),
-
+                DIV(_id="modal_estatisticas_unidades_registro_de_atividades"),
                 _class="phanterpwa-container p-container"
             )
         )
@@ -245,6 +270,13 @@ class TurmasSimples(helpers.XmlConstructor):
                                     "_class": "botao_indicador_desempenho icon_button",
                                     "_title": "Indicadores de Desempenho",
                                     "_href": window.PhanterPWA.XWAY("indicadores-de-desempenho", self.id_escola, self.ano_letivo)
+                                }
+                            ),
+                            DIV(
+                                I(_class="fas fa-chart-pie"),
+                                **{
+                                    "_class": "botao_estatistica_registro_atividades icon_button",
+                                    "_title": "Resumo Controle de Atividades",
                                 }
                             ),
                             _class="phanterpwa-card-panel-control-buttons"
@@ -469,6 +501,12 @@ class TurmasSimples(helpers.XmlConstructor):
             "click.colar_turmas",
             lambda: self.colar_dados(this)
         )
+        jQuery(".botao_estatistica_registro_atividades").off(
+            "click.botao_estatistica_registro_atividades"
+        ).on(
+            "click.botao_estatistica_registro_atividades",
+            lambda: self.modal_estatisticas_unidades()
+        )
 
     def deletar_turma(self, widget_instance):
         id_turma = jQuery(widget_instance).data("id_turma")
@@ -644,6 +682,7 @@ class TurmasSimples(helpers.XmlConstructor):
             json = data.responseJSON
             self.lista_de_turmas = json.data.turmas
             self.data_set_series = json.data.series
+            self.periodo_unidades = json.periodo_unidades
             self.turmas_disponiveis()
 
     def _get_turmas(self):
@@ -679,6 +718,60 @@ class TurmasSimples(helpers.XmlConstructor):
                 'form_data': formdata,
                 'onComplete': lambda data, ajax_status: self.update_turma(data, ajax_status)
             })
+
+    def iso_br(self, data_iso):
+        ano, mes, dia = data_iso.split("-")
+        return "{0}/{1}/{2}".format(dia, mes, ano)
+
+    def modal_estatisticas_unidades(self):
+        unidades_disponiveis = DIV(_class="unidades_disponiveis")
+        for x in self.periodo_unidades:
+            unidades_disponiveis.append(
+                DIV(
+                    A(
+                        "{0} - {1} à {2}".format(
+                            self.romanos[str(x[0])],
+                            self.iso_br(x[1]),
+                            self.iso_br(x[2])
+                        ),
+                        _href=window.PhanterPWA.XWAY(
+                            "estatistica-registro-de-atividades",
+                            self.id_escola,
+                            self.ano_letivo,
+                            str(x[0]),
+                        ),
+                        _class="btn e-link"
+                    ),
+                    _class="botao_estatistica_unidades",
+                )
+            )
+        unidades_disponiveis.append(
+            DIV(
+                A(
+                    "Todas as unidades",
+                    _href=window.PhanterPWA.XWAY(
+                        "estatistica-registro-de-atividades",
+                        self.id_escola,
+                        self.ano_letivo,
+                        "0",
+                    ),
+                    _class="btn e-link"
+                ), 
+                _class="botao_estatistica_unidades",
+            )
+        )
+        self.modal_estatisticas = modal.Modal(
+            "#modal_estatisticas_unidades_registro_de_atividades",
+            **{
+                "title": "Escolha a Unidade",
+                "content": unidades_disponiveis
+            }
+        )
+        self.modal_estatisticas.open()
+        jQuery(".botao_estatistica_unidades").off("click.ests").on(
+            "click.ests",
+            lambda: self.modal_estatisticas.close()
+        )
 
 
 class TurmasDetalhado(helpers.XmlConstructor):

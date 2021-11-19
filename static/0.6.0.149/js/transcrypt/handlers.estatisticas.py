@@ -48,7 +48,9 @@ TABLE = helpers.XmlConstructor.tagger('table')
 TR = helpers.XmlConstructor.tagger('tr')
 TH = helpers.XmlConstructor.tagger('th')
 TD = helpers.XmlConstructor.tagger('td')
-
+BR = helpers.XmlConstructor.tagger("br", True)
+THEAD = helpers.XmlConstructor.tagger('thead')
+TFOOT = helpers.XmlConstructor.tagger('tfoot')
 XTABLE = widgets.Table
 XML = helpers.XML
 XTRD = widgets.TableData
@@ -243,7 +245,6 @@ class ControleDeAtividades(gatehandler.Handler):
             self.criar_estatisticas()
 
     def porcentagem(self, valor, total):
-        console.log(valor, total)
         if str(valor).isdigit() and str(total).isdigit():
             valor = int(valor)
             total = int(total)
@@ -860,7 +861,7 @@ class ControleDeAtividades(gatehandler.Handler):
                 self.diario_binds()
 
 
-class RegistroDeAtividades(gatehandler.Handler):
+class RegistroDeAtividadesTurma(gatehandler.Handler):
     @decorators.check_authorization(lambda: window.PhanterPWA.auth_user_has_role(["administrator", "root", "Administrador Master SME", "Administrador Master Escola", "Professor(a)"]))
     def initialize(self):
         arg0 = window.PhanterPWA.Request.get_arg(0)
@@ -898,50 +899,26 @@ class RegistroDeAtividades(gatehandler.Handler):
             "11": "Novembro",
             "12": "Dezembro"
         }
-        if arg0 is None or arg0 is js_undefined:
-            html = escolas.EscolherEscola(
-                id_target="#content-registro_de_atividades",
-                callback_link=lambda id_escola: "#_phanterpwa:/registro-de-atividades/{0}".format(id_escola)
-            )
-        elif str(arg0).isdigit() and (arg1 is None or arg1 is js_undefined):
-            html = anos_letivos.EscolherAnoLetivo(
-                id_target="#content-registro_de_atividades",
-                callback_link=lambda ano: "#_phanterpwa:/registro-de-atividades/{0}/{1}".format(arg0, ano)
-            )
-        elif str(arg0).isdigit() and str(arg1).isdigit():
+        if str(arg0).isdigit() and str(arg1).isdigit():
             self._get_estatistica_registro_de_atividades()
-        if window.PhanterPWA.Request.get_param("retornar") is None:
-            BackButton1 = left_bar.LeftBarButton(
-                "back_estatistica_registro_de_atividades",
-                "Voltar",
-                I(_class="fas fa-arrow-circle-left"),
-                **{
-                    "tag": "a",
-                    "_href": window.PhanterPWA.XWAY(
-                        "registro-de-atividades",
-                        arg0,
-                        arg1,
-                        arg2,
-                        arg4,
-                    ),
-                    "position": "top",
-                    "show_if_way_match": r"^estatistica-registro-de-atividades\/[0-9]{1,}\/[0-9]{1,}\/[0-9]{1,}\/[0-9]{1,}.*$"
-                }
-            )
 
-        else:
+        BackButton1 = left_bar.LeftBarButton(
+            "back_estatistica_registro_de_atividades_turma",
+            "Voltar",
+            I(_class="fas fa-arrow-circle-left"),
+            **{
+                "tag": "a",
+                "_href": window.PhanterPWA.XWAY(
+                    "registro-de-atividades",
+                    arg0,
+                    arg1,
+                    arg2
+                ),
+                "position": "top",
+                "show_if_way_match": r"^estatistica-registro-de-atividades-turma\/[0-9]{1,}\/[0-9]{1,}\/[0-9]{1,}\/[0-9]{1,}.*$"
+            }
+        )
 
-            BackButton1 = left_bar.LeftBarButton(
-                "back_estatistica_registro_de_atividades",
-                "Voltar",
-                I(_class="fas fa-arrow-circle-left"),
-                **{
-                    "tag": "a",
-                    "_href": window.PhanterPWA.Request.get_param("retornar"),
-                    "position": "top",
-                    "show_if_way_match": r"^estatistica-registro-de-atividades\/[0-9]{1,}\/[0-9]{1,}\/[0-9]{1,}\/[0-9]{1,}.*$"
-                }
-            )
         window.PhanterPWA.Components['left_bar'].add_button(BackButton1)
 
     def _get_estatistica_registro_de_atividades(self):
@@ -989,7 +966,6 @@ class RegistroDeAtividades(gatehandler.Handler):
             self.criar_estatisticas()
 
     def porcentagem(self, valor, total):
-        console.log(valor, total)
         if str(valor).isdigit() and str(total).isdigit():
             valor = int(valor)
             total = int(total)
@@ -1090,6 +1066,7 @@ class RegistroDeAtividades(gatehandler.Handler):
             "Não Fez", self.estatistica_da_turma["NF"], color="red"
         )
         chats_alunos = CONCATENATE()
+        chats_disciplinas_turma = CONCATENATE()
         painel_turma = DIV(
             LABEL("Gráfico da Turma"),
             DIV(
@@ -1100,6 +1077,7 @@ class RegistroDeAtividades(gatehandler.Handler):
                                 DIV(
                                     chart_turma,
                                     tabela_tur,
+                                    chats_disciplinas_turma,
                                     _class="estatisticas-turma-container"
                                 ),
                                 _class="estatisticas-turma-wrapper"
@@ -1195,6 +1173,8 @@ class RegistroDeAtividades(gatehandler.Handler):
             painel_turma,
             painel_alunos
         )
+        disciplinas_ordem = []
+        disciplinas_data = dict()
 
         for aln in self.estatistica_por_aluno:
             tabela_geral.append(
@@ -1220,6 +1200,20 @@ class RegistroDeAtividades(gatehandler.Handler):
             cnf = []
 
             for dis in aln["disciplinas"]:
+                if self.data_disciplinas[dis[0]] not in disciplinas_ordem:
+                    disciplinas_ordem.append(self.data_disciplinas[dis[0]])
+                if self.data_disciplinas[dis[0]] in disciplinas_data:
+                    disciplinas_data[self.data_disciplinas[dis[0]]]["T"] += dis[1]["T"]
+                    disciplinas_data[self.data_disciplinas[dis[0]]]["F"] += dis[1]["F"]
+                    disciplinas_data[self.data_disciplinas[dis[0]]]["FP"] += dis[1]["FP"]
+                    disciplinas_data[self.data_disciplinas[dis[0]]]["NF"] += dis[1]["NF"]
+                else:
+                    disciplinas_data[self.data_disciplinas[dis[0]]] = {
+                        "T": dis[1]["T"],
+                        "F": dis[1]["F"],
+                        "FP": dis[1]["FP"],
+                        "NF": dis[1]["NF"],
+                    }
                 cont_dis += 1
                 cf.append(dis[1]["F"])
                 cfp.append(dis[1]["FP"])
@@ -1244,6 +1238,7 @@ class RegistroDeAtividades(gatehandler.Handler):
                         _class="phanterpwa-widget-table-data phanterpwa-widget"
                     )
                 tbody.append(tr_disciplinas)
+
 
             chart_disciplinas.add_serie("Fez", *cf, color="green")
             chart_disciplinas.add_serie("Fez Parcialmente", *cfp, color="#d28a06")
@@ -1286,6 +1281,15 @@ class RegistroDeAtividades(gatehandler.Handler):
             )
 
             chats_alunos.append(html_chart_aluno)
+        chart_disciplinas_turma = highcharts.BarStacked(
+            "grafico_disciplinas_turma_{0}".format(self.id_turma),
+            title="Distribuido pelas disciplinas",
+            *disciplinas_ordem
+        )
+        chart_disciplinas_turma.add_serie("Fez", *[disciplinas_data[x]["F"] for x in disciplinas_ordem], color="green")
+        chart_disciplinas_turma.add_serie("Fez Parcialmente", *[disciplinas_data[x]["FP"] for x in disciplinas_ordem], color="#d28a06")
+        chart_disciplinas_turma.add_serie("Não Fez", *[disciplinas_data[x]["NF"] for x in disciplinas_ordem], color="red")
+        chats_disciplinas_turma.append(chart_disciplinas_turma)
         tabela_geral.append(
             TR(
                 TD(STRONG("TOTAL TURMA"), _class="phanterpwa-widget-table-data-td"),
@@ -1299,396 +1303,249 @@ class RegistroDeAtividades(gatehandler.Handler):
 
         html.append(html_estatisticas)
         html.html_to("#content-registro_de_atividades")
-        self.diario_binds()
-
-    def diario_binds(self):
-        jQuery(
-            ".registro_de_atividades.celula_registro_de_atividades"
-        ).off(
-            "click.enviar_registro_de_atividades"
-        ).on(
-            "click.enviar_registro_de_atividades",
-            lambda: self.modal_confirmar_registro_de_atividades(jQuery(this))
-        )
-        jQuery(".tabela_coluna_modal").off(
-            "click.tabela_coluna_modal"
-        ).on(
-            "click.tabela_coluna_modal",
-            lambda: self.modal_registro_de_atividades_por_dia(this)
-        )
-
-    def abrir_diario(self, url):
-        window.location = url
-
-    def modal_confirmar_registro_de_atividades(self, el):
-        id_matricula = jQuery(el).data("id_matricula")
-        data = jQuery(el).data("dia")
-        ano, mes, dia = data.split("-")
-        mes_ext = self.meses[mes]
-        data_ext = "{0} de {1} de {2}".format(dia, mes_ext, ano)
-        id_disciplina = self.id_disciplina
-        if id_disciplina is None or id_disciplina is js_undefined:
-            id_disciplina = None
-
-        atividade = False
-        nome_aluno = self.data_registro_de_atividades[int(id_matricula)]["nome"]
-        status = self.data_registro_de_atividades[int(id_matricula)]["atividades"][data]
 
 
-        if status == "NF":
-            complement = " Atividade"
-            atividade = True
-            content = DIV(
-                P(STRONG("O(A) presente aluno(a) fez a atividade proposta?")),
-                P("No registro consta que o(a) aluno(a) não fez a atividade em ", STRONG(data_ext), ". Se o(a) aluno(a) fez completamente ou de forma satisfatória, ",
-                    " mude para ", STRONG("FEZ", _style="color: green"),
-                    ". Caso tenha feito a atividade parcialmente, você pode mudar para ", STRONG("FEZ PARCIALMENTE", _style="color: #d28a06"),
-                    "."),
-                _class="p-row"
-            )
-        elif status == "F":
-            complement = " remoção da Atividade"
-            atividade = True
-            content = DIV(
-                P(STRONG("O(A) presente aluno(a) fez a atividade proposta?")),
-                P("Pode-se observar que o(a) aluno(a) fez a atividade em ", STRONG(data_ext), " completamente ou de forma satisfatória.",
-                    " Se ele fez a atividade parcialmente, você pode mudar para ", STRONG("FEZ PARCIALMENTE", _style="color: #d28a06"),
-                    ". Caso o(a) aluno(a) não tenha feito, é só mudar para ", STRONG("NÃO FEZ", _style="color: red"), "."),
-                P("Você também pode apagar qualquer registro, é có acessar a opção ", STRONG("NÃO FEZ", _style="color: blue"), "."),
-                _class="p-row"
-            )
-        elif status == "FP":
-            complement = " remoção da Atividade"
-            atividade = True
-            content = DIV(
-                P(STRONG("O(A) presente aluno(a) fez a atividade proposta?")),
-                P("Pode-se observar que o(a) aluno(a) fez a atividade em ", STRONG(data_ext), ", porém ", STRONG("parcialmente"),
-                    ", se ele fez completamente ou de forma satisfatória, você pode mudar para ", STRONG("FEZ", _style="color: green"),
-                    ". Caso o(a) aluno(a) não tenha feito, é só mudar para ", STRONG("NÃO FEZ", _style="color: red"), "."),
-                P("Você também pode apagar qualquer registro, é có acessar a opção ", STRONG("NÃO FEZ", _style="color: blue"), "."),
-                _class="p-row"
-            )
-        else:
+class RegistroDeAtividades(gatehandler.Handler):
+    @decorators.check_authorization(lambda: window.PhanterPWA.auth_user_has_role(["administrator", "root", "Administrador Master SME", "Administrador Master Escola", "Professor(a)"]))
+    def initialize(self):
+        arg0 = window.PhanterPWA.Request.get_arg(0)
+        arg1 = window.PhanterPWA.Request.get_arg(1)
+        arg2 = window.PhanterPWA.Request.get_arg(2)
+        self.totF = 0
+        self.totFP = 0
+        self.totNF = 0
+        self.totT = 0
+        self.totalTurmas = 0
 
-            content = DIV(
-                P(STRONG("O(A) presente aluno(a) fez a atividade proposta?")),
-                P("Ainda não foi definido o status da atividade no dia ", STRONG(data_ext),
-                    ". Se ele fez completamente ou de forma satisfatória, você acessa a opção ", STRONG("FEZ", _style="color: green"),
-                    ", se ele fez parcialmente, é só acessar a opção ", STRONG("FEZ PARCIALMENTE", _style="color: #d28a06"),
-                    ". Caso o(a) aluno(a) não tenha feito, é só mudar para ", STRONG("NÃO FEZ", _style="color: red"), "."),
-                P("Você também pode apagar qualquer registro, é có acessar a opção ", STRONG("NÃO FEZ", _style="color: blue"), "."),
-                _class="p-row"
-            )
+        self.id_escola = arg0
+        self.ano_letivo = arg1
+        self.unidade = arg2
 
-        footer = DIV(
-            forms.FormButton(
-                "confirmar_atividade_fez",
-                "Fez",
-                _class="btn-autoresize wave_on_click waves-phanterpwa"
-            ) if status != "F" else "",
-            forms.FormButton(
-                "confirmar_atividade_fez_parcialmente",
-                "Fez parcialmente",
-                _class="btn-autoresize wave_on_click waves-phanterpwa"
-            ) if status != "FP" else "",
-            forms.FormButton(
-                "confirmar_atividade_nao_fez",
-                "Não fez",
-                _class="btn-autoresize wave_on_click waves-phanterpwa"
-            ) if status != "NF" else "",
-            forms.FormButton(
-                "apagar",
-                "Apagar",
-                _class="btn-autoresize wave_on_click waves-phanterpwa"
-            ) if atividade else "",
-            forms.FormButton(
-                "cancelar",
-                "Cancelar",
-                _class="btn-autoresize wave_on_click waves-phanterpwa"
-            ),
-            _class='phanterpwa-form-buttons-container'
-        )
-        self.modal_registro_de_atividades = modal.Modal(
-            "#modal_registro_de_atividades_container",
+        self.romanos = {
+            "0": "Ano inteiro",
+            "1": "Unidade I",
+            "2": "Unidade II",
+            "3": "Unidade III",
+            "4": "Unidade IV",
+            "5": "Unidade V",
+            "6": "Unidade VI",
+            "7": "Unidade VII",
+            "8": "Unidade VIII"
+        }
+        self.meses = {
+            "01": "Janeiro",
+            "02": "Fevereiro",
+            "03": "Março",
+            "04": "Abril",
+            "05": "Maio",
+            "06": "Junho",
+            "07": "Julho",
+            "08": "Agosto",
+            "09": "Setembro",
+            "10": "Outubro",
+            "11": "Novembro",
+            "12": "Dezembro"
+        }
+
+        if str(arg0).isdigit() and str(arg1).isdigit():
+            self._get_turmas()
+
+        BackButton1 = left_bar.LeftBarButton(
+            "back_estatistica_registro_de_atividades",
+            "Voltar",
+            I(_class="fas fa-arrow-circle-left"),
             **{
-                "title": nome_aluno,
-                "content": content,
-                "footer": footer,
-                "form": "registro_de_atividades"
+                "tag": "a",
+                "_href": window.PhanterPWA.XWAY(
+                    "turmas",
+                    arg0,
+                    arg1,
+                ),
+                "position": "top",
+                "show_if_way_match": r"^estatistica-registro-de-atividades\/[0-9]{1,}\/[0-9]{1,}\/[0-9]{1,}.*$"
             }
         )
-        self.modal_registro_de_atividades.open()
-        jQuery("#phanterpwa-widget-form-form_button-confirmar_atividade_nao_fez").off(
-            "click.adicionar_registro_de_atividades_fez_parcialmente"
-        ).on(
-            "click.adicionar_registro_de_atividades_fez_parcialmente",
-            lambda: self._on_click_registro_de_atividades(id_matricula, id_disciplina, "Não fez a atividade", data)
-        )
-        jQuery("#phanterpwa-widget-form-form_button-confirmar_atividade_fez").off(
-            "click.adicionar_registro_de_atividades_fez"
-        ).on(
-            "click.adicionar_registro_de_atividades_fez",
-            lambda: self._on_click_registro_de_atividades(id_matricula, id_disciplina, "Fez toda a atividade", data)
-        )
-        jQuery("#phanterpwa-widget-form-form_button-confirmar_atividade_fez_parcialmente").off(
-            "click.adicionar_registro_de_atividades_nao_fez"
-        ).on(
-            "click.adicionar_registro_de_atividades_nao_fez",
-            lambda: self._on_click_registro_de_atividades(id_matricula, id_disciplina, "Fez parcialmente a atividade", data)
-        )
-        jQuery("#phanterpwa-widget-form-form_button-apagar").off(
-            "click.adicionar_registro_de_atividades_nao"
-        ).on(
-            "click.adicionar_registro_de_atividades_nao",
-            lambda: self._on_click_registro_de_atividades(id_matricula, id_disciplina, "Apagar", data)
-        )
-        jQuery("#phanterpwa-widget-form-form_button-cancelar").off(
-            "click.adicionar_registro_de_atividades_nao"
-        ).on(
-            "click.adicionar_registro_de_atividades_nao",
-            lambda: self.modal_registro_de_atividades.close()
+
+
+        window.PhanterPWA.Components['left_bar'].add_button(BackButton1)
+
+    def porcentagem(self, valor, total):
+        if str(valor).isdigit() and str(total).isdigit():
+            valor = int(valor)
+            total = int(total)
+            if valor == 0:
+                return " (0%)"
+            else:
+                return " ({0}%)".format(((valor / total) * 100).toFixed(2))
+        return ""
+
+    def _get_turmas(self):
+
+        window.PhanterPWA.GET(
+            "api",
+            "turmas",
+            self.id_escola,
+            self.ano_letivo,
+            onComplete=self.after_get_turma
         )
 
-    def _on_click_registro_de_atividades(self, id_matricula, id_disciplina, novo_status, data):
-        formdata = __new__(FormData())
-        formdata.append(
-            "data",
-            data
-        )
-
-        formdata.append(
-            "status",
-            novo_status
-        )
-        if self.id_disciplina is not None and self.id_disciplina is not js_undefined:
-            window.PhanterPWA.PUT(
-                "api",
-                "registro-de-atividades",
-                self.id_escola,
-                self.ano_letivo,
-                id_matricula,
-                id_disciplina,
-                form_data=formdata,
-                onComplete=lambda data, ajax_status: self.depois_de_enviar_registro(data, ajax_status)
-            )
-        else:
-            window.PhanterPWA.PUT(
-                "api",
-                "registro-de-atividades",
-                self.id_escola,
-                self.ano_letivo,
-                id_matricula,
-                form_data=formdata,
-                onComplete=lambda data, ajax_status: self.depois_de_enviar_registro(data, ajax_status)
-            )
-        self.modal_registro_de_atividades.close()
-
-    def depois_de_enviar_registro(self, data, ajax_status):
+    def after_get_turma(self, data, ajax_status):
         if ajax_status == "success":
             json = data.responseJSON
-            up = json.celula_update
-            if up is not None and up is not js_undefined:
-                data, id_matricula = up[0].split("-")
+            self.turmas = json.data.turmas
+            self.unidades = json.unidades
+            self.processar_turmas()
 
-                if up[1] == "Fez parcialmente a atividade":
-                    jQuery("#{0}".format(up[0])).html(I(_class="fas fa-check-circle", _style="color:#d28a06;").jquery())
-                    self.data_registro_de_atividades[int(id_matricula)]["atividades"][str(data).replace("_", "-")] = "FP"
-                elif up[1] == "Não fez a atividade":
-                    jQuery("#{0}".format(up[0])).html(I(_class="fas fa-check-circle", _style="color:red;").jquery())
-                    self.data_registro_de_atividades[int(id_matricula)]["atividades"][str(data).replace("_", "-")] = "NF"
-                elif up[1] == "Fez toda a atividade":
-                    jQuery("#{0}".format(up[0])).html(I(_class="fas fa-check-circle", _style="color:green;").jquery())
-                    self.data_registro_de_atividades[int(id_matricula)]["atividades"][str(data).replace("_", "-")] = "F"
-                else:
-                    jQuery("#{0}".format(up[0])).html(DIV(up[2], _class="apagadinho").jquery())
-                    del self.data_registro_de_atividades[int(id_matricula)]["atividades"][str(data).replace("_", "-")]
+    def processar_turmas(self):
 
-            self.diario_binds()
-
-    def modal_registro_de_atividades_por_dia(self, el):
-        dia_mes_e_ano = jQuery(el).data("dia_mes_e_ano")
-        ano, mes, _dia = dia_mes_e_ano.split("-")
-        mes_ext = self.meses[mes]
-        data_ext = "{0} de {1} de {2}".format(_dia, mes_ext, ano)
-
-        tabela = TABLE(
+        tr_inicial = TBODY(
             TR(
-                TH("Nº", _class="rotulo", _rowspan=2),
-                TH("NOME ALUNO(A)", _class="rotulo cabecalho_aluno", _rowspan=2),
-                TH("OPÇÕES", _class="rotulo", _colspan=3),
-                TH("A", _title="Apagar", _class="rotulo", _rowspan=2)
+                TH("TURMA"),
+                TH("FEZ (%)", _class="centralizado"),
+                TH("FEZ PARCIALMENTE (%)", _class="centralizado"),
+                TH("NÃO FEZ (%)", _class="centralizado"),
+                TH("TOTAL (100%)", _class="centralizado"),
+                _class="rotulo_estat_registro_de_atividades phanterpwa-widget-table-head phanterpwa-widget"
             ),
-            TR(
-                TH("F", _title="Fez", _class="rotulo"),
-                TH("FP", _title="Fez Parcialmente", _class="rotulo"),
-                TH("NF", _title="Não Fez", _class="rotulo"),
-            ),
-            _class='tabela_modal_registro_de_atividades'
+            _class="tbody-estat_registro_de_atividades-container"
         )
-        self.data_temp = {}
-        for v in self.data_registro_de_atividades_keys:
-            x = self.data_registro_de_atividades[v]
-            self.data_temp[v] = [v, dia_mes_e_ano]
-            linha = TR(TH(x.numero, _rowspan=x.tot_disciplinas), TH(x.nome, _rowspan=x.tot_disciplinas))
-            body = TBODY(linha, _class="tbody_registro_de_atividades")
-            proximas_linhas = []
-            cont = 0
-            _class_f = ""
-            _class_fp = ""
-            _class_nf = ""
-            _class_a = ""
-            if dia_mes_e_ano in dict(x.atividades).keys():
-                if x.atividades[dia_mes_e_ano] == "F":
-                    _class_f = " ativado"
-                    self.data_temp[v].append("F")
-                elif x.atividades[dia_mes_e_ano] == "FP":
-                    _class_fp = " ativado"
-                    self.data_temp[v].append("FP")
-                elif x.atividades[dia_mes_e_ano] == "NF":
-                    _class_nf = " ativado"
-                    self.data_temp[v].append("NF")
-                else:
-                    _class_a = " ativado"
-            else:
-                _class_a = " ativado"
-                self.data_temp[v].append("")
 
-            linha.append(TD(
-                I(_class="fas fa-check-circle"),
-                _class="modal_registro_de_atividades modal_registro_de_atividades{0} modal_registro_de_atividades{1} valorf".format(x.id, _class_f),
-                _id="{0}-{1}-f".format(str(dia_mes_e_ano).replace("-", "_"), x.id),
-                **{"_data-id_matricula": x.id, "_data-dia_mes_e_ano": dia_mes_e_ano, "_data-valor": "F"}
-            ))
-            linha.append(TD(
-                I(_class="fas fa-check-circle"),
-                _class="modal_registro_de_atividades modal_registro_de_atividades{0} modal_registro_de_atividades{1} valorfp".format(x.id, _class_fp),
-                _id="{0}-{1}-fp".format(str(dia_mes_e_ano).replace("-", "_"), x.id),
-                **{"_data-id_matricula": x.id, "_data-dia_mes_e_ano": dia_mes_e_ano, "_data-valor": "FP"}
-            ))
-            linha.append(TD(
-                I(_class="fas fa-check-circle"),
-                _class="modal_registro_de_atividades modal_registro_de_atividades{0} modal_registro_de_atividades{1} valornf".format(x.id, _class_nf),
-                _id="{0}-{1}-nf".format(str(dia_mes_e_ano).replace("-", "_"), x.id),
-                **{"_data-id_matricula": x.id, "_data-dia_mes_e_ano": dia_mes_e_ano, "_data-valor": "NF"}
-            ))
-            linha.append(TD(
-                I(_class="fas fa-eraser"),
-                _class="modal_registro_de_atividades modal_registro_de_atividades{0} modal_registro_de_atividades{1} valora".format(x.id, _class_a),
-                _id="{0}-{1}-nf".format(str(dia_mes_e_ano).replace("-", "_"), x.id),
-                **{"_data-id_matricula": x.id, "_data-dia_mes_e_ano": dia_mes_e_ano, "_data-valor": "A"}
-            ))
-            tabela.append(
-                body
+        self.html_tabela = TABLE(
+            THEAD(TR(TD(BR(), _class="thead_estat_registro_de_atividades"))),
+            TFOOT(TR(TD(BR(), _class="tfoot_estat_registro_de_atividades"))),
+            tr_inicial,
+            _class="tabela_estat_registro_de_atividades_container1 phanterpwa-widget-table p-row"
+        )
+
+        html = CONCATENATE(
+            DIV(
+                DIV(
+                    DIV(
+                        DIV("ESTATÍSTICAS", _class="phanterpwa-breadcrumb"),
+                        DIV("CONTROLE DE ATIVIDADES", _class="phanterpwa-breadcrumb"),
+                        DIV(self.romanos[str(self.unidade)], _class="phanterpwa-breadcrumb"),
+                        _class="phanterpwa-breadcrumb-wrapper"
+                    ),
+                    _class="p-container extend"),
+                _class='title_page_container card'
+            ),
+            DIV(
+                DIV(
+                    DIV(
+                        DIV(
+                            DIV(_id="titulo_periodo"),
+                            DIV(self.html_tabela, _class="phanterpwa-widget-table-container phanterpwa-widget"),
+                            _id="content-estat_registro_de_atividades",
+                            _class='p-row e-padding_auto continuos'
+                        ),
+                        _class="phanterpwa-media-print-container"
+                    ),
+                    _class="card"
+                ),
+                DIV(_id="modal_cmp_curriculares_container"),
+                _class="phanterpwa-container p-container extend"
+            )
+        )
+
+        for x in self.turmas:
+            self.totalTurmas += 1
+            self.html_tabela.append(
+                TBODY(
+                    TR(
+                        TD(STRONG(x.turma), _class="phanterpwa-widget-table-data-td"),
+                        TD(
+                            DIV(
+                                preloaders.run_points
+                            ),
+                            _colspan=4,
+                            _style="text-align: center;",
+                            _class="phanterpwa-widget-table-data-td"
+                        ),
+                        _class="phanterpwa-widget-table-data"
+                    ),
+                    _id="tbody_est_tur_{0}".format(x.id),
+                    _class="tbody-indicador-container"
+                )
+            )
+        self.html_tabela.append(
+                TBODY(
+                    TR(
+                        TD(STRONG("TOTAL FINAL"), _class="phanterpwa-widget-table-data-td"),
+                        TD(
+                            DIV(
+                                preloaders.run_points
+                            ),
+                            _class="phanterpwa-widget-table-data-td",
+                            _colspan=4,
+                            _style="text-align: center;"
+                        ),
+                        _class="phanterpwa-widget-table-data"
+                    ),
+                    _id="tbody_est_total_final",
+                    _class="tbody-indicador-container"
+                )
             )
 
-        titulo_modal = "Atividades do dia {0}".format(data_ext)
-        footer = DIV(
-            forms.FormButton(
-                "confirmar_atividades",
-                "Salvar Alterações",
-                _class="btn-autoresize wave_on_click waves-phanterpwa"
-            ),
-            _class='phanterpwa-form-buttons-container'
-        )
-        self.modal_dia_registro_de_atividades = modal.Modal(
-            "#modal_dia_registro_de_atividades_container",
-            **{
-                "title": titulo_modal,
-                "content": tabela,
-                "footer": footer
-            }
-        )
-        self.modal_dia_registro_de_atividades.open()
-        self.diario_modal_binds()
+        html.html_to("#main-container")
+        for x in self.turmas:
+            self._get_estatistica_registro_de_atividades(x.id)
 
-    def diario_modal_binds(self):
-        jQuery(".modal_registro_de_atividades").off("click.mod_contr").on(
-            "click.mod_contr",
-            lambda: self.add_opcoes(this)
-        )
-        jQuery("#phanterpwa-widget-form-form_button-confirmar_atividades").off("click.mod_contr_conf").on(
-            "click.mod_contr_conf",
-            lambda: self.confirmar_modal_atividades()
+    def _get_estatistica_registro_de_atividades(self, id_turma):
+
+        window.PhanterPWA.GET(
+            "api",
+            "estatisticas",
+            "registro-de-atividades",
+            self.id_escola,
+            self.ano_letivo,
+            id_turma,
+            self.unidade,
+            "turmas",
+            onComplete=lambda data, ajax_status: self.criar_estatisticas(id_turma, data, ajax_status)
         )
 
-    def add_opcoes(self, el):
-        element = jQuery(el)
-        id_matricula = int(element.data("id_matricula"))
-        dia_mes_e_ano = element.data("dia_mes_e_ano")
-        valor = element.data("valor")
-        if element.hasClass("ativado"):
-            if not element.hasClass("valora"):
-                element.removeClass("ativado")
-                if id_matricula in self.data_temp.keys():
-                    self.data_temp[id_matricula][2] = ""
-                else:
-                    self.data_temp[id_matricula] = [id_matricula, dia_mes_e_ano, ""]
-                jQuery(".modal_registro_de_atividades{0}.valora".format(id_matricula)).addClass("ativado")
-        else:
-            if valor == "A":
-                valor = ""
-            jQuery(".modal_registro_de_atividades{0}".format(id_matricula)).removeClass("ativado")
-            element.addClass("ativado")
-            if id_matricula in self.data_temp.keys():
-                self.data_temp[id_matricula][2] = valor
-            else:
-                self.data_temp[id_matricula] = [id_matricula, dia_mes_e_ano, valor]
+    def iso_br(self, data_iso):
+        ano, mes, dia = data_iso.split("-")
+        return "{0}/{1}/{2}".format(dia, mes, ano)
 
-    def confirmar_modal_atividades(self):
-        formdata = __new__(FormData())
-        formdata.append(
-            "atividades",
-            JSON.stringify([self.data_temp[x] for x in self.data_temp.keys()])
-        )
-
-        if self.id_disciplina is not None and self.id_disciplina is not js_undefined:
-            window.PhanterPWA.PUT(
-                "api",
-                "registro-de-atividades",
-                self.id_escola,
-                self.ano_letivo,
-                self.id_turma,
-                "atividades",
-                self.id_disciplina,
-                form_data=formdata,
-                onComplete=lambda data, ajax_status: self.depois_de_enviar_registro_modal(data, ajax_status)
-            )
-        else:
-            window.PhanterPWA.PUT(
-                "api",
-                "registro-de-atividades",
-                self.id_escola,
-                self.ano_letivo,
-                "atividades",
-                form_data=formdata,
-                onComplete=lambda data, ajax_status: self.depois_de_enviar_registro_modal(data, ajax_status)
-            )
-        self.modal_dia_registro_de_atividades.close()
-
-    def depois_de_enviar_registro_modal(self, data, ajax_status):
+    def criar_estatisticas(self, id_turma, data, ajax_status):
         if ajax_status == "success":
             json = data.responseJSON
-            atividades = json.atividades
+            titulo_painel = "{0} - Período de {1} à {2}".format(
+                self.romanos[str(json.unidade)],
+                self.iso_br(json.data_inicial),
+                self.iso_br(json.data_final)
+            )
 
-            if atividades is not None and atividades is not js_undefined:
-                for up in atividades:
-                    id_matricula = up[0]
-                    data = up[1]
-                    element_id = "{0}-{1}".format(str(data).replace("-", "_"), id_matricula)
+            html_titulo = DIV(
+                H2("Estatísticas do Controle de Atividades da Escola"),
+                H2(titulo_painel),
+                _class="registro_de_atividades_container"
+            )
+            html_titulo.html_to("#titulo_periodo")
+            self.totF += json.totais_turma["F"]
+            self.totFP += json.totais_turma["FP"]
+            self.totNF += json.totais_turma["NF"]
+            self.totT += json.totais_turma["T"]
 
-                    if up[2] == "FP":
-                        jQuery("#{0}".format(element_id)).html(I(_class="fas fa-check-circle", _style="color:#d28a06;").jquery())
-                        self.data_registro_de_atividades[int(id_matricula)]["atividades"][str(data)] = "FP"
-                    elif up[2] == "NF":
-                        jQuery("#{0}".format(element_id)).html(I(_class="fas fa-check-circle", _style="color:red;").jquery())
-                        self.data_registro_de_atividades[int(id_matricula)]["atividades"][str(data)] = "NF"
-                    elif up[2] == "F":
-                        jQuery("#{0}".format(element_id)).html(I(_class="fas fa-check-circle", _style="color:green;").jquery())
-                        self.data_registro_de_atividades[int(id_matricula)]["atividades"][str(data)] = "F"
-                    else:
-                        jQuery("#{0}".format(element_id)).html(DIV(str(data)[-2:], _class="apagadinho").jquery())
-                        del self.data_registro_de_atividades[int(id_matricula)]["atividades"][str(data)]
-                self.diario_binds()
-
+            html_linha_turma = TR(
+                TD(STRONG(json.turma), _class="phanterpwa-widget-table-data-td"),
+                TD("{0} {1}".format(json.totais_turma["F"], self.porcentagem(json.totais_turma["F"], json.totais_turma["T"])), _class="phanterpwa-widget-table-data-td centralizado"),
+                TD("{0} {1}".format(json.totais_turma["FP"], self.porcentagem(json.totais_turma["FP"], json.totais_turma["T"])), _class="phanterpwa-widget-table-data-td centralizado"),
+                TD("{0} {1}".format(json.totais_turma["NF"], self.porcentagem(json.totais_turma["NF"], json.totais_turma["T"])), _class="phanterpwa-widget-table-data-td centralizado"),
+                TD(json.totais_turma["T"], _class="phanterpwa-widget-table-data-td centralizado"),
+                _class="phanterpwa-widget-table-data phanterpwa-widget"
+            )
+            html_linha_turma.html_to("#tbody_est_tur_{0}".format(id_turma))
+            self.totalTurmas -= 1
+            if self.totalTurmas == 0:
+                TR(
+                    TD(STRONG("TOTAL FINAL"), _class="phanterpwa-widget-table-data-td"),
+                    TD("{0} {1}".format(self.totF, self.porcentagem(self.totF, self.totT)), _class="phanterpwa-widget-table-data-td centralizado"),
+                    TD("{0} {1}".format(self.totFP, self.porcentagem(self.totFP, self.totT)), _class="phanterpwa-widget-table-data-td centralizado"),
+                    TD("{0} {1}".format(self.totNF, self.porcentagem(self.totNF, self.totT)), _class="phanterpwa-widget-table-data-td centralizado"),
+                    TD(self.totT, _class="phanterpwa-widget-table-data-td centralizado"),
+                    _class="phanterpwa-widget-table-data"
+                ).html_to("#tbody_est_total_final")
 
 __pragma__('nokwargs')

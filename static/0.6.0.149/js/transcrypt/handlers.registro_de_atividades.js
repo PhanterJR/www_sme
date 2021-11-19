@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2021-11-09 16:43:35
+// Transcrypt'ed from Python, 2021-11-18 22:50:21
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import * as anos_letivos from './handlers.anos_letivos.js';
 import * as escolas from './handlers.escolas.js';
@@ -409,9 +409,9 @@ export var RegistroDeAtividades =  __class__ ('RegistroDeAtividades', [object], 
 		}
 		var unidades_disponiveis = DIV (__kwargtrans__ ({_class: 'unidades_disponiveis'}));
 		for (var x of self.periodo_unidades) {
-			unidades_disponiveis.append (DIV (A ('{0} - {1} à {2}'.format (self.romanos [str (x [0])], self.iso_br (x [1]), self.iso_br (x [2])), __kwargtrans__ ({_href: window.PhanterPWA.XWAY ('estatistica-registro-de-atividades', self.id_escola, self.ano_letivo, self.id_turma, str (x [0]), self.id_disciplina), _class: 'btn e-link'})), __kwargtrans__ ({_class: 'botao_estatistica_unidades'})));
+			unidades_disponiveis.append (DIV (A ('{0} - {1} à {2}'.format (self.romanos [str (x [0])], self.iso_br (x [1]), self.iso_br (x [2])), __kwargtrans__ ({_href: window.PhanterPWA.XWAY ('estatistica-registro-de-atividades-turma', self.id_escola, self.ano_letivo, self.id_turma, str (x [0]), self.id_disciplina), _class: 'btn e-link'})), __kwargtrans__ ({_class: 'botao_estatistica_unidades'})));
 		}
-		unidades_disponiveis.append (DIV (A ('Todas as unidades', __kwargtrans__ ({_href: window.PhanterPWA.XWAY ('estatistica-registro-de-atividades', self.id_escola, self.ano_letivo, self.id_turma, '0', self.id_disciplina), _class: 'btn e-link'})), __kwargtrans__ ({_class: 'botao_estatistica_unidades'})));
+		unidades_disponiveis.append (DIV (A ('Todas as unidades', __kwargtrans__ ({_href: window.PhanterPWA.XWAY ('estatistica-registro-de-atividades-turma', self.id_escola, self.ano_letivo, self.id_turma, '0', self.id_disciplina), _class: 'btn e-link'})), __kwargtrans__ ({_class: 'botao_estatistica_unidades'})));
 		self.modal_estatisticas = modal.Modal ('#modal_estatisticas_unidades_registro_de_atividades', __kwargtrans__ (dict ({'title': 'Escolha a Unidade', 'content': unidades_disponiveis})));
 		self.modal_estatisticas.open ();
 		$ ('.botao_estatistica_unidades').off ('click.ests').on ('click.ests', (function __lambda__ () {

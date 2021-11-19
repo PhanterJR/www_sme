@@ -57,6 +57,7 @@ gates = {
     'administrar-escola': administrar_escola.Index,
     'estatistica-controle-de-atividades': estatisticas.ControleDeAtividades,
     'estatistica-registro-de-atividades': estatisticas.RegistroDeAtividades,
+    'estatistica-registro-de-atividades-turma': estatisticas.RegistroDeAtividadesTurma,
     'pais-e-alunos': pais_e_alunos.Index,
     'area-do-servidor': servidores.Index,
     'identificar-servidor': identificar_servidor.Index,

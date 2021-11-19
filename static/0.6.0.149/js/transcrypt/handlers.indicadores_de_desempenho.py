@@ -122,7 +122,6 @@ class IndicadoresDeDesempenho():
             self.unidades = json.unidades
             self.processar_turmas()
 
-
     def processar_turmas(self):
 
         tr_inicial = TBODY(

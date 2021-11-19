@@ -432,7 +432,7 @@ class RegistroDeAtividades():
                             self.iso_br(x[2])
                         ),
                         _href=window.PhanterPWA.XWAY(
-                            "estatistica-registro-de-atividades",
+                            "estatistica-registro-de-atividades-turma",
                             self.id_escola,
                             self.ano_letivo,
                             self.id_turma,
@@ -449,7 +449,7 @@ class RegistroDeAtividades():
                 A(
                     "Todas as unidades",
                     _href=window.PhanterPWA.XWAY(
-                        "estatistica-registro-de-atividades",
+                        "estatistica-registro-de-atividades-turma",
                         self.id_escola,
                         self.ano_letivo,
                         self.id_turma,

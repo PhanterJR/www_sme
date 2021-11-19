@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2021-11-17 23:03:10
+// Transcrypt'ed from Python, 2021-11-18 22:50:22
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import * as anos_letivos from './handlers.anos_letivos.js';
 import * as escolas from './handlers.escolas.js';
@@ -178,6 +178,8 @@ export var TurmasSimples =  __class__ ('TurmasSimples', [helpers.XmlConstructor]
 		self.tem_turma = true;
 		self.ano_letivo = ano_letivo;
 		self.index_instance = index_instance;
+		self.meses = dict ({'01': 'Janeiro', '02': 'Fevereiro', '03': 'Março', '04': 'Abril', '05': 'Maio', '06': 'Junho', '07': 'Julho', '08': 'Agosto', '09': 'Setembro', '10': 'Outubro', '11': 'Novembro', '12': 'Dezembro'});
+		self.romanos = dict ({'0': 'Ano inteiro', '1': 'Unidade I', '2': 'Unidade II', '3': 'Unidade III', '4': 'Unidade IV', '5': 'Unidade V', '6': 'Unidade VI', '7': 'Unidade VII', '8': 'Unidade VIII'});
 		helpers.XmlConstructor.__init__ (self, 'div', false, self.initial_xml (), __kwargtrans__ ({_class: 'lista_de_turmas_simples'}));
 		self._get_turmas ();
 	});},
@@ -195,7 +197,7 @@ export var TurmasSimples =  __class__ ('TurmasSimples', [helpers.XmlConstructor]
 		}
 		else {
 		}
-		var html = CONCATENATE (DIV (DIV (DIV (DIV (self.ano_letivo, __kwargtrans__ ({_class: 'phanterpwa-breadcrumb'})), DIV ('TURMAS', __kwargtrans__ ({_class: 'phanterpwa-breadcrumb'})), __kwargtrans__ ({_class: 'phanterpwa-breadcrumb-wrapper'})), __kwargtrans__ ({_class: 'p-container'})), __kwargtrans__ ({_class: 'title_page_container card'})), DIV (DIV (DIV (DIV (preloaders.android, __kwargtrans__ ({_style: 'width: 300px; height: 300px; overflow: hidden; margin: auto;'})), __kwargtrans__ ({_style: 'text-align:center; padding: 50px 0;'})), __kwargtrans__ ({_id: 'content-turmas', _class: 'p-row card e-padding_20'})), __kwargtrans__ ({_class: 'phanterpwa-container p-container'})));
+		var html = CONCATENATE (DIV (DIV (DIV (DIV (self.ano_letivo, __kwargtrans__ ({_class: 'phanterpwa-breadcrumb'})), DIV ('TURMAS', __kwargtrans__ ({_class: 'phanterpwa-breadcrumb'})), __kwargtrans__ ({_class: 'phanterpwa-breadcrumb-wrapper'})), __kwargtrans__ ({_class: 'p-container'})), __kwargtrans__ ({_class: 'title_page_container card'})), DIV (DIV (DIV (DIV (preloaders.android, __kwargtrans__ ({_style: 'width: 300px; height: 300px; overflow: hidden; margin: auto;'})), __kwargtrans__ ({_style: 'text-align:center; padding: 50px 0;'})), __kwargtrans__ ({_id: 'content-turmas', _class: 'p-row card e-padding_20'})), DIV (__kwargtrans__ ({_id: 'modal_estatisticas_unidades_registro_de_atividades'})), __kwargtrans__ ({_class: 'phanterpwa-container p-container'})));
 		html.html_to ('#main-container');
 		return html;
 	});},
@@ -215,7 +217,7 @@ export var TurmasSimples =  __class__ ('TurmasSimples', [helpers.XmlConstructor]
 		}
 		self.tem_turma = true;
 		var logo = '{0}/api/escolas/{1}/image'.format (window.PhanterPWA.ApiServer.remote_address, self.id_escola);
-		var html = DIV (DIV (DIV (DIV (IMG (__kwargtrans__ ({_src: logo})), __kwargtrans__ ({_class: 'escolas-container-info-image', _style: 'text-align: center;'})), __kwargtrans__ ({_class: 'p-col w1p100 w4p30'})), DIV (H2 ('NESTE PAINEL É POSSÍVEL MUDAR A ORDEM, EDITAR, EXCLUIR CADA TURMA OU CRIAR UMA NOVA.'), P ('Definindo as séries às turmas automaticamente estará definindo as disciplinas da mesma.', ' Para mais detalhes nas turmas clique no botão ', I (__kwargtrans__ ({_class: 'fas fa-list-alt'})), '.'), P ('É possível adicionar uma nova turma clicando em ', I (__kwargtrans__ ({_class: 'fas fa-plus'})), '.'), P ('Para mudar a ordem basta arrastar a turma na posição desejada.'), __kwargtrans__ ({_class: 'p-col w1p100 w4p70', _id: 'u_informacao_series'})), __kwargtrans__ ({_class: 'p-row'})), DIV (LABEL ('Lista de Turmas disponíveis', __kwargtrans__ ({_for: 'phanterpwa-card-panel-control-{0}'.format ('lista_de_turmas_simples')})), DIV (DIV (DIV (DIV (self.xml_tabela_turmas (), __kwargtrans__ ({_class: 'p-row'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-content'})), DIV (DIV (I (__kwargtrans__ ({_class: 'fas fa-plus'})), __kwargtrans__ (dict ({'_class': 'botao_nova_turma icon_button', '_title': 'Adicione uma nova turma', '_data-id_escola': self.id_escola, '_data-id_ano_letivo': self.ano_letivo}))), A (I (__kwargtrans__ ({_class: 'fas fa-list-alt'})), __kwargtrans__ (dict ({'_class': 'botao_turma_detalhada icon_button', '_title': 'Turmas detalhadas', '_href': window.PhanterPWA.XWAY ('turmas', self.id_escola, self.ano_letivo, 'detalhado')}))), A (I (__kwargtrans__ ({_class: 'fas fa-percentage'})), __kwargtrans__ (dict ({'_class': 'botao_indicador_desempenho icon_button', '_title': 'Indicadores de Desempenho', '_href': window.PhanterPWA.XWAY ('indicadores-de-desempenho', self.id_escola, self.ano_letivo)}))), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-buttons'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-wrapper has_buttons'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-container'})), DIV (__kwargtrans__ ({_id: 'modal_turma_case'})), DIV (__kwargtrans__ ({_id: 'modal_disciplinas_professores'})), DIV (__kwargtrans__ ({_id: 'modal_visualizar_aluno'})), __kwargtrans__ ({_id: 'phanterpwa-card-panel-control-{0}'.format ('lista_de_turmas_simples'), _class: 'phanterpwa-card-panel-control'})), __kwargtrans__ ({_class: 'turmas-turmas-container'}));
+		var html = DIV (DIV (DIV (DIV (IMG (__kwargtrans__ ({_src: logo})), __kwargtrans__ ({_class: 'escolas-container-info-image', _style: 'text-align: center;'})), __kwargtrans__ ({_class: 'p-col w1p100 w4p30'})), DIV (H2 ('NESTE PAINEL É POSSÍVEL MUDAR A ORDEM, EDITAR, EXCLUIR CADA TURMA OU CRIAR UMA NOVA.'), P ('Definindo as séries às turmas automaticamente estará definindo as disciplinas da mesma.', ' Para mais detalhes nas turmas clique no botão ', I (__kwargtrans__ ({_class: 'fas fa-list-alt'})), '.'), P ('É possível adicionar uma nova turma clicando em ', I (__kwargtrans__ ({_class: 'fas fa-plus'})), '.'), P ('Para mudar a ordem basta arrastar a turma na posição desejada.'), __kwargtrans__ ({_class: 'p-col w1p100 w4p70', _id: 'u_informacao_series'})), __kwargtrans__ ({_class: 'p-row'})), DIV (LABEL ('Lista de Turmas disponíveis', __kwargtrans__ ({_for: 'phanterpwa-card-panel-control-{0}'.format ('lista_de_turmas_simples')})), DIV (DIV (DIV (DIV (self.xml_tabela_turmas (), __kwargtrans__ ({_class: 'p-row'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-content'})), DIV (DIV (I (__kwargtrans__ ({_class: 'fas fa-plus'})), __kwargtrans__ (dict ({'_class': 'botao_nova_turma icon_button', '_title': 'Adicione uma nova turma', '_data-id_escola': self.id_escola, '_data-id_ano_letivo': self.ano_letivo}))), A (I (__kwargtrans__ ({_class: 'fas fa-list-alt'})), __kwargtrans__ (dict ({'_class': 'botao_turma_detalhada icon_button', '_title': 'Turmas detalhadas', '_href': window.PhanterPWA.XWAY ('turmas', self.id_escola, self.ano_letivo, 'detalhado')}))), A (I (__kwargtrans__ ({_class: 'fas fa-percentage'})), __kwargtrans__ (dict ({'_class': 'botao_indicador_desempenho icon_button', '_title': 'Indicadores de Desempenho', '_href': window.PhanterPWA.XWAY ('indicadores-de-desempenho', self.id_escola, self.ano_letivo)}))), DIV (I (__kwargtrans__ ({_class: 'fas fa-chart-pie'})), __kwargtrans__ (dict ({'_class': 'botao_estatistica_registro_atividades icon_button', '_title': 'Resumo Controle de Atividades'}))), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-buttons'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-wrapper has_buttons'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-container'})), DIV (__kwargtrans__ ({_id: 'modal_turma_case'})), DIV (__kwargtrans__ ({_id: 'modal_disciplinas_professores'})), DIV (__kwargtrans__ ({_id: 'modal_visualizar_aluno'})), __kwargtrans__ ({_id: 'phanterpwa-card-panel-control-{0}'.format ('lista_de_turmas_simples'), _class: 'phanterpwa-card-panel-control'})), __kwargtrans__ ({_class: 'turmas-turmas-container'}));
 		html.html_to ('#content-turmas');
 		if (!(self.tem_turma)) {
 			$ ('#phanterpwa-card-panel-control-lista_de_turmas_simples').find ('.botao_turma_detalhada').fadeOut ();
@@ -368,6 +370,19 @@ export var TurmasSimples =  __class__ ('TurmasSimples', [helpers.XmlConstructor]
 			else {
 			}
 			return self.colar_dados (this);
+		}));
+		$ ('.botao_estatistica_registro_atividades').off ('click.botao_estatistica_registro_atividades').on ('click.botao_estatistica_registro_atividades', (function __lambda__ () {
+			if (arguments.length) {
+				var __ilastarg0__ = arguments.length - 1;
+				if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+					var __allkwargs0__ = arguments [__ilastarg0__--];
+					for (var __attrib0__ in __allkwargs0__) {
+					}
+				}
+			}
+			else {
+			}
+			return self.modal_estatisticas_unidades ();
 		}));
 	});},
 	get deletar_turma () {return __get__ (this, function (self, widget_instance) {
@@ -599,6 +614,7 @@ export var TurmasSimples =  __class__ ('TurmasSimples', [helpers.XmlConstructor]
 			var json = data.responseJSON;
 			self.lista_de_turmas = json.data.turmas;
 			self.data_set_series = json.data.series;
+			self.periodo_unidades = json.periodo_unidades;
 			self.turmas_disponiveis ();
 		}
 	});},
@@ -682,6 +698,62 @@ export var TurmasSimples =  __class__ ('TurmasSimples', [helpers.XmlConstructor]
 				return self.update_turma (data, ajax_status);
 			})})));
 		}
+	});},
+	get iso_br () {return __get__ (this, function (self, data_iso) {
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+					switch (__attrib0__) {
+						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+						case 'data_iso': var data_iso = __allkwargs0__ [__attrib0__]; break;
+					}
+				}
+			}
+		}
+		else {
+		}
+		var __left0__ = data_iso.py_split ('-');
+		var ano = __left0__ [0];
+		var mes = __left0__ [1];
+		var dia = __left0__ [2];
+		return '{0}/{1}/{2}'.format (dia, mes, ano);
+	});},
+	get modal_estatisticas_unidades () {return __get__ (this, function (self) {
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+					switch (__attrib0__) {
+						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+					}
+				}
+			}
+		}
+		else {
+		}
+		var unidades_disponiveis = DIV (__kwargtrans__ ({_class: 'unidades_disponiveis'}));
+		for (var x of self.periodo_unidades) {
+			unidades_disponiveis.append (DIV (A ('{0} - {1} à {2}'.format (self.romanos [str (x [0])], self.iso_br (x [1]), self.iso_br (x [2])), __kwargtrans__ ({_href: window.PhanterPWA.XWAY ('estatistica-registro-de-atividades', self.id_escola, self.ano_letivo, str (x [0])), _class: 'btn e-link'})), __kwargtrans__ ({_class: 'botao_estatistica_unidades'})));
+		}
+		unidades_disponiveis.append (DIV (A ('Todas as unidades', __kwargtrans__ ({_href: window.PhanterPWA.XWAY ('estatistica-registro-de-atividades', self.id_escola, self.ano_letivo, '0'), _class: 'btn e-link'})), __kwargtrans__ ({_class: 'botao_estatistica_unidades'})));
+		self.modal_estatisticas = modal.Modal ('#modal_estatisticas_unidades_registro_de_atividades', __kwargtrans__ (dict ({'title': 'Escolha a Unidade', 'content': unidades_disponiveis})));
+		self.modal_estatisticas.open ();
+		$ ('.botao_estatistica_unidades').off ('click.ests').on ('click.ests', (function __lambda__ () {
+			if (arguments.length) {
+				var __ilastarg0__ = arguments.length - 1;
+				if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+					var __allkwargs0__ = arguments [__ilastarg0__--];
+					for (var __attrib0__ in __allkwargs0__) {
+					}
+				}
+			}
+			else {
+			}
+			return self.modal_estatisticas.close ();
+		}));
 	});}
 });
 export var TurmasDetalhado =  __class__ ('TurmasDetalhado', [helpers.XmlConstructor], {
