@@ -628,7 +628,9 @@ class TurmasSimples(helpers.XmlConstructor):
                 "title": titulo_mod,
                 "content": content,
                 "footer": footer,
-                "form": "turma"
+                "form": "turma",
+                "header_height": 50,
+                "footer_height": 65
             }
         )
         self.modal_turma.open()
@@ -764,7 +766,9 @@ class TurmasSimples(helpers.XmlConstructor):
             "#modal_estatisticas_unidades_registro_de_atividades",
             **{
                 "title": "Escolha a Unidade",
-                "content": unidades_disponiveis
+                "content": unidades_disponiveis,
+                "header_height": 50,
+                "footer_height": 20,
             }
         )
         self.modal_estatisticas.open()
@@ -1368,7 +1372,8 @@ class TurmasDetalhado(helpers.XmlConstructor):
                                 _style="color: red; font-size: 0.7em;"),
                         ),
                         "content": content,
-                        "form": "turma"
+                        "form": "turma",
+                        "header_height": 65,
                     }
                 )
                 self.modal_remanejar.open()
@@ -1424,6 +1429,8 @@ class TurmasDetalhado(helpers.XmlConstructor):
                 "title": "Retirar aluno da turma",
                 "content": content,
                 "footer": footer,
+                "header_height": 60,
+                "footer_height": 20,
                 "form": "remover_matricula_da_turma"
             }
         )
@@ -1593,6 +1600,8 @@ class TurmasDetalhado(helpers.XmlConstructor):
                         "title": DIV("LISTA DE DISCIPLINAS E SEUS RESPECTIVOS PROFESSORES"),
                         "content": content,
                         "footer": footer,
+                        "header_height": 60,
+                        "footer_height": 65,
                         "form": "professores-disciplinas"
                     }
                 )
@@ -1709,7 +1718,7 @@ class TurmasDetalhado(helpers.XmlConstructor):
                 **{
                     "title": CONCATENATE(DIV("Visualizar dados do aluno"),
                         DIV(STRONG(json.data.nome))),
-                    "content": content
+                    "content": content,
                 }
             )
             self.modal_visualizar.open()
@@ -2288,7 +2297,8 @@ class TurmaEspecifica():
                                 _style="color: red; font-size: 0.7em;"),
                         ),
                         "content": content,
-                        "form": "turma"
+                        "form": "turma",
+                        "header_height": 65,
                     }
                 )
                 self.modal_remanejar.open()
@@ -2344,6 +2354,8 @@ class TurmaEspecifica():
                 "title": "Retirar aluno da turma",
                 "content": content,
                 "footer": footer,
+                "header_height": 50,
+                "footer_height": 65,
                 "form": "remover_matricula_da_turma"
             }
         )
@@ -2401,6 +2413,8 @@ class TurmaEspecifica():
                 "title": "Deletar Matrícula do(a) aluno(a)",
                 "content": content,
                 "footer": footer,
+                "header_height": 50,
+                "footer_height": 65,
                 "form": "deletar_matricula"
             }
         )
@@ -2514,6 +2528,8 @@ class TurmaEspecifica():
                         "title": DIV("LISTA DE DISCIPLINAS E SEUS RESPECTIVOS PROFESSORES"),
                         "content": content,
                         "footer": footer,
+                        "header_height": 60,
+                        "footer_height": 65,
                         "form": "professores-disciplinas"
                     }
                 )
@@ -2629,7 +2645,8 @@ class TurmaEspecifica():
                 **{
                     "title": CONCATENATE(DIV("Visualizar dados do aluno"),
                         DIV(STRONG(json.data.nome))),
-                    "content": content
+                    "content": content,
+                    "header_height": 65,
                 }
             )
             self.modal_visualizar.open()

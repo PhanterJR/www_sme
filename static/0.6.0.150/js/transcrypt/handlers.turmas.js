@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2021-11-18 22:50:22
+// Transcrypt'ed from Python, 2021-11-19 10:15:18
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import * as anos_letivos from './handlers.anos_letivos.js';
 import * as escolas from './handlers.escolas.js';
@@ -457,7 +457,7 @@ export var TurmasSimples =  __class__ ('TurmasSimples', [helpers.XmlConstructor]
 		}
 		var content = DIV (extra_field, turma_field, forms.FormWidget ('turma', 'turno', __kwargtrans__ (dict ({'value': turno, 'label': 'Turno', 'type': 'select', 'form': 'turma', 'data_set': ['Matutino', 'Vespertino', 'Noturno'], '_placeholder': 'Turma abreviada', '_class': 'p-col w1p100 w3p30'}))), XSECTION (LABEL ('Série(s) da Turma'), DIV (STRONG ('SELECIONANDO MAIS DE UMA SÉRIE A TURMA TORNA-SE MULTISSERIADA,', ' SE ESTE NÃO FOR O CASO BASTA SELECIONAR UMA ÚNICA SÉRIE ', 'CORRESPONDENTE A TURMA', __kwargtrans__ ({_style: 'color: red;'})), widgets.MultSelect ('series', __kwargtrans__ (dict ({'value': series, 'data_set': self.data_set_series, 'label': 'Séries', 'type': 'string', 'name': 'series', 'form': 'turma', '_placeholder': 'Séries', '_class': 'p-col w1p100'}))), __kwargtrans__ ({_class: 'e-padding_10'}))), __kwargtrans__ ({_class: 'p-row'}));
 		var footer = DIV (forms.SubmitButton ('turma', label_sub, __kwargtrans__ ({_class: 'btn-autoresize wave_on_click waves-phanterpwa'})), __kwargtrans__ ({_class: 'phanterpwa-form-buttons-container'}));
-		self.modal_turma = modal.Modal ('#modal_turma_case', __kwargtrans__ (dict ({'title': titulo_mod, 'content': content, 'footer': footer, 'form': 'turma'})));
+		self.modal_turma = modal.Modal ('#modal_turma_case', __kwargtrans__ (dict ({'title': titulo_mod, 'content': content, 'footer': footer, 'form': 'turma', 'header_height': 50, 'footer_height': 65})));
 		self.modal_turma.open ();
 		$ ('#phanterpwa-widget-form-submit_button-turma').off ('click.adicionar_turma').on ('click.adicionar_turma', (function __lambda__ () {
 			if (arguments.length) {
@@ -739,7 +739,7 @@ export var TurmasSimples =  __class__ ('TurmasSimples', [helpers.XmlConstructor]
 			unidades_disponiveis.append (DIV (A ('{0} - {1} à {2}'.format (self.romanos [str (x [0])], self.iso_br (x [1]), self.iso_br (x [2])), __kwargtrans__ ({_href: window.PhanterPWA.XWAY ('estatistica-registro-de-atividades', self.id_escola, self.ano_letivo, str (x [0])), _class: 'btn e-link'})), __kwargtrans__ ({_class: 'botao_estatistica_unidades'})));
 		}
 		unidades_disponiveis.append (DIV (A ('Todas as unidades', __kwargtrans__ ({_href: window.PhanterPWA.XWAY ('estatistica-registro-de-atividades', self.id_escola, self.ano_letivo, '0'), _class: 'btn e-link'})), __kwargtrans__ ({_class: 'botao_estatistica_unidades'})));
-		self.modal_estatisticas = modal.Modal ('#modal_estatisticas_unidades_registro_de_atividades', __kwargtrans__ (dict ({'title': 'Escolha a Unidade', 'content': unidades_disponiveis})));
+		self.modal_estatisticas = modal.Modal ('#modal_estatisticas_unidades_registro_de_atividades', __kwargtrans__ (dict ({'title': 'Escolha a Unidade', 'content': unidades_disponiveis, 'header_height': 50, 'footer_height': 20})));
 		self.modal_estatisticas.open ();
 		$ ('.botao_estatistica_unidades').off ('click.ests').on ('click.ests', (function __lambda__ () {
 			if (arguments.length) {
@@ -1338,7 +1338,7 @@ export var TurmasDetalhado =  __class__ ('TurmasDetalhado', [helpers.XmlConstruc
 			}
 			if (cont_alunos > 0) {
 				var content = DIV (table, forms.FormWidget ('turma', 'id_turma', __kwargtrans__ (dict ({'value': data_turma.id_turma, 'type': 'hidden', 'form': 'turma'}))), __kwargtrans__ ({_class: 'p-row'}));
-				self.modal_remanejar = modal.Modal ('#modal_turma_case', __kwargtrans__ (dict ({'title': CONCATENATE (DIV ('REMANEJAR ALUNOS PARA A TURMA ', STRONG (str (data_turma.turma).upper ())), DIV ('Basta clicar sobre o(a) aluno(a) para ele ser remanejado', __kwargtrans__ ({_style: 'color: red; font-size: 0.7em;'}))), 'content': content, 'form': 'turma'})));
+				self.modal_remanejar = modal.Modal ('#modal_turma_case', __kwargtrans__ (dict ({'title': CONCATENATE (DIV ('REMANEJAR ALUNOS PARA A TURMA ', STRONG (str (data_turma.turma).upper ())), DIV ('Basta clicar sobre o(a) aluno(a) para ele ser remanejado', __kwargtrans__ ({_style: 'color: red; font-size: 0.7em;'}))), 'content': content, 'form': 'turma', 'header_height': 65})));
 				self.modal_remanejar.open ();
 				$ ('.linha_add_aluno_remanejar').off ('click.adicionar_aluno_na_turma').on ('click.adicionar_aluno_na_turma', (function __lambda__ () {
 					if (arguments.length) {
@@ -1428,7 +1428,7 @@ export var TurmasDetalhado =  __class__ ('TurmasDetalhado', [helpers.XmlConstruc
 		var id_matricula = $ (el).data ('id_matricula');
 		var content = DIV (P ('Atenção, o(a) aluno(a) sairá da turma permanentemente. Se ele possuir notas, faltas, pareceres, etc. Ou seja, ', 'informações dele vinculados a esta turma, tudo será perdido.'), P ('Tem certeza que deseja remover esta matrícula?'), __kwargtrans__ ({_class: 'p-row'}));
 		var footer = DIV (forms.FormButton ('remover_matricula_da_turma_sim', 'Sim', __kwargtrans__ ({_class: 'btn-autoresize wave_on_click waves-phanterpwa'})), forms.FormButton ('remover_matricula_da_turma_nao', 'Não', __kwargtrans__ ({_class: 'btn-autoresize wave_on_click waves-phanterpwa'})), __kwargtrans__ ({_class: 'phanterpwa-form-buttons-container'}));
-		self.modal_remover_matricula_da_turma = modal.Modal ('#modal_remover_matricula_da_turma_container', __kwargtrans__ (dict ({'title': 'Retirar aluno da turma', 'content': content, 'footer': footer, 'form': 'remover_matricula_da_turma'})));
+		self.modal_remover_matricula_da_turma = modal.Modal ('#modal_remover_matricula_da_turma_container', __kwargtrans__ (dict ({'title': 'Retirar aluno da turma', 'content': content, 'footer': footer, 'header_height': 60, 'footer_height': 20, 'form': 'remover_matricula_da_turma'})));
 		self.modal_remover_matricula_da_turma.open ();
 		$ ('#phanterpwa-widget-form-form_button-remover_matricula_da_turma_sim').off ('click.adicionar_remover_matricula_da_turma_sim').on ('click.adicionar_remover_matricula_da_turma_sim', (function __lambda__ () {
 			if (arguments.length) {
@@ -1629,7 +1629,7 @@ export var TurmasDetalhado =  __class__ ('TurmasDetalhado', [helpers.XmlConstruc
 				}
 				var content = DIV (table, __kwargtrans__ ({form: 'professores-disciplinas', _class: 'p-row'}));
 				var footer = DIV (forms.SubmitButton ('confirma_prof_disc', 'Confirmar', __kwargtrans__ ({_class: 'btn-autoresize wave_on_click waves-phanterpwa'})), __kwargtrans__ ({_class: 'phanterpwa-form-buttons-container'}));
-				self.modal_disc_prof = modal.Modal ('#modal_disciplinas_professores', __kwargtrans__ (dict ({'title': DIV ('LISTA DE DISCIPLINAS E SEUS RESPECTIVOS PROFESSORES'), 'content': content, 'footer': footer, 'form': 'professores-disciplinas'})));
+				self.modal_disc_prof = modal.Modal ('#modal_disciplinas_professores', __kwargtrans__ (dict ({'title': DIV ('LISTA DE DISCIPLINAS E SEUS RESPECTIVOS PROFESSORES'), 'content': content, 'footer': footer, 'header_height': 60, 'footer_height': 65, 'form': 'professores-disciplinas'})));
 				self.modal_disc_prof.open ();
 				self.binds_modal_disc_prof (id_turma);
 			}
@@ -2368,7 +2368,7 @@ export var TurmaEspecifica =  __class__ ('TurmaEspecifica', [object], {
 			}
 			if (cont_alunos > 0) {
 				var content = DIV (table, forms.FormWidget ('turma', 'id_turma', __kwargtrans__ (dict ({'value': data_turma.id_turma, 'type': 'hidden', 'form': 'turma'}))), __kwargtrans__ ({_class: 'p-row'}));
-				self.modal_remanejar = modal.Modal ('#modal_turma_case', __kwargtrans__ (dict ({'title': CONCATENATE (DIV ('REMANEJAR ALUNOS PARA A TURMA ', STRONG (str (data_turma.turma).upper ())), DIV ('Basta clicar sobre o(a) aluno(a) para ele(a) ser remanejado(a)', __kwargtrans__ ({_style: 'color: red; font-size: 0.7em;'}))), 'content': content, 'form': 'turma'})));
+				self.modal_remanejar = modal.Modal ('#modal_turma_case', __kwargtrans__ (dict ({'title': CONCATENATE (DIV ('REMANEJAR ALUNOS PARA A TURMA ', STRONG (str (data_turma.turma).upper ())), DIV ('Basta clicar sobre o(a) aluno(a) para ele(a) ser remanejado(a)', __kwargtrans__ ({_style: 'color: red; font-size: 0.7em;'}))), 'content': content, 'form': 'turma', 'header_height': 65})));
 				self.modal_remanejar.open ();
 				$ ('.linha_add_aluno_remanejar').off ('click.adicionar_aluno_na_turma').on ('click.adicionar_aluno_na_turma', (function __lambda__ () {
 					if (arguments.length) {
@@ -2458,7 +2458,7 @@ export var TurmaEspecifica =  __class__ ('TurmaEspecifica', [object], {
 		var id_matricula = $ (el).data ('id_matricula');
 		var content = DIV (P ('Atenção, o(a) aluno(a) sairá da turma permanentemente. Se ele possuir notas, faltas, pareceres, etc. Ou seja, ', 'informações dele vinculados a esta turma, tudo será perdido.'), P ('Tem certeza que deseja remover esta matrícula?'), __kwargtrans__ ({_class: 'p-row'}));
 		var footer = DIV (forms.FormButton ('remover_matricula_da_turma_sim', 'Sim', __kwargtrans__ ({_class: 'btn-autoresize wave_on_click waves-phanterpwa'})), forms.FormButton ('remover_matricula_da_turma_nao', 'Não', __kwargtrans__ ({_class: 'btn-autoresize wave_on_click waves-phanterpwa'})), __kwargtrans__ ({_class: 'phanterpwa-form-buttons-container'}));
-		self.modal_remover_matricula_da_turma = modal.Modal ('#modal_remover_matricula_da_turma_detalhe_container', __kwargtrans__ (dict ({'title': 'Retirar aluno da turma', 'content': content, 'footer': footer, 'form': 'remover_matricula_da_turma'})));
+		self.modal_remover_matricula_da_turma = modal.Modal ('#modal_remover_matricula_da_turma_detalhe_container', __kwargtrans__ (dict ({'title': 'Retirar aluno da turma', 'content': content, 'footer': footer, 'header_height': 50, 'footer_height': 65, 'form': 'remover_matricula_da_turma'})));
 		self.modal_remover_matricula_da_turma.open ();
 		$ ('#phanterpwa-widget-form-form_button-remover_matricula_da_turma_sim').off ('click.adicionar_remover_matricula_da_turma_sim').on ('click.adicionar_remover_matricula_da_turma_sim', (function __lambda__ () {
 			if (arguments.length) {
@@ -2523,7 +2523,7 @@ export var TurmaEspecifica =  __class__ ('TurmaEspecifica', [object], {
 		var id_matricula = $ (el).data ('id_matricula');
 		var content = DIV (P ('Atenção, a matrícula do  aluno será deletada permanentemente, se ', 'o mesmo possuir notas, faltas, ficha individual, boletim, etc. Tudo isto será perdido, inclusive o mesmo sairá da turma permanentemente.'), P ('Tem certeza que deseja deletar esta matrícula?'), __kwargtrans__ ({_class: 'p-row'}));
 		var footer = DIV (forms.FormButton ('deletar_matricula_sim', 'Sim', __kwargtrans__ ({_class: 'btn-autoresize wave_on_click waves-phanterpwa'})), forms.FormButton ('deletar_matricula_nao', 'Não', __kwargtrans__ ({_class: 'btn-autoresize wave_on_click waves-phanterpwa'})), __kwargtrans__ ({_class: 'phanterpwa-form-buttons-container'}));
-		self.modal_deletar_matricula = modal.Modal ('#modal_deletar_matricula_detalhe_container', __kwargtrans__ (dict ({'title': 'Deletar Matrícula do(a) aluno(a)', 'content': content, 'footer': footer, 'form': 'deletar_matricula'})));
+		self.modal_deletar_matricula = modal.Modal ('#modal_deletar_matricula_detalhe_container', __kwargtrans__ (dict ({'title': 'Deletar Matrícula do(a) aluno(a)', 'content': content, 'footer': footer, 'header_height': 50, 'footer_height': 65, 'form': 'deletar_matricula'})));
 		self.modal_deletar_matricula.open ();
 		$ ('#phanterpwa-widget-form-form_button-deletar_matricula_sim').off ('click.adicionar_deletar_matricula_sim').on ('click.adicionar_deletar_matricula_sim', (function __lambda__ () {
 			if (arguments.length) {
@@ -2659,7 +2659,7 @@ export var TurmaEspecifica =  __class__ ('TurmaEspecifica', [object], {
 				}
 				var content = DIV (table, __kwargtrans__ ({form: 'professores-disciplinas', _class: 'p-row'}));
 				var footer = DIV (forms.SubmitButton ('confirma_prof_disc', 'Confirmar', __kwargtrans__ ({_class: 'btn-autoresize wave_on_click waves-phanterpwa'})), __kwargtrans__ ({_class: 'phanterpwa-form-buttons-container'}));
-				self.modal_disc_prof = modal.Modal ('#modal_disciplinas_professores', __kwargtrans__ (dict ({'title': DIV ('LISTA DE DISCIPLINAS E SEUS RESPECTIVOS PROFESSORES'), 'content': content, 'footer': footer, 'form': 'professores-disciplinas'})));
+				self.modal_disc_prof = modal.Modal ('#modal_disciplinas_professores', __kwargtrans__ (dict ({'title': DIV ('LISTA DE DISCIPLINAS E SEUS RESPECTIVOS PROFESSORES'), 'content': content, 'footer': footer, 'header_height': 60, 'footer_height': 65, 'form': 'professores-disciplinas'})));
 				self.modal_disc_prof.open ();
 				self.binds_modal_disc_prof (id_turma);
 			}
@@ -2848,7 +2848,7 @@ export var TurmaEspecifica =  __class__ ('TurmaEspecifica', [object], {
 				}
 			}
 			var content = CONCATENATE (forms.Form (json.data.aluno), DIV (html_historico, __kwargtrans__ ({_class: 'p-row'})));
-			self.modal_visualizar = modal.Modal ('#modal_visualizar_aluno', __kwargtrans__ (dict ({'title': CONCATENATE (DIV ('Visualizar dados do aluno'), DIV (STRONG (json.data.nome))), 'content': content})));
+			self.modal_visualizar = modal.Modal ('#modal_visualizar_aluno', __kwargtrans__ (dict ({'title': CONCATENATE (DIV ('Visualizar dados do aluno'), DIV (STRONG (json.data.nome))), 'content': content, 'header_height': 65})));
 			self.modal_visualizar.open ();
 		}
 		else {
