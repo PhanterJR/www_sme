@@ -583,7 +583,6 @@ class Matriculas():
         if str(event.key) in valores:
             value = element.val()
             nvalue = fmasks.stringFilter(value)
-            console.log(nvalue)
 
     def _onkeypress(self, event):
         element = jQuery(
@@ -668,7 +667,6 @@ class Matriculas():
         self._get_data_search(search=search, field=field, orderby=sorted_field[0], sort=sorted_field[1], page=page)
 
     def _class_resultados(self, resultados):
-        console.log(resultados)
         _class = ""
         resultados_permitidos = [
             "Início do Ano"

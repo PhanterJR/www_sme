@@ -1316,7 +1316,8 @@ class RegistroDeAtividades(gatehandler.Handler):
         self.totNF = 0
         self.totT = 0
         self.totalTurmas = 0
-
+        self.totalAlunos = 0
+        self.totalAlnNF = 0
         self.id_escola = arg0
         self.ano_letivo = arg1
         self.unidade = arg2
@@ -1401,10 +1402,13 @@ class RegistroDeAtividades(gatehandler.Handler):
         tr_inicial = TBODY(
             TR(
                 TH("TURMA"),
+                TH("QUANT. ALUNOS"),
+                TH("TURNO"),
                 TH("FEZ (%)", _class="centralizado"),
                 TH("FEZ PARCIALMENTE (%)", _class="centralizado"),
                 TH("NÃO FEZ (%)", _class="centralizado"),
                 TH("TOTAL (100%)", _class="centralizado"),
+                TH("QUANT. ALUNOS NÃO ENTREGARAM"),
                 _class="rotulo_estat_registro_de_atividades phanterpwa-widget-table-head phanterpwa-widget"
             ),
             _class="tbody-estat_registro_de_atividades-container"
@@ -1457,7 +1461,7 @@ class RegistroDeAtividades(gatehandler.Handler):
                             DIV(
                                 preloaders.run_points
                             ),
-                            _colspan=4,
+                            _colspan=7,
                             _style="text-align: center;",
                             _class="phanterpwa-widget-table-data-td"
                         ),
@@ -1476,7 +1480,7 @@ class RegistroDeAtividades(gatehandler.Handler):
                                 preloaders.run_points
                             ),
                             _class="phanterpwa-widget-table-data-td",
-                            _colspan=4,
+                            _colspan=7,
                             _style="text-align: center;"
                         ),
                         _class="phanterpwa-widget-table-data"
@@ -1536,21 +1540,29 @@ class RegistroDeAtividades(gatehandler.Handler):
 
             html_linha_turma = TR(
                 TD(STRONG(json.turma), _class="phanterpwa-widget-table-data-td"),
+                TD(json.total_alunos, _class="phanterpwa-widget-table-data-td centralizado"),
+                TD(json.turno, _class="phanterpwa-widget-table-data-td centralizado"),
                 TD("{0} {1}".format(json.totais_turma["F"], self.porcentagem(json.totais_turma["F"], json.totais_turma["T"])), _class="phanterpwa-widget-table-data-td centralizado"),
                 TD("{0} {1}".format(json.totais_turma["FP"], self.porcentagem(json.totais_turma["FP"], json.totais_turma["T"])), _class="phanterpwa-widget-table-data-td centralizado"),
                 TD("{0} {1}".format(json.totais_turma["NF"], self.porcentagem(json.totais_turma["NF"], json.totais_turma["T"])), _class="phanterpwa-widget-table-data-td centralizado"),
                 TD(json.totais_turma["T"], _class="phanterpwa-widget-table-data-td centralizado"),
+                TD(json.total_alunos_nf, _class="phanterpwa-widget-table-data-td centralizado"),
                 _class="phanterpwa-widget-table-data phanterpwa-widget"
             )
             html_linha_turma.html_to("#tbody_est_tur_{0}".format(id_turma))
             self.totalTurmas -= 1
+            self.totalAlunos += int(json.total_alunos)
+            self.totalAlnNF += int(json.total_alunos_nf)
             if self.totalTurmas == 0:
                 TR(
                     TD(STRONG("TOTAL FINAL"), _class="phanterpwa-widget-table-data-td"),
-                    TD("{0} {1}".format(self.totF, self.porcentagem(self.totF, self.totT)), _class="phanterpwa-widget-table-data-td centralizado"),
-                    TD("{0} {1}".format(self.totFP, self.porcentagem(self.totFP, self.totT)), _class="phanterpwa-widget-table-data-td centralizado"),
-                    TD("{0} {1}".format(self.totNF, self.porcentagem(self.totNF, self.totT)), _class="phanterpwa-widget-table-data-td centralizado"),
-                    TD(self.totT, _class="phanterpwa-widget-table-data-td centralizado"),
+                    TD(STRONG(self.totalAlunos), _class="phanterpwa-widget-table-data-td centralizado"),
+                    TD(STRONG("-"), _class="phanterpwa-widget-table-data-td centralizado"),
+                    TD(STRONG("{0} {1}".format(self.totF, self.porcentagem(self.totF, self.totT))), _class="phanterpwa-widget-table-data-td centralizado"),
+                    TD(STRONG("{0} {1}".format(self.totFP, self.porcentagem(self.totFP, self.totT))), _class="phanterpwa-widget-table-data-td centralizado"),
+                    TD(STRONG("{0} {1}".format(self.totNF, self.porcentagem(self.totNF, self.totT))), _class="phanterpwa-widget-table-data-td centralizado"),
+                    TD(STRONG(self.totT), _class="phanterpwa-widget-table-data-td centralizado"),
+                    TD(STRONG(self.totalAlnNF), _class="phanterpwa-widget-table-data-td centralizado"),
                     _class="phanterpwa-widget-table-data"
                 ).html_to("#tbody_est_total_final")
 

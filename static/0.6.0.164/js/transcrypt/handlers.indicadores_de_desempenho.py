@@ -360,7 +360,10 @@ class IndicadoresDeDesempenho():
                 self.id_escola,
                 self.ano_letivo,
                 id_turma,
-                onComplete=lambda data, ajax_status: (self.after_get_indicador(id_turma, data, ajax_status), self.get_indicador(self.turmas[self.posicao].id) if self.turmas[self.posicao] is not js_undefined else "")
+                onComplete=lambda data, ajax_status: (
+                    self.after_get_indicador(id_turma, data, ajax_status),
+                    self.get_indicador(self.turmas[self.posicao].id) if self.turmas[self.posicao] is not js_undefined else ""
+                )
             )
 
     def after_get_indicador(self, id_turma, data, ajax_status):
