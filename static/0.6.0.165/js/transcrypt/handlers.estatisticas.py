@@ -1402,13 +1402,13 @@ class RegistroDeAtividades(gatehandler.Handler):
         tr_inicial = TBODY(
             TR(
                 TH("TURMA"),
-                TH("QUANT. ALUNOS"),
-                TH("TURNO"),
+                TH("QUANT. ALUNOS", _class="centralizado"),
+                TH("TURNO", _class="centralizado"),
                 TH("FEZ (%)", _class="centralizado"),
                 TH("FEZ PARCIALMENTE (%)", _class="centralizado"),
                 TH("NÃO FEZ (%)", _class="centralizado"),
                 TH("TOTAL (100%)", _class="centralizado"),
-                TH("QUANT. ALUNOS NÃO ENTREGARAM"),
+                TH("QUANT. ALUNOS NÃO ENTREGARAM", _class="centralizado"),
                 _class="rotulo_estat_registro_de_atividades phanterpwa-widget-table-head phanterpwa-widget"
             ),
             _class="tbody-estat_registro_de_atividades-container"
