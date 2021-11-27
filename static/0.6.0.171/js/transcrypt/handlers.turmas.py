@@ -40,6 +40,7 @@ TR = helpers.XmlConstructor.tagger("tr")
 TABLE = helpers.XmlConstructor.tagger("table")
 LABEL = helpers.XmlConstructor.tagger("label")
 INPUT = helpers.XmlConstructor.tagger("input", True)
+HR = helpers.XmlConstructor.tagger("hr", True)
 I18N = helpers.I18N
 XTABLE = widgets.Table
 XML = helpers.XML
@@ -641,7 +642,6 @@ class TurmasSimples(helpers.XmlConstructor):
             lambda: self._on_click_add_turma(widget_instance, action)
         )
         forms.SignForm("#form-turma", after_sign=lambda: forms.ValidateForm("#form-turma"))
-        
 
     def _on_click_add_turma(self, widget_instance, action):
         id_turma = jQuery(widget_instance).data("id_turma")
@@ -783,6 +783,8 @@ class TurmasDetalhado(helpers.XmlConstructor):
         self.prosseguir = prosseguir
         self.id_escola = escola
         self.ano_letivo = ano_letivo
+        self.matriculas = dict()
+        self.data_turmas = dict()
         self.index_instance = index_instance
         helpers.XmlConstructor.__init__(self, "div", False, self.initial_xml(), _class="lista_de_turmas_detalhado")
         self._get_turmas()
@@ -850,6 +852,9 @@ class TurmasDetalhado(helpers.XmlConstructor):
             DIV(_id="modal_turma_case"),
             DIV(_id="modal_disciplinas_professores"),
             DIV(_id="modal_visualizar_aluno"),
+            DIV(_id="modal_desistencia_aluno"),
+            DIV(_id="modal_transferencia_aluno"),
+            DIV(_id="modal_visualizar_escola_funcionario"),
             _class='turmas-turmas-container'
         )
         if self.lista_de_turmas is not js_undefined:
@@ -869,19 +874,22 @@ class TurmasDetalhado(helpers.XmlConstructor):
                 "Nº",
                 "Nome",
                 "Data de Nascimento",
-                "Endereço"
+                "Endereço",
+                "Resultado"
                 # " "
             )
         )
         linha_serie = []
         cont_alunos = 0
+        self.data_turmas[data_turma.id] = data_turma
         for x in data_turma.alunos:
+            self.matriculas[int(x.matriculas.id)] = x
             cont_alunos += 1
             if data_turma.multisseriado:
                 if x.series.serie not in linha_serie:
 
                     serie_th = TR(
-                        TH(x.series.serie, _colspan="6", _style="text-align: center; background-color: #d5d5d5;")
+                        TH(x.series.serie, _colspan="7", _style="text-align: center; background-color: #d5d5d5;")
                     )
                     table.append(serie_th)
                     linha_serie.append(x.series.serie)
@@ -899,6 +907,10 @@ class TurmasDetalhado(helpers.XmlConstructor):
                     window.PhanterPWA.ApiServer.remote_address,
                     x.alunos.foto3x4
                 )
+            resultado = "Em aberto"
+            if x.resultados is not None:
+                if x.resultados.resultado_final is not None:
+                    resultado = x.resultados.resultado_final
             table.append(
                 XTRD(
                     "turma-table-data-{0}".format(x.alunos.id),
@@ -907,6 +919,7 @@ class TurmasDetalhado(helpers.XmlConstructor):
                     x.alunos.aluno,
                     data_de_nascimento_formated,
                     x.alunos.endereco,
+                    resultado,
                     widgets.MenuBox(
                         "menu_alunos_{0}".format(x.alunos.id),
                         I(_class="fas fa-ellipsis-v"),
@@ -942,7 +955,17 @@ class TurmasDetalhado(helpers.XmlConstructor):
                             "_class": "botao_deletar_matricula wave_on_click",
                             "_data-id_matricula": x.matriculas.id
                         }),
-                        widgets.MenuOption("Remover de Turma", **{
+                        widgets.MenuOption("Desistência", **{
+                            "_class": "botao_aluno_desistente wave_on_click",
+                            "_data-id_matricula": x.matriculas.id,
+                            "_data-quant_unidades": data_turma.quant_unidades
+                        }),
+                        widgets.MenuOption("Transferência", **{
+                            "_class": "botao_transferir_aluno wave_on_click",
+                            "_data-id_matricula": x.matriculas.id,
+                            "_data-quant_unidades": data_turma.quant_unidades
+                        }),
+                        widgets.MenuOption("Remover da Turma", **{
                             "_class": "botao_remover_matricula_da_turma wave_on_click",
                             "_data-id_matricula": x.matriculas.id
                         }),
@@ -954,7 +977,11 @@ class TurmasDetalhado(helpers.XmlConstructor):
                         "drag_and_drop": True,
                         "after_drop": self.after_drop,
                         "drop_if": lambda ori, tar: True if str(jQuery(ori).data("id_serie")) == str(jQuery(tar).data("id_serie")) and jQuery(ori).data("id_turma") == str(jQuery(tar).data("id_turma")) else False,
-                        "_class": "linha_turma_turma",
+                        "_class": self._class_resultados(
+                            x.resultados,
+                            data_turma.quant_unidades,
+                            x.matriculas.admitido
+                        ),
                         "_data-id_escola": self.id_escola,
                         "_data-id_ano_letivo": self.ano_letivo,
                         "_data-id_turma": data_turma.id,
@@ -970,15 +997,53 @@ class TurmasDetalhado(helpers.XmlConstructor):
             self.tem_turma = False
             table = DIV("NÃO HÁ ALUNOS NESTA TURMA", _style="color: red; padding: 100px 0; text-align: center;")
 
+        corpo_docente = ""
+        cont_dos = 0
+        if data_turma.corpo_docente is not None and data_turma.corpo_docente is not js_undefined:
+            table_docente = XTABLE(
+                "docentes-table-{0}".format(data_turma.id),
+                XTRH(
+                    "docentes-table-head-{0}".format(data_turma.id),
+                    "Nome",
+                    "Email",
+                )
+            )
+            corpo_docente = DIV(
+                HR(),
+                H3("Corpo Docente"),
+                table_docente,
+                _class="p-row"
+            )
+            for doce in data_turma.corpo_docente:
+                table_docente.append(
+                    XTRD(
+                        "docentes-table-data-{0}".format(doce[2]),
+                        doce[0],
+                        doce[1],
+                        widgets.MenuBox(
+                            "menu_funcionario_vinculado_{0}".format(doce[2]),
+                            I(_class="fas fa-ellipsis-v"),
+                            widgets.MenuOption("Visualizar", **{
+                                "_class": "botao_visualizar_funcionario wave_on_click",
+                                "_data-id_funcionario": doce[2],
+                            }),
+                            onOpen=self.bind_menu_docente
+                        ),
+                        **{"drag_and_drop": False}
+                    )
+                )
+
         card = DIV(
             LABEL(data_turma.turma, " (", data_turma.quant_alunos, " Alunos)", _for="phanterpwa-card-panel-control-{0}".format(data_turma.id)),
             DIV(
                 DIV(
                     DIV(
                         DIV(
+                            H3("Corpo Discente"),
                             table,
                             _class="p-row"
                         ),
+                        corpo_docente,
                         _class="phanterpwa-card-panel-control-content"
                     ),
                     DIV(
@@ -1086,6 +1151,16 @@ class TurmasDetalhado(helpers.XmlConstructor):
         )
         return card
 
+    def bind_menu_docente(self):
+        jQuery(
+            ".botao_visualizar_funcionario"
+        ).off(
+            "click.botao_visualizar_funcionario"
+        ).on(
+            "click.botao_visualizar_funcionario",
+            lambda: self.get_visualizar_funcionario(this)
+        )
+
     def binds_menu_aluno(self):
         jQuery(
             ".botao_visualizar_aluno"
@@ -1110,6 +1185,22 @@ class TurmasDetalhado(helpers.XmlConstructor):
         ).on(
             "click.botao_revogar_matricula",
             lambda: self.modal_confirmar_deletar_matricula(this)
+        )
+        jQuery(
+            ".botao_aluno_desistente"
+        ).off(
+            "click.botao_aluno_desistente"
+        ).on(
+            "click.botao_aluno_desistente",
+            lambda: self.abrir_modal_desistencia(this)
+        )
+        jQuery(
+            ".botao_transferir_aluno"
+        ).off(
+            "click.botao_transferir_aluno"
+        ).on(
+            "click.botao_transferir_aluno",
+            lambda: self.abrir_modal_transferencia(this)
         )
 
     def binds_painel_da_turma(self):
@@ -1727,6 +1818,496 @@ class TurmasDetalhado(helpers.XmlConstructor):
         else:
             window.PhanterPWA.flash("Não há alunos_visualizar matriculados para a série da turma")
 
+    def _class_resultados(self, resultados, quant_unidades, admitido=False):
+        _class = ""
+        if admitido:
+            _class = " eh_admitido"
+        resultados_permitidos = [
+            "Início do Ano"
+        ]
+        corres_romanos = ["I", "II", "III", "IV", "V", "VI"]
+        for x in range(int(quant_unidades)):
+            resultados_permitidos.append(
+                "Unidade {0} Completada".format(corres_romanos[x])
+            )
+        if resultados is not None and resultados is not js_undefined:
+            if resultados.desistente is True:
+                _class = "{0} eh_desistente".format(_class)
+            elif resultados.transferido is True and resultados.unidade_trans in resultados_permitidos:
+                _class = "{0} eh_transferido".format(_class)
+        return "linha_turma_turma{0}".format(_class)
+
+    def abrir_modal_desistencia(self, el):
+        id_matricula = jQuery(el).data("id_matricula")
+        quant_unidades = jQuery(el).data("quant_unidades")
+        nome_aluno = self.matriculas[int(id_matricula)].matriculas.nome_do_aluno
+        des_data = self.matriculas[int(id_matricula)].resultados.unidade_des or ""
+        sexo = self.matriculas[int(id_matricula)].alunos.sexo
+        texto1 = P("Informa abaixo quando o(a) aluno(a) ", STRONG(nome_aluno), " desistiu, ",
+            "com esta informação poderemos fazer o levantamento do indicador de desempenho.")
+        texto2 = P("Se o(a) aluno(a) não desistiu, ",
+            "escolha a opção vazia.", _style="color: red;")
+
+        if sexo == 1:
+            texto1 = P("Informa abaixo quando o aluno ", STRONG(nome_aluno), " desistiu, ",
+                "com esta informação poderemos fazer o levantamento do indicador de desempenho.")
+            texto2 = P("Se o aluno não desistiu, ",
+                "escolha a opção vazia.", _style="color: red;")
+        elif sexo == 2:
+            texto1 = P("Informa abaixo quando a aluna ", STRONG(nome_aluno), " desistiu, ",
+                "com esta informação poderemos fazer o levantamento do indicador de desempenho.")
+            texto2 = P("Se a aluna não desistiu, ",
+                "escolha a opção vazia.", _style="color: red;")
+        data_set = [
+            "Início do Ano"
+        ]
+        corres_romanos = ["I", "II", "III", "IV", "V", "VI"]
+        for x in range(int(quant_unidades)):
+            data_set.append(
+                "Unidade {0} Completada".format(corres_romanos[x])
+            )
+        data_set.append("Fim de Curso")
+
+
+        content = CONCATENATE(
+            texto1,
+            texto2,
+            DIV(
+                widgets.Select(
+                    "unidade_des",
+                    label="Quando desistiu?",
+                    value=des_data,
+                    can_empty=True,
+                    data_set=data_set
+                ),
+                _id="phanterpwa-input-search_field-matriculas",
+                _class="p-col w1p100"
+            ),
+        )
+        footer = DIV(
+            forms.FormButton(
+                "confirmar_desistencia",
+                "Confirmar",
+                _class="btn-autoresize wave_on_click waves-phanterpwa"
+            ),
+            _class='phanterpwa-form-buttons-container'
+        )
+        self.modal_desistencia = modal.Modal(
+            "#modal_desistencia_aluno",
+            **{
+                "title": "Desistência de {0}".format(nome_aluno),
+                "content": content,
+                "footer": footer,
+            }
+        )
+        self.modal_desistencia.open()
+        jQuery("#phanterpwa-widget-form-form_button-confirmar_desistencia").off(
+            "click.confirmar_desistencia"
+        ).on(
+            "click.confirmar_desistencia",
+            lambda: self._on_click_confirmar_desistencia(id_matricula)
+        )
+
+    def _on_click_confirmar_desistencia(self, id_matricula):
+
+        formdata = __new__(FormData())
+        formdata.append(
+            "quando_desistiu",
+            jQuery("#phanterpwa-widget-select-input-unidade_des").val()
+        )
+        
+        window.PhanterPWA.PUT(
+            "api",
+            "matricula",
+            "desistencia",
+            self.id_escola,
+            self.ano_letivo,
+            id_matricula,
+            form_data=formdata,
+            onComplete=lambda data, ajax_status: self.depois_de_confirmar_desistencia(data, ajax_status)
+        )
+
+    def depois_de_confirmar_desistencia(self, data, ajax_status):
+        if ajax_status == "success":
+            self.modal_desistencia.close()
+            json = data.responseJSON
+
+            data_de_nascimento_formated = ""
+            if json.data_matricula.data_nasc is not None and json.data_matricula.data_nasc is not js_undefined:
+                data_de_nascimento_formated = validations.format_iso_date_datetime(
+                    json.data_matricula.data_nasc, "dd/MM/yyyy", "date"
+                )
+            endereco_imagem_aluno = "/static/{0}/images/user.png".format(
+                window.PhanterPWA.VERSIONING
+            )
+            if json.data_matricula.foto3x4 is not None and json.data_matricula.foto3x4 is not js_undefined:
+                endereco_imagem_aluno = "{0}/api/alunos/{1}/image".format(
+                    window.PhanterPWA.ApiServer.remote_address,
+                    json.data_matricula.foto3x4
+                )
+            resultado = "Em aberto"
+            if json.data_matricula.resultados is not None:
+                if json.data_matricula.resultados.resultado_final is not None:
+                    resultado = json.data_matricula.resultados.resultado_final
+
+            html_xd = XTRD(
+                "turma-table-data-{0}".format(json.data_matricula.id_aluno),
+                DIV(IMG(_src=endereco_imagem_aluno, _style="width:25px; height:25px; border-radius: 100%;")),
+                validations.zfill(json.data_matricula.numero_aluno, 2),
+                json.data_matricula.nome_aluno_matricula,
+                data_de_nascimento_formated,
+                json.data_matricula.endereco,
+                resultado,
+                widgets.MenuBox(
+                    "menu_alunos_{0}".format(json.data_matricula.id_aluno),
+                    I(_class="fas fa-ellipsis-v"),
+                    widgets.MenuOption("Visualizar Aluno", **{
+                        "_class": "botao_visualizar_aluno wave_on_click",
+                        "_data-id_aluno": json.data_matricula.id_aluno,
+                    }),
+                    widgets.MenuOption("Editar Aluno", **{
+                        "_class": "botao_editar_aluno wave_on_click",
+                        "_href": window.PhanterPWA.XWAY(
+                            "alunos",
+                            json.data_matricula.id_aluno,
+                            "editar",
+                            **{
+                                "_turmas-detalhadas": "/turmas/{0}/{1}/detalhado/".format(self.id_escola, self.ano_letivo)
+                            }
+                        )
+                    }),
+                    widgets.MenuOption("Editar Matrícula", **{
+                        "_class": "botao_editar_aluno wave_on_click",
+                        "_href": window.PhanterPWA.XWAY(
+                            "matricula",
+                            json.data_matricula.id_aluno,
+                            "aluno-conferido",
+                            self.id_escola,
+                            self.ano_letivo,
+                            **{
+                                "_turmas-detalhadas": "/turmas/{0}/{1}/detalhado/".format(self.id_escola, self.ano_letivo)
+                            }
+                        )
+                    }),
+                    widgets.MenuOption("Deletar Matrícula", **{
+                        "_class": "botao_deletar_matricula wave_on_click",
+                        "_data-id_matricula": json.data_matricula.id
+                    }),
+                    widgets.MenuOption("Desistência", **{
+                        "_class": "botao_aluno_desistente wave_on_click",
+                        "_data-id_matricula": json.data_matricula.id,
+                        "_data-quant_unidades": self.data_turmas[int(json.data_matricula.id_turma)].quant_unidades
+                    }),
+                    widgets.MenuOption("Transferência", **{
+                        "_class": "botao_transferir_aluno wave_on_click",
+                        "_data-id_matricula": json.data_matricula.id,
+                        "_data-quant_unidades": self.data_turmas[int(json.data_matricula.id_turma)].quant_unidades
+                    }),
+                    widgets.MenuOption("Remover da Turma", **{
+                        "_class": "botao_remover_matricula_da_turma wave_on_click",
+                        "_data-id_matricula": json.data_matricula.id
+                    }),
+                    **{
+                        "onOpen": lambda: self.binds_menu_aluno()
+                    }
+                ),
+                **{
+                    "drag_and_drop": True,
+                    "after_drop": self.after_drop,
+                    "drop_if": lambda ori, tar: True if str(jQuery(ori).data("id_serie")) == str(jQuery(tar).data("id_serie")) and jQuery(ori).data("id_turma") == str(jQuery(tar).data("id_turma")) else False,
+                    "_class": self._class_resultados(
+                        json.data_matricula.resultados,
+                        self.data_turmas[int(json.data_matricula.id_turma)].quant_unidades,
+                        json.data_matricula.admitido
+                    ),
+                    "_data-id_escola": self.id_escola,
+                    "_data-id_ano_letivo": self.ano_letivo,
+                    "_data-id_turma": json.data_matricula.id_turma,
+                    "_data-id_aluno": json.data_matricula.id_aluno,
+                    "_data-id_serie": json.data_matricula.id_serie,
+                    "_data-id_matricula": json.data_matricula.id
+                }
+            )
+            jQuery("#phanterpwa-widget-turma-table-data-{0}".format(json.data_matricula.id_aluno)).replaceWith(
+                html_xd.jquery()
+            )
+            self.binds_painel_da_turma()
+
+    def abrir_modal_transferencia(self, el):
+        id_matricula = jQuery(el).data("id_matricula")
+        quant_unidades = jQuery(el).data("quant_unidades")
+        trans_data = self.matriculas[int(id_matricula)].resultados.unidade_trans or ""
+        nome_aluno = self.matriculas[int(id_matricula)].matriculas.nome_do_aluno
+        sexo = self.matriculas[int(id_matricula)].alunos.sexo
+        texto1 = P("Informa abaixo quando o(a) aluno(a) ", STRONG(nome_aluno), " foi transferido(a), ",
+            "com esta informação poderemos fazer o levantamento do indicador de desempenho.",
+            " Caso a transferencia seja no final do curso não haverá indicativo visual de que ",
+            " foi transferido(a)."
+        )
+        texto2 = P("Se o(a) aluno(a) não foi transferido(a), ",
+            "escolha a opção vazia.", _style="color: red;")
+
+        if sexo == 1:
+            texto1 = P("Informa abaixo quando o aluno ", STRONG(nome_aluno), " foi transferido, ",
+                "com esta informação poderemos fazer o levantamento do indicador de desempenho.",
+                " Caso a transferencia seja no final do curso não haverá indicativo visual de que ",
+                " foi transferido."
+            )
+            texto2 = P("Se o aluno não foi transferido, ",
+                "escolha a opção vazia.", _style="color: red;")
+        elif sexo == 2:
+            texto1 = P("Informa abaixo quando a aluna ", STRONG(nome_aluno), " foi transferida, ",
+                "com esta informação poderemos fazer o levantamento do indicador de desempenho.",
+                " Caso a transferencia seja no final do curso não haverá indicativo visual de que ",
+                " foi transferida."
+            )
+            texto2 = P("Se a aluna não foi transferida, ",
+                "escolha a opção vazia.", _style="color: red;")
+        data_set = [
+            "Início do Ano"
+        ]
+        corres_romanos = ["I", "II", "III", "IV", "V", "VI"]
+        for x in range(int(quant_unidades)):
+            data_set.append(
+                "Unidade {0} Completada".format(corres_romanos[x])
+            )
+        data_set.append("Fim de Curso")
+
+
+        content = CONCATENATE(
+            texto1,
+            texto2,
+            DIV(
+                widgets.Select(
+                    "unidade_trams",
+                    label="Quando foi a Transferência?",
+                    value=trans_data,
+                    can_empty=True,
+                    data_set=data_set
+                ),
+                _id="phanterpwa-input-search_field-matriculas",
+                _class="p-col w1p100"
+            ),
+        )
+        footer = DIV(
+            forms.FormButton(
+                "confirmar_transferencia",
+                "Confirmar",
+                _class="btn-autoresize wave_on_click waves-phanterpwa"
+            ),
+            _class='phanterpwa-form-buttons-container'
+        )
+        self.modal_transferencia = modal.Modal(
+            "#modal_transferencia_aluno",
+            **{
+                "title": "Transferência de {0}".format(nome_aluno),
+                "content": content,
+                "footer": footer,
+            }
+        )
+        self.modal_transferencia.open()
+        jQuery("#phanterpwa-widget-form-form_button-confirmar_transferencia").off(
+            "click.confirmar_transferencia"
+        ).on(
+            "click.confirmar_transferencia",
+            lambda: self._on_click_confirmar_transferencia(id_matricula)
+        )
+
+    def _on_click_confirmar_transferencia(self, id_matricula):
+
+        formdata = __new__(FormData())
+        formdata.append(
+            "quando_transferiu",
+            jQuery("#phanterpwa-widget-select-input-unidade_trams").val()
+        )
+        
+        window.PhanterPWA.PUT(
+            "api",
+            "matricula",
+            "transferencia",
+            self.id_escola,
+            self.ano_letivo,
+            id_matricula,
+            form_data=formdata,
+            onComplete=lambda data, ajax_status: self.depois_de_confirmar_transferencia(data, ajax_status)
+        )
+
+    def depois_de_confirmar_transferencia(self, data, ajax_status):
+        if ajax_status == "success":
+            self.modal_transferencia.close()
+            json = data.responseJSON
+            data_de_nascimento_formated = ""
+            if json.data_matricula.data_nasc is not None and json.data_matricula.data_nasc is not js_undefined:
+                data_de_nascimento_formated = validations.format_iso_date_datetime(
+                    json.data_matricula.data_nasc, "dd/MM/yyyy", "date"
+                )
+            endereco_imagem_aluno = "/static/{0}/images/user.png".format(
+                window.PhanterPWA.VERSIONING
+            )
+            if json.data_matricula.foto3x4 is not None and json.data_matricula.foto3x4 is not js_undefined:
+                endereco_imagem_aluno = "{0}/api/alunos/{1}/image".format(
+                    window.PhanterPWA.ApiServer.remote_address,
+                    json.data_matricula.foto3x4
+                )
+            resultado = "Em aberto"
+            if json.data_matricula.resultados is not None:
+                if json.data_matricula.resultados.resultado_final is not None:
+                    resultado = json.data_matricula.resultados.resultado_final
+
+            html_xd = XTRD(
+                "turma-table-data-{0}".format(json.data_matricula.id_aluno),
+                DIV(IMG(_src=endereco_imagem_aluno, _style="width:25px; height:25px; border-radius: 100%;")),
+                validations.zfill(json.data_matricula.numero_aluno, 2),
+                json.data_matricula.nome_aluno_matricula,
+                data_de_nascimento_formated,
+                json.data_matricula.endereco,
+                resultado,
+                widgets.MenuBox(
+                    "menu_alunos_{0}".format(json.data_matricula.id_aluno),
+                    I(_class="fas fa-ellipsis-v"),
+                    widgets.MenuOption("Visualizar Aluno", **{
+                        "_class": "botao_visualizar_aluno wave_on_click",
+                        "_data-id_aluno": json.data_matricula.id_aluno,
+                    }),
+                    widgets.MenuOption("Editar Aluno", **{
+                        "_class": "botao_editar_aluno wave_on_click",
+                        "_href": window.PhanterPWA.XWAY(
+                            "alunos",
+                            json.data_matricula.id_aluno,
+                            "editar",
+                            **{
+                                "_turmas-detalhadas": "/turmas/{0}/{1}/detalhado/".format(self.id_escola, self.ano_letivo)
+                            }
+                        )
+                    }),
+                    widgets.MenuOption("Editar Matrícula", **{
+                        "_class": "botao_editar_aluno wave_on_click",
+                        "_href": window.PhanterPWA.XWAY(
+                            "matricula",
+                            json.data_matricula.id_aluno,
+                            "aluno-conferido",
+                            self.id_escola,
+                            self.ano_letivo,
+                            **{
+                                "_turmas-detalhadas": "/turmas/{0}/{1}/detalhado/".format(self.id_escola, self.ano_letivo)
+                            }
+                        )
+                    }),
+                    widgets.MenuOption("Deletar Matrícula", **{
+                        "_class": "botao_deletar_matricula wave_on_click",
+                        "_data-id_matricula": json.data_matricula.id
+                    }),
+                    widgets.MenuOption("Desistência", **{
+                        "_class": "botao_aluno_desistente wave_on_click",
+                        "_data-id_matricula": json.data_matricula.id,
+                        "_data-quant_unidades": self.data_turmas[int(json.data_matricula.id_turma)].quant_unidades
+                    }),
+                    widgets.MenuOption("Transferência", **{
+                        "_class": "botao_transferir_aluno wave_on_click",
+                        "_data-id_matricula": json.data_matricula.id,
+                        "_data-quant_unidades": self.data_turmas[int(json.data_matricula.id_turma)].quant_unidades
+                    }),
+                    widgets.MenuOption("Remover da Turma", **{
+                        "_class": "botao_remover_matricula_da_turma wave_on_click",
+                        "_data-id_matricula": json.data_matricula.id
+                    }),
+                    **{
+                        "onOpen": lambda: self.binds_menu_aluno()
+                    }
+                ),
+                **{
+                    "drag_and_drop": True,
+                    "after_drop": self.after_drop,
+                    "drop_if": lambda ori, tar: True if str(jQuery(ori).data("id_serie")) == str(jQuery(tar).data("id_serie")) and jQuery(ori).data("id_turma") == str(jQuery(tar).data("id_turma")) else False,
+                    "_class": self._class_resultados(
+                        json.data_matricula.resultados,
+                        self.data_turmas[int(json.data_matricula.id_turma)].quant_unidades,
+                        json.data_matricula.admitido
+                    ),
+                    "_data-id_escola": self.id_escola,
+                    "_data-id_ano_letivo": self.ano_letivo,
+                    "_data-id_turma": json.data_matricula.id_turma,
+                    "_data-id_aluno": json.data_matricula.id_aluno,
+                    "_data-id_serie": json.data_matricula.id_serie,
+                    "_data-id_matricula": json.data_matricula.id
+                }
+            )
+            jQuery("#phanterpwa-widget-turma-table-data-{0}".format(json.data_matricula.id_aluno)).replaceWith(
+                html_xd.jquery()
+            )
+            self.binds_painel_da_turma()
+    def get_visualizar_funcionario(self, widget_instance):
+        id_funcionario = jQuery(widget_instance).data("id_funcionario")
+        window.PhanterPWA.GET(
+            "api",
+            "funcionario",
+            "visualizar",
+            id_funcionario,
+            onComplete=lambda data, ajax_status: self.modal_add_funcinario_visualizar(data, ajax_status)
+        )
+
+    def modal_add_funcinario_visualizar(self, data, ajax_status):
+        json = data.responseJSON
+        if ajax_status == "success":
+            html_vinculos =  DIV(
+                    DIV("VÍNCULOS DO FUNCIONÁRIO", _class="p-col w1p100 phanterpwa-widget-form-separator"),
+                    P("O Funcionário não possui vínculos"),
+                    _class="vinculos-conteudo"
+                )
+            if json.data.vinculos is not None and json.data.vinculos is not js_undefined:
+                html_vinculos = DIV(
+                    DIV("VÍNCULOS DO FUNCIONÁRIO", _class="p-col w1p100 phanterpwa-widget-form-separator"),
+                    _class="vinculos-conteudo"
+                )
+                tabela = XTABLE(
+                    "tabela_ficha_individual",
+                    XTRH(
+                        "tabela_ficha_individual_head",
+                        "Ano Letivo",
+                        "Escola",
+                        "Atribuições",
+                        "Data Limite",
+                        "Autorização"
+                    ),
+
+                )
+                for x in json.data.vinculos:
+                    data_limite = "31/12/{0}".format(x.anos_letivo.ano)
+                    if x.vinculos_funcionarios.data_limite is not None and x.vinculos_funcionarios.data_limite is not js_undefined:
+                        data_limite = validations.format_iso_date_datetime(
+                            x.vinculos_funcionarios.data_limite, "dd/MM/yyyy", "date"
+                        )
+
+                    tabela.append(
+                        XTRD(
+                            "tabela_ficha_individual_linhas_{0}".format(x.vinculos_funcionarios.id),
+                            x.anos_letivo.ano,
+                            x.escolas.nome,
+                            x.profissoes.profissao,
+                            data_limite,
+                            x.vinculos_funcionarios.autorizacao,
+                            **{"drag_and_drop": False}
+                        )
+                    )
+                html_vinculos.append(tabela)
+            content = DIV(
+                forms.Form(json.data.funcionario),
+                html_vinculos,
+                _class="p-row"
+            )
+            self.modal_visualizar_funcionario = modal.Modal(
+                "#modal_visualizar_escola_funcionario",
+                **{
+                    "title": CONCATENATE(DIV("Visualizar dados do funcionário"),
+                        DIV(STRONG(json.data.nome))),
+                    "content": content
+                }
+            )
+            self.modal_visualizar_funcionario.open()
+
+        else:
+            window.PhanterPWA.flash("Não há alunos_visualizar matriculados para a série da turma")
+
 
 class TurmaEspecifica():
     def __init__(self, parent, id_escola, ano_letivo, id_turma):
@@ -1734,6 +2315,8 @@ class TurmaEspecifica():
         self.id_escola = id_escola
         self.ano_letivo = ano_letivo
         self.id_turma = id_turma
+        self.data_turmas = dict()
+        self.matriculas = dict()
         html = CONCATENATE(
             DIV(
                 DIV(
@@ -1775,8 +2358,7 @@ class TurmaEspecifica():
     def depois_de_obter_turma(self, data, ajax_status):
         if ajax_status == "success":
             json = data.responseJSON
-            self.lista_de_turmas = json.data.turmas
-            self.data_set_turmas = json.data.data_set_turmas
+            self.data_turmas[json.data.turma.id] = json.data.turma
             self.tem_alunos = True
             logo = "{0}/api/escolas/{1}/image".format(
                 window.PhanterPWA.ApiServer.remote_address,
@@ -1810,6 +2392,9 @@ class TurmaEspecifica():
                 DIV(_id="modal_turma_case"),
                 DIV(_id="modal_disciplinas_professores"),
                 DIV(_id="modal_visualizar_aluno"),
+                DIV(_id="modal_desistencia_aluno"),
+                DIV(_id="modal_transferencia_aluno"),
+                DIV(_id="modal_visualizar_escola_funcionario"),
                 _class='turmas-turmas-container'
             )
             html.append(DIV(_id="modal_remover_matricula_da_turma_detalhe_container"))
@@ -1826,13 +2411,16 @@ class TurmaEspecifica():
                 "Nº",
                 "Nome",
                 "Data de Nascimento",
-                "Endereço"
+                "Endereço",
+                "Resultado"
                 # " "
             )
         )
         linha_serie = []
         cont_alunos = 0
+
         for x in data_turma.alunos:
+            self.matriculas[int(x.matriculas.id)] = x
             cont_alunos += 1
             if data_turma.multisseriado:
                 if x.series.serie not in linha_serie:
@@ -1856,6 +2444,10 @@ class TurmaEspecifica():
                     window.PhanterPWA.ApiServer.remote_address,
                     x.alunos.foto3x4
                 )
+            resultado = "Em aberto"
+            if x.resultados is not None:
+                if x.resultados.resultado_final is not None:
+                    resultado = x.resultados.resultado_final
             table.append(
                 XTRD(
                     "turma-table-data-{0}".format(x.alunos.id),
@@ -1864,6 +2456,7 @@ class TurmaEspecifica():
                     x.alunos.aluno,
                     data_de_nascimento_formated,
                     x.alunos.endereco,
+                    resultado,
                     widgets.MenuBox(
                         "menu_alunos_{0}".format(x.alunos.id),
                         I(_class="fas fa-ellipsis-v"),
@@ -1899,7 +2492,17 @@ class TurmaEspecifica():
                             "_class": "botao_deletar_matricula wave_on_click",
                             "_data-id_matricula": x.matriculas.id
                         }),
-                        widgets.MenuOption("Remover de Turma", **{
+                        widgets.MenuOption("Desistência", **{
+                            "_class": "botao_aluno_desistente wave_on_click",
+                            "_data-id_matricula": x.matriculas.id,
+                            "_data-quant_unidades": data_turma.quant_unidades
+                        }),
+                        widgets.MenuOption("Transferência", **{
+                            "_class": "botao_transferir_aluno wave_on_click",
+                            "_data-id_matricula": x.matriculas.id,
+                            "_data-quant_unidades": data_turma.quant_unidades
+                        }),
+                        widgets.MenuOption("Remover da Turma", **{
                             "_class": "botao_remover_matricula_da_turma wave_on_click",
                             "_data-id_matricula": x.matriculas.id
                         }),
@@ -1911,7 +2514,11 @@ class TurmaEspecifica():
                         "drag_and_drop": True,
                         "after_drop": self.after_drop,
                         "drop_if": lambda ori, tar: True if str(jQuery(ori).data("id_serie")) == str(jQuery(tar).data("id_serie")) and jQuery(ori).data("id_turma") == str(jQuery(tar).data("id_turma")) else False,
-                        "_class": "linha_turma_turma",
+                        "_class": self._class_resultados(
+                            x.resultados,
+                            data_turma.quant_unidades,
+                            x.matriculas.admitido
+                        ),
                         "_data-id_escola": self.id_escola,
                         "_data-id_ano_letivo": self.ano_letivo,
                         "_data-id_turma": data_turma.id,
@@ -1927,15 +2534,54 @@ class TurmaEspecifica():
             self.tem_turma = False
             table = DIV("NÃO HÁ ALUNOS NESTA TURMA", _style="color: red; padding: 100px 0; text-align: center;")
 
+
+        corpo_docente = ""
+        cont_dos = 0
+        if data_turma.corpo_docente is not None and data_turma.corpo_docente is not js_undefined:
+            table_docente = XTABLE(
+                "docentes-table-{0}".format(data_turma.id),
+                XTRH(
+                    "docentes-table-head-{0}".format(data_turma.id),
+                    "Nome",
+                    "Email",
+                )
+            )
+            corpo_docente = DIV(
+                HR(),
+                H3("Corpo Docente"),
+                table_docente,
+                _class="p-row"
+            )
+            for doce in data_turma.corpo_docente:
+                table_docente.append(
+                    XTRD(
+                        "docentes-table-data-{0}".format(doce[2]),
+                        doce[0],
+                        doce[1],
+                        widgets.MenuBox(
+                            "menu_funcionario_vinculado_{0}".format(doce[2]),
+                            I(_class="fas fa-ellipsis-v"),
+                            widgets.MenuOption("Visualizar", **{
+                                "_class": "botao_visualizar_funcionario wave_on_click",
+                                "_data-id_funcionario": doce[2],
+                            }),
+                            onOpen=self.bind_menu_docente
+                        ),
+                        **{"drag_and_drop": False}
+                    )
+                )
+
         card = DIV(
             LABEL(data_turma.turma, " (", data_turma.quant_alunos, " Alunos)", _for="phanterpwa-card-panel-control-{0}".format(data_turma.id)),
             DIV(
                 DIV(
                     DIV(
                         DIV(
+                            H3("Corpo Discente"),
                             table,
                             _class="p-row"
                         ),
+                        corpo_docente,
                         _class="phanterpwa-card-panel-control-content"
                     ),
                     DIV(
@@ -2027,6 +2673,16 @@ class TurmaEspecifica():
         )
         return card
 
+    def bind_menu_docente(self):
+        jQuery(
+            ".botao_visualizar_funcionario"
+        ).off(
+            "click.botao_visualizar_funcionario"
+        ).on(
+            "click.botao_visualizar_funcionario",
+            lambda: self.get_visualizar_funcionario(this)
+        )
+
     def binds_menu_aluno(self):
         jQuery(
             ".botao_visualizar_aluno"
@@ -2051,6 +2707,22 @@ class TurmaEspecifica():
         ).on(
             "click.botao_revogar_matricula",
             lambda: self.modal_confirmar_deletar_matricula(this)
+        )
+        jQuery(
+            ".botao_aluno_desistente"
+        ).off(
+            "click.botao_aluno_desistente"
+        ).on(
+            "click.botao_aluno_desistente",
+            lambda: self.abrir_modal_desistencia(this)
+        )
+        jQuery(
+            ".botao_transferir_aluno"
+        ).off(
+            "click.botao_transferir_aluno"
+        ).on(
+            "click.botao_transferir_aluno",
+            lambda: self.abrir_modal_transferencia(this)
         )
 
     def binds_painel_da_turma(self):
@@ -2652,6 +3324,498 @@ class TurmaEspecifica():
             self.modal_visualizar.open()
 
             
+        else:
+            window.PhanterPWA.flash("Não há alunos_visualizar matriculados para a série da turma")
+
+    def _class_resultados(self, resultados, quant_unidades, admitido=False):
+        _class = ""
+        if admitido:
+            _class = " eh_admitido"
+        resultados_permitidos = [
+            "Início do Ano"
+        ]
+        corres_romanos = ["I", "II", "III", "IV", "V", "VI"]
+        for x in range(int(quant_unidades)):
+            resultados_permitidos.append(
+                "Unidade {0} Completada".format(corres_romanos[x])
+            )
+        if resultados is not None and resultados is not js_undefined:
+            if resultados.desistente is True:
+                _class = "{0} eh_desistente".format(_class)
+            elif resultados.transferido is True and resultados.unidade_trans in resultados_permitidos:
+                _class = "{0} eh_transferido".format(_class)
+        return "linha_turma_turma{0}".format(_class)
+
+    def abrir_modal_desistencia(self, el):
+        console.log(self.matriculas, el)
+        id_matricula = jQuery(el).data("id_matricula")
+        quant_unidades = jQuery(el).data("quant_unidades")
+        nome_aluno = self.matriculas[int(id_matricula)].matriculas.nome_do_aluno
+        des_data = self.matriculas[int(id_matricula)].resultados.unidade_des or ""
+        sexo = self.matriculas[int(id_matricula)].alunos.sexo
+        texto1 = P("Informa abaixo quando o(a) aluno(a) ", STRONG(nome_aluno), " desistiu, ",
+            "com esta informação poderemos fazer o levantamento do indicador de desempenho.")
+        texto2 = P("Se o(a) aluno(a) não desistiu, ",
+            "escolha a opção vazia.", _style="color: red;")
+
+        if sexo == 1:
+            texto1 = P("Informa abaixo quando o aluno ", STRONG(nome_aluno), " desistiu, ",
+                "com esta informação poderemos fazer o levantamento do indicador de desempenho.")
+            texto2 = P("Se o aluno não desistiu, ",
+                "escolha a opção vazia.", _style="color: red;")
+        elif sexo == 2:
+            texto1 = P("Informa abaixo quando a aluna ", STRONG(nome_aluno), " desistiu, ",
+                "com esta informação poderemos fazer o levantamento do indicador de desempenho.")
+            texto2 = P("Se a aluna não desistiu, ",
+                "escolha a opção vazia.", _style="color: red;")
+        data_set = [
+            "Início do Ano"
+        ]
+        corres_romanos = ["I", "II", "III", "IV", "V", "VI"]
+        for x in range(int(quant_unidades)):
+            data_set.append(
+                "Unidade {0} Completada".format(corres_romanos[x])
+            )
+        data_set.append("Fim de Curso")
+
+
+        content = CONCATENATE(
+            texto1,
+            texto2,
+            DIV(
+                widgets.Select(
+                    "unidade_des",
+                    label="Quando desistiu?",
+                    value=des_data,
+                    can_empty=True,
+                    data_set=data_set
+                ),
+                _id="phanterpwa-input-search_field-matriculas",
+                _class="p-col w1p100"
+            ),
+        )
+        footer = DIV(
+            forms.FormButton(
+                "confirmar_desistencia",
+                "Confirmar",
+                _class="btn-autoresize wave_on_click waves-phanterpwa"
+            ),
+            _class='phanterpwa-form-buttons-container'
+        )
+        self.modal_desistencia = modal.Modal(
+            "#modal_desistencia_aluno",
+            **{
+                "title": "Desistência de {0}".format(nome_aluno),
+                "content": content,
+                "footer": footer,
+            }
+        )
+        self.modal_desistencia.open()
+        jQuery("#phanterpwa-widget-form-form_button-confirmar_desistencia").off(
+            "click.confirmar_desistencia"
+        ).on(
+            "click.confirmar_desistencia",
+            lambda: self._on_click_confirmar_desistencia(id_matricula)
+        )
+
+    def _on_click_confirmar_desistencia(self, id_matricula):
+
+        formdata = __new__(FormData())
+        formdata.append(
+            "quando_desistiu",
+            jQuery("#phanterpwa-widget-select-input-unidade_des").val()
+        )
+        
+        window.PhanterPWA.PUT(
+            "api",
+            "matricula",
+            "desistencia",
+            self.id_escola,
+            self.ano_letivo,
+            id_matricula,
+            form_data=formdata,
+            onComplete=lambda data, ajax_status: self.depois_de_confirmar_desistencia(data, ajax_status)
+        )
+
+    def depois_de_confirmar_desistencia(self, data, ajax_status):
+        if ajax_status == "success":
+            self.modal_desistencia.close()
+            json = data.responseJSON
+
+            data_de_nascimento_formated = ""
+            if json.data_matricula.data_nasc is not None and json.data_matricula.data_nasc is not js_undefined:
+                data_de_nascimento_formated = validations.format_iso_date_datetime(
+                    json.data_matricula.data_nasc, "dd/MM/yyyy", "date"
+                )
+            endereco_imagem_aluno = "/static/{0}/images/user.png".format(
+                window.PhanterPWA.VERSIONING
+            )
+            if json.data_matricula.foto3x4 is not None and json.data_matricula.foto3x4 is not js_undefined:
+                endereco_imagem_aluno = "{0}/api/alunos/{1}/image".format(
+                    window.PhanterPWA.ApiServer.remote_address,
+                    json.data_matricula.foto3x4
+                )
+            resultado = "Em aberto"
+            if json.data_matricula.resultados is not None:
+                if json.data_matricula.resultados.resultado_final is not None:
+                    resultado = json.data_matricula.resultados.resultado_final
+
+            html_xd = XTRD(
+                "turma-table-data-{0}".format(json.data_matricula.id_aluno),
+                DIV(IMG(_src=endereco_imagem_aluno, _style="width:25px; height:25px; border-radius: 100%;")),
+                validations.zfill(json.data_matricula.numero_aluno, 2),
+                json.data_matricula.nome_aluno_matricula,
+                data_de_nascimento_formated,
+                json.data_matricula.endereco,
+                resultado,
+                widgets.MenuBox(
+                    "menu_alunos_{0}".format(json.data_matricula.id_aluno),
+                    I(_class="fas fa-ellipsis-v"),
+                    widgets.MenuOption("Visualizar Aluno", **{
+                        "_class": "botao_visualizar_aluno wave_on_click",
+                        "_data-id_aluno": json.data_matricula.id_aluno,
+                    }),
+                    widgets.MenuOption("Editar Aluno", **{
+                        "_class": "botao_editar_aluno wave_on_click",
+                        "_href": window.PhanterPWA.XWAY(
+                            "alunos",
+                            json.data_matricula.id_aluno,
+                            "editar",
+                            **{
+                                "_turmas-detalhadas": "/turmas/{0}/{1}/detalhado/".format(self.id_escola, self.ano_letivo)
+                            }
+                        )
+                    }),
+                    widgets.MenuOption("Editar Matrícula", **{
+                        "_class": "botao_editar_aluno wave_on_click",
+                        "_href": window.PhanterPWA.XWAY(
+                            "matricula",
+                            json.data_matricula.id_aluno,
+                            "aluno-conferido",
+                            self.id_escola,
+                            self.ano_letivo,
+                            **{
+                                "_turmas-detalhadas": "/turmas/{0}/{1}/detalhado/".format(self.id_escola, self.ano_letivo)
+                            }
+                        )
+                    }),
+                    widgets.MenuOption("Deletar Matrícula", **{
+                        "_class": "botao_deletar_matricula wave_on_click",
+                        "_data-id_matricula": json.data_matricula.id
+                    }),
+                    widgets.MenuOption("Desistência", **{
+                        "_class": "botao_aluno_desistente wave_on_click",
+                        "_data-id_matricula": json.data_matricula.id,
+                        "_data-quant_unidades": self.data_turmas[int(json.data_matricula.id_turma)].quant_unidades
+                    }),
+                    widgets.MenuOption("Transferência", **{
+                        "_class": "botao_transferir_aluno wave_on_click",
+                        "_data-id_matricula": json.data_matricula.id,
+                        "_data-quant_unidades": self.data_turmas[int(json.data_matricula.id_turma)].quant_unidades
+                    }),
+                    widgets.MenuOption("Remover da Turma", **{
+                        "_class": "botao_remover_matricula_da_turma wave_on_click",
+                        "_data-id_matricula": json.data_matricula.id
+                    }),
+                    **{
+                        "onOpen": lambda: self.binds_menu_aluno()
+                    }
+                ),
+                **{
+                    "drag_and_drop": True,
+                    "after_drop": self.after_drop,
+                    "drop_if": lambda ori, tar: True if str(jQuery(ori).data("id_serie")) == str(jQuery(tar).data("id_serie")) and jQuery(ori).data("id_turma") == str(jQuery(tar).data("id_turma")) else False,
+                    "_class": self._class_resultados(
+                        json.data_matricula.resultados,
+                        self.data_turmas[int(json.data_matricula.id_turma)].quant_unidades,
+                        json.data_matricula.admitido
+                    ),
+                    "_data-id_escola": self.id_escola,
+                    "_data-id_ano_letivo": self.ano_letivo,
+                    "_data-id_turma": json.data_matricula.id_turma,
+                    "_data-id_aluno": json.data_matricula.id_aluno,
+                    "_data-id_serie": json.data_matricula.id_serie,
+                    "_data-id_matricula": json.data_matricula.id
+                }
+            )
+            jQuery("#phanterpwa-widget-turma-table-data-{0}".format(json.data_matricula.id_aluno)).replaceWith(
+                html_xd.jquery()
+            )
+            self.binds_painel_da_turma()
+
+    def abrir_modal_transferencia(self, el):
+        id_matricula = jQuery(el).data("id_matricula")
+        quant_unidades = jQuery(el).data("quant_unidades")
+        trans_data = self.matriculas[int(id_matricula)].resultados.unidade_trans or ""
+        nome_aluno = self.matriculas[int(id_matricula)].matriculas.nome_do_aluno
+        sexo = self.matriculas[int(id_matricula)].alunos.sexo
+        texto1 = P("Informa abaixo quando o(a) aluno(a) ", STRONG(nome_aluno), " foi transferido(a), ",
+            "com esta informação poderemos fazer o levantamento do indicador de desempenho.",
+            " Caso a transferencia seja no final do curso não haverá indicativo visual de que ",
+            " foi transferido(a)."
+        )
+        texto2 = P("Se o(a) aluno(a) não foi transferido(a), ",
+            "escolha a opção vazia.", _style="color: red;")
+
+        if sexo == 1:
+            texto1 = P("Informa abaixo quando o aluno ", STRONG(nome_aluno), " foi transferido, ",
+                "com esta informação poderemos fazer o levantamento do indicador de desempenho.",
+                " Caso a transferencia seja no final do curso não haverá indicativo visual de que ",
+                " foi transferido."
+            )
+            texto2 = P("Se o aluno não foi transferido, ",
+                "escolha a opção vazia.", _style="color: red;")
+        elif sexo == 2:
+            texto1 = P("Informa abaixo quando a aluna ", STRONG(nome_aluno), " foi transferida, ",
+                "com esta informação poderemos fazer o levantamento do indicador de desempenho.",
+                " Caso a transferencia seja no final do curso não haverá indicativo visual de que ",
+                " foi transferida."
+            )
+            texto2 = P("Se a aluna não foi transferida, ",
+                "escolha a opção vazia.", _style="color: red;")
+        data_set = [
+            "Início do Ano"
+        ]
+        corres_romanos = ["I", "II", "III", "IV", "V", "VI"]
+        for x in range(int(quant_unidades)):
+            data_set.append(
+                "Unidade {0} Completada".format(corres_romanos[x])
+            )
+        data_set.append("Fim de Curso")
+
+
+        content = CONCATENATE(
+            texto1,
+            texto2,
+            DIV(
+                widgets.Select(
+                    "unidade_trams",
+                    label="Quando foi a Transferência?",
+                    value=trans_data,
+                    can_empty=True,
+                    data_set=data_set
+                ),
+                _id="phanterpwa-input-search_field-matriculas",
+                _class="p-col w1p100"
+            ),
+        )
+        footer = DIV(
+            forms.FormButton(
+                "confirmar_transferencia",
+                "Confirmar",
+                _class="btn-autoresize wave_on_click waves-phanterpwa"
+            ),
+            _class='phanterpwa-form-buttons-container'
+        )
+        self.modal_transferencia = modal.Modal(
+            "#modal_transferencia_aluno",
+            **{
+                "title": "Transferência de {0}".format(nome_aluno),
+                "content": content,
+                "footer": footer,
+            }
+        )
+        self.modal_transferencia.open()
+        jQuery("#phanterpwa-widget-form-form_button-confirmar_transferencia").off(
+            "click.confirmar_transferencia"
+        ).on(
+            "click.confirmar_transferencia",
+            lambda: self._on_click_confirmar_transferencia(id_matricula)
+        )
+
+    def _on_click_confirmar_transferencia(self, id_matricula):
+
+        formdata = __new__(FormData())
+        formdata.append(
+            "quando_transferiu",
+            jQuery("#phanterpwa-widget-select-input-unidade_trams").val()
+        )
+        
+        window.PhanterPWA.PUT(
+            "api",
+            "matricula",
+            "transferencia",
+            self.id_escola,
+            self.ano_letivo,
+            id_matricula,
+            form_data=formdata,
+            onComplete=lambda data, ajax_status: self.depois_de_confirmar_transferencia(data, ajax_status)
+        )
+
+    def depois_de_confirmar_transferencia(self, data, ajax_status):
+        if ajax_status == "success":
+            self.modal_transferencia.close()
+            json = data.responseJSON
+            data_de_nascimento_formated = ""
+            if json.data_matricula.data_nasc is not None and json.data_matricula.data_nasc is not js_undefined:
+                data_de_nascimento_formated = validations.format_iso_date_datetime(
+                    json.data_matricula.data_nasc, "dd/MM/yyyy", "date"
+                )
+            endereco_imagem_aluno = "/static/{0}/images/user.png".format(
+                window.PhanterPWA.VERSIONING
+            )
+            if json.data_matricula.foto3x4 is not None and json.data_matricula.foto3x4 is not js_undefined:
+                endereco_imagem_aluno = "{0}/api/alunos/{1}/image".format(
+                    window.PhanterPWA.ApiServer.remote_address,
+                    json.data_matricula.foto3x4
+                )
+            resultado = "Em aberto"
+            if json.data_matricula.resultados is not None:
+                if json.data_matricula.resultados.resultado_final is not None:
+                    resultado = json.data_matricula.resultados.resultado_final
+
+            html_xd = XTRD(
+                "turma-table-data-{0}".format(json.data_matricula.id_aluno),
+                DIV(IMG(_src=endereco_imagem_aluno, _style="width:25px; height:25px; border-radius: 100%;")),
+                validations.zfill(json.data_matricula.numero_aluno, 2),
+                json.data_matricula.nome_aluno_matricula,
+                data_de_nascimento_formated,
+                json.data_matricula.endereco,
+                resultado,
+                widgets.MenuBox(
+                    "menu_alunos_{0}".format(json.data_matricula.id_aluno),
+                    I(_class="fas fa-ellipsis-v"),
+                    widgets.MenuOption("Visualizar Aluno", **{
+                        "_class": "botao_visualizar_aluno wave_on_click",
+                        "_data-id_aluno": json.data_matricula.id_aluno,
+                    }),
+                    widgets.MenuOption("Editar Aluno", **{
+                        "_class": "botao_editar_aluno wave_on_click",
+                        "_href": window.PhanterPWA.XWAY(
+                            "alunos",
+                            json.data_matricula.id_aluno,
+                            "editar",
+                            **{
+                                "_turmas-detalhadas": "/turmas/{0}/{1}/detalhado/".format(self.id_escola, self.ano_letivo)
+                            }
+                        )
+                    }),
+                    widgets.MenuOption("Editar Matrícula", **{
+                        "_class": "botao_editar_aluno wave_on_click",
+                        "_href": window.PhanterPWA.XWAY(
+                            "matricula",
+                            json.data_matricula.id_aluno,
+                            "aluno-conferido",
+                            self.id_escola,
+                            self.ano_letivo,
+                            **{
+                                "_turmas-detalhadas": "/turmas/{0}/{1}/detalhado/".format(self.id_escola, self.ano_letivo)
+                            }
+                        )
+                    }),
+                    widgets.MenuOption("Deletar Matrícula", **{
+                        "_class": "botao_deletar_matricula wave_on_click",
+                        "_data-id_matricula": json.data_matricula.id
+                    }),
+                    widgets.MenuOption("Desistência", **{
+                        "_class": "botao_aluno_desistente wave_on_click",
+                        "_data-id_matricula": json.data_matricula.id,
+                        "_data-quant_unidades": self.data_turmas[int(json.data_matricula.id_turma)].quant_unidades
+                    }),
+                    widgets.MenuOption("Transferência", **{
+                        "_class": "botao_transferir_aluno wave_on_click",
+                        "_data-id_matricula": json.data_matricula.id,
+                        "_data-quant_unidades": self.data_turmas[int(json.data_matricula.id_turma)].quant_unidades
+                    }),
+                    widgets.MenuOption("Remover da Turma", **{
+                        "_class": "botao_remover_matricula_da_turma wave_on_click",
+                        "_data-id_matricula": json.data_matricula.id
+                    }),
+                    **{
+                        "onOpen": lambda: self.binds_menu_aluno()
+                    }
+                ),
+                **{
+                    "drag_and_drop": True,
+                    "after_drop": self.after_drop,
+                    "drop_if": lambda ori, tar: True if str(jQuery(ori).data("id_serie")) == str(jQuery(tar).data("id_serie")) and jQuery(ori).data("id_turma") == str(jQuery(tar).data("id_turma")) else False,
+                    "_class": self._class_resultados(
+                        json.data_matricula.resultados,
+                        self.data_turmas[int(json.data_matricula.id_turma)].quant_unidades,
+                        json.data_matricula.admitido
+                    ),
+                    "_data-id_escola": self.id_escola,
+                    "_data-id_ano_letivo": self.ano_letivo,
+                    "_data-id_turma": json.data_matricula.id_turma,
+                    "_data-id_aluno": json.data_matricula.id_aluno,
+                    "_data-id_serie": json.data_matricula.id_serie,
+                    "_data-id_matricula": json.data_matricula.id
+                }
+            )
+            jQuery("#phanterpwa-widget-turma-table-data-{0}".format(json.data_matricula.id_aluno)).replaceWith(
+                html_xd.jquery()
+            )
+            self.binds_painel_da_turma()
+
+    def get_visualizar_funcionario(self, widget_instance):
+        id_funcionario = jQuery(widget_instance).data("id_funcionario")
+        window.PhanterPWA.GET(
+            "api",
+            "funcionario",
+            "visualizar",
+            id_funcionario,
+            onComplete=lambda data, ajax_status: self.modal_add_funcinario_visualizar(data, ajax_status)
+        )
+
+    def modal_add_funcinario_visualizar(self, data, ajax_status):
+        json = data.responseJSON
+        if ajax_status == "success":
+            html_vinculos =  DIV(
+                    DIV("VÍNCULOS DO FUNCIONÁRIO", _class="p-col w1p100 phanterpwa-widget-form-separator"),
+                    P("O Funcionário não possui vínculos"),
+                    _class="vinculos-conteudo"
+                )
+            if json.data.vinculos is not None and json.data.vinculos is not js_undefined:
+                html_vinculos = DIV(
+                    DIV("VÍNCULOS DO FUNCIONÁRIO", _class="p-col w1p100 phanterpwa-widget-form-separator"),
+                    _class="vinculos-conteudo"
+                )
+                tabela = XTABLE(
+                    "tabela_ficha_individual",
+                    XTRH(
+                        "tabela_ficha_individual_head",
+                        "Ano Letivo",
+                        "Escola",
+                        "Atribuições",
+                        "Data Limite",
+                        "Autorização"
+                    ),
+
+                )
+                for x in json.data.vinculos:
+                    data_limite = "31/12/{0}".format(x.anos_letivo.ano)
+                    if x.vinculos_funcionarios.data_limite is not None and x.vinculos_funcionarios.data_limite is not js_undefined:
+                        data_limite = validations.format_iso_date_datetime(
+                            x.vinculos_funcionarios.data_limite, "dd/MM/yyyy", "date"
+                        )
+
+                    tabela.append(
+                        XTRD(
+                            "tabela_ficha_individual_linhas_{0}".format(x.vinculos_funcionarios.id),
+                            x.anos_letivo.ano,
+                            x.escolas.nome,
+                            x.profissoes.profissao,
+                            data_limite,
+                            x.vinculos_funcionarios.autorizacao,
+                            **{"drag_and_drop": False}
+                        )
+                    )
+                html_vinculos.append(tabela)
+            content = DIV(
+                forms.Form(json.data.funcionario),
+                html_vinculos,
+                _class="p-row"
+            )
+            self.modal_visualizar_funcionario = modal.Modal(
+                "#modal_visualizar_escola_funcionario",
+                **{
+                    "title": CONCATENATE(DIV("Visualizar dados do funcionário"),
+                        DIV(STRONG(json.data.nome))),
+                    "content": content
+                }
+            )
+            self.modal_visualizar_funcionario.open()
+
         else:
             window.PhanterPWA.flash("Não há alunos_visualizar matriculados para a série da turma")
 

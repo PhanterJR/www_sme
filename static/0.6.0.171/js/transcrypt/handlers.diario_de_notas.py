@@ -111,7 +111,7 @@ class Index(gatehandler.Handler):
                 I(_class="fas fa-arrow-circle-left"),
                 **{
                     "tag": "a",
-                    "_href": window.PhanterPWA.XWAY("professores", "turmas",arg1, arg2),
+                    "_href": window.PhanterPWA.XWAY("professores", "turmas", arg1, arg2),
                     "position": "top",
                     "show_if_way_match": r"^diario-de-notas\/professor\/[0-9]{1,}\/[0-9]{1,}\/"
                 }
@@ -277,10 +277,19 @@ class Diario():
                 "Resultado Final"
             )
         )
+        series = []
         for x in diario_de_notas.lista_alunos:
             add_class = "link linha_aluno_abrir_diario"
             if "selecionado" in x[1][1]["_class"]:
                 add_class = "link selecionado linha_aluno_abrir_diario"
+            if self.eh_multisseriado:
+                serie = x[1][1]["_data-serie"]
+                if serie not in series:
+                    series.append(serie)
+                    tabela_lista_alunos.append(
+                        TR(TH(serie, _colspan=4, _class="serie_multisseriado"))
+                    )
+
             tabela_lista_alunos.append(
                 XTRD(
                     "lista_alunos_diario_linha_{0}_{1}".format(self.id_turma, x[1][1]['_data-id_aluno']),
@@ -728,6 +737,7 @@ class Diario():
         if ajax_status == "success":
             json = data.responseJSON
             diario_de_notas = json.diario_de_notas
+            self.eh_multisseriado = json.eh_multisseriado
 
             self.processar_diario(diario_de_notas)
 
