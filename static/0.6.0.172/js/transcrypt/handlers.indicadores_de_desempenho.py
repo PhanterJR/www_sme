@@ -315,9 +315,11 @@ class IndicadoresDeDesempenho():
                 _class="phanterpwa-container p-container extend"
             )
         )
-
+        tem_multisseriado = False
+        tem_regular = False
         for x in self.turmas:
             if x.multisseriado:
+                tem_multisseriado = True
                 # self.html_indicador_multi_uni1.append(DIV(preloaders.run_points, _id="ind_uni1_{0}".format(x.id), _class="indicador-container"))
                 # self.html_indicador_multi_uni2.append(DIV(preloaders.run_points, _id="ind_uni2_{0}".format(x.id), _class="indicador-container"))
                 # self.html_indicador_multi_uni3.append(DIV(preloaders.run_points, _id="ind_uni3_{0}".format(x.id), _class="indicador-container"))
@@ -333,6 +335,7 @@ class IndicadoresDeDesempenho():
                 self.html_tabela_multi_unif.append(TBODY(TR(TH(x.turma), TD(DIV(preloaders.run_points), _colspan=13, _style="text-align: center;")), _id="tbody_ind_unif_{0}".format(x.id), _class="tbody-indicador-container"))
 
             else:
+                tem_regular = True
                 # self.html_indicador_uni1.append(DIV(preloaders.run_points, _id="ind_uni1_{0}".format(x.id), _class="indicador-container"))
                 # self.html_indicador_uni2.append(DIV(preloaders.run_points, _id="ind_uni2_{0}".format(x.id), _class="indicador-container"))
                 # self.html_indicador_uni3.append(DIV(preloaders.run_points, _id="ind_uni3_{0}".format(x.id), _class="indicador-container"))
@@ -348,6 +351,10 @@ class IndicadoresDeDesempenho():
                 self.html_tabela_unif.append(TBODY(TR(TH(x.turma), TD(DIV(preloaders.run_points), _colspan=12, _style="text-align: center;")), _id="tbody_ind_unif_{0}".format(x.id), _class="tbody-indicador-container"))
 
         html.html_to("#main-container")
+        if not tem_multisseriado:
+            jQuery(".indicador_multi").fadeOut()
+        if not tem_regular:
+            jQuery(".indicador_simples").fadeOut()
         self.posicao = 0
         self.get_indicador(self.turmas[self.posicao].id)
 

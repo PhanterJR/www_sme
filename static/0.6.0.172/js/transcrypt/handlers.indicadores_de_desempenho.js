@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2021-11-21 18:45:05
+// Transcrypt'ed from Python, 2021-11-27 03:21:31
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import * as anos_letivos from './handlers.anos_letivos.js';
 import * as escolas from './handlers.escolas.js';
@@ -217,8 +217,11 @@ export var IndicadoresDeDesempenho =  __class__ ('IndicadoresDeDesempenho', [obj
 		self.html_indicador_multi_uni4 = DIV (H3 ('Indicadores de Desempenho - Multisseriado - Unidade IV'), self.html_tabela_multi_uni4, __kwargtrans__ ({_class: 'indicador_desempenho_container indicador_desempenho_container_mult_uni4'}));
 		self.html_indicador_multi_unif = DIV (H3 ('Indicadores de Desempenho - Multisseriado - Final'), self.html_tabela_multi_unif, __kwargtrans__ ({_class: 'indicador_desempenho_container indicador_desempenho_container_mult_unif'}));
 		var html = CONCATENATE (DIV (DIV (DIV (DIV ('INDICADORES DE DESEMPENHO', __kwargtrans__ ({_class: 'phanterpwa-breadcrumb'})), __kwargtrans__ ({_class: 'phanterpwa-breadcrumb-wrapper'})), __kwargtrans__ ({_class: 'p-container extend'})), __kwargtrans__ ({_class: 'title_page_container card'})), DIV (DIV (DIV (DIV (DIV (self.html_indicador_uni1, self.html_indicador_uni2, self.html_indicador_uni3, (self.unidades == 4 ? self.html_indicador_uni4 : ''), self.html_indicador_unif, __kwargtrans__ ({_class: 'indicador_simples'})), DIV (self.html_indicador_multi_uni1, self.html_indicador_multi_uni2, self.html_indicador_multi_uni3, (self.unidades == 4 ? self.html_indicador_multi_uni4 : ''), self.html_indicador_multi_unif, __kwargtrans__ ({_class: 'indicador_multi'})), __kwargtrans__ ({_id: 'content-indicadores_de_desempenho', _class: 'p-row e-padding_auto continuos'})), __kwargtrans__ ({_class: 'phanterpwa-media-print-container'})), __kwargtrans__ ({_class: 'card'})), DIV (__kwargtrans__ ({_id: 'modal_cmp_curriculares_container'})), __kwargtrans__ ({_class: 'phanterpwa-container p-container extend'})));
+		var tem_multisseriado = false;
+		var tem_regular = false;
 		for (var x of self.turmas) {
 			if (x.multisseriado) {
+				var tem_multisseriado = true;
 				self.html_tabela_multi_uni1.append (TBODY (TR (TH (x.turma), TD (DIV (preloaders.run_points), __kwargtrans__ ({_colspan: 13, _style: 'text-align: center;'}))), __kwargtrans__ ({_id: 'tbody_ind_uni1_{0}'.format (x.id), _class: 'tbody-indicador-container'})));
 				self.html_tabela_multi_uni2.append (TBODY (TR (TH (x.turma), TD (DIV (preloaders.run_points), __kwargtrans__ ({_colspan: 13, _style: 'text-align: center;'}))), __kwargtrans__ ({_id: 'tbody_ind_uni2_{0}'.format (x.id), _class: 'tbody-indicador-container'})));
 				self.html_tabela_multi_uni3.append (TBODY (TR (TH (x.turma), TD (DIV (preloaders.run_points), __kwargtrans__ ({_colspan: 13, _style: 'text-align: center;'}))), __kwargtrans__ ({_id: 'tbody_ind_uni3_{0}'.format (x.id), _class: 'tbody-indicador-container'})));
@@ -228,6 +231,7 @@ export var IndicadoresDeDesempenho =  __class__ ('IndicadoresDeDesempenho', [obj
 				self.html_tabela_multi_unif.append (TBODY (TR (TH (x.turma), TD (DIV (preloaders.run_points), __kwargtrans__ ({_colspan: 13, _style: 'text-align: center;'}))), __kwargtrans__ ({_id: 'tbody_ind_unif_{0}'.format (x.id), _class: 'tbody-indicador-container'})));
 			}
 			else {
+				var tem_regular = true;
 				self.html_tabela_uni1.append (TBODY (TR (TH (x.turma), TD (DIV (preloaders.run_points), __kwargtrans__ ({_colspan: 12, _style: 'text-align: center;'}))), __kwargtrans__ ({_id: 'tbody_ind_uni1_{0}'.format (x.id), _class: 'tbody-indicador-container'})));
 				self.html_tabela_uni2.append (TBODY (TR (TH (x.turma), TD (DIV (preloaders.run_points), __kwargtrans__ ({_colspan: 12, _style: 'text-align: center;'}))), __kwargtrans__ ({_id: 'tbody_ind_uni2_{0}'.format (x.id), _class: 'tbody-indicador-container'})));
 				self.html_tabela_uni3.append (TBODY (TR (TH (x.turma), TD (DIV (preloaders.run_points), __kwargtrans__ ({_colspan: 12, _style: 'text-align: center;'}))), __kwargtrans__ ({_id: 'tbody_ind_uni3_{0}'.format (x.id), _class: 'tbody-indicador-container'})));
@@ -238,6 +242,12 @@ export var IndicadoresDeDesempenho =  __class__ ('IndicadoresDeDesempenho', [obj
 			}
 		}
 		html.html_to ('#main-container');
+		if (!(tem_multisseriado)) {
+			$ ('.indicador_multi').fadeOut ();
+		}
+		if (!(tem_regular)) {
+			$ ('.indicador_simples').fadeOut ();
+		}
 		self.posicao = 0;
 		self.get_indicador (self.turmas [self.posicao].id);
 	});},
