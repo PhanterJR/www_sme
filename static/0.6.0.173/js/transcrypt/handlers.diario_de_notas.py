@@ -226,7 +226,6 @@ class Diario():
                         )
                 elif y[1]['tipo'] == "input":
                     if "_coor" in y[1]:
-                        console.log(y[1]["_coor"])
                         seps = y[1]["_coor"].split("x")
                         v = int(seps[0])
                         h = int(seps[1])
@@ -561,21 +560,21 @@ class Diario():
             if updates is not None and updates is not js_undefined:
                 for x in dict(updates).keys():
                     celula = ""
-                    if updates[x][1]['tipo'] == "input":
-                        celula = TD(
-                            INPUT(_value=updates[x][0]),
-                            DIV(I(_class="fas fa-cloud-upload-alt"), _class="botao_enviar_nota"),
-                            **updates[x][1]
+                    if updates[x] is not None and updates[x] is not js_undefined:
+                        if updates[x][1]['tipo'] == "input":
+                            celula = TD(
+                                INPUT(_value=updates[x][0]),
+                                DIV(I(_class="fas fa-cloud-upload-alt"), _class="botao_enviar_nota"),
+                                **updates[x][1]
+                            )
+                        else:
+                            celula = TD(
+                                updates[x][0],
+                                **updates[x][1]
+                            )
+                        jQuery("#{0}".format(x)).replaceWith(
+                            celula.jquery()
                         )
-                    else:
-                        celula = TD(
-                            updates[x][0],
-                            **updates[x][1]
-                        )
-                    console.log(x)
-                    jQuery("#{0}".format(x)).replaceWith(
-                        celula.jquery()
-                    )
                 self.diario_binds()
 
     def nota(self, value):
