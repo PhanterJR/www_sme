@@ -282,6 +282,14 @@ class TurmasSimples(helpers.XmlConstructor):
                                     "_title": "Resumo Controle de Atividades",
                                 }
                             ),
+                            A(
+                                I(_class="fas fa-bus-alt"),
+                                **{
+                                    "_class": "botao_lista_transporte icon_button",
+                                    "_title": "Zonas de Transporte",
+                                    "_href": window.PhanterPWA.XWAY("imprimir", "lista-transporte-alunos", self.id_escola, self.ano_letivo)
+                                }
+                            ),
                             _class="phanterpwa-card-panel-control-buttons"
                         ),
                         _class="phanterpwa-card-panel-control-wrapper has_buttons"

@@ -94,30 +94,20 @@ class Index(gatehandler.Handler):
                     )
                 else:
                     self.TotalDeMatriculados = TotalDeMatriculados(self, arg1, arg2)
+
         elif arg0 == "lista-transporte-alunos":
-            if window.PhanterPWA.auth_user_has_role(["administrator", "root", "Administrador Master SME"]):
-                if arg1 is None or arg1 is js_undefined:
-                    arg1 = "todos"
-                if arg2 is None or arg2 is js_undefined:
-                    html = anos_letivos.EscolherAnoLetivo(
-                        id_target="#content-diario_de_notas",
-                        callback_link=lambda ano: "#_phanterpwa:/imprimir/lista-transporte-alunos/{0}/{1}".format(arg1, ano)
-                    )
-                else:
-                    self.AlunosTransporte = AlunosTransporte(self, arg1, arg2)
+            if arg0 is None or arg0 is js_undefined:
+                html = escolas.EscolherEscola(
+                    id_target="#content-diario_de_notas",
+                    callback_link=lambda id_escola: "#_phanterpwa:/imprimir/lista-transporte-alunos/{0}".format(id_escola)
+                )
+            elif str(arg0).isdigit() and (arg1 is None or arg1 is js_undefined):
+                html = anos_letivos.EscolherAnoLetivo(
+                    id_target="#content-diario_de_notas",
+                    callback_link=lambda ano: "#_phanterpwa:/imprimir/lista-transporte-alunos/{0}/{1}".format(arg1, ano)
+                )
             else:
-                if arg0 is None or arg0 is js_undefined:
-                    html = escolas.EscolherEscola(
-                        id_target="#content-diario_de_notas",
-                        callback_link=lambda id_escola: "#_phanterpwa:/imprimir/lista-transporte-alunos/{0}".format(id_escola)
-                    )
-                elif str(arg0).isdigit() and (arg1 is None or arg1 is js_undefined):
-                    html = anos_letivos.EscolherAnoLetivo(
-                        id_target="#content-diario_de_notas",
-                        callback_link=lambda ano: "#_phanterpwa:/imprimir/lista-transporte-alunos/{0}/{1}".format(arg1, ano)
-                    )
-                else:
-                    self.AlunosTransporte = AlunosTransporte(self, arg1, arg2)
+                self.AlunosTransporte = AlunosTransporte(self, arg1, arg2)
         elif arg0 == "lista-de-novatos":
             self.ListaDeNovatos = ListaDeNovatos(self, arg1)
         else:
@@ -787,7 +777,7 @@ class QuestionarioSocial():
                     widgets.FloatButton(
                         I(_class="fas fa-file-contract"),
                         _class="botao_imprimir_matricula",
-                        _title="Imprimir matrícula",
+                        _title="Documento de matrícula",
                         _href=window.PhanterPWA.XWAY(
                             "imprimir",
                             "matricula",
@@ -795,7 +785,33 @@ class QuestionarioSocial():
                         )
                     )
                 )
-
+            array_botoes.append(
+                widgets.FloatButton(
+                    I(
+                        DIV(
+                            DIV(
+                                SPAN(I(_class="fas fa-user-graduate"), _class="icombine-container-first"),
+                                SPAN(I(_class="fas fa-pen"), _class="icombine-container-last"),
+                                _class="icombine-container"
+                            ),
+                            _class="phanterpwa-snippet-icombine"
+                        ),
+                    ),
+                    _class="botao_editar_dados_aluno",
+                    _title="Editar dados do aluno",
+                    _href=window.PhanterPWA.XWAY(
+                        "matricular",
+                        self.id_escola,
+                        self.ano_letivo,
+                        self.id_aluno,
+                        _retornar="imprimir/questionario-social/{0}/{1}/{2}".format(
+                            self.id_escola,
+                            self.ano_letivo,
+                            self.id_aluno
+                        )
+                    )
+                )
+            )
             array_botoes.append(
                 widgets.FloatButton(
                     I(_class="fas fa-file-pdf"),
@@ -2183,7 +2199,7 @@ class AlunosTransporte():
                 DIV(
                     DIV(
                         DIV("IMPRIMIR", _class="phanterpwa-breadcrumb"),
-                        DIV("LISTA DE ALUNOS TRANSPORTE", _class="phanterpwa-breadcrumb"),
+                        DIV("ZONAS DE TRANSPORTE", _class="phanterpwa-breadcrumb"),
                         _class="phanterpwa-breadcrumb-wrapper"
                     ),
                     _class="p-container"),
@@ -2196,7 +2212,7 @@ class AlunosTransporte():
                             DIV(preloaders.android, _style="width: 300px; height: 300px; overflow: hidden; margin: auto;"),
                             _style="text-align:center; padding: 50px 0;"
                         ),
-                        _id="content-matriculas-imprimir",
+                        _id="content-alunos-transporte",
                         _class='p-row card e-padding_20'
                     ),
                     _class="phanterpwa-container p-container"
@@ -2220,105 +2236,7 @@ class AlunosTransporte():
         window.PhanterPWA.Components['left_bar'].add_button(BackButton)
         self._get_data()
 
-    def after_get(self, data, ajax_status):
-        json = data.responseJSON
 
-        # data_assinatura = json.data.data_matricula_formatada
-
-        logo = "{0}/api/escolas/{1}/image".format(
-            window.PhanterPWA.ApiServer.remote_address,
-            12
-        )
-
-        if ajax_status == "success":
-
-            lista_escola = []
-            dict_escola = {}
-            html_lista_novatos = DIV(
-                _class="p-row"
-            )
-            for a in json.data.alunos:
-                data_de_nascimento = validations.format_iso_date_datetime(
-                    a.data_de_nascimento, "dd/MM/yyyy", "date"
-                )
-                if not a.escola in lista_escola:
-                    lista_escola.append(a.escola)
-                    html_lista_novatos.append(
-                        H3(a.escola)
-                    )
-                    table = XTABLE(
-                        "tabela_escola_{0}".format(a.id_escola),
-                        XTRH(
-                            "tabela_th_escola_{0}".format(a.id_escola),
-                            "Nome",
-                            "Data de Nascimento",
-                            "Sexo",
-                            "Cor/Raça",
-                            "Localização",
-                            "Ensino",
-                            "Turno",
-                            "CPF",
-                            "Responsável",
-                            "Grau de Parentesto",
-                            "Endereço",
-                            "Latitude",
-                            "Longitude"
-                        )
-                        # TR(
-                        #     TH(a.serie, _colspan=4, _style="background-color: grey; color: white;")
-                        # )
-                    )
-                    html_lista_novatos.append(table)
-                    html_lista_novatos.append(HR())
-                    dict_escola[a.id_escola] = {"serie": [a.serie]}
-                else:
-                    if not a.serie in dict_escola[a.id_escola]["serie"]:
-                        dict_escola[a.id_escola]["serie"].append(a.serie)
-                        # table.append(
-                        #     TR(
-                        #         TH(a.serie, _colspan=4, _style="background-color: grey; color: white;")
-                        #     )
-                        # )
-                table.append(
-                    XTRD(
-                        "tabela_aluno_escola_{0}".format(a.matricula),
-                        a.aluno,
-                        data_de_nascimento,
-                        a.sexo,
-                        a.raca,
-                        a.localizacao,
-                        a.ensino,
-                        a.turno,
-                        a.cpf,
-                        a.nome_do_responsavel,
-                        a.grau_parentesto,
-                        a.endereco,
-                        "",
-                        ""
-                    )
-                )                    
-
-            folha2_content = DIV(
-                DIV(
-                    DIV(
-                        DIV(
-                            DIV(
-                                DIV(
-                                    DIV(H2("LISTA DE ALUNOS TRANSPORTE POR ESCOLA"), _class="sme_cabecalho_titulo_documento"),
-                                    DIV(
-                                        html_lista_novatos,
-                                        _class="sme_documento_conteudo"
-                                    ),
-                                    _class="p-row"
-                                ),
-                                _class="p-container extend"
-                            ),
-                        ),
-                    ),
-                ),
-                _class="folhas_para_imprimir phanterpwa-media-print-container"
-            )
-            folha2_content.html_to("#content-matriculas-imprimir")
 
     def _get_data(self):
         window.PhanterPWA.GET(
@@ -2329,5 +2247,114 @@ class AlunosTransporte():
             self.ano_letivo,
             onComplete=self.after_get
         )
+
+    def after_get(self, data, ajax_status):
+        json = data.responseJSON
+        self.localidades = dict(json.data.localidades)
+        self.escola = json.data.escola
+
+        # data_assinatura = json.data.data_matricula_formatada
+
+        logo = "{0}/api/escolas/{1}/image".format(
+            window.PhanterPWA.ApiServer.remote_address,
+            self.id_escola
+        )
+
+        if ajax_status == "success":
+
+            html_lista_novatos = DIV(
+                _class="p-row"
+            )
+            table = XTABLE(
+                "tabela_escola_{0}".format(self.id_escola),
+                XTRH(
+                    "tabela_th_escola_{0}".format(self.id_escola),
+                    "Nome",
+                    "Data de Nascimento",
+                    "Série",
+                    "Turno",
+                    "Endereço",
+                    " "
+                )
+            )
+            self.conta_localidades = dict()
+            for loc_ in self.localidades.keys():
+                self.conta_localidades[loc_] = 0
+                table.append(TR(TH(loc_, _colspan="6", _style="text-align: center; background-color: grey;")))
+                for aln in self.localidades[loc_]:
+                    self.conta_localidades[loc_] += 1
+                    data_de_nascimento = validations.format_iso_date_datetime(
+                        aln.data_de_nascimento, "dd/MM/yyyy", "date"
+                    )
+                    table.append(XTRD(
+                        "tabela_th_aluno_{0}".format(aln.id_aluno),
+                        aln.aluno,
+                        data_de_nascimento,
+                        aln.serie,
+                        aln.turno,
+                        aln.endereco,
+                        TD(
+                            A(
+                                I(_class="fas fa-list-alt"),
+                                **{
+                                    "_class": "botao_turma_detalhada icon_button",
+                                    "_title": "Turmas detalhadas",
+                                    "_href": window.PhanterPWA.XWAY("alunos", aln.id_aluno, "editar"),
+                                    "_target": "_blank"
+                                }
+                            )
+                        )
+                    ))
+            tabela_resu = XTABLE(
+                "tabela_resumo_localidade_{0}".format(self.id_escola),
+                XTRH(
+                    "tabela_th_resumo_localidade_{0}".format(self.id_escola),
+                    "Zona de Transporte",
+                    "Quantidade de Alunos",
+                )
+            )
+            id_total_locs = 0
+            for conts in self.conta_localidades.keys():
+                id_total_locs += 1
+                tabela_resu.append(
+                    XTRD(
+                        "tabela_resumo_localidade_dados_{0}".format(id_total_locs),
+                        conts,
+                        self.conta_localidades[conts]
+                    )
+                )
+
+
+            folha2_content = DIV(
+                DIV(
+                    DIV(
+                        DIV(
+                            DIV(
+                                DIV(
+                                    DIV(H2("ZONAS DE TRANSPORTE E SUAS RESPECTIVAS QUANTIDADE DE ALUNOS"), _class="sme_cabecalho_titulo_documento"),
+                                    DIV(
+                                        tabela_resu,
+                                        _class="sme_documento_conteudo"
+                                    ),
+                                    _class="p-row"
+                                ),
+                                DIV(
+                                    DIV(H2("LISTA DE ALUNOS POR ZONA DE TRANSPORTE"), _class="sme_cabecalho_titulo_documento"),
+                                    DIV(
+                                        table,
+                                        _class="sme_documento_conteudo"
+                                    ),
+                                    _class="p-row"
+                                ),
+                                _class="p-container extend"
+                            ),
+                        ),
+                    ),
+                    _class="media-print-visible"
+                ),
+                _class="folhas_para_imprimir phanterpwa-simple-media-print"
+            )
+            folha2_content.html_to("#content-alunos-transporte")
+
 
 __pragma__('nokwargs')

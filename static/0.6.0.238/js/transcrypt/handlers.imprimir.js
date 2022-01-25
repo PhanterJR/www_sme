@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2022-01-21 01:15:36
+// Transcrypt'ed from Python, 2022-01-25 10:03:14
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import * as anos_letivos from './handlers.anos_letivos.js';
 import * as escolas from './handlers.escolas.js';
@@ -158,33 +158,7 @@ export var Index =  __class__ ('Index', [gatehandler.Handler], {
 			}
 		}
 		else if (arg0 == 'lista-transporte-alunos') {
-			if (window.PhanterPWA.auth_user_has_role (['administrator', 'root', 'Administrador Master SME'])) {
-				if (arg1 === null || arg1 === undefined) {
-					var arg1 = 'todos';
-				}
-				if (arg2 === null || arg2 === undefined) {
-					var html = anos_letivos.EscolherAnoLetivo (__kwargtrans__ ({id_target: '#content-diario_de_notas', callback_link: (function __lambda__ (ano) {
-						if (arguments.length) {
-							var __ilastarg0__ = arguments.length - 1;
-							if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
-								var __allkwargs0__ = arguments [__ilastarg0__--];
-								for (var __attrib0__ in __allkwargs0__) {
-									switch (__attrib0__) {
-										case 'ano': var ano = __allkwargs0__ [__attrib0__]; break;
-									}
-								}
-							}
-						}
-						else {
-						}
-						return '#_phanterpwa:/imprimir/lista-transporte-alunos/{0}/{1}'.format (arg1, ano);
-					})}));
-				}
-				else {
-					self.AlunosTransporte = AlunosTransporte (self, arg1, arg2);
-				}
-			}
-			else if (arg0 === null || arg0 === undefined) {
+			if (arg0 === null || arg0 === undefined) {
 				var html = escolas.EscolherEscola (__kwargtrans__ ({id_target: '#content-diario_de_notas', callback_link: (function __lambda__ (id_escola) {
 					if (arguments.length) {
 						var __ilastarg0__ = arguments.length - 1;
@@ -541,8 +515,9 @@ export var QuestionarioSocial =  __class__ ('QuestionarioSocial', [object], {
 				array_botoes.append (widgets.FloatButton (I (__kwargtrans__ ({_class: 'fas fa-edit'})), __kwargtrans__ ({_class: 'botao_editar_matricula', _title: 'Editar Matrícula', _href: window.PhanterPWA.XWAY ('matricular', self.id_escola, self.ano_letivo, 'aluno-conferido', self.id_aluno)})));
 			}
 			if (self.id_matricula !== null) {
-				array_botoes.append (widgets.FloatButton (I (__kwargtrans__ ({_class: 'fas fa-file-contract'})), __kwargtrans__ ({_class: 'botao_imprimir_matricula', _title: 'Imprimir matrícula', _href: window.PhanterPWA.XWAY ('imprimir', 'matricula', self.id_matricula)})));
+				array_botoes.append (widgets.FloatButton (I (__kwargtrans__ ({_class: 'fas fa-file-contract'})), __kwargtrans__ ({_class: 'botao_imprimir_matricula', _title: 'Documento de matrícula', _href: window.PhanterPWA.XWAY ('imprimir', 'matricula', self.id_matricula)})));
 			}
+			array_botoes.append (widgets.FloatButton (I (DIV (DIV (SPAN (I (__kwargtrans__ ({_class: 'fas fa-user-graduate'})), __kwargtrans__ ({_class: 'icombine-container-first'})), SPAN (I (__kwargtrans__ ({_class: 'fas fa-pen'})), __kwargtrans__ ({_class: 'icombine-container-last'})), __kwargtrans__ ({_class: 'icombine-container'})), __kwargtrans__ ({_class: 'phanterpwa-snippet-icombine'}))), __kwargtrans__ ({_class: 'botao_editar_dados_aluno', _title: 'Editar dados do aluno', _href: window.PhanterPWA.XWAY ('matricular', self.id_escola, self.ano_letivo, self.id_aluno, __kwargtrans__ ({_retornar: 'imprimir/questionario-social/{0}/{1}/{2}'.format (self.id_escola, self.ano_letivo, self.id_aluno)}))})));
 			array_botoes.append (widgets.FloatButton (I (__kwargtrans__ ({_class: 'fas fa-file-pdf'})), __kwargtrans__ ({_class: 'botao_gerar_pdf', _title: 'Gerar PDF', _href: '{0}/api/pdfs/questionario-social/{1}/{2}/{3}?nocache={4}'.format (window.PhanterPWA.ApiServer.remote_address, self.id_escola, self.ano_letivo, self.id_aluno, now)})));
 			array_botoes.append (widgets.FloatButton (I (__kwargtrans__ ({_class: 'fas fa-print'})), __kwargtrans__ ({_title: 'Imprimir documento', _class: 'botao_imprimir_diario_de_notas', _onclick: 'print();'})));
 			var html_botoes = widgets.FloatMenu ('menu_impressao', I (__kwargtrans__ ({_class: 'fas fa-ellipsis-v'})), ...array_botoes);
@@ -1256,7 +1231,7 @@ export var AlunosTransporte =  __class__ ('AlunosTransporte', [object], {
 		else {
 		}
 		self.id_matricula = window.PhanterPWA.Request.get_arg (1);
-		var html = CONCATENATE (DIV (DIV (DIV (DIV ('IMPRIMIR', __kwargtrans__ ({_class: 'phanterpwa-breadcrumb'})), DIV ('LISTA DE ALUNOS TRANSPORTE', __kwargtrans__ ({_class: 'phanterpwa-breadcrumb'})), __kwargtrans__ ({_class: 'phanterpwa-breadcrumb-wrapper'})), __kwargtrans__ ({_class: 'p-container'})), __kwargtrans__ ({_class: 'title_page_container card'})), DIV (DIV (DIV (DIV (DIV (preloaders.android, __kwargtrans__ ({_style: 'width: 300px; height: 300px; overflow: hidden; margin: auto;'})), __kwargtrans__ ({_style: 'text-align:center; padding: 50px 0;'})), __kwargtrans__ ({_id: 'content-matriculas-imprimir', _class: 'p-row card e-padding_20'})), __kwargtrans__ ({_class: 'phanterpwa-container p-container'})), __kwargtrans__ ({_id: 'documentos-content'})), DIV (__kwargtrans__ ({_id: 'documento-lista-alunos'})), DIV (__kwargtrans__ ({_id: 'documento-lista-desistentes'})), DIV (__kwargtrans__ ({_id: 'documento-lista-transferidos'})), DIV (__kwargtrans__ ({_id: 'documento-lista-novatos'})));
+		var html = CONCATENATE (DIV (DIV (DIV (DIV ('IMPRIMIR', __kwargtrans__ ({_class: 'phanterpwa-breadcrumb'})), DIV ('ZONAS DE TRANSPORTE', __kwargtrans__ ({_class: 'phanterpwa-breadcrumb'})), __kwargtrans__ ({_class: 'phanterpwa-breadcrumb-wrapper'})), __kwargtrans__ ({_class: 'p-container'})), __kwargtrans__ ({_class: 'title_page_container card'})), DIV (DIV (DIV (DIV (DIV (preloaders.android, __kwargtrans__ ({_style: 'width: 300px; height: 300px; overflow: hidden; margin: auto;'})), __kwargtrans__ ({_style: 'text-align:center; padding: 50px 0;'})), __kwargtrans__ ({_id: 'content-alunos-transporte', _class: 'p-row card e-padding_20'})), __kwargtrans__ ({_class: 'phanterpwa-container p-container'})), __kwargtrans__ ({_id: 'documentos-content'})), DIV (__kwargtrans__ ({_id: 'documento-lista-alunos'})), DIV (__kwargtrans__ ({_id: 'documento-lista-desistentes'})), DIV (__kwargtrans__ ({_id: 'documento-lista-transferidos'})), DIV (__kwargtrans__ ({_id: 'documento-lista-novatos'})));
 		html.html_to ('#main-container');
 		var BackButton = left_bar.LeftBarButton ('back_imprimir_matricula', 'Voltar', I (__kwargtrans__ ({_class: 'fas fa-arrow-circle-left'})), __kwargtrans__ (dict ({'_phanterpwa-way': 'area-do-servidor', 'position': 'top', 'ways': [(function __lambda__ (r) {
 			if (arguments.length) {
@@ -1277,6 +1252,22 @@ export var AlunosTransporte =  __class__ ('AlunosTransporte', [object], {
 		window.PhanterPWA.Components ['left_bar'].add_button (BackButton);
 		self._get_data ();
 	}));},
+	get _get_data () {return __get__ (this, function (self) {
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+					switch (__attrib0__) {
+						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+					}
+				}
+			}
+		}
+		else {
+		}
+		window.PhanterPWA.GET ('api', 'estatisticas', 'transporte', self.id_escola, self.ano_letivo, __kwargtrans__ ({onComplete: self.after_get}));
+	});},
 	get after_get () {return __get__ (this, function (self, data, ajax_status) {
 		if (arguments.length) {
 			var __ilastarg0__ = arguments.length - 1;
@@ -1294,45 +1285,31 @@ export var AlunosTransporte =  __class__ ('AlunosTransporte', [object], {
 		else {
 		}
 		var json = data.responseJSON;
-		var logo = '{0}/api/escolas/{1}/image'.format (window.PhanterPWA.ApiServer.remote_address, 12);
+		self.localidades = dict (json.data.localidades);
+		self.escola = json.data.escola;
+		var logo = '{0}/api/escolas/{1}/image'.format (window.PhanterPWA.ApiServer.remote_address, self.id_escola);
 		if (ajax_status == 'success') {
-			var lista_escola = [];
-			var dict_escola = dict ({});
 			var html_lista_novatos = DIV (__kwargtrans__ ({_class: 'p-row'}));
-			for (var a of json.data.alunos) {
-				var data_de_nascimento = validations.format_iso_date_datetime (a.data_de_nascimento, 'dd/MM/yyyy', 'date');
-				if (!(__in__ (a.escola, lista_escola))) {
-					lista_escola.append (a.escola);
-					html_lista_novatos.append (H3 (a.escola));
-					var table = XTABLE ('tabela_escola_{0}'.format (a.id_escola), XTRH ('tabela_th_escola_{0}'.format (a.id_escola), 'Nome', 'Data de Nascimento', 'Sexo', 'Cor/Raça', 'Localização', 'Ensino', 'Turno', 'CPF', 'Responsável', 'Grau de Parentesto', 'Endereço', 'Latitude', 'Longitude'));
-					html_lista_novatos.append (table);
-					html_lista_novatos.append (HR ());
-					dict_escola [a.id_escola] = dict ({'serie': [a.serie]});
-				}
-				else if (!(__in__ (a.serie, dict_escola [a.id_escola] ['serie']))) {
-					dict_escola [a.id_escola] ['serie'].append (a.serie);
-				}
-				table.append (XTRD ('tabela_aluno_escola_{0}'.format (a.matricula), a.aluno, data_de_nascimento, a.sexo, a.raca, a.localizacao, a.ensino, a.turno, a.cpf, a.nome_do_responsavel, a.grau_parentesto, a.endereco, '', ''));
-			}
-			var folha2_content = DIV (DIV (DIV (DIV (DIV (DIV (DIV (H2 ('LISTA DE ALUNOS TRANSPORTE POR ESCOLA'), __kwargtrans__ ({_class: 'sme_cabecalho_titulo_documento'})), DIV (html_lista_novatos, __kwargtrans__ ({_class: 'sme_documento_conteudo'})), __kwargtrans__ ({_class: 'p-row'})), __kwargtrans__ ({_class: 'p-container extend'}))))), __kwargtrans__ ({_class: 'folhas_para_imprimir phanterpwa-media-print-container'}));
-			folha2_content.html_to ('#content-matriculas-imprimir');
-		}
-	});},
-	get _get_data () {return __get__ (this, function (self) {
-		if (arguments.length) {
-			var __ilastarg0__ = arguments.length - 1;
-			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
-				var __allkwargs0__ = arguments [__ilastarg0__--];
-				for (var __attrib0__ in __allkwargs0__) {
-					switch (__attrib0__) {
-						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
-					}
+			var table = XTABLE ('tabela_escola_{0}'.format (self.id_escola), XTRH ('tabela_th_escola_{0}'.format (self.id_escola), 'Nome', 'Data de Nascimento', 'Série', 'Turno', 'Endereço', ' '));
+			self.conta_localidades = dict ();
+			for (var loc_ of self.localidades.py_keys ()) {
+				self.conta_localidades [loc_] = 0;
+				table.append (TR (TH (loc_, __kwargtrans__ ({_colspan: '6', _style: 'text-align: center; background-color: grey;'}))));
+				for (var aln of self.localidades [loc_]) {
+					self.conta_localidades [loc_]++;
+					var data_de_nascimento = validations.format_iso_date_datetime (aln.data_de_nascimento, 'dd/MM/yyyy', 'date');
+					table.append (XTRD ('tabela_th_aluno_{0}'.format (aln.id_aluno), aln.aluno, data_de_nascimento, aln.serie, aln.turno, aln.endereco, TD (A (I (__kwargtrans__ ({_class: 'fas fa-list-alt'})), __kwargtrans__ (dict ({'_class': 'botao_turma_detalhada icon_button', '_title': 'Turmas detalhadas', '_href': window.PhanterPWA.XWAY ('alunos', aln.id_aluno, 'editar'), '_target': '_blank'}))))));
 				}
 			}
+			var tabela_resu = XTABLE ('tabela_resumo_localidade_{0}'.format (self.id_escola), XTRH ('tabela_th_resumo_localidade_{0}'.format (self.id_escola), 'Zona de Transporte', 'Quantidade de Alunos'));
+			var id_total_locs = 0;
+			for (var conts of self.conta_localidades.py_keys ()) {
+				id_total_locs++;
+				tabela_resu.append (XTRD ('tabela_resumo_localidade_dados_{0}'.format (id_total_locs), conts, self.conta_localidades [conts]));
+			}
+			var folha2_content = DIV (DIV (DIV (DIV (DIV (DIV (DIV (H2 ('ZONAS DE TRANSPORTE E SUAS RESPECTIVAS QUANTIDADE DE ALUNOS'), __kwargtrans__ ({_class: 'sme_cabecalho_titulo_documento'})), DIV (tabela_resu, __kwargtrans__ ({_class: 'sme_documento_conteudo'})), __kwargtrans__ ({_class: 'p-row'})), DIV (DIV (H2 ('LISTA DE ALUNOS POR ZONA DE TRANSPORTE'), __kwargtrans__ ({_class: 'sme_cabecalho_titulo_documento'})), DIV (table, __kwargtrans__ ({_class: 'sme_documento_conteudo'})), __kwargtrans__ ({_class: 'p-row'})), __kwargtrans__ ({_class: 'p-container extend'})))), __kwargtrans__ ({_class: 'media-print-visible'})), __kwargtrans__ ({_class: 'folhas_para_imprimir phanterpwa-simple-media-print'}));
+			folha2_content.html_to ('#content-alunos-transporte');
 		}
-		else {
-		}
-		window.PhanterPWA.GET ('api', 'estatisticas', 'transporte', self.id_escola, self.ano_letivo, __kwargtrans__ ({onComplete: self.after_get}));
 	});}
 });
 

@@ -703,7 +703,11 @@ class Matricula():
                 self.process_data(json)
 
     def process_data_put(self, data):
-        window.PhanterPWA.open_xway("matricular", self.id_escola, self.ano_letivo, "aluno-conferido", self.id_aluno)
+        retornar = window.PhanterPWA.Request.get_param("retornar")
+        if retornar is not None:
+            window.PhanterPWA.open_way(retornar)
+        else:
+            window.PhanterPWA.open_xway("matricular", self.id_escola, self.ano_letivo, "aluno-conferido", self.id_aluno)
 
     def process_data(self, json):
         self.nova_matricula = True
