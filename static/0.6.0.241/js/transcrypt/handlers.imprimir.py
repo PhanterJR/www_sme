@@ -2102,13 +2102,13 @@ class AtaDeResultadosFinais():
                     for x in disciplinas:
                         colunas.append(TD("", _class="notas_disciplina_atas sem_dados"))
                 legenda = "?"
-                if "Aprovado(a)" in c[1]:
+                if "Aprovado(a)" == c[1]:
                     legenda = "AP"
-                elif "Reprovado(a)" in c[1]:
+                elif "Reprovado(a)" == c[1]:
                     legenda = "RP"
-                elif "Aprovado(a) no Conselhor" in c[1]:
+                elif "Aprovado(a) no Conselho" == c[1]:
                     legenda = "APC"
-                elif "Reprovado(a) no Conselho" in c[1]:
+                elif "Reprovado(a) no Conselho" == c[1]:
                     legenda = "RPC"
                 colunas.append(TD(legenda, _class="resultado_legenda"))
             linha = TR(*colunas)
