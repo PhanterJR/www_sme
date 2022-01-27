@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2022-01-19 13:42:55
+// Transcrypt'ed from Python, 2022-01-27 04:33:54
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import * as anos_letivos from './handlers.anos_letivos.js';
 import * as escolas from './handlers.escolas.js';
@@ -74,13 +74,17 @@ export var Index =  __class__ ('Index', [gatehandler.Handler], {
 		}
 		else {
 		}
-		var html = CONCATENATE (DIV (DIV (DIV (DIV ('FICHA AVALIATIVA', __kwargtrans__ ({_class: 'phanterpwa-breadcrumb'})), __kwargtrans__ ({_class: 'phanterpwa-breadcrumb-wrapper'})), __kwargtrans__ ({_class: 'p-container'})), __kwargtrans__ ({_class: 'title_page_container card'})), DIV (DIV (DIV (DIV (preloaders.android, __kwargtrans__ ({_style: 'width: 300px; height: 300px; overflow: hidden; margin: auto;'})), __kwargtrans__ ({_style: 'text-align:center; padding: 50px 0;'})), __kwargtrans__ ({_id: 'content-diario_de_notas', _class: 'p-row card e-padding_auto'})), __kwargtrans__ ({_class: 'phanterpwa-container p-container', _style: 'width: 95%; max-width: 95%;'})));
-		html.html_to ('#main-container');
 		var arg0 = window.PhanterPWA.Request.get_arg (0);
 		var arg1 = window.PhanterPWA.Request.get_arg (1);
 		var arg2 = window.PhanterPWA.Request.get_arg (2);
 		var arg3 = window.PhanterPWA.Request.get_arg (3);
 		var arg4 = window.PhanterPWA.Request.get_arg (4);
+		var tit = 'FICHA AVALIATIVA';
+		if (arg4 == 'parecer') {
+			var tit = 'PARECERES POR ALUNO';
+		}
+		var html = CONCATENATE (DIV (DIV (DIV (DIV (tit, __kwargtrans__ ({_class: 'phanterpwa-breadcrumb'})), __kwargtrans__ ({_class: 'phanterpwa-breadcrumb-wrapper'})), __kwargtrans__ ({_class: 'p-container'})), __kwargtrans__ ({_class: 'title_page_container card'})), DIV (DIV (DIV (DIV (preloaders.android, __kwargtrans__ ({_style: 'width: 300px; height: 300px; overflow: hidden; margin: auto;'})), __kwargtrans__ ({_style: 'text-align:center; padding: 50px 0;'})), __kwargtrans__ ({_id: 'content-diario_de_notas', _class: 'p-row card e-padding_auto'})), __kwargtrans__ ({_class: 'phanterpwa-container p-container', _style: 'width: 95%; max-width: 95%;'})));
+		html.html_to ('#main-container');
 		if (arg0 == 'professor') {
 			if (arg1 === null || arg1 === undefined) {
 				var html = escolas.EscolherEscola (__kwargtrans__ ({id_target: '#content-diario_de_notas', callback_link: (function __lambda__ (id_escola) {
@@ -241,7 +245,13 @@ export var FichaAvaliativa =  __class__ ('FichaAvaliativa', [object], {
 		}
 		else {
 		}
-		var html = DIV (DIV (H2 ('Ficha Avaliativa ', STRONG (turma)), DIV (DIV (professor, __kwargtrans__ ({_class: 'p-col w1p100 w4p50'})), DIV (disciplina, __kwargtrans__ ({_class: 'p-col w1p100 w4p50'})), __kwargtrans__ ({_class: 'p-row'})), HR (), __kwargtrans__ ({_class: 'media-print-visible'})), __kwargtrans__ ({_class: 'diario_de_notas_container ficha_avaliativa_imprimir phanterpwa-simple-media-print'}));
+		var tit = 'Ficha Avaliativa ';
+		var sub_tit = CONCATENATE (DIV (professor, __kwargtrans__ ({_class: 'p-col w1p100 w4p50'})), DIV (disciplina, __kwargtrans__ ({_class: 'p-col w1p100 w4p50'})));
+		if (self.id_disciplina == 'parecer') {
+			var tit = 'Pareceres ';
+			var sub_tit = CONCATENATE (DIV (professor, __kwargtrans__ ({_class: 'p-col w1p100'})));
+		}
+		var html = DIV (DIV (H2 (tit, STRONG (turma)), DIV (sub_tit, __kwargtrans__ ({_class: 'p-row'})), HR (), __kwargtrans__ ({_class: 'media-print-visible'})), __kwargtrans__ ({_class: 'diario_de_notas_container ficha_avaliativa_imprimir phanterpwa-simple-media-print'}));
 		var tabela = TABLE (__kwargtrans__ ({_class: 'tabela_diario_de_notas'}));
 		var has_textarea = false;
 		self.limites_verticais = [];
@@ -380,20 +390,32 @@ export var FichaAvaliativa =  __class__ ('FichaAvaliativa', [object], {
 		}
 		if (ajax_status == 'success') {
 			var json = data.responseJSON;
-			var diario_de_notas = json.ficha_avaliativa;
-			var turma = diario_de_notas.turma.turma;
-			self.id_disciplina = json.id_disciplina;
-			self.lista_de_disciplinas = json.lista_de_disciplinas;
-			self.disciplina_atual = diario_de_notas.disciplina;
-			var professor = DIV (STRONG ('Professor'), SPAN ('Não definido'), __kwargtrans__ ({_class: 'e-tagger-wrapper'}));
-			var disciplina = '';
-			if (diario_de_notas.professor !== null && diario_de_notas.professor !== undefined) {
-				var professor = DIV (STRONG ('Professor'), SPAN (diario_de_notas.professor), __kwargtrans__ ({_class: 'e-tagger-wrapper'}));
+			if (self.id_disciplina == 'parecer') {
+				var diario_de_notas = json.ficha_avaliativa;
+				var turma = diario_de_notas.turma.turma;
+				var professor = DIV (STRONG ('Professor'), SPAN ('Não definido'), __kwargtrans__ ({_class: 'e-tagger-wrapper'}));
+				var disciplina = '';
+				if (diario_de_notas.professor !== null && diario_de_notas.professor !== undefined) {
+					var professor = DIV (STRONG ('Professor'), SPAN (diario_de_notas.professor), __kwargtrans__ ({_class: 'e-tagger-wrapper'}));
+				}
+				self.processar_diario (diario_de_notas.ficha_avaliativa_parecer, professor, disciplina, turma);
 			}
-			if (diario_de_notas.disciplina !== null && diario_de_notas.disciplina !== undefined) {
-				var disciplina = DIV (STRONG ('Disciplina'), SPAN (diario_de_notas.disciplina), (len (self.lista_de_disciplinas) > 1 ? DIV (self.menu_box_disciplinas (), __kwargtrans__ ({_class: 'botao_mudar_disciplina media-print-inside-invisible'})) : ''), __kwargtrans__ ({_class: 'e-tagger-wrapper disciplina_atual'}));
+			else {
+				var diario_de_notas = json.ficha_avaliativa;
+				self.id_disciplina = json.id_disciplina;
+				var turma = diario_de_notas.turma.turma;
+				self.lista_de_disciplinas = json.lista_de_disciplinas;
+				self.disciplina_atual = diario_de_notas.disciplina;
+				var professor = DIV (STRONG ('Professor'), SPAN ('Não definido'), __kwargtrans__ ({_class: 'e-tagger-wrapper'}));
+				var disciplina = '';
+				if (diario_de_notas.professor !== null && diario_de_notas.professor !== undefined) {
+					var professor = DIV (STRONG ('Professor'), SPAN (diario_de_notas.professor), __kwargtrans__ ({_class: 'e-tagger-wrapper'}));
+				}
+				if (diario_de_notas.disciplina !== null && diario_de_notas.disciplina !== undefined) {
+					var disciplina = DIV (STRONG ('Disciplina'), SPAN (diario_de_notas.disciplina), (len (self.lista_de_disciplinas) > 1 ? DIV (self.menu_box_disciplinas (), __kwargtrans__ ({_class: 'botao_mudar_disciplina media-print-inside-invisible'})) : ''), __kwargtrans__ ({_class: 'e-tagger-wrapper disciplina_atual'}));
+				}
+				self.processar_diario (diario_de_notas.ficha_avaliativa, professor, disciplina, turma);
 			}
-			self.processar_diario (diario_de_notas.ficha_avaliativa, professor, disciplina, turma);
 		}
 	});},
 	get _get_diario_de_notas () {return __get__ (this, function (self) {

@@ -59,11 +59,20 @@ __pragma__('kwargs')
 class Index(gatehandler.Handler):
     @decorators.check_authorization(lambda: window.PhanterPWA.auth_user_has_role(["administrator", "root", "Administrador Master SME", "Administrador Master Escola", "Professor(a)"]))
     def initialize(self):
+        arg0 = window.PhanterPWA.Request.get_arg(0)
+        arg1 = window.PhanterPWA.Request.get_arg(1)
+        arg2 = window.PhanterPWA.Request.get_arg(2)
+        arg3 = window.PhanterPWA.Request.get_arg(3)
+        arg4 = window.PhanterPWA.Request.get_arg(4)
+        tit = "FICHA AVALIATIVA"
+        if arg4 == "parecer":
+            tit = "PARECERES POR ALUNO"
+
         html = CONCATENATE(
             DIV(
                 DIV(
                     DIV(
-                        DIV("FICHA AVALIATIVA", _class="phanterpwa-breadcrumb"),
+                        DIV(tit, _class="phanterpwa-breadcrumb"),
                         _class="phanterpwa-breadcrumb-wrapper"
                     ),
                     _class="p-container"),
@@ -84,18 +93,13 @@ class Index(gatehandler.Handler):
             )
         )
         html.html_to("#main-container")
-        arg0 = window.PhanterPWA.Request.get_arg(0)
-        arg1 = window.PhanterPWA.Request.get_arg(1)
-        arg2 = window.PhanterPWA.Request.get_arg(2)
-        arg3 = window.PhanterPWA.Request.get_arg(3)
-        arg4 = window.PhanterPWA.Request.get_arg(4)
 
         if arg0 == "professor":
             if arg1 is None or arg1 is js_undefined:
-                    html = escolas.EscolherEscola(
-                        id_target="#content-diario_de_notas",
-                        callback_link=lambda id_escola: "#_phanterpwa:/ficha-avaliativa/professor/{0}".format(id_escola)
-                    )
+                html = escolas.EscolherEscola(
+                    id_target="#content-diario_de_notas",
+                    callback_link=lambda id_escola: "#_phanterpwa:/ficha-avaliativa/professor/{0}".format(id_escola)
+                )
             elif str(arg1).isdigit() and (arg2 is None or arg2 is js_undefined):
                 html = anos_letivos.EscolherAnoLetivo(
                     id_target="#content-diario_de_notas",
@@ -155,13 +159,21 @@ class FichaAvaliativa():
         self._get_diario_de_notas()
 
     def processar_diario(self, diario_de_notas, professor="", disciplina="", turma=""):
-
+        tit = "Ficha Avaliativa "
+        sub_tit = CONCATENATE(
+                DIV(professor, _class="p-col w1p100 w4p50"),
+                DIV(disciplina, _class="p-col w1p100 w4p50")
+        )
+        if self.id_disciplina == "parecer":
+            tit = "Pareceres "
+            sub_tit = CONCATENATE(
+                    DIV(professor, _class="p-col w1p100")
+            )
         html = DIV(
             DIV(
-                H2("Ficha Avaliativa ", STRONG(turma)),
+                H2(tit, STRONG(turma)),
                 DIV(
-                    DIV(professor, _class="p-col w1p100 w4p50"),
-                    DIV(disciplina, _class="p-col w1p100 w4p50"),
+                    sub_tit,
                     _class="p-row"
                 ),
                 HR(),
@@ -293,34 +305,53 @@ class FichaAvaliativa():
     def after_get(self, data, ajax_status):
         if ajax_status == "success":
             json = data.responseJSON
-            diario_de_notas = json.ficha_avaliativa
-            turma = diario_de_notas.turma.turma
-            self.id_disciplina = json.id_disciplina
-            self.lista_de_disciplinas = json.lista_de_disciplinas
-            self.disciplina_atual = diario_de_notas.disciplina
-            professor = DIV(
-                STRONG("Professor"),
-                SPAN("Não definido"),
-                _class="e-tagger-wrapper"
-            )
-            disciplina = ""
-            if diario_de_notas.professor is not None and diario_de_notas.professor is not js_undefined:
+            if self.id_disciplina == "parecer":
+                diario_de_notas = json.ficha_avaliativa
+                turma = diario_de_notas.turma.turma
                 professor = DIV(
                     STRONG("Professor"),
-                    SPAN(diario_de_notas.professor),
+                    SPAN("Não definido"),
                     _class="e-tagger-wrapper"
                 )
-            if diario_de_notas.disciplina is not None and diario_de_notas.disciplina is not js_undefined:
-                disciplina = DIV(
-                    STRONG("Disciplina"),
-                    SPAN(diario_de_notas.disciplina),
-                    DIV(
-                        self.menu_box_disciplinas(),
-                        _class="botao_mudar_disciplina media-print-inside-invisible"
-                    ) if len(self.lista_de_disciplinas) > 1 else "",
-                    _class="e-tagger-wrapper disciplina_atual"
+                disciplina = ""
+                if diario_de_notas.professor is not None and diario_de_notas.professor is not js_undefined:
+                    professor = DIV(
+                        STRONG("Professor"),
+                        SPAN(diario_de_notas.professor),
+                        _class="e-tagger-wrapper"
+                    )
+
+                self.processar_diario(diario_de_notas.ficha_avaliativa_parecer, professor, disciplina, turma)
+
+            else:
+                diario_de_notas = json.ficha_avaliativa
+                self.id_disciplina = json.id_disciplina
+                turma = diario_de_notas.turma.turma
+                self.lista_de_disciplinas = json.lista_de_disciplinas
+                self.disciplina_atual = diario_de_notas.disciplina
+                professor = DIV(
+                    STRONG("Professor"),
+                    SPAN("Não definido"),
+                    _class="e-tagger-wrapper"
                 )
-            self.processar_diario(diario_de_notas.ficha_avaliativa, professor, disciplina, turma)
+                disciplina = ""
+                if diario_de_notas.professor is not None and diario_de_notas.professor is not js_undefined:
+                    professor = DIV(
+                        STRONG("Professor"),
+                        SPAN(diario_de_notas.professor),
+                        _class="e-tagger-wrapper"
+                    )
+                if diario_de_notas.disciplina is not None and diario_de_notas.disciplina is not js_undefined:
+                    disciplina = DIV(
+                        STRONG("Disciplina"),
+                        SPAN(diario_de_notas.disciplina),
+                        DIV(
+                            self.menu_box_disciplinas(),
+                            _class="botao_mudar_disciplina media-print-inside-invisible"
+                        ) if len(self.lista_de_disciplinas) > 1 else "",
+                        _class="e-tagger-wrapper disciplina_atual"
+                    )
+                self.processar_diario(diario_de_notas.ficha_avaliativa, professor, disciplina, turma)
 
     def _get_diario_de_notas(self):
         if self.eh_professor:

@@ -225,17 +225,30 @@ class Diario():
                     if y[1]['_class'] == "diario_notas_disciplina":
                         id_disciplina = y[1]['_data-id_disciplina']
                         if self.eh_professor:
-                            celula = TH(
-                                A(y[0], _href=window.PhanterPWA.XWAY(
-                                    "ficha-avaliativa",
-                                    "professor",
-                                    self.id_escola,
-                                    self.ano_letivo,
-                                    self.id_turma,
-                                    id_disciplina
-                                )),
-                                **y[1]
-                            )
+                            if y[0] == "Pareceres":
+                                celula = TH(
+                                    A(y[0], _href=window.PhanterPWA.XWAY(
+                                        "ficha-avaliativa",
+                                        "professor",
+                                        self.id_escola,
+                                        self.ano_letivo,
+                                        self.id_turma,
+                                        "parecer"
+                                    )),
+                                    **y[1]
+                                )
+                            else:
+                                celula = TH(
+                                    A(y[0], _href=window.PhanterPWA.XWAY(
+                                        "ficha-avaliativa",
+                                        "professor",
+                                        self.id_escola,
+                                        self.ano_letivo,
+                                        self.id_turma,
+                                        id_disciplina
+                                    )),
+                                    **y[1]
+                                )
                         else:
                             celula = TH(
                                 A(y[0], _href=window.PhanterPWA.XWAY(

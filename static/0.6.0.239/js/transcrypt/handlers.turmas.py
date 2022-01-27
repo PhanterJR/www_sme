@@ -357,6 +357,19 @@ class TurmasSimples(helpers.XmlConstructor):
                     widgets.MenuBox(
                         "drop_{0}".format(x.id),
                         I(_class="fas fa-ellipsis-v"),
+                        widgets.MenuOption("Ata de resultados finais", **{
+                            "_class": "botao_diario_de_notas_turma wave_on_click",
+                            "_href": window.PhanterPWA.XWAY(
+                                "imprimir",
+                                "ata-de-resultados-finais",
+                                self.id_escola,
+                                self.ano_letivo,
+                                x.id,
+                                **{
+                                    "_retornar": "turma-simples"
+                                }
+                            )
+                        }),
                         widgets.MenuOption("Turma detalhada", **{
                             "_class": "botao_diario_de_notas_turma wave_on_click",
                             "_href": window.PhanterPWA.XWAY(

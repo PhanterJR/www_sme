@@ -547,7 +547,7 @@ svg.logo_sme_svg .fil8 {
 #phanterpwa-snippet-phanterpwa-logo-wrapper {
   background: #020024;
   background: radial-gradient(circle, #007512 0%, #002418 87%, #000 100%);
-  background-image: url("/static/0.6.0.238/images/background.jpg");
+  background-image: url("/static/0.6.0.239/images/background.jpg");
   width: 100%;
   min-height: 400px;
   background-repeat-y: repeat;
@@ -1299,29 +1299,29 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
 
 @font-face {
   font-family: "Segoe UI Mono W01 Regular";
-  src: url("/static/0.6.0.238/fonts/88bdc70ec292cc29451932f9875b378a.eot");
-  src: url("/static/0.6.0.238/fonts/88bdc70ec292cc29451932f9875b378a.eot?#iefix") format("embedded-opentype"), url("/static/0.6.0.238/fonts/88bdc70ec292cc29451932f9875b378a.woff2") format("woff2"), url("/static/0.6.0.238/fonts/88bdc70ec292cc29451932f9875b378a.woff") format("woff"), url("/static/0.6.0.238/fonts/88bdc70ec292cc29451932f9875b378a.ttf") format("truetype"), url("/static/0.6.0.238/fonts/88bdc70ec292cc29451932f9875b378a.svg#Segoe UI Mono W01 Regular") format("svg");
+  src: url("/static/0.6.0.239/fonts/88bdc70ec292cc29451932f9875b378a.eot");
+  src: url("/static/0.6.0.239/fonts/88bdc70ec292cc29451932f9875b378a.eot?#iefix") format("embedded-opentype"), url("/static/0.6.0.239/fonts/88bdc70ec292cc29451932f9875b378a.woff2") format("woff2"), url("/static/0.6.0.239/fonts/88bdc70ec292cc29451932f9875b378a.woff") format("woff"), url("/static/0.6.0.239/fonts/88bdc70ec292cc29451932f9875b378a.ttf") format("truetype"), url("/static/0.6.0.239/fonts/88bdc70ec292cc29451932f9875b378a.svg#Segoe UI Mono W01 Regular") format("svg");
 }
 
 @font-face {
   font-family: "Segoe UI Italic";
   font-style: normal;
   font-weight: normal;
-  src: local("Segoe UI Italic"), url("/static/0.6.0.238/fonts/Segoe UI Italic.woff") format("woff");
+  src: local("Segoe UI Italic"), url("/static/0.6.0.239/fonts/Segoe UI Italic.woff") format("woff");
 }
 
 @font-face {
   font-family: "Segoe UI Bold";
   font-style: normal;
   font-weight: normal;
-  src: local("Segoe UI Bold"), url("/static/0.6.0.238/fonts/Segoe UI Bold.woff") format("woff");
+  src: local("Segoe UI Bold"), url("/static/0.6.0.239/fonts/Segoe UI Bold.woff") format("woff");
 }
 
 @font-face {
   font-family: "Segoe UI Bold Italic";
   font-style: normal;
   font-weight: normal;
-  src: local("Segoe UI Bold Italic"), url("/static/0.6.0.238/fonts/Segoe UI Bold Italic.woff") format("woff");
+  src: local("Segoe UI Bold Italic"), url("/static/0.6.0.239/fonts/Segoe UI Bold Italic.woff") format("woff");
 }
 
 /* roboto-thin - latin */
@@ -1330,8 +1330,8 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
   font-family: "Roboto";
   font-style: normal;
   font-weight: 400;
-  src: url("/static/0.6.0.238/fonts/roboto-v20-latin-regular.eot");
-  src: local("Roboto"), local("Roboto-Regular"), url("/static/0.6.0.238/fonts/roboto-v20-latin-regular.eot?#iefix") format("embedded-opentype"), url("/static/0.6.0.238/fonts/roboto-v20-latin-regular.woff2") format("woff2"), url("/static/0.6.0.238/fonts/roboto-v20-latin-regular.woff") format("woff"), url("/static/0.6.0.238/fonts/roboto-v20-latin-regular.ttf") format("truetype"), url("/static/0.6.0.238/fonts/roboto-v20-latin-regular.svg#Roboto") format("svg");
+  src: url("/static/0.6.0.239/fonts/roboto-v20-latin-regular.eot");
+  src: local("Roboto"), local("Roboto-Regular"), url("/static/0.6.0.239/fonts/roboto-v20-latin-regular.eot?#iefix") format("embedded-opentype"), url("/static/0.6.0.239/fonts/roboto-v20-latin-regular.woff2") format("woff2"), url("/static/0.6.0.239/fonts/roboto-v20-latin-regular.woff") format("woff"), url("/static/0.6.0.239/fonts/roboto-v20-latin-regular.ttf") format("truetype"), url("/static/0.6.0.239/fonts/roboto-v20-latin-regular.svg#Roboto") format("svg");
 }
 
 /* latin-ext */
@@ -1339,7 +1339,7 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
   font-family: "Roboto Mono";
   font-style: normal;
   font-weight: 400;
-  src: url("/static/0.6.0.238/fonts/L0x5DF4xlVMF-BfR8bXMIjhFq3-OXg.woff2") format("woff2");
+  src: url("/static/0.6.0.239/fonts/L0x5DF4xlVMF-BfR8bXMIjhFq3-OXg.woff2") format("woff2");
   unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
@@ -1348,7 +1348,7 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
   font-family: "Roboto Mono";
   font-style: normal;
   font-weight: 400;
-  src: url("/static/0.6.0.238/fonts/L0x5DF4xlVMF-BfR8bXMIjhLq38.woff2") format("woff2");
+  src: url("/static/0.6.0.239/fonts/L0x5DF4xlVMF-BfR8bXMIjhLq38.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
@@ -1357,7 +1357,7 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
   font-family: "Cousine";
   font-style: normal;
   font-weight: 400;
-  src: url("/static/0.6.0.238/fonts/d6lIkaiiRdih4SpP_SovzAbt.woff2") format("woff2");
+  src: url("/static/0.6.0.239/fonts/d6lIkaiiRdih4SpP_SovzAbt.woff2") format("woff2");
   unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
@@ -1366,15 +1366,15 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
   font-family: "Cousine";
   font-style: normal;
   font-weight: 400;
-  src: url("/static/0.6.0.238/fonts/d6lIkaiiRdih4SpP_SQvzA.woff2") format("woff2");
+  src: url("/static/0.6.0.239/fonts/d6lIkaiiRdih4SpP_SQvzA.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 /* DejaVu Sans */
 @font-face {
   font-family: "DejaVu Sans";
-  src: url("/static/0.6.0.238/fonts/DejaVuSans.eot");
-  src: url("/static/0.6.0.238/fonts/DejaVuSans.eot?#iefix") format("embedded-opentype"), url("/static/0.6.0.238/fonts/DejaVuSans.woff2") format("woff2"), url("/static/0.6.0.238/fonts/DejaVuSans.woff") format("woff"), url("/static/0.6.0.238/fonts/DejaVuSans.ttf") format("truetype"), url("/static/0.6.0.238/fonts/DejaVuSans.svg#Segoe UI Mono W01 Regular") format("svg");
+  src: url("/static/0.6.0.239/fonts/DejaVuSans.eot");
+  src: url("/static/0.6.0.239/fonts/DejaVuSans.eot?#iefix") format("embedded-opentype"), url("/static/0.6.0.239/fonts/DejaVuSans.woff2") format("woff2"), url("/static/0.6.0.239/fonts/DejaVuSans.woff") format("woff"), url("/static/0.6.0.239/fonts/DejaVuSans.ttf") format("truetype"), url("/static/0.6.0.239/fonts/DejaVuSans.svg#Segoe UI Mono W01 Regular") format("svg");
 }
 
 .phanterpwa-paper-sme {
@@ -3184,7 +3184,7 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
 }
 
 /* SASS Source Code: /var/www/tornado/SME/frontapps/secretaria/sources/styles/handlers/imprimir.sass */
-.imprimir_matricula_container, .imprimir_questionario_social, .imprimir_comprovante_social {
+.imprimir_matricula_container, .imprimir_questionario_social, .imprimir_comprovante_social, .imprimir_ata_de_resultados {
   font-family: "Segoe UI","DejaVu Sans","Roboto";
   padding: 40px;
   width: 855px;
@@ -3193,101 +3193,101 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
   line-height: 1;
 }
 
-.imprimir_matricula_container.quebra-de-pagina-depois, .imprimir_questionario_social.quebra-de-pagina-depois, .imprimir_comprovante_social.quebra-de-pagina-depois {
+.imprimir_matricula_container.quebra-de-pagina-depois, .imprimir_questionario_social.quebra-de-pagina-depois, .imprimir_comprovante_social.quebra-de-pagina-depois, .imprimir_ata_de_resultados.quebra-de-pagina-depois {
   clear: both;
   page-break-after: always;
 }
 
-.imprimir_matricula_container.quebra-de-pagina-antes, .imprimir_questionario_social.quebra-de-pagina-antes, .imprimir_comprovante_social.quebra-de-pagina-antes {
+.imprimir_matricula_container.quebra-de-pagina-antes, .imprimir_questionario_social.quebra-de-pagina-antes, .imprimir_comprovante_social.quebra-de-pagina-antes, .imprimir_ata_de_resultados.quebra-de-pagina-antes {
   clear: both;
   page-break-before: always;
 }
 
-.imprimir_matricula_container .imprimir_documentos_wrapper, .imprimir_questionario_social .imprimir_documentos_wrapper, .imprimir_comprovante_social .imprimir_documentos_wrapper {
+.imprimir_matricula_container .imprimir_documentos_wrapper, .imprimir_questionario_social .imprimir_documentos_wrapper, .imprimir_comprovante_social .imprimir_documentos_wrapper, .imprimir_ata_de_resultados .imprimir_documentos_wrapper {
   page-break-inside: avoid;
 }
 
-.imprimir_matricula_container h1, .imprimir_matricula_container h2, .imprimir_matricula_container h3, .imprimir_matricula_container h4, .imprimir_matricula_container h5, .imprimir_matricula_container h6, .imprimir_questionario_social h1, .imprimir_questionario_social h2, .imprimir_questionario_social h3, .imprimir_questionario_social h4, .imprimir_questionario_social h5, .imprimir_questionario_social h6, .imprimir_comprovante_social h1, .imprimir_comprovante_social h2, .imprimir_comprovante_social h3, .imprimir_comprovante_social h4, .imprimir_comprovante_social h5, .imprimir_comprovante_social h6 {
+.imprimir_matricula_container h1, .imprimir_matricula_container h2, .imprimir_matricula_container h3, .imprimir_matricula_container h4, .imprimir_matricula_container h5, .imprimir_matricula_container h6, .imprimir_questionario_social h1, .imprimir_questionario_social h2, .imprimir_questionario_social h3, .imprimir_questionario_social h4, .imprimir_questionario_social h5, .imprimir_questionario_social h6, .imprimir_comprovante_social h1, .imprimir_comprovante_social h2, .imprimir_comprovante_social h3, .imprimir_comprovante_social h4, .imprimir_comprovante_social h5, .imprimir_comprovante_social h6, .imprimir_ata_de_resultados h1, .imprimir_ata_de_resultados h2, .imprimir_ata_de_resultados h3, .imprimir_ata_de_resultados h4, .imprimir_ata_de_resultados h5, .imprimir_ata_de_resultados h6 {
   font-family: "Roboto Thin","Segoe UI","DejaVu Sans","Roboto";
 }
 
-.imprimir_matricula_container .sme_cabecalho_sme, .imprimir_questionario_social .sme_cabecalho_sme, .imprimir_comprovante_social .sme_cabecalho_sme {
+.imprimir_matricula_container .sme_cabecalho_sme, .imprimir_questionario_social .sme_cabecalho_sme, .imprimir_comprovante_social .sme_cabecalho_sme, .imprimir_ata_de_resultados .sme_cabecalho_sme {
   position: relative;
 }
 
-.imprimir_matricula_container .sme_cabecalho_sme .back, .imprimir_questionario_social .sme_cabecalho_sme .back, .imprimir_comprovante_social .sme_cabecalho_sme .back {
+.imprimir_matricula_container .sme_cabecalho_sme .back, .imprimir_questionario_social .sme_cabecalho_sme .back, .imprimir_comprovante_social .sme_cabecalho_sme .back, .imprimir_ata_de_resultados .sme_cabecalho_sme .back {
   width: 100%;
   text-align: center;
 }
 
-.imprimir_matricula_container .sme_cabecalho_sme .back > img, .imprimir_questionario_social .sme_cabecalho_sme .back > img, .imprimir_comprovante_social .sme_cabecalho_sme .back > img {
+.imprimir_matricula_container .sme_cabecalho_sme .back > img, .imprimir_questionario_social .sme_cabecalho_sme .back > img, .imprimir_comprovante_social .sme_cabecalho_sme .back > img, .imprimir_ata_de_resultados .sme_cabecalho_sme .back > img {
   height: 120px;
   width: auto;
 }
 
-.imprimir_matricula_container .sme_cabecalho_sme .front, .imprimir_questionario_social .sme_cabecalho_sme .front, .imprimir_comprovante_social .sme_cabecalho_sme .front {
+.imprimir_matricula_container .sme_cabecalho_sme .front, .imprimir_questionario_social .sme_cabecalho_sme .front, .imprimir_comprovante_social .sme_cabecalho_sme .front, .imprimir_ata_de_resultados .sme_cabecalho_sme .front {
   position: absolute;
   width: 100%;
   text-align: center;
   top: 0;
 }
 
-.imprimir_matricula_container .sme_cabecalho_sme_nome_escola h3, .imprimir_questionario_social .sme_cabecalho_sme_nome_escola h3, .imprimir_comprovante_social .sme_cabecalho_sme_nome_escola h3 {
+.imprimir_matricula_container .sme_cabecalho_sme_nome_escola h3, .imprimir_questionario_social .sme_cabecalho_sme_nome_escola h3, .imprimir_comprovante_social .sme_cabecalho_sme_nome_escola h3, .imprimir_ata_de_resultados .sme_cabecalho_sme_nome_escola h3 {
   text-transform: uppercase;
   text-align: center;
   margin: 5px 0;
 }
 
-.imprimir_matricula_container .sme_cabecalho_sme_dados_escola h5, .imprimir_questionario_social .sme_cabecalho_sme_dados_escola h5, .imprimir_comprovante_social .sme_cabecalho_sme_dados_escola h5 {
+.imprimir_matricula_container .sme_cabecalho_sme_dados_escola h5, .imprimir_questionario_social .sme_cabecalho_sme_dados_escola h5, .imprimir_comprovante_social .sme_cabecalho_sme_dados_escola h5, .imprimir_ata_de_resultados .sme_cabecalho_sme_dados_escola h5 {
   text-transform: uppercase;
   text-align: center;
   margin: 4px 0;
 }
 
-.imprimir_matricula_container .sme_cabecalho_titulo_documento h2, .imprimir_questionario_social .sme_cabecalho_titulo_documento h2, .imprimir_comprovante_social .sme_cabecalho_titulo_documento h2 {
+.imprimir_matricula_container .sme_cabecalho_titulo_documento h2, .imprimir_questionario_social .sme_cabecalho_titulo_documento h2, .imprimir_comprovante_social .sme_cabecalho_titulo_documento h2, .imprimir_ata_de_resultados .sme_cabecalho_titulo_documento h2 {
   text-transform: uppercase;
   text-align: center;
   margin: 15px 0;
 }
 
-.imprimir_matricula_container .sme_documento_conteudo, .imprimir_questionario_social .sme_documento_conteudo, .imprimir_comprovante_social .sme_documento_conteudo {
+.imprimir_matricula_container .sme_documento_conteudo, .imprimir_questionario_social .sme_documento_conteudo, .imprimir_comprovante_social .sme_documento_conteudo, .imprimir_ata_de_resultados .sme_documento_conteudo {
   font-size: 10pt;
 }
 
-.imprimir_matricula_container .sme_documento_conteudo.conteudo_declaracao, .imprimir_questionario_social .sme_documento_conteudo.conteudo_declaracao, .imprimir_comprovante_social .sme_documento_conteudo.conteudo_declaracao {
+.imprimir_matricula_container .sme_documento_conteudo.conteudo_declaracao, .imprimir_questionario_social .sme_documento_conteudo.conteudo_declaracao, .imprimir_comprovante_social .sme_documento_conteudo.conteudo_declaracao, .imprimir_ata_de_resultados .sme_documento_conteudo.conteudo_declaracao {
   font-size: 14pt;
 }
 
-.imprimir_matricula_container .sme_documento_conteudo table, .imprimir_questionario_social .sme_documento_conteudo table, .imprimir_comprovante_social .sme_documento_conteudo table {
+.imprimir_matricula_container .sme_documento_conteudo table, .imprimir_questionario_social .sme_documento_conteudo table, .imprimir_comprovante_social .sme_documento_conteudo table, .imprimir_ata_de_resultados .sme_documento_conteudo table {
   margin: auto;
   min-width: 750px;
   width: 100%;
 }
 
-.imprimir_matricula_container .sme_documento_conteudo p, .imprimir_questionario_social .sme_documento_conteudo p, .imprimir_comprovante_social .sme_documento_conteudo p {
+.imprimir_matricula_container .sme_documento_conteudo p, .imprimir_questionario_social .sme_documento_conteudo p, .imprimir_comprovante_social .sme_documento_conteudo p, .imprimir_ata_de_resultados .sme_documento_conteudo p {
   text-indent: 40px;
   text-align: justify;
 }
 
-.imprimir_matricula_container .sme_documento_conteudo .miudinho, .imprimir_questionario_social .sme_documento_conteudo .miudinho, .imprimir_comprovante_social .sme_documento_conteudo .miudinho {
+.imprimir_matricula_container .sme_documento_conteudo .miudinho, .imprimir_questionario_social .sme_documento_conteudo .miudinho, .imprimir_comprovante_social .sme_documento_conteudo .miudinho, .imprimir_ata_de_resultados .sme_documento_conteudo .miudinho {
   font-size: 8pt;
 }
 
-.imprimir_matricula_container .sme_documento_conteudo .cidade_e_data, .imprimir_questionario_social .sme_documento_conteudo .cidade_e_data, .imprimir_comprovante_social .sme_documento_conteudo .cidade_e_data {
+.imprimir_matricula_container .sme_documento_conteudo .cidade_e_data, .imprimir_questionario_social .sme_documento_conteudo .cidade_e_data, .imprimir_comprovante_social .sme_documento_conteudo .cidade_e_data, .imprimir_ata_de_resultados .sme_documento_conteudo .cidade_e_data {
   margin: 20px 0 40px 0;
 }
 
-.imprimir_matricula_container .tudo_centralizado, .imprimir_questionario_social .tudo_centralizado, .imprimir_comprovante_social .tudo_centralizado {
+.imprimir_matricula_container .tudo_centralizado, .imprimir_questionario_social .tudo_centralizado, .imprimir_comprovante_social .tudo_centralizado, .imprimir_ata_de_resultados .tudo_centralizado {
   text-align: center;
 }
 
-.imprimir_matricula_container .phanterpwa-xsection h4, .imprimir_questionario_social .phanterpwa-xsection h4, .imprimir_comprovante_social .phanterpwa-xsection h4 {
+.imprimir_matricula_container .phanterpwa-xsection h4, .imprimir_questionario_social .phanterpwa-xsection h4, .imprimir_comprovante_social .phanterpwa-xsection h4, .imprimir_ata_de_resultados .phanterpwa-xsection h4 {
   text-transform: uppercase;
   text-align: center;
   margin: 4px 0;
 }
 
-.imprimir_matricula_container .phanterpwa-xsection-container, .imprimir_questionario_social .phanterpwa-xsection-container, .imprimir_comprovante_social .phanterpwa-xsection-container {
+.imprimir_matricula_container .phanterpwa-xsection-container, .imprimir_questionario_social .phanterpwa-xsection-container, .imprimir_comprovante_social .phanterpwa-xsection-container, .imprimir_ata_de_resultados .phanterpwa-xsection-container {
   position: relative;
   display: block;
   padding: 10px 0;
@@ -3295,7 +3295,7 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
   overflow: auto;
 }
 
-.imprimir_matricula_container .phanterpwa-xsection-container .phanterpwa-xsection, .imprimir_questionario_social .phanterpwa-xsection-container .phanterpwa-xsection, .imprimir_comprovante_social .phanterpwa-xsection-container .phanterpwa-xsection {
+.imprimir_matricula_container .phanterpwa-xsection-container .phanterpwa-xsection, .imprimir_questionario_social .phanterpwa-xsection-container .phanterpwa-xsection, .imprimir_comprovante_social .phanterpwa-xsection-container .phanterpwa-xsection, .imprimir_ata_de_resultados .phanterpwa-xsection-container .phanterpwa-xsection {
   border: 1px solid #d7d7d7;
   overflow: auto;
   border-radius: 5px;
@@ -3303,13 +3303,13 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
   padding: 15px 0px 10px 0px;
 }
 
-.imprimir_matricula_container .phanterpwa-xsection-container .phanterpwa-xsection .phanterpwa-xsection-menu_buttom, .imprimir_questionario_social .phanterpwa-xsection-container .phanterpwa-xsection .phanterpwa-xsection-menu_buttom, .imprimir_comprovante_social .phanterpwa-xsection-container .phanterpwa-xsection .phanterpwa-xsection-menu_buttom {
+.imprimir_matricula_container .phanterpwa-xsection-container .phanterpwa-xsection .phanterpwa-xsection-menu_buttom, .imprimir_questionario_social .phanterpwa-xsection-container .phanterpwa-xsection .phanterpwa-xsection-menu_buttom, .imprimir_comprovante_social .phanterpwa-xsection-container .phanterpwa-xsection .phanterpwa-xsection-menu_buttom, .imprimir_ata_de_resultados .phanterpwa-xsection-container .phanterpwa-xsection .phanterpwa-xsection-menu_buttom {
   position: absolute;
   top: 15px;
   right: 7px;
 }
 
-.imprimir_matricula_container .phanterpwa-xsection-container .phanterpwa-xsection > label, .imprimir_questionario_social .phanterpwa-xsection-container .phanterpwa-xsection > label, .imprimir_comprovante_social .phanterpwa-xsection-container .phanterpwa-xsection > label {
+.imprimir_matricula_container .phanterpwa-xsection-container .phanterpwa-xsection > label, .imprimir_questionario_social .phanterpwa-xsection-container .phanterpwa-xsection > label, .imprimir_comprovante_social .phanterpwa-xsection-container .phanterpwa-xsection > label, .imprimir_ata_de_resultados .phanterpwa-xsection-container .phanterpwa-xsection > label {
   white-space: nowrap;
   padding: 5px;
   color: #4e6eaa;
@@ -3325,11 +3325,11 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
   font-size: 10pt;
 }
 
-.imprimir_matricula_container .phanterpwa-xsection-container .phanterpwa-xsection > hr, .imprimir_questionario_social .phanterpwa-xsection-container .phanterpwa-xsection > hr, .imprimir_comprovante_social .phanterpwa-xsection-container .phanterpwa-xsection > hr {
+.imprimir_matricula_container .phanterpwa-xsection-container .phanterpwa-xsection > hr, .imprimir_questionario_social .phanterpwa-xsection-container .phanterpwa-xsection > hr, .imprimir_comprovante_social .phanterpwa-xsection-container .phanterpwa-xsection > hr, .imprimir_ata_de_resultados .phanterpwa-xsection-container .phanterpwa-xsection > hr {
   border: 0.5px solid #eeeded;
 }
 
-.imprimir_matricula_container .phanterpwa-xsection-container .phanterpwa-xsection .phanterpwa-xsection-title, .imprimir_questionario_social .phanterpwa-xsection-container .phanterpwa-xsection .phanterpwa-xsection-title, .imprimir_comprovante_social .phanterpwa-xsection-container .phanterpwa-xsection .phanterpwa-xsection-title {
+.imprimir_matricula_container .phanterpwa-xsection-container .phanterpwa-xsection .phanterpwa-xsection-title, .imprimir_questionario_social .phanterpwa-xsection-container .phanterpwa-xsection .phanterpwa-xsection-title, .imprimir_comprovante_social .phanterpwa-xsection-container .phanterpwa-xsection .phanterpwa-xsection-title, .imprimir_ata_de_resultados .phanterpwa-xsection-container .phanterpwa-xsection .phanterpwa-xsection-title {
   width: 100%;
   text-align: center;
   color: white;
@@ -3339,23 +3339,23 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
   padding: 16px 20px;
 }
 
-.imprimir_matricula_container .phanterpwa-xsection-container.has_menu_button .phanterpwa-xsection, .imprimir_questionario_social .phanterpwa-xsection-container.has_menu_button .phanterpwa-xsection, .imprimir_comprovante_social .phanterpwa-xsection-container.has_menu_button .phanterpwa-xsection {
+.imprimir_matricula_container .phanterpwa-xsection-container.has_menu_button .phanterpwa-xsection, .imprimir_questionario_social .phanterpwa-xsection-container.has_menu_button .phanterpwa-xsection, .imprimir_comprovante_social .phanterpwa-xsection-container.has_menu_button .phanterpwa-xsection, .imprimir_ata_de_resultados .phanterpwa-xsection-container.has_menu_button .phanterpwa-xsection {
   padding: 50px 0px 10px 0px;
 }
 
-.imprimir_matricula_container .phanterpwa-xsection-container.has_menu_button .phanterpwa-xsection-title, .imprimir_questionario_social .phanterpwa-xsection-container.has_menu_button .phanterpwa-xsection-title, .imprimir_comprovante_social .phanterpwa-xsection-container.has_menu_button .phanterpwa-xsection-title {
+.imprimir_matricula_container .phanterpwa-xsection-container.has_menu_button .phanterpwa-xsection-title, .imprimir_questionario_social .phanterpwa-xsection-container.has_menu_button .phanterpwa-xsection-title, .imprimir_comprovante_social .phanterpwa-xsection-container.has_menu_button .phanterpwa-xsection-title, .imprimir_ata_de_resultados .phanterpwa-xsection-container.has_menu_button .phanterpwa-xsection-title {
   margin-top: -50px;
 }
 
-.imprimir_matricula_container .phanterpwa-xsection-container.e-padding_20 .phanterpwa-xsection, .imprimir_questionario_social .phanterpwa-xsection-container.e-padding_20 .phanterpwa-xsection, .imprimir_comprovante_social .phanterpwa-xsection-container.e-padding_20 .phanterpwa-xsection {
+.imprimir_matricula_container .phanterpwa-xsection-container.e-padding_20 .phanterpwa-xsection, .imprimir_questionario_social .phanterpwa-xsection-container.e-padding_20 .phanterpwa-xsection, .imprimir_comprovante_social .phanterpwa-xsection-container.e-padding_20 .phanterpwa-xsection, .imprimir_ata_de_resultados .phanterpwa-xsection-container.e-padding_20 .phanterpwa-xsection {
   padding: 20px;
 }
 
-.imprimir_matricula_container .phanterpwa-xsection-container.e-padding_10 .phanterpwa-xsection, .imprimir_questionario_social .phanterpwa-xsection-container.e-padding_10 .phanterpwa-xsection, .imprimir_comprovante_social .phanterpwa-xsection-container.e-padding_10 .phanterpwa-xsection {
+.imprimir_matricula_container .phanterpwa-xsection-container.e-padding_10 .phanterpwa-xsection, .imprimir_questionario_social .phanterpwa-xsection-container.e-padding_10 .phanterpwa-xsection, .imprimir_comprovante_social .phanterpwa-xsection-container.e-padding_10 .phanterpwa-xsection, .imprimir_ata_de_resultados .phanterpwa-xsection-container.e-padding_10 .phanterpwa-xsection {
   padding: 10px;
 }
 
-.imprimir_matricula_container .tabela_ficha_individual .resultado_final, .imprimir_questionario_social .tabela_ficha_individual .resultado_final, .imprimir_comprovante_social .tabela_ficha_individual .resultado_final {
+.imprimir_matricula_container .tabela_ficha_individual .resultado_final, .imprimir_questionario_social .tabela_ficha_individual .resultado_final, .imprimir_comprovante_social .tabela_ficha_individual .resultado_final, .imprimir_ata_de_resultados .tabela_ficha_individual .resultado_final {
   text-align: center;
   font-weight: bold;
   text-transform: uppercase;
@@ -3380,6 +3380,84 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
 
 .imprimir_questionario_social #qrcode_matricula img, .imprimir_comprovante_social #qrcode_matricula img {
   margin: auto;
+}
+
+.imprimir_ata_de_resultados table.tabela_resultados_ata {
+  border-collapse: collapse;
+  border: 1px solid gray;
+  background-color: white;
+  margin: auto;
+}
+
+.imprimir_ata_de_resultados table.tabela_resultados_ata td, .imprimir_ata_de_resultados table.tabela_resultados_ata th {
+  border: 1px solid gray;
+  padding: 2px;
+}
+
+.imprimir_ata_de_resultados table.tabela_resultados_ata td.cabecalho_rotate, .imprimir_ata_de_resultados table.tabela_resultados_ata th.cabecalho_rotate {
+  position: relative;
+  height: 250px;
+  text-align: center;
+  position: relative;
+  width: 52px;
+}
+
+.imprimir_ata_de_resultados table.tabela_resultados_ata td.cabecalho_rotate .rotate, .imprimir_ata_de_resultados table.tabela_resultados_ata th.cabecalho_rotate .rotate {
+  text-transform: uppercase;
+  font-size: 9pt;
+  -moz-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+  -webkit-transform: rotate(-90deg);
+  filter: "progid: DXImageTransform.Microsoft.BasicImage(rotation=0.083)";
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)";
+  transform: rotate(-90deg);
+  height: 199px;
+  transform: rotate(-90deg);
+  text-align: left;
+  width: 250px;
+  height: 26px;
+  position: absolute;
+  top: 102px;
+  left: -105px;
+  line-height: 18px;
+}
+
+.imprimir_ata_de_resultados .caixa_vazia.rotulo_diciplinas_alunos_atas {
+  position: relative;
+}
+
+.imprimir_ata_de_resultados #myCanvas {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+.imprimir_ata_de_resultados .rotulo_alunos_atas {
+  position: absolute;
+  bottom: 10px;
+  text-transform: uppercase;
+  left: 10px;
+  font-size: 9pt;
+}
+
+.imprimir_ata_de_resultados .rotulo_disciplinas_atas {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  text-transform: uppercase;
+  font-size: 9pt;
+}
+
+.imprimir_ata_de_resultados .notas_disciplina_atas {
+  text-align: center;
+}
+
+.imprimir_ata_de_resultados .notas_disciplina_atas.sem_dados {
+  background: gray;
+}
+
+.imprimir_ata_de_resultados .serie_multisseriada_cabecalho {
+  background-color: #c8c7c7;
 }
 
 @media print {

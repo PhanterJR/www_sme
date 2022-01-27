@@ -284,6 +284,20 @@ class TurmasSimples(helpers.XmlConstructor):
                             }
                         )
                     }),
+                    widgets.MenuOption("Lista de pareceres", **{
+                        "_class": "botao_ficha_avaliativa_turma wave_on_click",
+                        "_href": window.PhanterPWA.XWAY(
+                            "ficha-avaliativa",
+                            "professor",
+                            self.id_escola,
+                            self.ano_letivo,
+                            x.id,
+                            "parecer",
+                            **{
+                                "_retornar": window.PhanterPWA.XWAY("professores", "turmas", self.id_escola, self.ano_letivo)
+                            }
+                        )
+                    }),
                     widgets.MenuOption("Registro de Faltas", **{
                         "_class": "botao_registro_de_faltas_turma wave_on_click",
                         "_href": window.PhanterPWA.XWAY(

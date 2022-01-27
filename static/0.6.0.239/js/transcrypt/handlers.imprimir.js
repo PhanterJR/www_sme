@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2022-01-25 10:03:14
+// Transcrypt'ed from Python, 2022-01-27 04:33:55
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import * as anos_letivos from './handlers.anos_letivos.js';
 import * as escolas from './handlers.escolas.js';
@@ -33,6 +33,7 @@ export var H1 = helpers.XmlConstructor.tagger ('h1');
 export var H2 = helpers.XmlConstructor.tagger ('h2');
 export var H3 = helpers.XmlConstructor.tagger ('h3');
 export var H4 = helpers.XmlConstructor.tagger ('h4');
+export var CANVAS = helpers.XmlConstructor.tagger ('canvas');
 export var H5 = helpers.XmlConstructor.tagger ('h5');
 export var HR = helpers.XmlConstructor.tagger ('hr', true);
 export var P = helpers.XmlConstructor.tagger ('p');
@@ -89,6 +90,9 @@ export var Index =  __class__ ('Index', [gatehandler.Handler], {
 		}
 		else if (arg0 == 'ficha-individual-do-aluno') {
 			self.FichaIndividualDoAluno = FichaIndividualDoAluno ();
+		}
+		else if (arg0 == 'ata-de-resultados-finais') {
+			self.AtaDeResultadosFinais = AtaDeResultadosFinais ();
 		}
 		else if (arg0 == 'total-de-matriculados') {
 			if (window.PhanterPWA.auth_user_has_role (['administrator', 'root', 'Administrador Master SME'])) {
@@ -1036,6 +1040,202 @@ export var FichaIndividualDoAluno =  __class__ ('FichaIndividualDoAluno', [objec
 		else {
 		}
 		window.PhanterPWA.GET ('api', 'imprimir', 'ficha-individual', self.id_matricula, __kwargtrans__ ({onComplete: self.after_get}));
+	});}
+});
+export var AtaDeResultadosFinais =  __class__ ('AtaDeResultadosFinais', [object], {
+	__module__: __name__,
+	get __init__ () {return __get__ (this, decorators.check_authorization ((function __lambda__ () {
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+				}
+			}
+		}
+		else {
+		}
+		return window.PhanterPWA.auth_user_has_role (['administrator', 'root', 'Administrador Master SME', 'Administrador Master Escola']);
+	})) (function (self) {
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+					switch (__attrib0__) {
+						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+					}
+				}
+			}
+		}
+		else {
+		}
+		self.id_escola = window.PhanterPWA.Request.get_arg (1);
+		self.ano_letivo = window.PhanterPWA.Request.get_arg (2);
+		self.id_turma = window.PhanterPWA.Request.get_arg (3);
+		var html = CONCATENATE (DIV (DIV (DIV (DIV ('IMPRIMIR', __kwargtrans__ ({_class: 'phanterpwa-breadcrumb'})), DIV ('ATAS DE RESULTADOS FINAIS', __kwargtrans__ ({_class: 'phanterpwa-breadcrumb'})), __kwargtrans__ ({_class: 'phanterpwa-breadcrumb-wrapper'})), __kwargtrans__ ({_class: 'p-container'})), __kwargtrans__ ({_class: 'title_page_container card'})), DIV (DIV (DIV (DIV (DIV (preloaders.android, __kwargtrans__ ({_style: 'width: 300px; height: 300px; overflow: hidden; margin: auto;'})), __kwargtrans__ ({_style: 'text-align:center; padding: 50px 0;'})), __kwargtrans__ ({_id: 'content-matriculas-imprimir', _class: 'p-row card e-padding_20'})), __kwargtrans__ ({_class: 'phanterpwa-container p-container'})), __kwargtrans__ ({_id: 'documentos-content'})), DIV (__kwargtrans__ ({_id: 'botoes_de_comando_impressao'})));
+		html.html_to ('#main-container');
+		var BackButton = left_bar.LeftBarButton ('back_imprimir_matricula', 'Voltar', I (__kwargtrans__ ({_class: 'fas fa-arrow-circle-left'})), __kwargtrans__ (dict ({'_phanterpwa-way': 'area-do-servidor', 'position': 'top', 'ways': [(function __lambda__ (r) {
+			if (arguments.length) {
+				var __ilastarg0__ = arguments.length - 1;
+				if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+					var __allkwargs0__ = arguments [__ilastarg0__--];
+					for (var __attrib0__ in __allkwargs0__) {
+						switch (__attrib0__) {
+							case 'r': var r = __allkwargs0__ [__attrib0__]; break;
+						}
+					}
+				}
+			}
+			else {
+			}
+			return (r.startswith ('documentos') || r.startswith ('documentos/') ? true : false);
+		})]})));
+		window.PhanterPWA.Components ['left_bar'].add_button (BackButton);
+		self._get_data ();
+	}));},
+	get after_get () {return __get__ (this, function (self, data, ajax_status) {
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+					switch (__attrib0__) {
+						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+						case 'data': var data = __allkwargs0__ [__attrib0__]; break;
+						case 'ajax_status': var ajax_status = __allkwargs0__ [__attrib0__]; break;
+					}
+				}
+			}
+		}
+		else {
+		}
+		var json = data.responseJSON;
+		self.id_escola = json.data.id_escola;
+		self.ano_letivo = json.data.ano_letivo;
+		self.id_aluno = json.data.id_aluno;
+		var meses = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+		var now = new Date ().getTime ();
+		var dia = new Date ().getDate ();
+		var mes_int = new Date ().getMonth ();
+		var ano = new Date ().getFullYear ();
+		var mes = meses [int (mes_int)];
+		var data_assinatura = '{0} de {1} de {2}'.format (dia, mes, ano);
+		var html_botoes = CONCATENATE (widgets.FloatMenu ('menu_impressao', I (__kwargtrans__ ({_class: 'fas fa-ellipsis-v'})), widgets.FloatButton (I (__kwargtrans__ ({_class: 'fas fa-file-pdf'})), __kwargtrans__ ({_class: 'botao_gerar_pdf', _title: 'Gerar PDF', _href: '{0}/api/pdfs/declaracao-de-transferencia/{1}?nocache={2}'.format (window.PhanterPWA.ApiServer.remote_address, self.id_matricula, now)})), widgets.FloatButton (I (__kwargtrans__ ({_class: 'fas fa-print'})), __kwargtrans__ ({_title: 'Imprimir documento', _class: 'botao_imprimir_diario_de_notas', _onclick: 'print();'}))));
+		html_botoes.html_to ('#botoes_de_comando_impressao');
+		var nome_escola = json.data.nome_escola;
+		var dados_escola = json.data.dados_escola;
+		var ano_letivo = json.data.ano_letivo;
+		var eh_multi = json.data.ata_de_resultados_finais.eh_multi;
+		var naturalidade = json.data.naturalidade;
+		var nome_do_pai = json.data.nome_do_pai;
+		var nome_da_mae = json.data.nome_da_mae;
+		var sexo = json.data.sexo;
+		var data_de_nascimento_formatada = json.data.data_de_nascimento_formatada;
+		var nome_autoridade = json.data.nome_autoridade;
+		var cargo_autoridade = json.data.cargo_autoridade;
+		var turma = json.data.turma;
+		var turno = json.data.turno;
+		var serie_e_ensino = json.data.serie_e_ensino;
+		var resultado_final = json.data.resultado_final;
+		var oa_alunoa = 'o(a) aluno(a)';
+		var filho = 'filho(a)';
+		var nasc = 'nascido(a)';
+		var mats = 'matriculado(a)';
+		var considerado = 'considerado(a)';
+		if (nome_do_pai === null || nome_do_pai == '') {
+			var nome_do_pai = '';
+		}
+		var anunciado = XML (json.data.anunciado);
+		var dados_serie = '';
+		var disciplinas = json.data.ata_de_resultados_finais.disciplinas_ordem;
+		var linha_cabecalho = TR (TH (DIV ('Número do(a) aluno(a)', __kwargtrans__ ({_class: 'rotate'})), __kwargtrans__ ({_class: 'disciplina_atas_rotate cabecalho_rotate'})), TH (CANVAS (__kwargtrans__ ({_id: 'myCanvas', _width: 300, _height: 300})), DIV ('NOME DO(A) ALUNO(A)', __kwargtrans__ ({_class: 'rotulo_alunos_atas'})), DIV ('DISCIPLINAS', __kwargtrans__ ({_class: 'rotulo_disciplinas_atas'})), __kwargtrans__ ({_class: 'caixa_vazia rotulo_diciplinas_alunos_atas'})), ...(function () {
+			var __accu0__ = [];
+			for (var x of disciplinas) {
+				__accu0__.append (TH (DIV (x, __kwargtrans__ ({_class: 'rotate'})), __kwargtrans__ ({_class: 'disciplina_atas_rotate cabecalho_rotate'})));
+			}
+			return __accu0__;
+		}) ());
+		var tabela_fundamental = TABLE (linha_cabecalho, __kwargtrans__ ({_class: 'tabela_fundamental tabela_resultados_ata'}));
+		linha_cabecalho.append (TH (DIV ('Resultado', __kwargtrans__ ({_class: 'rotate'})), __kwargtrans__ ({_class: 'disciplina_atas_rotate cabecalho_rotate'})));
+		var series_multi = [];
+		for (var c of json.data.ata_de_resultados_finais.resultados_finais) {
+			var numero_aluno = c [0].numero_do_aluno;
+			var nome_aluno = c [0].nome_do_aluno;
+			var colunas = [TH (numero_aluno, __kwargtrans__ ({_class: 'nome_do_aluno_atas'})), TH (nome_aluno, __kwargtrans__ ({_class: 'nome_do_aluno_atas'}))];
+			if (eh_multi && !__in__ (c [0].serie, series_multi)) {
+				tabela_fundamental.append (TR (TH (c [0].serie, __kwargtrans__ ({_class: 'serie_multisseriada_cabecalho', _colspan: len (disciplinas) + 3}))));
+				series_multi.append (c [0].serie);
+			}
+			if (c [1] == 'Desistente' || c [1] == 'Transderido(a)') {
+				colunas.append (TH (c [1], __kwargtrans__ ({_class: 'desistente_transferido_atas', _colspan: len (disciplinas) + 1})));
+			}
+			else {
+				if (c [2] !== null) {
+					var dict_dis_al = dict (c [2]);
+					for (var x of disciplinas) {
+						if (__in__ (x, dict_dis_al)) {
+							colunas.append (TD (dict_dis_al [x].nota, __kwargtrans__ ({_class: 'notas_disciplina_atas'})));
+						}
+						else {
+							colunas.append (TD ('', __kwargtrans__ ({_class: 'notas_disciplina_atas sem_dados'})));
+						}
+					}
+				}
+				else {
+					for (var x of disciplinas) {
+						colunas.append (TD ('', __kwargtrans__ ({_class: 'notas_disciplina_atas sem_dados'})));
+					}
+				}
+				var legenda = '?';
+				if (__in__ ('Aprovado(a)', c [1])) {
+					var legenda = 'AP';
+				}
+				else if (__in__ ('Reprovado(a)', c [1])) {
+					var legenda = 'RP';
+				}
+				else if (__in__ ('Aprovado(a) no Conselhor', c [1])) {
+					var legenda = 'APC';
+				}
+				else if (__in__ ('Reprovado(a) no Conselho', c [1])) {
+					var legenda = 'RPC';
+				}
+				colunas.append (TD (legenda, __kwargtrans__ ({_class: 'resultado_legenda'})));
+			}
+			var linha = TR (...colunas);
+			tabela_fundamental.append (linha);
+		}
+		var logo = '{0}/api/escolas/{1}/image'.format (window.PhanterPWA.ApiServer.remote_address, self.id_escola);
+		if (ajax_status == 'success') {
+			var declaracao_matricula_content = DIV (DIV (DIV (DIV (DIV (DIV (DIV (DIV (IMG (__kwargtrans__ ({_src: '/static/{0}/images/cabecalho_background.jpg'.format (window.PhanterPWA.VERSIONING)})), __kwargtrans__ ({_class: 'back'})), DIV (IMG (__kwargtrans__ ({_src: logo, _style: 'width: 120px; height: 120px;'})), __kwargtrans__ ({_class: 'front'})), __kwargtrans__ ({_class: 'sme_cabecalho_sme'})), DIV (H3 (nome_escola), __kwargtrans__ ({_class: 'sme_cabecalho_sme_nome_escola'})), DIV (H5 (dados_escola), __kwargtrans__ ({_class: 'sme_cabecalho_sme_dados_escola'})), DIV (H2 ('ATA DE RESULTADOS FINAIS'), __kwargtrans__ ({_class: 'sme_cabecalho_titulo_documento'})), BR (), DIV (anunciado, BR (), tabela_fundamental, BR (), BR (), BR (), BR (), BR (), DIV (TABLE (TR (TD ('___________________________________________')), TR (TD (nome_autoridade)), TR (TD (cargo_autoridade, __kwargtrans__ ({_class: 'miudinho'}))), __kwargtrans__ ({_class: 'tudo_centralizado'})), __kwargtrans__ ({_class: 'p-row'})), __kwargtrans__ ({_class: 'sme_documento_conteudo'})), __kwargtrans__ ({_id: 'pagina_{0}_declaracao'.format (self.id_matricula), _class: 'p-row'})), __kwargtrans__ ({_class: 'imprimir_matricula_wrapper imprimir_documentos_wrapper'})), __kwargtrans__ ({_class: 'imprimir_ata_de_resultados'}))), __kwargtrans__ ({_class: 'media-print-visible'})), __kwargtrans__ ({_class: 'folhas_para_imprimir phanterpwa-simple-media-print'}));
+			CONCATENATE (declaracao_matricula_content).html_to ('#documentos-content');
+			var c = $ ('#myCanvas') [0];
+			var ctx = c.getContext ('2d');
+			ctx.lineWidth = 1;
+			ctx.beginPath ();
+			ctx.moveTo (0, 0);
+			ctx.lineTo (300, 300);
+			ctx.stroke ();
+			var altura = $ ('.caixa_vazia.rotulo_diciplinas_alunos_atas').height ();
+			var largura = $ ('.caixa_vazia.rotulo_diciplinas_alunos_atas').width ();
+			$ ('#myCanvas').width (largura).height (altura);
+		}
+	});},
+	get _get_data () {return __get__ (this, function (self) {
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+					switch (__attrib0__) {
+						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+					}
+				}
+			}
+		}
+		else {
+		}
+		window.PhanterPWA.GET ('api', 'imprimir', 'ata-de-resultados-finais', self.id_escola, self.ano_letivo, self.id_turma, __kwargtrans__ ({onComplete: self.after_get}));
 	});}
 });
 export var TotalDeMatriculados =  __class__ ('TotalDeMatriculados', [object], {

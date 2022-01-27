@@ -38,6 +38,7 @@ H1 = helpers.XmlConstructor.tagger("h1")
 H2 = helpers.XmlConstructor.tagger("h2")
 H3 = helpers.XmlConstructor.tagger("h3")
 H4 = helpers.XmlConstructor.tagger("h4")
+CANVAS = helpers.XmlConstructor.tagger("canvas")
 H5 = helpers.XmlConstructor.tagger("h5")
 HR = helpers.XmlConstructor.tagger("hr", True)
 P = helpers.XmlConstructor.tagger("p")
@@ -70,6 +71,8 @@ class Index(gatehandler.Handler):
             self.DeclaracaoDeTransferencia = DeclaracaoDeTransferencia()
         elif arg0 == "ficha-individual-do-aluno":
             self.FichaIndividualDoAluno = FichaIndividualDoAluno()
+        elif arg0 == "ata-de-resultados-finais":
+            self.AtaDeResultadosFinais = AtaDeResultadosFinais()
         elif arg0 == "total-de-matriculados":
             if window.PhanterPWA.auth_user_has_role(["administrator", "root", "Administrador Master SME"]):
                 if arg1 is None or arg1 is js_undefined:
@@ -1931,6 +1934,274 @@ class FichaIndividualDoAluno():
             "imprimir",
             "ficha-individual",
             self.id_matricula,
+            onComplete=self.after_get
+        )
+
+
+class AtaDeResultadosFinais():
+    @decorators.check_authorization(lambda: window.PhanterPWA.auth_user_has_role(["administrator", "root", "Administrador Master SME", "Administrador Master Escola"]))
+    def __init__(self):
+        self.id_escola = window.PhanterPWA.Request.get_arg(1)
+        self.ano_letivo = window.PhanterPWA.Request.get_arg(2)
+        self.id_turma = window.PhanterPWA.Request.get_arg(3)
+        
+        html = CONCATENATE(
+            DIV(
+                DIV(
+                    DIV(
+                        DIV("IMPRIMIR", _class="phanterpwa-breadcrumb"),
+                        DIV("ATAS DE RESULTADOS FINAIS", _class="phanterpwa-breadcrumb"),
+                        _class="phanterpwa-breadcrumb-wrapper"
+                    ),
+                    _class="p-container"),
+                _class='title_page_container card'
+            ),
+            DIV(
+                DIV(
+                    DIV(
+                        DIV(
+                            DIV(preloaders.android, _style="width: 300px; height: 300px; overflow: hidden; margin: auto;"),
+                            _style="text-align:center; padding: 50px 0;"
+                        ),
+                        _id="content-matriculas-imprimir",
+                        _class='p-row card e-padding_20'
+                    ),
+                    _class="phanterpwa-container p-container"
+                ),
+                _id="documentos-content",
+            ),
+            DIV(_id="botoes_de_comando_impressao")
+        )
+        html.html_to("#main-container")
+        BackButton = left_bar.LeftBarButton(
+            "back_imprimir_matricula",
+            "Voltar",
+            I(_class="fas fa-arrow-circle-left"),
+            **{"_phanterpwa-way": "area-do-servidor",
+                "position": "top",
+                "ways": [lambda r: True if r.startswith("documentos") or r.startswith("documentos/") else False]}
+        )
+        window.PhanterPWA.Components['left_bar'].add_button(BackButton)
+        self._get_data()
+
+    def after_get(self, data, ajax_status):
+        json = data.responseJSON
+        self.id_escola = json.data.id_escola
+        self.ano_letivo = json.data.ano_letivo
+        self.id_aluno = json.data.id_aluno
+        meses = [
+            "janeiro",
+            "fevereiro",
+            "março",
+            "abril",
+            "maio",
+            "junho",
+            "julho",
+            "agosto",
+            "setembro",
+            "outubro",
+            "novembro",
+            "dezembro"
+        ]
+        now = __new__(Date().getTime())
+        dia = __new__(Date().getDate())
+        mes_int = __new__(Date().getMonth())
+        ano = __new__(Date().getFullYear())
+        mes = meses[int(mes_int)]
+        data_assinatura = "{0} de {1} de {2}".format(dia, mes, ano)
+
+        html_botoes = CONCATENATE(
+            widgets.FloatMenu(
+                "menu_impressao",
+                I(_class="fas fa-ellipsis-v"),
+                widgets.FloatButton(
+                    I(_class="fas fa-file-pdf"),
+                    _class="botao_gerar_pdf",
+                    _title="Gerar PDF",
+                    _href="{0}/api/pdfs/declaracao-de-transferencia/{1}?nocache={2}".format(
+                        window.PhanterPWA.ApiServer.remote_address,
+                        self.id_matricula,
+                        now
+                    )
+                ),
+                widgets.FloatButton(
+                    I(_class="fas fa-print"),
+                    _title="Imprimir documento",
+                    _class="botao_imprimir_diario_de_notas",
+                    _onclick="print();"
+                )
+            )
+        )
+        html_botoes.html_to("#botoes_de_comando_impressao")
+        nome_escola = json.data.nome_escola
+        dados_escola = json.data.dados_escola
+        ano_letivo = json.data.ano_letivo
+        eh_multi = json.data.ata_de_resultados_finais.eh_multi
+        naturalidade = json.data.naturalidade
+        nome_do_pai = json.data.nome_do_pai
+        nome_da_mae = json.data.nome_da_mae
+        sexo = json.data.sexo
+        data_de_nascimento_formatada = json.data.data_de_nascimento_formatada
+        nome_autoridade = json.data.nome_autoridade
+        cargo_autoridade = json.data.cargo_autoridade
+        turma = json.data.turma
+        turno = json.data.turno
+        serie_e_ensino = json.data.serie_e_ensino
+        resultado_final = json.data.resultado_final
+        oa_alunoa = "o(a) aluno(a)"
+        filho = "filho(a)"
+        nasc = "nascido(a)"
+        mats = "matriculado(a)"
+        considerado = "considerado(a)"
+        if nome_do_pai is None or nome_do_pai == "":
+            nome_do_pai = ""
+
+        anunciado = XML(json.data.anunciado)
+        dados_serie = ""
+        disciplinas = json.data.ata_de_resultados_finais.disciplinas_ordem
+        linha_cabecalho = TR(
+            TH(DIV("Número do(a) aluno(a)", _class="rotate"), _class="disciplina_atas_rotate cabecalho_rotate"),
+            TH(
+                CANVAS(_id="myCanvas", _width=300, _height=300),
+                DIV("NOME DO(A) ALUNO(A)", _class="rotulo_alunos_atas"),
+                DIV("DISCIPLINAS", _class="rotulo_disciplinas_atas"),
+                _class="caixa_vazia rotulo_diciplinas_alunos_atas"
+            ),
+            *[TH(DIV(x, _class="rotate"), _class="disciplina_atas_rotate cabecalho_rotate") for x in disciplinas]
+        )
+        tabela_fundamental = TABLE(
+            linha_cabecalho,
+            _class="tabela_fundamental tabela_resultados_ata",
+        )
+        linha_cabecalho.append(TH(DIV("Resultado", _class="rotate"), _class="disciplina_atas_rotate cabecalho_rotate"))
+        series_multi = []
+        for c in json.data.ata_de_resultados_finais.resultados_finais:
+            numero_aluno = c[0].numero_do_aluno
+            nome_aluno = c[0].nome_do_aluno
+            colunas = [TH(numero_aluno, _class="nome_do_aluno_atas"), TH(nome_aluno, _class="nome_do_aluno_atas")]
+            if eh_multi and c[0].serie not in series_multi:
+                tabela_fundamental.append(TR(
+                    TH(
+                        c[0].serie,
+                        _class="serie_multisseriada_cabecalho",
+                        _colspan=len(disciplinas) + 3
+                    )
+                ))
+                series_multi.append(c[0].serie)
+            if c[1] == "Desistente" or c[1] == "Transderido(a)":
+                colunas.append(TH(c[1], _class="desistente_transferido_atas", _colspan=len(disciplinas) + 1))
+            else:
+                if c[2] is not None:
+                    dict_dis_al = dict(c[2])
+                    for x in disciplinas:
+                        if x in dict_dis_al:
+                            colunas.append(TD(dict_dis_al[x].nota, _class="notas_disciplina_atas"))
+                        else:
+                            colunas.append(TD("", _class="notas_disciplina_atas sem_dados"))
+                else:
+                    for x in disciplinas:
+                        colunas.append(TD("", _class="notas_disciplina_atas sem_dados"))
+                legenda = "?"
+                if "Aprovado(a)" in c[1]:
+                    legenda = "AP"
+                elif "Reprovado(a)" in c[1]:
+                    legenda = "RP"
+                elif "Aprovado(a) no Conselhor" in c[1]:
+                    legenda = "APC"
+                elif "Reprovado(a) no Conselho" in c[1]:
+                    legenda = "RPC"
+                colunas.append(TD(legenda, _class="resultado_legenda"))
+            linha = TR(*colunas)
+            tabela_fundamental.append(linha)
+
+        logo = "{0}/api/escolas/{1}/image".format(
+            window.PhanterPWA.ApiServer.remote_address,
+            self.id_escola
+        )
+        if ajax_status == "success":
+            declaracao_matricula_content = DIV(
+                DIV(
+                    DIV(
+                        DIV(
+                            DIV(
+                                DIV(
+                                    DIV(
+                                        DIV(
+                                            IMG(_src="/static/{0}/images/cabecalho_background.jpg".format(
+                                                window.PhanterPWA.VERSIONING)),
+                                            _class="back",
+                                        ),
+                                        DIV(
+                                            IMG(_src=logo, _style="width: 120px; height: 120px;"),
+                                            _class="front",
+                                        ),
+                                        _class="sme_cabecalho_sme"
+                                    ),
+                                    DIV(H3(nome_escola), _class="sme_cabecalho_sme_nome_escola"),
+                                    DIV(H5(dados_escola), _class="sme_cabecalho_sme_dados_escola"),
+                                    DIV(H2("ATA DE RESULTADOS FINAIS"), _class="sme_cabecalho_titulo_documento"),
+                                    BR(),
+                                    DIV(
+                                        anunciado,
+                                        BR(),
+                                        tabela_fundamental,
+                                        BR(),
+                                        BR(),
+                                        BR(),
+                                        BR(),
+                                        BR(),
+                                        DIV(
+                                            TABLE(
+                                                TR(
+                                                    TD("___________________________________________"),
+                                                ),
+                                                TR(
+                                                    TD(nome_autoridade),
+                                                ),
+                                                TR(
+                                                    TD(cargo_autoridade, _class="miudinho"),
+                                                ),
+                                                _class="tudo_centralizado"
+                                            ),
+                                            _class="p-row"
+                                        ),
+                                        _class="sme_documento_conteudo"
+                                    ),
+                                    _id="pagina_{0}_declaracao".format(self.id_matricula),
+                                    _class="p-row"
+                                ),
+                                _class="imprimir_matricula_wrapper imprimir_documentos_wrapper"
+                            ),
+                            _class="imprimir_ata_de_resultados"
+                        ),
+                    ),
+
+                    _class="media-print-visible"
+                ),
+                _class="folhas_para_imprimir phanterpwa-simple-media-print"
+            )
+            CONCATENATE(declaracao_matricula_content).html_to("#documentos-content")
+
+            c = jQuery("#myCanvas")[0]
+            ctx = c.getContext("2d")
+            ctx.lineWidth = 1
+            ctx.beginPath()
+            ctx.moveTo(0, 0)
+            ctx.lineTo(300, 300)
+            ctx.stroke()
+            altura = jQuery('.caixa_vazia.rotulo_diciplinas_alunos_atas').height()
+            largura = jQuery('.caixa_vazia.rotulo_diciplinas_alunos_atas').width()
+            jQuery('#myCanvas').width(largura).height(altura)
+
+
+    def _get_data(self):
+        window.PhanterPWA.GET(
+            "api",
+            "imprimir",
+            "ata-de-resultados-finais",
+            self.id_escola,
+            self.ano_letivo,
+            self.id_turma,
             onComplete=self.after_get
         )
 
