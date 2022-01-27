@@ -2056,25 +2056,60 @@ class AtaDeResultadosFinais():
         if nome_do_pai is None or nome_do_pai == "":
             nome_do_pai = ""
 
+        series_multi = []
         anunciado = XML(json.data.anunciado)
         dados_serie = ""
         disciplinas = json.data.ata_de_resultados_finais.disciplinas_ordem
+        linha_cabecalho_educacao = TR(
+            TH("Nº", _class="disciplina_atas_ed"),
+            TH("Nome do(a) aluno(a)", _class="disciplina_atas_ed"),
+            TH("Parecer Final", _class="disciplina_atas_ed"),
+        )
+        tabela_educacao = TABLE(
+            linha_cabecalho_educacao,
+            _class="tabela_educacao_infantil tabela_resultados_ata",
+        )
+        tem_dados_educacao_infantil = False
+        for c in json.data.ata_de_resultados_finais.resultados_finais_educacao:
+            tem_dados_educacao_infantil = True
+            numero_aluno = c[0].numero_do_aluno
+            nome_aluno = c[0].nome_do_aluno
+            colunas = [TH(numero_aluno, _class="nome_do_aluno_atas"), TH(nome_aluno, _class="nome_do_aluno_atas")]
+            if eh_multi and c[0].serie not in series_multi:
+                tabela_educacao.append(TR(
+                    TH(
+                        c[0].serie,
+                        _class="serie_multisseriada_cabecalho",
+                        _colspan=3
+                    )
+                ))
+                series_multi.append(c[0].serie)
+            if c[1] == "Desistente" or c[1] == "Transderido(a)":
+                class_add = " transferido" if c[1] == "Transderido(a)" else " desistente"
+                colunas.append(TH(c[1], _class="desistente_transferido_atas{0}".format(class_add)))
+            else:
+                if c[2] is not None:
+                    colunas.append(TD(c[2], _class="notas_disciplina_atas"))
+                else:
+                    colunas.append(TD("Não foi atribuido um parecer final a(o) referente aluno(a)!", _class="notas_disciplina_atas sem_dados"))
+            linha = TR(*colunas)
+            tabela_educacao.append(linha)
+
         linha_cabecalho = TR(
-            TH(DIV("Número do(a) aluno(a)", _class="rotate"), _class="disciplina_atas_rotate cabecalho_rotate"),
+            TH(DIV("Número do(a) aluno(a)", _class="rotate"), _class="disciplina_atas_rotate cabecalho_rotate disciplina_atas_ed"),
             TH(
                 CANVAS(_id="myCanvas", _width=300, _height=300),
                 DIV("NOME DO(A) ALUNO(A)", _class="rotulo_alunos_atas"),
                 DIV("DISCIPLINAS", _class="rotulo_disciplinas_atas"),
-                _class="caixa_vazia rotulo_diciplinas_alunos_atas"
+                _class="caixa_vazia rotulo_diciplinas_alunos_atas disciplina_atas_ed"
             ),
-            *[TH(DIV(x, _class="rotate"), _class="disciplina_atas_rotate cabecalho_rotate") for x in disciplinas]
+            *[TH(DIV(x, _class="rotate"), _class="disciplina_atas_rotate cabecalho_rotate disciplina_atas_ed") for x in disciplinas]
         )
         tabela_fundamental = TABLE(
             linha_cabecalho,
             _class="tabela_fundamental tabela_resultados_ata",
         )
-        linha_cabecalho.append(TH(DIV("Resultado", _class="rotate"), _class="disciplina_atas_rotate cabecalho_rotate"))
-        series_multi = []
+        linha_cabecalho.append(TH(DIV("Resultado", _class="rotate"), _class="disciplina_atas_rotate cabecalho_rotate disciplina_atas_ed"))
         for c in json.data.ata_de_resultados_finais.resultados_finais:
             numero_aluno = c[0].numero_do_aluno
             nome_aluno = c[0].nome_do_aluno
@@ -2089,13 +2124,15 @@ class AtaDeResultadosFinais():
                 ))
                 series_multi.append(c[0].serie)
             if c[1] == "Desistente" or c[1] == "Transderido(a)":
-                colunas.append(TH(c[1], _class="desistente_transferido_atas", _colspan=len(disciplinas) + 1))
+                class_add = " transferido" if c[1] == "Transderido(a)" else " desistente"
+                colunas.append(TH(c[1], _class="desistente_transferido_atas{0}".format(class_add), _colspan=len(disciplinas) + 1))
             else:
                 if c[2] is not None:
                     dict_dis_al = dict(c[2])
                     for x in disciplinas:
                         if x in dict_dis_al:
-                            colunas.append(TD(dict_dis_al[x].nota, _class="notas_disciplina_atas"))
+                            class_add = " vermelho" if dict_dis_al[x].vermelho else ""
+                            colunas.append(TD(dict_dis_al[x].nota, _class="notas_disciplina_atas{0}".format(class_add)))
                         else:
                             colunas.append(TD("", _class="notas_disciplina_atas sem_dados"))
                 else:
@@ -2113,6 +2150,27 @@ class AtaDeResultadosFinais():
                 colunas.append(TD(legenda, _class="resultado_legenda"))
             linha = TR(*colunas)
             tabela_fundamental.append(linha)
+        tabela_fundamental.append(
+            TR(
+                TD(
+                    DIV(
+                        DIV(
+                            STRONG("LEGENDA")
+                        ),
+                        DIV(
+                            DIV(STRONG("AP"), " - APROVADO(A)", _class="p-col w1p50"),
+                            DIV(STRONG("APC"), " - APROVADO(A) NO CONSELHO", _class="p-col w1p50"),
+                            DIV(STRONG("RP"), " - REPROVADO(A)", _class="p-col w1p50"),
+                            DIV(STRONG("RPC"), " - REPROVADO(A) NO CONSELHO", _class="p-col w1p50"),
+                            DIV(STRONG("*"), " -  MÉDIA CONFORME PARECER DO CONSELHO DE CLASSE", _class="p-col w1p100"),
+                            _class="p-row"
+                        ),
+                        _class="painel_legenda_ata"
+                    ),
+                    _colspan=len(disciplinas) + 3
+                )
+            )
+        )
 
         logo = "{0}/api/escolas/{1}/image".format(
             window.PhanterPWA.ApiServer.remote_address,
@@ -2139,27 +2197,25 @@ class AtaDeResultadosFinais():
                                     ),
                                     DIV(H3(nome_escola), _class="sme_cabecalho_sme_nome_escola"),
                                     DIV(H5(dados_escola), _class="sme_cabecalho_sme_dados_escola"),
-                                    DIV(H2("ATA DE RESULTADOS FINAIS"), _class="sme_cabecalho_titulo_documento"),
-                                    BR(),
+                                    DIV(H3("ATA DE RESULTADOS FINAIS", _class="tudo_centralizado"), _class="sme_cabecalho_titulo_documento"),
                                     DIV(
-                                        anunciado,
-                                        BR(),
+                                        P(anunciado),
+                                        tabela_educacao if tem_dados_educacao_infantil else "",
                                         tabela_fundamental,
-                                        BR(),
-                                        BR(),
-                                        BR(),
+                                        P("E, Para constar, eu, ", "__________________________________________________",
+                                            ", Secretário(a), lavrei a presente ata que vai assinada ",
+                                            "por mim e pelo(a) Diretor(a) do estabelecimento."),
                                         BR(),
                                         BR(),
                                         DIV(
                                             TABLE(
                                                 TR(
                                                     TD("___________________________________________"),
+                                                    TD("___________________________________________"),
                                                 ),
                                                 TR(
-                                                    TD(nome_autoridade),
-                                                ),
-                                                TR(
-                                                    TD(cargo_autoridade, _class="miudinho"),
+                                                    TD("Diretor(a)", _class="miudinho"),
+                                                    TD("Secretário)", _class="miudinho"),
                                                 ),
                                                 _class="tudo_centralizado"
                                             ),

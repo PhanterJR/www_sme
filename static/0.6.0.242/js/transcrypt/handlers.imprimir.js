@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2022-01-27 05:05:36
+// Transcrypt'ed from Python, 2022-01-27 08:12:35
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import * as anos_letivos from './handlers.anos_letivos.js';
 import * as escolas from './handlers.escolas.js';
@@ -1146,19 +1146,44 @@ export var AtaDeResultadosFinais =  __class__ ('AtaDeResultadosFinais', [object]
 		if (nome_do_pai === null || nome_do_pai == '') {
 			var nome_do_pai = '';
 		}
+		var series_multi = [];
 		var anunciado = XML (json.data.anunciado);
 		var dados_serie = '';
 		var disciplinas = json.data.ata_de_resultados_finais.disciplinas_ordem;
-		var linha_cabecalho = TR (TH (DIV ('Número do(a) aluno(a)', __kwargtrans__ ({_class: 'rotate'})), __kwargtrans__ ({_class: 'disciplina_atas_rotate cabecalho_rotate'})), TH (CANVAS (__kwargtrans__ ({_id: 'myCanvas', _width: 300, _height: 300})), DIV ('NOME DO(A) ALUNO(A)', __kwargtrans__ ({_class: 'rotulo_alunos_atas'})), DIV ('DISCIPLINAS', __kwargtrans__ ({_class: 'rotulo_disciplinas_atas'})), __kwargtrans__ ({_class: 'caixa_vazia rotulo_diciplinas_alunos_atas'})), ...(function () {
+		var linha_cabecalho_educacao = TR (TH ('Nº', __kwargtrans__ ({_class: 'disciplina_atas_ed'})), TH ('Nome do(a) aluno(a)', __kwargtrans__ ({_class: 'disciplina_atas_ed'})), TH ('Parecer Final', __kwargtrans__ ({_class: 'disciplina_atas_ed'})));
+		var tabela_educacao = TABLE (linha_cabecalho_educacao, __kwargtrans__ ({_class: 'tabela_educacao_infantil tabela_resultados_ata'}));
+		var tem_dados_educacao_infantil = false;
+		for (var c of json.data.ata_de_resultados_finais.resultados_finais_educacao) {
+			var tem_dados_educacao_infantil = true;
+			var numero_aluno = c [0].numero_do_aluno;
+			var nome_aluno = c [0].nome_do_aluno;
+			var colunas = [TH (numero_aluno, __kwargtrans__ ({_class: 'nome_do_aluno_atas'})), TH (nome_aluno, __kwargtrans__ ({_class: 'nome_do_aluno_atas'}))];
+			if (eh_multi && !__in__ (c [0].serie, series_multi)) {
+				tabela_educacao.append (TR (TH (c [0].serie, __kwargtrans__ ({_class: 'serie_multisseriada_cabecalho', _colspan: 3}))));
+				series_multi.append (c [0].serie);
+			}
+			if (c [1] == 'Desistente' || c [1] == 'Transderido(a)') {
+				var class_add = (c [1] == 'Transderido(a)' ? ' transferido' : ' desistente');
+				colunas.append (TH (c [1], __kwargtrans__ ({_class: 'desistente_transferido_atas{0}'.format (class_add)})));
+			}
+			else if (c [2] !== null) {
+				colunas.append (TD (c [2], __kwargtrans__ ({_class: 'notas_disciplina_atas'})));
+			}
+			else {
+				colunas.append (TD ('Não foi atribuido um parecer final a(o) referente aluno(a)!', __kwargtrans__ ({_class: 'notas_disciplina_atas sem_dados'})));
+			}
+			var linha = TR (...colunas);
+			tabela_educacao.append (linha);
+		}
+		var linha_cabecalho = TR (TH (DIV ('Número do(a) aluno(a)', __kwargtrans__ ({_class: 'rotate'})), __kwargtrans__ ({_class: 'disciplina_atas_rotate cabecalho_rotate disciplina_atas_ed'})), TH (CANVAS (__kwargtrans__ ({_id: 'myCanvas', _width: 300, _height: 300})), DIV ('NOME DO(A) ALUNO(A)', __kwargtrans__ ({_class: 'rotulo_alunos_atas'})), DIV ('DISCIPLINAS', __kwargtrans__ ({_class: 'rotulo_disciplinas_atas'})), __kwargtrans__ ({_class: 'caixa_vazia rotulo_diciplinas_alunos_atas disciplina_atas_ed'})), ...(function () {
 			var __accu0__ = [];
 			for (var x of disciplinas) {
-				__accu0__.append (TH (DIV (x, __kwargtrans__ ({_class: 'rotate'})), __kwargtrans__ ({_class: 'disciplina_atas_rotate cabecalho_rotate'})));
+				__accu0__.append (TH (DIV (x, __kwargtrans__ ({_class: 'rotate'})), __kwargtrans__ ({_class: 'disciplina_atas_rotate cabecalho_rotate disciplina_atas_ed'})));
 			}
 			return __accu0__;
 		}) ());
 		var tabela_fundamental = TABLE (linha_cabecalho, __kwargtrans__ ({_class: 'tabela_fundamental tabela_resultados_ata'}));
-		linha_cabecalho.append (TH (DIV ('Resultado', __kwargtrans__ ({_class: 'rotate'})), __kwargtrans__ ({_class: 'disciplina_atas_rotate cabecalho_rotate'})));
-		var series_multi = [];
+		linha_cabecalho.append (TH (DIV ('Resultado', __kwargtrans__ ({_class: 'rotate'})), __kwargtrans__ ({_class: 'disciplina_atas_rotate cabecalho_rotate disciplina_atas_ed'})));
 		for (var c of json.data.ata_de_resultados_finais.resultados_finais) {
 			var numero_aluno = c [0].numero_do_aluno;
 			var nome_aluno = c [0].nome_do_aluno;
@@ -1168,14 +1193,16 @@ export var AtaDeResultadosFinais =  __class__ ('AtaDeResultadosFinais', [object]
 				series_multi.append (c [0].serie);
 			}
 			if (c [1] == 'Desistente' || c [1] == 'Transderido(a)') {
-				colunas.append (TH (c [1], __kwargtrans__ ({_class: 'desistente_transferido_atas', _colspan: len (disciplinas) + 1})));
+				var class_add = (c [1] == 'Transderido(a)' ? ' transferido' : ' desistente');
+				colunas.append (TH (c [1], __kwargtrans__ ({_class: 'desistente_transferido_atas{0}'.format (class_add), _colspan: len (disciplinas) + 1})));
 			}
 			else {
 				if (c [2] !== null) {
 					var dict_dis_al = dict (c [2]);
 					for (var x of disciplinas) {
 						if (__in__ (x, dict_dis_al)) {
-							colunas.append (TD (dict_dis_al [x].nota, __kwargtrans__ ({_class: 'notas_disciplina_atas'})));
+							var class_add = (dict_dis_al [x].vermelho ? ' vermelho' : '');
+							colunas.append (TD (dict_dis_al [x].nota, __kwargtrans__ ({_class: 'notas_disciplina_atas{0}'.format (class_add)})));
 						}
 						else {
 							colunas.append (TD ('', __kwargtrans__ ({_class: 'notas_disciplina_atas sem_dados'})));
@@ -1205,9 +1232,10 @@ export var AtaDeResultadosFinais =  __class__ ('AtaDeResultadosFinais', [object]
 			var linha = TR (...colunas);
 			tabela_fundamental.append (linha);
 		}
+		tabela_fundamental.append (TR (TD (DIV (DIV (STRONG ('LEGENDA')), DIV (DIV (STRONG ('AP'), ' - APROVADO(A)', __kwargtrans__ ({_class: 'p-col w1p50'})), DIV (STRONG ('APC'), ' - APROVADO(A) NO CONSELHO', __kwargtrans__ ({_class: 'p-col w1p50'})), DIV (STRONG ('RP'), ' - REPROVADO(A)', __kwargtrans__ ({_class: 'p-col w1p50'})), DIV (STRONG ('RPC'), ' - REPROVADO(A) NO CONSELHO', __kwargtrans__ ({_class: 'p-col w1p50'})), DIV (STRONG ('*'), ' -  MÉDIA CONFORME PARECER DO CONSELHO DE CLASSE', __kwargtrans__ ({_class: 'p-col w1p100'})), __kwargtrans__ ({_class: 'p-row'})), __kwargtrans__ ({_class: 'painel_legenda_ata'})), __kwargtrans__ ({_colspan: len (disciplinas) + 3}))));
 		var logo = '{0}/api/escolas/{1}/image'.format (window.PhanterPWA.ApiServer.remote_address, self.id_escola);
 		if (ajax_status == 'success') {
-			var declaracao_matricula_content = DIV (DIV (DIV (DIV (DIV (DIV (DIV (DIV (IMG (__kwargtrans__ ({_src: '/static/{0}/images/cabecalho_background.jpg'.format (window.PhanterPWA.VERSIONING)})), __kwargtrans__ ({_class: 'back'})), DIV (IMG (__kwargtrans__ ({_src: logo, _style: 'width: 120px; height: 120px;'})), __kwargtrans__ ({_class: 'front'})), __kwargtrans__ ({_class: 'sme_cabecalho_sme'})), DIV (H3 (nome_escola), __kwargtrans__ ({_class: 'sme_cabecalho_sme_nome_escola'})), DIV (H5 (dados_escola), __kwargtrans__ ({_class: 'sme_cabecalho_sme_dados_escola'})), DIV (H2 ('ATA DE RESULTADOS FINAIS'), __kwargtrans__ ({_class: 'sme_cabecalho_titulo_documento'})), BR (), DIV (anunciado, BR (), tabela_fundamental, BR (), BR (), BR (), BR (), BR (), DIV (TABLE (TR (TD ('___________________________________________')), TR (TD (nome_autoridade)), TR (TD (cargo_autoridade, __kwargtrans__ ({_class: 'miudinho'}))), __kwargtrans__ ({_class: 'tudo_centralizado'})), __kwargtrans__ ({_class: 'p-row'})), __kwargtrans__ ({_class: 'sme_documento_conteudo'})), __kwargtrans__ ({_id: 'pagina_{0}_declaracao'.format (self.id_matricula), _class: 'p-row'})), __kwargtrans__ ({_class: 'imprimir_matricula_wrapper imprimir_documentos_wrapper'})), __kwargtrans__ ({_class: 'imprimir_ata_de_resultados'}))), __kwargtrans__ ({_class: 'media-print-visible'})), __kwargtrans__ ({_class: 'folhas_para_imprimir phanterpwa-simple-media-print'}));
+			var declaracao_matricula_content = DIV (DIV (DIV (DIV (DIV (DIV (DIV (DIV (IMG (__kwargtrans__ ({_src: '/static/{0}/images/cabecalho_background.jpg'.format (window.PhanterPWA.VERSIONING)})), __kwargtrans__ ({_class: 'back'})), DIV (IMG (__kwargtrans__ ({_src: logo, _style: 'width: 120px; height: 120px;'})), __kwargtrans__ ({_class: 'front'})), __kwargtrans__ ({_class: 'sme_cabecalho_sme'})), DIV (H3 (nome_escola), __kwargtrans__ ({_class: 'sme_cabecalho_sme_nome_escola'})), DIV (H5 (dados_escola), __kwargtrans__ ({_class: 'sme_cabecalho_sme_dados_escola'})), DIV (H3 ('ATA DE RESULTADOS FINAIS', __kwargtrans__ ({_class: 'tudo_centralizado'})), __kwargtrans__ ({_class: 'sme_cabecalho_titulo_documento'})), DIV (P (anunciado), (tem_dados_educacao_infantil ? tabela_educacao : ''), tabela_fundamental, P ('E, Para constar, eu, ', '__________________________________________________', ', Secretário(a), lavrei a presente ata que vai assinada ', 'por mim e pelo(a) Diretor(a) do estabelecimento.'), BR (), BR (), DIV (TABLE (TR (TD ('___________________________________________'), TD ('___________________________________________')), TR (TD ('Diretor(a)', __kwargtrans__ ({_class: 'miudinho'})), TD ('Secretário)', __kwargtrans__ ({_class: 'miudinho'}))), __kwargtrans__ ({_class: 'tudo_centralizado'})), __kwargtrans__ ({_class: 'p-row'})), __kwargtrans__ ({_class: 'sme_documento_conteudo'})), __kwargtrans__ ({_id: 'pagina_{0}_declaracao'.format (self.id_matricula), _class: 'p-row'})), __kwargtrans__ ({_class: 'imprimir_matricula_wrapper imprimir_documentos_wrapper'})), __kwargtrans__ ({_class: 'imprimir_ata_de_resultados'}))), __kwargtrans__ ({_class: 'media-print-visible'})), __kwargtrans__ ({_class: 'folhas_para_imprimir phanterpwa-simple-media-print'}));
 			CONCATENATE (declaracao_matricula_content).html_to ('#documentos-content');
 			var c = $ ('#myCanvas') [0];
 			var ctx = c.getContext ('2d');
