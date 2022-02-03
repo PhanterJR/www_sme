@@ -231,7 +231,6 @@ class RegistroDeAulas():
                     pluchd = ""
                 if serie is None:
                     ch = " {0} aula{1} de {2}. Falta{3} {4} aula{5}.".format(
-                        serie,
                         total_dado,
                         pluchd,
                         carga_horaria,

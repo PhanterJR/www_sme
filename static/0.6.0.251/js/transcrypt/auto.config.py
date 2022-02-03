@@ -11,9 +11,9 @@ CONFIG = {
         "name": "SME",
         "title": "Secretaria Municipal de Educa\u00e7\u00e3o - F\u00e1tima/BA",
         "version": "0.6.0",
-        "compilation": 249,
-        "date_compilation": "2022-02-03 09:44:58.566804",
-        "versioning": "0.6.0.249",
+        "compilation": 251,
+        "date_compilation": "2022-02-03 11:23:10.431299",
+        "versioning": "0.6.0.251",
         "debug": False,
         "author": "PhanterJR<phanterjr@conexaodidata.com.br>"
     },
