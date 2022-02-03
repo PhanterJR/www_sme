@@ -2110,7 +2110,9 @@ class AtaDeResultadosFinais():
             _class="tabela_fundamental tabela_resultados_ata",
         )
         linha_cabecalho.append(TH(DIV("Resultado", _class="rotate"), _class="disciplina_atas_rotate cabecalho_rotate disciplina_atas_ed"))
+        tem_aluno_fundamental = False
         for c in json.data.ata_de_resultados_finais.resultados_finais:
+            tem_aluno_fundamental = True
             numero_aluno = c[0].numero_do_aluno
             nome_aluno = c[0].nome_do_aluno
             colunas = [TH(numero_aluno, _class="nome_do_aluno_atas"), TH(nome_aluno, _class="nome_do_aluno_atas")]
@@ -2201,7 +2203,7 @@ class AtaDeResultadosFinais():
                                     DIV(
                                         P(anunciado),
                                         tabela_educacao if tem_dados_educacao_infantil else "",
-                                        tabela_fundamental,
+                                        tabela_fundamental if tem_aluno_fundamental else "",
                                         P("E, Para constar, eu, ", "__________________________________________________",
                                             ", Secretário(a), lavrei a presente ata que vai assinada ",
                                             "por mim e pelo(a) Diretor(a) do estabelecimento."),
