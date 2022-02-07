@@ -43,6 +43,7 @@ LABEL = helpers.XmlConstructor.tagger("label")
 TEXTAREA = helpers.XmlConstructor.tagger("textarea")
 INPUT = helpers.XmlConstructor.tagger("input", True)
 TABLE = helpers.XmlConstructor.tagger('table')
+TBODY = helpers.XmlConstructor.tagger('tbody')
 TR = helpers.XmlConstructor.tagger('tr')
 TH = helpers.XmlConstructor.tagger('th')
 TD = helpers.XmlConstructor.tagger('td')
@@ -132,7 +133,7 @@ class Index(gatehandler.Handler):
                 callback_link=lambda ano: "#_phanterpwa:/diario-integrado/{0}/{1}".format(arg0, ano)
             )
         elif str(arg0).isdigit() and str(arg1).isdigit():
-            self.RegistroDeAulas = RegistroDeAulas(self, arg0, arg1, arg2, arg3)
+            self.RegistroDeAulas = DiarioRegistroDeAulas(self, arg0, arg1, arg2, arg3)
 
 
         BackButton1 = left_bar.LeftBarButton(
@@ -157,7 +158,6 @@ class RegistroDeAulas():
         self.id_turma = turma
         self.rotulo_mes_ano = rotulo_mes_ano
         self.index_instance = index_instance
-        self._get_registro_de_aulas()
         self.meses = {
             "01": "Janeiro",
             "02": "Fevereiro",
@@ -172,6 +172,7 @@ class RegistroDeAulas():
             "11": "Novembro",
             "12": "Dezembro"
         }
+        self._get_registro_de_aulas()
 
     def _get_registro_de_aulas(self):
         if self.rotulo_mes_ano is not None and self.rotulo_mes_ano is not js_undefined:
@@ -637,5 +638,230 @@ class RegistroDeAulas():
             json = data.responseJSON
             jQuery(elemento).find(".registro_de_aulas_cmp_curriculares").html(json.valor_extenso)
             self.diario_binds()
+
+
+class DiarioRegistroDeAulas():
+    def __init__(self, index_instance, escola, ano_letivo, turma, rotulo_mes_ano):
+        self.id_escola = escola
+        self.ano_letivo = ano_letivo
+        self.id_turma = turma
+        self.rotulo_mes_ano = rotulo_mes_ano
+        self.index_instance = index_instance
+        self.meses = {
+            "01": "Janeiro",
+            "02": "Fevereiro",
+            "03": "Março",
+            "04": "Abril",
+            "05": "Maio",
+            "06": "Junho",
+            "07": "Julho",
+            "08": "Agosto",
+            "09": "Setembro",
+            "10": "Outubro",
+            "11": "Novembro",
+            "12": "Dezembro"
+        }
+        html = CONCATENATE(
+            DIV(
+                DIV(
+                    DIV(
+                        DIV("DIÁRIO DE AULAS INTEGRADO", _class="phanterpwa-breadcrumb"),
+                        _class="phanterpwa-breadcrumb-wrapper"
+                    ),
+                    _class="p-container extend"),
+                _class='title_page_container card'
+            ),
+            DIV(
+                DIV(
+                    DIV(
+                        DIV(preloaders.android, _style="width: 300px; height: 300px; overflow: hidden; margin: auto;"),
+                        _style="text-align:center; padding: 50px 0;"
+                    ),
+                    _id="content-diario_integrado",
+                    _class='p-row card e-padding_auto'
+                ),
+                DIV(_id="modal_cmp_curriculares_container"),
+                _class="phanterpwa-container p-container extend"
+            )
+        )
+        html.html_to("#main-container")
+        self._get_calendario()
+
+    def _get_calendario(self):
+        window.PhanterPWA.GET(
+            "api",
+            "calendario",
+            self.ano_letivo,
+            self.id_escola,
+            onComplete=self.depois_de_pegar_calendario
+        )
+
+    def depois_de_pegar_calendario(self, data, ajax_status):
+        json = data.responseJSON
+        self.conta_aulas_fundamental = dict()
+        self.conta_aulas_educacao_infantil = 0
+        self.cargas_horarias = dict()
+        if ajax_status == "success":
+            self.datas_processadas = list()
+            self.lista_de_datas = list()
+            self._pos_index = 0
+            self.lista_dias_letivos = json.lista_dias_letivos
+            tem_dia_letivo = False
+            content = CONCATENATE()
+            for x in self.lista_dias_letivos:
+                tabela = TABLE(
+                )
+                for y in x[1]:
+                    self.lista_de_datas.append(y)
+                    tem_dia_letivo = True
+                    tabela.append(
+                        TBODY(
+                            TR(
+                                TD(DIV(preloaders.run_points)),
+                            ),
+                            _id="{0}".format(str(y).replace("-", "_"))
+                        )
+                    )
+                content.append(tabela)
+
+            if tem_dia_letivo:
+
+                self.datas_processadas.append(self.lista_de_datas[0])
+                self._get_registro_de_aulas()
+                content.append(DIV(_id="resumo_carga_horaria"))
+                content.html_to("#content-diario_integrado")
+            
+
+
+
+    def _get_registro_de_aulas(self):
+        if self._pos_index < len(self.lista_de_datas):
+
+            data_atual = self.lista_de_datas[self._pos_index]
+            ano, mes, dia = str(data_atual).split("-")
+            data_ext = "{0}{1}{2}".format(dia, mes, ano)
+            self._pos_index += 1
+            window.PhanterPWA.GET(
+                "api",
+                "registro-de-aulas",
+                "diario",
+                self.id_escola,
+                self.ano_letivo,
+                self.id_turma,
+                data_ext,
+                onComplete=self.after_get
+            )
+        else:
+            console.log(self.conta_aulas_fundamental)
+            console.log(self.conta_aulas_educacao_infantil)
+            console.log(self.cargas_horarias)
+            md = window.markdownit("default", {
+                "html": True,
+            })
+            md.use(window.markdownitDeflist)
+            result1 = DIV(XML(md.render(self.resumo_contagem())), _class="phanterpwa-markdownit-wrapper")
+            result1.html_to("#resumo_carga_horaria")
+            
+
+    def after_get(self, data, ajax_status):
+        if ajax_status == "success":
+            json = data.responseJSON
+            self.eh_multisseriado = json.eh_multisseriado
+            self.ordem_series = json.ordem_series
+            tot_aulas_educacao_infantil = json.conta_aulas_educacao_infantil
+            self.calc_cargas_horarias(json.cargas_horarias)
+            if str(tot_aulas_educacao_infantil).isdigit():
+                self.conta_aulas_educacao_infantil += tot_aulas_educacao_infantil
+            tot_aulas_ensino_fundamental = json.conta_aulas_ensino_fundamental
+            if tot_aulas_ensino_fundamental is not None:
+                self.conta_aulas(tot_aulas_ensino_fundamental)
+            dia, mes, ano = json.data_aula.split("/")
+            id_target = "#{0}_{1}_{2}".format(ano, mes, dia)
+            linha = CONCATENATE(
+
+            )
+            if json.conteudo_educacao_infantil is not None and json.conteudo_ensino_fundamental is not None:
+                md = window.markdownit("default", {
+                    "html": True,
+                })
+                md.use(window.markdownitDeflist)
+                result1 = DIV(XML(md.render(json.conteudo_educacao_infantil)), _class="phanterpwa-markdownit-wrapper")
+                result2 = DIV(XML(md.render(json.conteudo_ensino_fundamental)), _class="phanterpwa-markdownit-wrapper")
+                linha.append(TR(TH(json.data_aula, _rowspan="2"), TD(result1)))
+                linha.append(TR(TD(result2)))
+                linha.html_to(id_target)
+            elif json.conteudo_educacao_infantil is not None:
+                md = window.markdownit("default", {
+                    "html": True,
+                })
+                md.use(window.markdownitDeflist)
+                result1 = DIV(XML(md.render(json.conteudo_educacao_infantil)), _class="phanterpwa-markdownit-wrapper")
+                linha.append(TR(TH(json.data_aula), TD(result1)))
+
+                linha.html_to(id_target)
+            elif json.conteudo_ensino_fundamental is not None:
+                md = window.markdownit("default", {
+                    "html": True,
+                })
+                md.use(window.markdownitDeflist)
+                result1 = DIV(XML(md.render(json.conteudo_ensino_fundamental)), _class="phanterpwa-markdownit-wrapper")
+                linha.append(TR(TH(json.data_aula), TD(result1)))
+
+                linha.html_to(id_target)
+            else:
+                jQuery(id_target).remove()
+        self._get_registro_de_aulas()
+
+
+    def conta_aulas(self, dados):
+        dict_dados = dict(dados)
+        for x in dict_dados.keys():
+            if x not in self.conta_aulas_fundamental:
+                self.conta_aulas_fundamental[x] = dict(dict_dados[x])
+            else:
+                for y in dict(dict_dados[x]).keys():
+                    if y in self.conta_aulas_fundamental[x]:
+                        self.conta_aulas_fundamental[x][y] += dict_dados[x][y]
+                    else:
+                        self.conta_aulas_fundamental[x][y] = dict_dados[x][y]
+
+    def calc_cargas_horarias(self, dados):
+        dict_dados = dict(dados)
+        for x in dict_dados.keys():
+            if x not in self.cargas_horarias:
+                self.cargas_horarias[x] = dict_dados[x]
+            else:
+                for y in dict(dict_dados[x]).keys():
+                    if y not in self.cargas_horarias[x]:
+                        self.cargas_horarias[x][y] = dict_dados[x][y]
+
+    def resumo_contagem(self):
+        lista_series = []
+        linhas_series = []
+        texto_resumo_carga_horaria = ""
+        for x in self.ordem_series:
+            if x[0] in self.conta_aulas_fundamental and x[0] in self.cargas_horarias:
+                texto_linha = "**{0}**\n\n".format(x[1])
+                for dis in self.conta_aulas_fundamental[x[0]].keys():
+                    tot = self.conta_aulas_fundamental[x[0]][dis]
+                    ch = self.cargas_horarias[x[0]][dis]
+                    texto_dis = "+  **{0}:**".format(dis)
+                    if tot == ch:
+                        texto_dis += " Todas as {0} aulas foram dadas.\n".format(tot)
+                    elif tot > ch:
+                        texto_dis += " {0} aulas registradas. Foram dadas {1} aulas extras das {2} necessárias.\n".format(tot, tot - ch, ch)
+                    elif tot < ch:
+                        texto_dis += " {0} aulas registradas. Faltam {1} aulas das {2} necessárias.\n".format(tot, ch - tot, ch)
+                    texto_linha += texto_dis
+                texto_resumo_carga_horaria += texto_linha
+                texto_resumo_carga_horaria += "\n"
+
+        return texto_resumo_carga_horaria
+
+
+
+
+
+
 
 __pragma__('nokwargs')

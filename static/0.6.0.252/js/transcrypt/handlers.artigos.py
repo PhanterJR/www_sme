@@ -142,7 +142,7 @@ class Index(gatehandler.Handler):
                     md.use(window.markdownitSub)
                     md.use(window.markdownitSup)
                     md.enable('replacements').enable('smartquotes').enable('image')
-                    result = DIV(md.render(x.texto), _class="phanterpwa-markdownit-wrapper")
+                    result = DIV(XML(md.render(x.texto)), _class="phanterpwa-markdownit-wrapper")
                     html_artigos.append(
                         DIV(
                             H2(x.titulo),
@@ -151,7 +151,7 @@ class Index(gatehandler.Handler):
                                 DIV(STRONG("Postagem: "), data_postagem, _class="p-col w1p50"),
                                 _class="p-row"
                             ),
-                            XML(result),
+                            result,
                             _id="artigo-container-{0}".format(x.id), _class="artigo-container"
                         )
                     )
