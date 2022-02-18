@@ -320,7 +320,10 @@ class TurmasSimples(helpers.XmlConstructor):
                 "turmas-table-head",
                 "Turma",
                 "Turno",
-                TH("Quantidade de Alunos", _style="text-align: center;"),
+                TH("Matrículas efetuadas", _style="text-align: center;"),
+                TH("Transferidos", _style="text-align: center;"),
+                TH("Desistentes", _style="text-align: center;"),
+                TH("Matrículas efetivas", _style="text-align: center;"),
                 TH("Multisseriado?", _style="text-align: center;"),
                 TH("Diário bloqueado?", _style="text-align: center;"),
                 TH(_style="width: 40px;")
@@ -352,6 +355,9 @@ class TurmasSimples(helpers.XmlConstructor):
                     x.turma,
                     x.turno,
                     TD(x.quant_alunos, _style="text-align: center;"),
+                    TD(x.transferidos, _style="text-align: center; color: orange"),
+                    TD(x.desistentes, _style="text-align: center; color: red"),
+                    TD(x.total_matriculas, _style="text-align: center; color: green"),
                     TD(multis, _style="text-align: center;"),
                     TD(diario_bloqueado, _style="text-align: center;"),
                     widgets.MenuBox(
