@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2022-02-20 02:17:31
+// Transcrypt'ed from Python, 2022-02-20 18:51:42
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import * as preloaders from './phanterpwa.frontend.preloaders.js';
 import * as modal from './phanterpwa.frontend.components.modal.js';
@@ -123,14 +123,20 @@ export var Visualizar =  __class__ ('Visualizar', [helpers.XmlConstructor], {
 			var xml_endereco = TR (TD (DIV (STRONG ('Endereço: ', __kwargtrans__ ({_class: 'rotulo'})), SPAN (endereco, __kwargtrans__ ({_class: 'dado'})), __kwargtrans__ ({_class: 'label_e_campo'})), __kwargtrans__ ({_colspan: 2, _class: 'label_e_campo_wrapper'})));
 		}
 		var xml_naturalidade = TD (DIV (STRONG ('Naturalidade: ', __kwargtrans__ ({_class: 'rotulo'})), SPAN (STRONG ('Não definido!', __kwargtrans__ ({_style: 'color: red;'})), __kwargtrans__ ({_class: 'dado'})), __kwargtrans__ ({_class: 'label_e_campo'})), __kwargtrans__ ({_class: 'label_e_campo_wrapper'}));
-		var xml_turma_atual = TR (TD (DIV (STRONG (l_o_aluno, ' não está em uma turma ainda!', __kwargtrans__ ({_style: 'color: red;'})), __kwargtrans__ ({_class: 'label_e_campo'})), __kwargtrans__ ({_colspan: 2, _class: 'label_e_campo_wrapper'})));
+		var xml_turma_atual = TR (TD (DIV (STRONG (l_o_aluno, ' não está em uma turma ainda!', __kwargtrans__ ({_style: 'color: red;'})), __kwargtrans__ ({_class: 'label_e_campo'})), __kwargtrans__ ({_colspan: 3, _class: 'label_e_campo_wrapper'})));
 		if (turma !== null) {
+			var xml_resultado_final = '';
+			var xml_numero_aluno = '';
+			var colspan_turma = 3;
+			if (resultado_final !== null) {
+				colspan_turma--;
+				var xml_resultado_final = TD (DIV (STRONG ('Resultado Final: '), resultado_final, __kwargtrans__ ({_class: 'label_e_campo'})), __kwargtrans__ ({_colspan: 1, _class: 'label_e_campo_wrapper'}));
+			}
 			if (str (numero_aluno).isdigit ()) {
-				var xml_turma_atual = TR (TD (DIV (STRONG ('Turma: '), turma, __kwargtrans__ ({_class: 'label_e_campo'})), __kwargtrans__ ({_colspan: 2, _class: 'label_e_campo_wrapper'})), TD (DIV (STRONG ('Número: '), numero_aluno, __kwargtrans__ ({_class: 'label_e_campo'})), __kwargtrans__ ({_colspan: 2, _class: 'label_e_campo_wrapper'})));
+				colspan_turma--;
+				var xml_numero_aluno = TD (DIV (STRONG ('Número: '), numero_aluno, __kwargtrans__ ({_class: 'label_e_campo'})), __kwargtrans__ ({_colspan: 1, _class: 'label_e_campo_wrapper'}));
 			}
-			else {
-				var xml_turma_atual = TR (TD (DIV (STRONG ('Turma : '), turma, __kwargtrans__ ({_class: 'label_e_campo'})), __kwargtrans__ ({_colspan: 3, _class: 'label_e_campo_wrapper'})));
-			}
+			var xml_turma_atual = TR (TD (DIV (STRONG ('Turma : '), turma, __kwargtrans__ ({_class: 'label_e_campo'})), __kwargtrans__ ({_colspan: colspan_turma, _class: 'label_e_campo_wrapper'})), xml_numero_aluno, xml_resultado_final);
 		}
 		var xml_ano_anterior = '';
 		if (serie_ant !== null) {

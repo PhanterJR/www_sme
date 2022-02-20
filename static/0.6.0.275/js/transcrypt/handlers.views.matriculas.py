@@ -151,41 +151,46 @@ class Visualizar(helpers.XmlConstructor):
                     STRONG(l_o_aluno, " não está em uma turma ainda!", _style="color: red;"),
                     _class="label_e_campo"
                 ),
-                _colspan=2,
+                _colspan=3,
                 _class="label_e_campo_wrapper"
             )
         )
         if turma is not None:
-            if str(numero_aluno).isdigit():
-                xml_turma_atual = TR(
-                    TD(
-                        DIV(
-                            STRONG("Turma: "), turma,
-                            _class="label_e_campo"
-                        ),
-                        _colspan=2,
-                        _class="label_e_campo_wrapper"
+            xml_resultado_final = ""
+            xml_numero_aluno = ""
+            colspan_turma = 3
+            if resultado_final is not None:
+                colspan_turma -= 1
+                xml_resultado_final = TD(
+                    DIV(
+                        STRONG("Resultado Final: "), resultado_final,
+                        _class="label_e_campo"
                     ),
-                    TD(
-                        DIV(
-                            STRONG("Número: "), numero_aluno,
-                            _class="label_e_campo"
-                        ),
-                        _colspan=2,
-                        _class="label_e_campo_wrapper"
-                    )
+                    _colspan=1,
+                    _class="label_e_campo_wrapper"
                 )
-            else:
-                xml_turma_atual = TR(
-                    TD(
-                        DIV(
-                            STRONG("Turma : "), turma,
-                            _class="label_e_campo"
-                        ),
-                        _colspan=3,
-                        _class="label_e_campo_wrapper"
-                    )
+            if str(numero_aluno).isdigit():
+                colspan_turma -= 1
+                xml_numero_aluno = TD(
+                    DIV(
+                        STRONG("Número: "), numero_aluno,
+                        _class="label_e_campo"
+                    ),
+                    _colspan=1,
+                    _class="label_e_campo_wrapper"
                 )
+            xml_turma_atual = TR(
+                TD(
+                    DIV(
+                        STRONG("Turma : "), turma,
+                        _class="label_e_campo"
+                    ),
+                    _colspan=colspan_turma,
+                    _class="label_e_campo_wrapper"
+                ),
+                xml_numero_aluno,
+                xml_resultado_final
+            )
 
         xml_ano_anterior = ""
         if serie_ant is not None:

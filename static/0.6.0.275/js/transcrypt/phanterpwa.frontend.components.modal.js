@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2022-01-19 13:42:38
+// Transcrypt'ed from Python, 2022-02-20 18:51:41
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import * as snippets from './phanterpwa.frontend.components.snippets.js';
 import * as helpers from './phanterpwa.frontend.helpers.js';
@@ -32,10 +32,12 @@ export var Modal =  __class__ ('Modal', [object], {
 		self.title = '';
 		self.content = '';
 		self.footer = '';
+		self.buttons_panel = '';
 		self.header_height = 80;
 		self.footer_height = 80;
 		self._max_content_height = 400;
 		self._form = parameters.py_get ('form', null);
+		var _class_panel = '';
 		if (__in__ ('title', parameters)) {
 			self.title = parameters ['title'];
 		}
@@ -47,6 +49,10 @@ export var Modal =  __class__ ('Modal', [object], {
 		}
 		else {
 			self.footer_height = 20;
+		}
+		if (__in__ ('buttons_panel', parameters)) {
+			var _class_panel = ' has_buttons_panel';
+			self.buttons_panel = parameters ['buttons_panel'];
 		}
 		if (__in__ ('header_height', parameters)) {
 			self.header_height = parameters ['header_height'];
@@ -70,7 +76,7 @@ export var Modal =  __class__ ('Modal', [object], {
 		if (self.header_height < 50) {
 			var style_close_button = 'line-height: {0}px; height: {0}px; font-size: 1rem;'.format (self.header_height);
 		}
-		var wrapper_content = CONCATENATE (DIV (DIV (I (__kwargtrans__ ({_class: 'fas fa-times'})), __kwargtrans__ ({_class: 'phanterpwa-component-modal-close link', _style: style_close_button})), DIV (snippets.Centralizer ('phanterpwa-component-modal-title-snippets-centralizer', DIV (self.title, __kwargtrans__ ({_class: 'phanterpwa-component-modal-title-content'})), __kwargtrans__ ({default_height: self.header_height - 20})), __kwargtrans__ ({_class: 'phanterpwa-component-modal-title'})), __kwargtrans__ ({_class: 'phanterpwa-component-modal-header-container'})), DIV (self.content, __kwargtrans__ ({_class: 'phanterpwa-component-modal-content-container'})), DIV (self.footer, __kwargtrans__ ({_class: 'phanterpwa-component-modal-footer-container'})));
+		var wrapper_content = CONCATENATE (DIV (DIV (I (__kwargtrans__ ({_class: 'fas fa-times'})), __kwargtrans__ ({_class: 'phanterpwa-component-modal-close link', _style: style_close_button})), DIV (snippets.Centralizer ('phanterpwa-component-modal-title-snippets-centralizer', DIV (self.title, __kwargtrans__ ({_class: 'phanterpwa-component-modal-title-content'})), __kwargtrans__ ({default_height: self.header_height - 20})), __kwargtrans__ ({_class: 'phanterpwa-component-modal-title'})), __kwargtrans__ ({_class: 'phanterpwa-component-modal-header-container'})), DIV (self.content, DIV (self.buttons_panel, __kwargtrans__ ({_class: 'phanterpwa-component-modal-button-panel'})), __kwargtrans__ ({_class: 'phanterpwa-component-modal-content-container{0}'.format (_class_panel)})), DIV (self.footer, __kwargtrans__ ({_class: 'phanterpwa-component-modal-footer-container'})));
 		if (self._form !== null) {
 			if (__in__ (['_class'], parameters)) {
 				parameters ['_class'] = '{0}{1}'.format (parameters ['_class'], ' phanterpwa-form');
