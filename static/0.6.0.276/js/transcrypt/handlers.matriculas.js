@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2022-02-20 18:51:42
+// Transcrypt'ed from Python, 2022-02-20 21:39:50
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import * as matriculas from './handlers.views.matriculas.js';
 import * as anos_letivos from './handlers.anos_letivos.js';
@@ -479,7 +479,7 @@ export var Matriculas =  __class__ ('Matriculas', [helpers.XmlConstructor], {
 			else {
 			}
 			return self.search ();
-		})})), __kwargtrans__ ({_id: 'search_alunos_container', _class: 'p-col w1p100 w3p50 w4p75'})), DIV (widgets.Select ('campos_alunos', __kwargtrans__ ({label: 'Campos à pesquisar', placeholder: 'Escolha o Campo', value: parametro_campo, data_set: [['id', 'ID'], ['aluno', 'Nome do(a) Aluno(a)'], ['data_nasc', 'Data de Nascimento'], ['nome_do_pai', 'Nome do Pai'], ['nome_da_mae', 'Nome da Mãe']]})), __kwargtrans__ ({_id: 'phanterpwa-input-search_field-alunos', _class: 'p-col w1p100 w3p50 w4p25'})), __kwargtrans__ ({_class: 'p-row e-padding_20w'})), __kwargtrans__ ({_class: 'phanterpwa-container-section'})), __kwargtrans__ ({_action: '#', _id: 'search_alunos', _class: 'form-search_alunos', _enctype: 'multipart/form-data', _method: 'post', _autocomplete: 'off'})), __kwargtrans__ ({_class: 'phanterpwa_tables_search_wrapper'})), DIV (__kwargtrans__ ({_id: 'lista-alunos-subtitle', _class: 'phanterpwa-subtitle'})), DIV (DIV (DIV (preloaders.android, __kwargtrans__ ({_style: 'width: 300px; height: 300px; overflow: hidden; margin: auto;'})), __kwargtrans__ ({_style: 'text-align:center; padding: 50px 0;'})), __kwargtrans__ ({_id: 'lista-alunos-container', _class: 'phanterpwa_tables_container'})), DIV (__kwargtrans__ ({_id: 'modal_visualizar_aluno'})), DIV (__kwargtrans__ ({_id: 'modal_visualizar_matricula'})), DIV (__kwargtrans__ ({_id: 'modal_documentos'})), __kwargtrans__ ({_class: 'alunos-container phanterpwa-card-container'}));
+		})})), __kwargtrans__ ({_id: 'search_alunos_container', _class: 'p-col w1p100 w3p50 w4p75'})), DIV (widgets.Select ('campos_alunos', __kwargtrans__ ({label: 'Campos à pesquisar', placeholder: 'Escolha o Campo', value: parametro_campo, data_set: [['id', 'ID'], ['aluno', 'Nome do(a) Aluno(a)'], ['data_nasc', 'Data de Nascimento'], ['nome_do_pai', 'Nome do Pai'], ['nome_da_mae', 'Nome da Mãe']]})), __kwargtrans__ ({_id: 'phanterpwa-input-search_field-alunos', _class: 'p-col w1p100 w3p50 w4p25'})), __kwargtrans__ ({_class: 'p-row e-padding_20w'})), __kwargtrans__ ({_class: 'phanterpwa-container-section'})), __kwargtrans__ ({_action: '#', _id: 'search_alunos', _class: 'form-search_alunos', _enctype: 'multipart/form-data', _method: 'post', _autocomplete: 'off'})), __kwargtrans__ ({_class: 'phanterpwa_tables_search_wrapper'})), DIV (__kwargtrans__ ({_id: 'lista-alunos-subtitle', _class: 'phanterpwa-subtitle'})), DIV (DIV (DIV (preloaders.android, __kwargtrans__ ({_style: 'width: 300px; height: 300px; overflow: hidden; margin: auto;'})), __kwargtrans__ ({_style: 'text-align:center; padding: 50px 0;'})), __kwargtrans__ ({_id: 'lista-alunos-container', _class: 'phanterpwa_tables_container'})), DIV (__kwargtrans__ ({_id: 'modal_visualizar_aluno'})), DIV (__kwargtrans__ ({_id: 'modal_visualizar_matricula'})), DIV (__kwargtrans__ ({_id: 'modal_documentos'})), DIV (__kwargtrans__ ({_id: 'modal_adicionar_aluno_turma'})), DIV (__kwargtrans__ ({_id: 'modal_deletar_matricula_detalhe_container'})), __kwargtrans__ ({_class: 'alunos-container phanterpwa-card-container'}));
 		return html;
 	});},
 	get binds () {return __get__ (this, function (self) {
@@ -771,7 +771,7 @@ export var Matriculas =  __class__ ('Matriculas', [helpers.XmlConstructor], {
 					if (x.alunos.data_nasc !== null && x.alunos.data_nasc !== undefined) {
 						var data_de_nascimento_formated = validations.format_iso_date_datetime (x.alunos.data_nasc, 'dd/MM/yyyy', 'date');
 					}
-					table.append (XTRD ('alunos-matricula-table-data-{0}'.format (x.matriculas.id), x.matriculas.id, x.matriculas.nome_do_aluno, data_de_nascimento_formated, x.matriculas.nome_do_pai, x.matriculas.nome_da_mae, x.series.serie, (x.turmas.turma !== null ? x.turmas.turma : TD ('Sem Turma', __kwargtrans__ ({_style: 'color: red;'}))), widgets.MenuBox ('drop_{0}'.format (x.matriculas.id), I (__kwargtrans__ ({_class: 'fas fa-ellipsis-v'})), widgets.MenuOption ('Detalhes da Matrícula', __kwargtrans__ (dict ({'_class': 'botao_visualizar_matricula wave_on_click', '_title': 'Visualizar matrícula do aluno', '_data-id_matricula': x.matriculas.id}))), widgets.MenuOption ('Visualizar dados do aluno', __kwargtrans__ (dict ({'_class': 'botao_visualizar_aluno wave_on_click', '_data-id_aluno': x.alunos.id}))), widgets.MenuOption ('Deletar Matrícula', __kwargtrans__ (dict ({'_class': 'botao_deletar_matricula wave_on_click', '_data-id_matricula': x.matriculas.id}))), widgets.MenuOption ('Desistência', __kwargtrans__ (dict ({'_class': 'botao_aluno_desistente wave_on_click', '_data-id_matricula': x.matriculas.id, '_data-quant_unidades': 3}))), widgets.MenuOption ('Transferência', __kwargtrans__ (dict ({'_class': 'botao_transferir_aluno wave_on_click', '_data-id_matricula': x.matriculas.id, '_data-quant_unidades': 3}))), __kwargtrans__ ({onOpen: (function __lambda__ () {
+					table.append (XTRD ('alunos-matricula-table-data-{0}'.format (x.matriculas.id), x.matriculas.id, x.matriculas.nome_do_aluno, data_de_nascimento_formated, x.matriculas.nome_do_pai, x.matriculas.nome_da_mae, x.series.serie, (x.turmas.turma !== null ? x.turmas.turma : TD ('Sem Turma', __kwargtrans__ ({_style: 'color: red;'}))), widgets.MenuBox ('drop_{0}'.format (x.matriculas.id), I (__kwargtrans__ ({_class: 'fas fa-ellipsis-v'})), widgets.MenuOption ('Detalhes da Matrícula', __kwargtrans__ (dict ({'_class': 'botao_visualizar_matricula wave_on_click', '_title': 'Visualizar matrícula do aluno', '_data-id_matricula': x.matriculas.id}))), widgets.MenuOption ('Visualizar dados do aluno', __kwargtrans__ (dict ({'_class': 'botao_visualizar_aluno wave_on_click', '_data-id_aluno': x.alunos.id}))), __kwargtrans__ ({onOpen: (function __lambda__ () {
 						if (arguments.length) {
 							var __ilastarg0__ = arguments.length - 1;
 							if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
@@ -847,58 +847,6 @@ export var Matriculas =  __class__ ('Matriculas', [helpers.XmlConstructor], {
 			else {
 			}
 			return self.get_visualizar_aluno (this);
-		}));
-		$ ('.botao_deletar_aluno').off ('click.botao_deletar_aluno').on ('click.botao_deletar_aluno', (function __lambda__ () {
-			if (arguments.length) {
-				var __ilastarg0__ = arguments.length - 1;
-				if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
-					var __allkwargs0__ = arguments [__ilastarg0__--];
-					for (var __attrib0__ in __allkwargs0__) {
-					}
-				}
-			}
-			else {
-			}
-			return self.get_deletar_aluno (this);
-		}));
-		$ ('.botao_deletar_matricula').off ('click.botao_revogar_matricula').on ('click.botao_revogar_matricula', (function __lambda__ () {
-			if (arguments.length) {
-				var __ilastarg0__ = arguments.length - 1;
-				if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
-					var __allkwargs0__ = arguments [__ilastarg0__--];
-					for (var __attrib0__ in __allkwargs0__) {
-					}
-				}
-			}
-			else {
-			}
-			return self.modal_confirmar_deletar_matricula (this);
-		}));
-		$ ('.botao_aluno_desistente').off ('click.botao_aluno_desistente').on ('click.botao_aluno_desistente', (function __lambda__ () {
-			if (arguments.length) {
-				var __ilastarg0__ = arguments.length - 1;
-				if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
-					var __allkwargs0__ = arguments [__ilastarg0__--];
-					for (var __attrib0__ in __allkwargs0__) {
-					}
-				}
-			}
-			else {
-			}
-			return self.abrir_modal_desistencia (this);
-		}));
-		$ ('.botao_transferir_aluno').off ('click.botao_transferir_aluno').on ('click.botao_transferir_aluno', (function __lambda__ () {
-			if (arguments.length) {
-				var __ilastarg0__ = arguments.length - 1;
-				if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
-					var __allkwargs0__ = arguments [__ilastarg0__--];
-					for (var __attrib0__ in __allkwargs0__) {
-					}
-				}
-			}
-			else {
-			}
-			return self.abrir_modal_transferencia (this);
 		}));
 		$ ('.botao_visualizar_matricula').off ('click.botao_visualizar_matricula').on ('click.botao_visualizar_matricula', (function __lambda__ () {
 			if (arguments.length) {
@@ -1037,54 +985,6 @@ export var Matriculas =  __class__ ('Matriculas', [helpers.XmlConstructor], {
 			return self.modal_add_alunos_visualizar (data, ajax_status);
 		})}));
 	});},
-	get get_deletar_aluno () {return __get__ (this, function (self, widget_instance) {
-		if (arguments.length) {
-			var __ilastarg0__ = arguments.length - 1;
-			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
-				var __allkwargs0__ = arguments [__ilastarg0__--];
-				for (var __attrib0__ in __allkwargs0__) {
-					switch (__attrib0__) {
-						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
-						case 'widget_instance': var widget_instance = __allkwargs0__ [__attrib0__]; break;
-					}
-				}
-			}
-		}
-		else {
-		}
-		var id_aluno = $ (widget_instance).data ('id_aluno');
-		window.PhanterPWA.DELETE ('api', 'aluno', id_aluno, __kwargtrans__ ({onComplete: self.depois_de_deletar}));
-	});},
-	get depois_de_deletar () {return __get__ (this, function (self, data, ajax_status) {
-		if (arguments.length) {
-			var __ilastarg0__ = arguments.length - 1;
-			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
-				var __allkwargs0__ = arguments [__ilastarg0__--];
-				for (var __attrib0__ in __allkwargs0__) {
-					switch (__attrib0__) {
-						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
-						case 'data': var data = __allkwargs0__ [__attrib0__]; break;
-						case 'ajax_status': var ajax_status = __allkwargs0__ [__attrib0__]; break;
-					}
-				}
-			}
-		}
-		else {
-		}
-		if (ajax_status == 'success') {
-			var json = data.responseJSON;
-			if (data.code == 202) {
-				window.PhanterPWA.flash (json.message);
-			}
-			else {
-				window.PhanterPWA.flash (json.message);
-			}
-			window.PhanterPWA.GET (__kwargtrans__ (dict ({'url_args': ['api', 'alunos'], 'url_vars': dict ({'search': self._search, 'field': self._field, 'orderby': self._orderby, 'sort': self._sort, 'page': self._page}), 'onComplete': self.after_get, 'get_cache': self.process_data})));
-		}
-		else {
-			window.PhanterPWA.flash (json.message);
-		}
-	});},
 	get modal_add_alunos_visualizar () {return __get__ (this, function (self, data, ajax_status) {
 		if (arguments.length) {
 			var __ilastarg0__ = arguments.length - 1;
@@ -1199,17 +1099,30 @@ export var Matriculas =  __class__ ('Matriculas', [helpers.XmlConstructor], {
 			var numero_aluno = json.data.numero_aluno;
 			var turma = json.data.turma;
 			var id_turma = json.data.id_turma;
+			var turmas_disponiveis = json.data.turmas_disponiveis;
 			var now = new Date ().getTime ();
 			var card = DIV (matriculas.Visualizar (id_matricula, id_escola, ano_letivo, prof_pai, prof_mae, id_aluno, nome_do_aluno, sexo, data_de_nascimento, nome_do_pai, nome_da_mae, naturalidade, endereco, serie, nome_do_responsavel, data_mat, novato, admitido, unidade_admitido, ano_anterior, serie_ant, resultado_final, resultado_anterior, numero_aluno, turma));
-			self.modal_visualizar_matricula = modal.Modal ('#modal_visualizar_matricula', __kwargtrans__ (dict ({'title': CONCATENATE (DIV ('Visualizar Matrícula ', STRONG (ano_letivo)), DIV (STRONG (json.data.nome_do_aluno))), 'content': card, 'buttons_panel': DIV (A (I (DIV (DIV (SPAN (I (__kwargtrans__ ({_class: 'fas fa-user-graduate'})), __kwargtrans__ ({_class: 'icombine-container-first'})), SPAN (I (__kwargtrans__ ({_class: 'fas fa-plus'})), __kwargtrans__ ({_class: 'icombine-container-last'})), __kwargtrans__ ({_class: 'icombine-container'})), __kwargtrans__ ({_class: 'phanterpwa-snippet-icombine'}))), __kwargtrans__ ({_class: 'icon_button botao_matricular', _title: 'Nova matrícula', _href: window.PhanterPWA.XWAY ('matricula', id_aluno)})), A (I (__kwargtrans__ ({_class: 'fas fa-edit'})), __kwargtrans__ ({_class: 'icon_button botao_editar_matricula', _title: 'Editar Matrícula', _href: window.PhanterPWA.XWAY ('matricula', id_aluno, id_escola, ano_letivo, 'editar', id_matricula)})), A (I (__kwargtrans__ ({_class: 'fas fa-chalkboard'})), __kwargtrans__ ({_class: 'icon_button botao_turma_matriculado', _title: 'Turma do aluno', _href: window.PhanterPWA.XWAY ('turmas', id_escola, ano_letivo, 'especifico', id_turma)})), DIV (I (__kwargtrans__ ({_class: 'fas fa-print'})), __kwargtrans__ ({_title: 'Imprimir documentos', _class: 'icon_button botao_lista_de_documentos_disponiveis'})))})));
+			var xml_btn_turma_aluno = '';
+			if (str (id_turma).isdigit ()) {
+				var xml_btn_turma_aluno = A (I (__kwargtrans__ ({_class: 'fas fa-chalkboard'})), __kwargtrans__ ({_class: 'icon_button botao_turma_matriculado', _title: 'Turma do aluno', _href: window.PhanterPWA.XWAY ('turmas', id_escola, ano_letivo, 'especifico', id_turma)}));
+			}
+			var xml_btn_turma_rema_aluno = '';
+			if (turmas_disponiveis !== null) {
+				var tl_btn = 'Alterar turma do aluno';
+				if (id_turma === null) {
+					var tl_btn = 'Adicionar o aluno numa turma';
+				}
+				var xml_btn_turma_rema_aluno = DIV (I (DIV (DIV (SPAN (I (__kwargtrans__ ({_class: 'fas fa-user-graduate'})), __kwargtrans__ ({_class: 'icombine-container-first'})), SPAN (I (__kwargtrans__ ({_class: 'fas fa-chalkboard'})), __kwargtrans__ ({_class: 'icombine-container-last'})), __kwargtrans__ ({_class: 'icombine-container'})), __kwargtrans__ ({_class: 'phanterpwa-snippet-icombine'}))), __kwargtrans__ ({_class: 'icon_button add_aluno_turma', _title: tl_btn}));
+			}
+			self.modal_visualizar_matricula = modal.Modal ('#modal_visualizar_matricula', __kwargtrans__ (dict ({'title': CONCATENATE (DIV ('Visualizar Matrícula ', STRONG (ano_letivo)), DIV (STRONG (json.data.nome_do_aluno))), 'content': card, 'buttons_panel': DIV (A (I (DIV (DIV (SPAN (I (__kwargtrans__ ({_class: 'fas fa-user-graduate'})), __kwargtrans__ ({_class: 'icombine-container-first'})), SPAN (I (__kwargtrans__ ({_class: 'fas fa-plus'})), __kwargtrans__ ({_class: 'icombine-container-last'})), __kwargtrans__ ({_class: 'icombine-container'})), __kwargtrans__ ({_class: 'phanterpwa-snippet-icombine'}))), __kwargtrans__ ({_class: 'icon_button botao_matricular', _title: 'Nova matrícula', _href: window.PhanterPWA.XWAY ('matricula', id_aluno)})), A (I (__kwargtrans__ ({_class: 'fas fa-edit'})), __kwargtrans__ ({_class: 'icon_button botao_editar_matricula', _title: 'Editar Matrícula', _href: window.PhanterPWA.XWAY ('matricula', id_aluno, id_escola, ano_letivo, 'editar', id_matricula)})), DIV (I (DIV (DIV (SPAN (I (__kwargtrans__ ({_class: 'fas fa-user-graduate'})), __kwargtrans__ ({_class: 'icombine-container-first'})), SPAN (I (__kwargtrans__ ({_class: 'fas fa-eraser'})), __kwargtrans__ ({_class: 'icombine-container-last'})), __kwargtrans__ ({_class: 'icombine-container'})), __kwargtrans__ ({_class: 'phanterpwa-snippet-icombine'}))), __kwargtrans__ ({_title: 'Cancelar matrícula', _class: 'icon_button botao_deletar_matricula'})), xml_btn_turma_aluno, xml_btn_turma_rema_aluno, DIV (I (__kwargtrans__ ({_class: 'fas fa-print'})), __kwargtrans__ ({_title: 'Imprimir documentos', _class: 'icon_button botao_lista_de_documentos_disponiveis'})))})));
 			self.modal_visualizar_matricula.open ();
-			self.binds_menu_flutuante (id_escola, ano_letivo, id_turma, id_matricula, id_aluno, nome_do_aluno, resultado_final);
+			self.binds_menu_flutuante (id_escola, ano_letivo, id_turma, id_matricula, id_aluno, nome_do_aluno, resultado_final, turmas_disponiveis);
 		}
 		else {
 			window.PhanterPWA.flash ('Não há alunos_visualizar matriculados para a série da turma');
 		}
 	});},
-	get binds_menu_flutuante () {return __get__ (this, function (self, id_escola, ano_letivo, id_turma, id_matricula, id_aluno, nome_do_aluno, resultado_final) {
+	get binds_menu_flutuante () {return __get__ (this, function (self, id_escola, ano_letivo, id_turma, id_matricula, id_aluno, nome_do_aluno, resultado_final, turmas_disponiveis) {
 		if (arguments.length) {
 			var __ilastarg0__ = arguments.length - 1;
 			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
@@ -1224,6 +1137,7 @@ export var Matriculas =  __class__ ('Matriculas', [helpers.XmlConstructor], {
 						case 'id_aluno': var id_aluno = __allkwargs0__ [__attrib0__]; break;
 						case 'nome_do_aluno': var nome_do_aluno = __allkwargs0__ [__attrib0__]; break;
 						case 'resultado_final': var resultado_final = __allkwargs0__ [__attrib0__]; break;
+						case 'turmas_disponiveis': var turmas_disponiveis = __allkwargs0__ [__attrib0__]; break;
 					}
 				}
 			}
@@ -1243,49 +1157,7 @@ export var Matriculas =  __class__ ('Matriculas', [helpers.XmlConstructor], {
 			}
 			return self.abrir_modal_documentos (id_escola, ano_letivo, id_turma, id_matricula, id_aluno, nome_do_aluno, resultado_final);
 		}));
-	});},
-	get abrir_modal_desistencia () {return __get__ (this, function (self, id_escola, ano_letivo, id_matricula, quant_unidades, nome_aluno, sexo, des_data) {
-		if (arguments.length) {
-			var __ilastarg0__ = arguments.length - 1;
-			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
-				var __allkwargs0__ = arguments [__ilastarg0__--];
-				for (var __attrib0__ in __allkwargs0__) {
-					switch (__attrib0__) {
-						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
-						case 'id_escola': var id_escola = __allkwargs0__ [__attrib0__]; break;
-						case 'ano_letivo': var ano_letivo = __allkwargs0__ [__attrib0__]; break;
-						case 'id_matricula': var id_matricula = __allkwargs0__ [__attrib0__]; break;
-						case 'quant_unidades': var quant_unidades = __allkwargs0__ [__attrib0__]; break;
-						case 'nome_aluno': var nome_aluno = __allkwargs0__ [__attrib0__]; break;
-						case 'sexo': var sexo = __allkwargs0__ [__attrib0__]; break;
-						case 'des_data': var des_data = __allkwargs0__ [__attrib0__]; break;
-					}
-				}
-			}
-		}
-		else {
-		}
-		var texto1 = P ('Informa abaixo quando o(a) aluno(a) ', STRONG (nome_aluno), ' desistiu, ', 'com esta informação poderemos fazer o levantamento do indicador de desempenho.');
-		var texto2 = P ('Se o(a) aluno(a) não desistiu, ', 'escolha a opção vazia.', __kwargtrans__ ({_style: 'color: red;'}));
-		if (sexo == 1) {
-			var texto1 = P ('Informa abaixo quando o aluno ', STRONG (nome_aluno), ' desistiu, ', 'com esta informação poderemos fazer o levantamento do indicador de desempenho.');
-			var texto2 = P ('Se o aluno não desistiu, ', 'escolha a opção vazia.', __kwargtrans__ ({_style: 'color: red;'}));
-		}
-		else if (sexo == 2) {
-			var texto1 = P ('Informa abaixo quando a aluna ', STRONG (nome_aluno), ' desistiu, ', 'com esta informação poderemos fazer o levantamento do indicador de desempenho.');
-			var texto2 = P ('Se a aluna não desistiu, ', 'escolha a opção vazia.', __kwargtrans__ ({_style: 'color: red;'}));
-		}
-		var data_set = ['Início do Ano'];
-		var corres_romanos = ['I', 'II', 'III', 'IV', 'V', 'VI'];
-		for (var x = 0; x < int (quant_unidades); x++) {
-			data_set.append ('Unidade {0} Completada'.format (corres_romanos [x]));
-		}
-		data_set.append ('Fim de Curso');
-		var content = CONCATENATE (texto1, texto2, DIV (widgets.Select ('unidade_des', __kwargtrans__ ({label: 'Quando desistiu?', value: des_data, can_empty: true, data_set: data_set})), __kwargtrans__ ({_id: 'phanterpwa-input-search_field-matriculas', _class: 'p-col w1p100'})));
-		var footer = DIV (forms.FormButton ('confirmar_desistencia', 'Confirmar', __kwargtrans__ ({_class: 'btn-autoresize wave_on_click waves-phanterpwa'})), __kwargtrans__ ({_class: 'phanterpwa-form-buttons-container'}));
-		self.modal_desistencia = modal.Modal ('#modal_desistencia_aluno', __kwargtrans__ (dict ({'title': 'Desistência de {0}'.format (nome_aluno), 'content': content, 'footer': footer})));
-		self.modal_desistencia.open ();
-		$ ('#phanterpwa-widget-form-form_button-confirmar_desistencia').off ('click.confirmar_desistencia').on ('click.confirmar_desistencia', (function __lambda__ () {
+		$ ('.add_aluno_turma').off ('click.add_aluno_turma').on ('click.add_aluno_turma', (function __lambda__ () {
 			if (arguments.length) {
 				var __ilastarg0__ = arguments.length - 1;
 				if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
@@ -1296,10 +1168,73 @@ export var Matriculas =  __class__ ('Matriculas', [helpers.XmlConstructor], {
 			}
 			else {
 			}
-			return self._on_click_confirmar_desistencia (id_escola, ano_letivo, id_matricula);
+			return self.abrir_modal_add_aluno_turma (id_escola, ano_letivo, id_turma, id_matricula, nome_do_aluno, turmas_disponiveis, id_turma);
+		}));
+		$ ('.botao_deletar_matricula').off ('click.botao_deletar_matricula').on ('click.botao_deletar_matricula', (function __lambda__ () {
+			if (arguments.length) {
+				var __ilastarg0__ = arguments.length - 1;
+				if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+					var __allkwargs0__ = arguments [__ilastarg0__--];
+					for (var __attrib0__ in __allkwargs0__) {
+					}
+				}
+			}
+			else {
+			}
+			return self.modal_confirmar_deletar_matricula (id_escola, ano_letivo, id_matricula, nome_do_aluno);
 		}));
 	});},
-	get _on_click_confirmar_desistencia () {return __get__ (this, function (self, id_escola, ano_letivo, id_matricula) {
+	get modal_confirmar_deletar_matricula () {return __get__ (this, function (self, id_escola, ano_letivo, id_matricula, nome_do_aluno) {
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+					switch (__attrib0__) {
+						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+						case 'id_escola': var id_escola = __allkwargs0__ [__attrib0__]; break;
+						case 'ano_letivo': var ano_letivo = __allkwargs0__ [__attrib0__]; break;
+						case 'id_matricula': var id_matricula = __allkwargs0__ [__attrib0__]; break;
+						case 'nome_do_aluno': var nome_do_aluno = __allkwargs0__ [__attrib0__]; break;
+					}
+				}
+			}
+		}
+		else {
+		}
+		self.modal_visualizar_matricula.close ();
+		var content = DIV (P ('Atenção, a matrícula do aluno será deletada permanentemente, se ', 'o mesmo possuir notas, faltas, ficha individual, boletim, etc. Tudo isto será perdido, inclusive o mesmo sairá da turma permanentemente.'), P ('Tem certeza que deseja deletar esta matrícula?'), __kwargtrans__ ({_class: 'p-row'}));
+		var footer = DIV (forms.FormButton ('deletar_matricula_sim', 'Sim', __kwargtrans__ ({_class: 'btn-autoresize wave_on_click waves-phanterpwa'})), forms.FormButton ('deletar_matricula_nao', 'Não', __kwargtrans__ ({_class: 'btn-autoresize wave_on_click waves-phanterpwa'})), __kwargtrans__ ({_class: 'phanterpwa-form-buttons-container'}));
+		self.modal_deletar_matricula = modal.Modal ('#modal_deletar_matricula_detalhe_container', __kwargtrans__ (dict ({'title': 'Deletar Matrícula do(a) aluno(a) {0}'.format (nome_do_aluno), 'content': content, 'footer': footer, 'footer_height': 65, 'form': 'deletar_matricula'})));
+		self.modal_deletar_matricula.open ();
+		$ ('#phanterpwa-widget-form-form_button-deletar_matricula_sim').off ('click.adicionar_deletar_matricula_sim').on ('click.adicionar_deletar_matricula_sim', (function __lambda__ () {
+			if (arguments.length) {
+				var __ilastarg0__ = arguments.length - 1;
+				if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+					var __allkwargs0__ = arguments [__ilastarg0__--];
+					for (var __attrib0__ in __allkwargs0__) {
+					}
+				}
+			}
+			else {
+			}
+			return self._on_click_deletar_matricula (id_escola, ano_letivo, id_matricula);
+		}));
+		$ ('#phanterpwa-widget-form-form_button-deletar_matricula_nao').off ('click.adicionar_deletar_matricula_nao').on ('click.adicionar_deletar_matricula_nao', (function __lambda__ () {
+			if (arguments.length) {
+				var __ilastarg0__ = arguments.length - 1;
+				if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+					var __allkwargs0__ = arguments [__ilastarg0__--];
+					for (var __attrib0__ in __allkwargs0__) {
+					}
+				}
+			}
+			else {
+			}
+			return self.modal_deletar_matricula.close ();
+		}));
+	});},
+	get _on_click_deletar_matricula () {return __get__ (this, function (self, id_escola, ano_letivo, id_matricula) {
 		if (arguments.length) {
 			var __ilastarg0__ = arguments.length - 1;
 			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
@@ -1316,27 +1251,10 @@ export var Matriculas =  __class__ ('Matriculas', [helpers.XmlConstructor], {
 		}
 		else {
 		}
-		var formdata = new FormData ();
-		formdata.append ('quando_desistiu', $ ('#phanterpwa-widget-select-input-unidade_des').val ());
-		window.PhanterPWA.PUT ('api', 'matricula', 'desistencia', id_escola, ano_letivo, id_matricula, __kwargtrans__ ({form_data: formdata, onComplete: (function __lambda__ (data, ajax_status) {
-			if (arguments.length) {
-				var __ilastarg0__ = arguments.length - 1;
-				if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
-					var __allkwargs0__ = arguments [__ilastarg0__--];
-					for (var __attrib0__ in __allkwargs0__) {
-						switch (__attrib0__) {
-							case 'data': var data = __allkwargs0__ [__attrib0__]; break;
-							case 'ajax_status': var ajax_status = __allkwargs0__ [__attrib0__]; break;
-						}
-					}
-				}
-			}
-			else {
-			}
-			return self.depois_de_confirmar_desistencia (data, ajax_status);
-		})}));
+		window.PhanterPWA.DELETE ('api', 'matricula', 'deletar', id_escola, ano_letivo, id_matricula, __kwargtrans__ ({onComplete: self.depois_de_revogar_matricula}));
+		self.modal_deletar_matricula.close ();
 	});},
-	get depois_de_confirmar_desistencia () {return __get__ (this, function (self, data, ajax_status) {
+	get depois_de_revogar_matricula () {return __get__ (this, function (self, data, ajax_status) {
 		if (arguments.length) {
 			var __ilastarg0__ = arguments.length - 1;
 			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
@@ -1353,119 +1271,9 @@ export var Matriculas =  __class__ ('Matriculas', [helpers.XmlConstructor], {
 		else {
 		}
 		if (ajax_status == 'success') {
-			self.modal_desistencia.close ();
-		}
-	});},
-	get abrir_modal_transferencia () {return __get__ (this, function (self, id_escola, ano_letivo, id_matricula, quant_unidades, trans_data, nome_aluno, sexo) {
-		if (arguments.length) {
-			var __ilastarg0__ = arguments.length - 1;
-			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
-				var __allkwargs0__ = arguments [__ilastarg0__--];
-				for (var __attrib0__ in __allkwargs0__) {
-					switch (__attrib0__) {
-						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
-						case 'id_escola': var id_escola = __allkwargs0__ [__attrib0__]; break;
-						case 'ano_letivo': var ano_letivo = __allkwargs0__ [__attrib0__]; break;
-						case 'id_matricula': var id_matricula = __allkwargs0__ [__attrib0__]; break;
-						case 'quant_unidades': var quant_unidades = __allkwargs0__ [__attrib0__]; break;
-						case 'trans_data': var trans_data = __allkwargs0__ [__attrib0__]; break;
-						case 'nome_aluno': var nome_aluno = __allkwargs0__ [__attrib0__]; break;
-						case 'sexo': var sexo = __allkwargs0__ [__attrib0__]; break;
-					}
-				}
-			}
-		}
-		else {
-		}
-		var texto1 = P ('Informa abaixo quando o(a) aluno(a) ', STRONG (nome_aluno), ' foi transferido(a), ', 'com esta informação poderemos fazer o levantamento do indicador de desempenho.', ' Caso a transferencia seja no final do curso não haverá indicativo visual de que ', ' foi transferido(a).');
-		var texto2 = P ('Se o(a) aluno(a) não foi transferido(a), ', 'escolha a opção vazia.', __kwargtrans__ ({_style: 'color: red;'}));
-		if (sexo == 1) {
-			var texto1 = P ('Informa abaixo quando o aluno ', STRONG (nome_aluno), ' foi transferido, ', 'com esta informação poderemos fazer o levantamento do indicador de desempenho.', ' Caso a transferencia seja no final do curso não haverá indicativo visual de que ', ' foi transferido.');
-			var texto2 = P ('Se o aluno não foi transferido, ', 'escolha a opção vazia.', __kwargtrans__ ({_style: 'color: red;'}));
-		}
-		else if (sexo == 2) {
-			var texto1 = P ('Informa abaixo quando a aluna ', STRONG (nome_aluno), ' foi transferida, ', 'com esta informação poderemos fazer o levantamento do indicador de desempenho.', ' Caso a transferencia seja no final do curso não haverá indicativo visual de que ', ' foi transferida.');
-			var texto2 = P ('Se a aluna não foi transferida, ', 'escolha a opção vazia.', __kwargtrans__ ({_style: 'color: red;'}));
-		}
-		var data_set = ['Início do Ano'];
-		var corres_romanos = ['I', 'II', 'III', 'IV', 'V', 'VI'];
-		for (var x = 0; x < int (quant_unidades); x++) {
-			data_set.append ('Unidade {0} Completada'.format (corres_romanos [x]));
-		}
-		data_set.append ('Fim de Curso');
-		var content = CONCATENATE (texto1, texto2, DIV (widgets.Select ('unidade_trams', __kwargtrans__ ({label: 'Quando foi a Transferência?', value: trans_data, can_empty: true, data_set: data_set})), __kwargtrans__ ({_id: 'phanterpwa-input-search_field-matriculas', _class: 'p-col w1p100'})));
-		var footer = DIV (forms.FormButton ('confirmar_transferencia', 'Confirmar', __kwargtrans__ ({_class: 'btn-autoresize wave_on_click waves-phanterpwa'})), __kwargtrans__ ({_class: 'phanterpwa-form-buttons-container'}));
-		self.modal_transferencia = modal.Modal ('#modal_transferencia_aluno', __kwargtrans__ (dict ({'title': 'Transferência de {0}'.format (nome_aluno), 'content': content, 'footer': footer})));
-		self.modal_transferencia.open ();
-		$ ('#phanterpwa-widget-form-form_button-confirmar_transferencia').off ('click.confirmar_transferencia').on ('click.confirmar_transferencia', (function __lambda__ () {
-			if (arguments.length) {
-				var __ilastarg0__ = arguments.length - 1;
-				if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
-					var __allkwargs0__ = arguments [__ilastarg0__--];
-					for (var __attrib0__ in __allkwargs0__) {
-					}
-				}
-			}
-			else {
-			}
-			return self._on_click_confirmar_transferencia (id_escola, ano_letivo, id_matricula);
-		}));
-	});},
-	get _on_click_confirmar_transferencia () {return __get__ (this, function (self, id_escola, ano_letivo, id_matricula) {
-		if (arguments.length) {
-			var __ilastarg0__ = arguments.length - 1;
-			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
-				var __allkwargs0__ = arguments [__ilastarg0__--];
-				for (var __attrib0__ in __allkwargs0__) {
-					switch (__attrib0__) {
-						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
-						case 'id_escola': var id_escola = __allkwargs0__ [__attrib0__]; break;
-						case 'ano_letivo': var ano_letivo = __allkwargs0__ [__attrib0__]; break;
-						case 'id_matricula': var id_matricula = __allkwargs0__ [__attrib0__]; break;
-					}
-				}
-			}
-		}
-		else {
-		}
-		var formdata = new FormData ();
-		formdata.append ('quando_transferiu', $ ('#phanterpwa-widget-select-input-unidade_trams').val ());
-		window.PhanterPWA.PUT ('api', 'matricula', 'transferencia', self.id_escola, self.ano_letivo, id_matricula, __kwargtrans__ ({form_data: formdata, onComplete: (function __lambda__ (data, ajax_status) {
-			if (arguments.length) {
-				var __ilastarg0__ = arguments.length - 1;
-				if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
-					var __allkwargs0__ = arguments [__ilastarg0__--];
-					for (var __attrib0__ in __allkwargs0__) {
-						switch (__attrib0__) {
-							case 'data': var data = __allkwargs0__ [__attrib0__]; break;
-							case 'ajax_status': var ajax_status = __allkwargs0__ [__attrib0__]; break;
-						}
-					}
-				}
-			}
-			else {
-			}
-			return self.depois_de_confirmar_transferencia (data, ajax_status);
-		})}));
-	});},
-	get depois_de_confirmar_transferencia () {return __get__ (this, function (self, data, ajax_status) {
-		if (arguments.length) {
-			var __ilastarg0__ = arguments.length - 1;
-			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
-				var __allkwargs0__ = arguments [__ilastarg0__--];
-				for (var __attrib0__ in __allkwargs0__) {
-					switch (__attrib0__) {
-						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
-						case 'data': var data = __allkwargs0__ [__attrib0__]; break;
-						case 'ajax_status': var ajax_status = __allkwargs0__ [__attrib0__]; break;
-					}
-				}
-			}
-		}
-		else {
-		}
-		if (ajax_status == 'success') {
-			self.modal_transferencia.close ();
+			self.modal_deletar_matricula.close ();
+			window.PhanterPWA.flash ('Matrícula cancelada com sucesso!');
+			window.location.reload ();
 		}
 	});},
 	get abrir_modal_documentos () {return __get__ (this, function (self, id_escola, ano_letivo, id_turma, id_matricula, id_aluno, nome_do_aluno, resultado_final) {
@@ -1498,6 +1306,170 @@ export var Matriculas =  __class__ ('Matriculas', [helpers.XmlConstructor], {
 		var html_documentos = DIV (A (DIV (I (__kwargtrans__ ({_class: 'fas fa-file-alt'})), __kwargtrans__ ({_class: 'icon_documentos_button'})), DIV ('Matrícula', __kwargtrans__ ({_class: 'descricao_documentos_button'})), __kwargtrans__ (__mergekwargtrans__ ({_class: 'p-col w4p33 w1p50 link'}, dict ({'_href': '/#_phanterpwa:/imprimir/matricula/{0}?_retornar=turmas/{1}/{2}/especifico/{3}'.format (id_matricula, id_escola, ano_letivo, id_turma)})))), A (DIV (I (__kwargtrans__ ({_class: 'fas fa-file-alt'})), __kwargtrans__ ({_class: 'icon_documentos_button'})), DIV ('Questionário Social', __kwargtrans__ ({_class: 'descricao_documentos_button'})), __kwargtrans__ (__mergekwargtrans__ ({_class: 'p-col w4p34 w1p50 link'}, dict ({'_href': '/#_phanterpwa:/imprimir/questionario-social/{0}/{1}/{2}?_retornar=turmas/{0}/{1}/especifico/{3}'.format (id_escola, ano_letivo, id_turma, id_aluno, id_turma)})))), A (DIV (I (__kwargtrans__ ({_class: 'fas fa-file-alt'})), __kwargtrans__ ({_class: 'icon_documentos_button'})), DIV ('Declaração de Matrícula', __kwargtrans__ ({_class: 'descricao_documentos_button'})), __kwargtrans__ (__mergekwargtrans__ ({_class: 'p-col w4p33 w1p50 link'}, dict ({'_href': '/#_phanterpwa:/imprimir/declaracao-de-matricula/{0}?_retornar=turmas/{1}/{2}/especifico/{3}'.format (id_matricula, id_escola, ano_letivo, id_turma)})))), html_botao_declaracao_de_transferencia, A (DIV (I (__kwargtrans__ ({_class: 'fas fa-file-alt'})), __kwargtrans__ ({_class: 'icon_documentos_button'})), DIV ('Ficha Individual', __kwargtrans__ ({_class: 'descricao_documentos_button'})), __kwargtrans__ (__mergekwargtrans__ ({_class: 'p-col w4p33 w1p50 link'}, dict ({'_href': '/#_phanterpwa:/imprimir/ficha-individual-do-aluno/{0}?_retornar=turmas/{1}/{2}/detalhado'.format (id_matricula, id_escola, ano_letivo)})))), __kwargtrans__ ({_class: 'p-row documentos_buttons_container'}));
 		self.modal_documentos = modal.Modal ('#modal_documentos', __kwargtrans__ (dict ({'title': 'Documentos do(a) aluno(a) {0}'.format (nome_do_aluno), 'content': html_documentos})));
 		self.modal_documentos.open ();
+	});},
+	get abrir_modal_add_aluno_turma () {return __get__ (this, function (self, id_escola, ano_letivo, id_turma, id_matricula, nome_do_aluno, turmas_disponiveis, id_turma_atual) {
+		if (typeof id_turma_atual == 'undefined' || (id_turma_atual != null && id_turma_atual.hasOwnProperty ("__kwargtrans__"))) {;
+			var id_turma_atual = null;
+		};
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+					switch (__attrib0__) {
+						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+						case 'id_escola': var id_escola = __allkwargs0__ [__attrib0__]; break;
+						case 'ano_letivo': var ano_letivo = __allkwargs0__ [__attrib0__]; break;
+						case 'id_turma': var id_turma = __allkwargs0__ [__attrib0__]; break;
+						case 'id_matricula': var id_matricula = __allkwargs0__ [__attrib0__]; break;
+						case 'nome_do_aluno': var nome_do_aluno = __allkwargs0__ [__attrib0__]; break;
+						case 'turmas_disponiveis': var turmas_disponiveis = __allkwargs0__ [__attrib0__]; break;
+						case 'id_turma_atual': var id_turma_atual = __allkwargs0__ [__attrib0__]; break;
+					}
+				}
+			}
+		}
+		else {
+		}
+		self.modal_visualizar_matricula.close ();
+		var html_turmas_disponiveis = XTABLE ('tabela_turmas_disponiveis_aluno', TR (TH ('Escolha a turma a qual o aluno irá ingressar', __kwargtrans__ ({_style: 'text-align: center;'}))));
+		var aluno_na_turma = false;
+		for (var x of turmas_disponiveis) {
+			var _class_tur = '';
+			console.log (x [0], id_turma_atual);
+			if (id_turma_atual == x [0]) {
+				var aluno_na_turma = true;
+				var _class_tur = ' turma_atual_do_aluno';
+			}
+			html_turmas_disponiveis.append (TR (TD (x [1], __kwargtrans__ ({_style: 'text-align: center;'})), __kwargtrans__ (dict ({'_data-id_matricula': id_matricula, '_data-id_escola': id_escola, '_data-ano_letivo': ano_letivo, '_data-id_turma': x [0], '_class': 'link turma_disponiveis_para_o_aluno{0}'.format (_class_tur)}))));
+		}
+		if (aluno_na_turma) {
+			html_turmas_disponiveis.append (TR (TD ('Retirar o(a) aluno(a) da turma', __kwargtrans__ ({_style: 'text-align: center; color: red;'})), __kwargtrans__ (dict ({'_data-id_matricula': id_matricula, '_data-id_escola': id_escola, '_data-ano_letivo': ano_letivo, '_data-id_turma': x [0], '_class': 'link retirar_aluno_da_turma'}))));
+		}
+		var titu = 'Adicionar o(a) aluno(a) {0} em uma turma.'.format (nome_do_aluno);
+		if (aluno_na_turma) {
+			var titu = 'Alterar turma do(a) aluno(a) {0}'.format (nome_do_aluno);
+		}
+		self.modal_adicionar_aluno_turma = modal.Modal ('#modal_adicionar_aluno_turma', __kwargtrans__ (dict ({'title': titu, 'content': html_turmas_disponiveis})));
+		self.modal_adicionar_aluno_turma.open ();
+		$ ('.turma_disponiveis_para_o_aluno').off ('click.turma_disponiveis_para_o_aluno').on ('click.turma_disponiveis_para_o_aluno', (function __lambda__ () {
+			if (arguments.length) {
+				var __ilastarg0__ = arguments.length - 1;
+				if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+					var __allkwargs0__ = arguments [__ilastarg0__--];
+					for (var __attrib0__ in __allkwargs0__) {
+					}
+				}
+			}
+			else {
+			}
+			return self._adicionar_aluno_na_turma (this);
+		}));
+		$ ('.retirar_aluno_da_turma').off ('click.retirar_aluno_da_turma').on ('click.retirar_aluno_da_turma', (function __lambda__ () {
+			if (arguments.length) {
+				var __ilastarg0__ = arguments.length - 1;
+				if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+					var __allkwargs0__ = arguments [__ilastarg0__--];
+					for (var __attrib0__ in __allkwargs0__) {
+					}
+				}
+			}
+			else {
+			}
+			return self._remover_aluno_na_turma (this);
+		}));
+	});},
+	get _adicionar_aluno_na_turma () {return __get__ (this, function (self, el) {
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+					switch (__attrib0__) {
+						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+						case 'el': var el = __allkwargs0__ [__attrib0__]; break;
+					}
+				}
+			}
+		}
+		else {
+		}
+		var id_matricula = $ (el).data ('id_matricula');
+		var id_escola = $ (el).data ('id_escola');
+		var ano_letivo = $ (el).data ('ano_letivo');
+		var id_turma = $ (el).data ('id_turma');
+		var formdata = new FormData ();
+		formdata.append ('id_matricula', id_matricula);
+		formdata.append ('id_turma', id_turma);
+		window.PhanterPWA.PUT ('api', 'turma', id_escola, ano_letivo, 'remanejar', id_turma, id_matricula, __kwargtrans__ ({onComplete: self._depois_de_adicionar_a_turma, form_data: formdata}));
+	});},
+	get _depois_de_adicionar_a_turma () {return __get__ (this, function (self, data, ajax_status) {
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+					switch (__attrib0__) {
+						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+						case 'data': var data = __allkwargs0__ [__attrib0__]; break;
+						case 'ajax_status': var ajax_status = __allkwargs0__ [__attrib0__]; break;
+					}
+				}
+			}
+		}
+		else {
+		}
+		if (ajax_status == 'success') {
+			self.modal_adicionar_aluno_turma.close ();
+			window.PhanterPWA.flash ('Edição da turma do(a) aluno(a) realizada com sucesso!');
+			window.location.reload ();
+		}
+	});},
+	get _remover_aluno_na_turma () {return __get__ (this, function (self, el) {
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+					switch (__attrib0__) {
+						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+						case 'el': var el = __allkwargs0__ [__attrib0__]; break;
+					}
+				}
+			}
+		}
+		else {
+		}
+		var id_matricula = $ (el).data ('id_matricula');
+		var id_escola = $ (el).data ('id_escola');
+		var ano_letivo = $ (el).data ('ano_letivo');
+		var id_turma = $ (el).data ('id_turma');
+		var formdata = new FormData ();
+		formdata.append ('id_matricula', id_matricula);
+		formdata.append ('id_turma', id_turma);
+		window.PhanterPWA.PUT ('api', 'matricula', 'remover-da-turma', id_escola, ano_letivo, id_matricula, __kwargtrans__ ({onComplete: self._depois_de_remover_da_turma}));
+	});},
+	get _depois_de_remover_da_turma () {return __get__ (this, function (self, data, ajax_status) {
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+					switch (__attrib0__) {
+						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+						case 'data': var data = __allkwargs0__ [__attrib0__]; break;
+						case 'ajax_status': var ajax_status = __allkwargs0__ [__attrib0__]; break;
+					}
+				}
+			}
+		}
+		else {
+		}
+		if (ajax_status == 'success') {
+			self.modal_adicionar_aluno_turma.close ();
+			window.PhanterPWA.flash ('Aluno(a) retirado(a) da turma');
+			window.location.reload ();
+		}
 	});}
 });
 

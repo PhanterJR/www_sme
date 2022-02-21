@@ -575,6 +575,8 @@ class Matriculas(helpers.XmlConstructor):
             DIV(_id="modal_visualizar_aluno"),
             DIV(_id="modal_visualizar_matricula"),
             DIV(_id="modal_documentos"),
+            DIV(_id="modal_adicionar_aluno_turma"),
+            DIV(_id="modal_deletar_matricula_detalhe_container"),
             _class='alunos-container phanterpwa-card-container'
         )
         return html
@@ -786,21 +788,6 @@ class Matriculas(helpers.XmlConstructor):
                                     "_class": "botao_visualizar_aluno wave_on_click",
                                     "_data-id_aluno": x.alunos.id,
                                 }),
-                                widgets.MenuOption("Deletar Matrícula", **{
-                                    "_class": "botao_deletar_matricula wave_on_click",
-                                    "_data-id_matricula": x.matriculas.id
-                                }),
-                                widgets.MenuOption("Desistência", **{
-                                    "_class": "botao_aluno_desistente wave_on_click",
-                                    "_data-id_matricula": x.matriculas.id,
-                                    "_data-quant_unidades": 3
-                                }),
-                                widgets.MenuOption("Transferência", **{
-                                    "_class": "botao_transferir_aluno wave_on_click",
-                                    "_data-id_matricula": x.matriculas.id,
-                                    "_data-quant_unidades": 3
-                                }),
-
                                 onOpen=lambda: self.binds_menu_aluno()
                             ),
                             **{"drag_and_drop": False}
@@ -830,38 +817,6 @@ class Matriculas(helpers.XmlConstructor):
         ).on(
             "click.botao_visualizar_aluno",
             lambda: self.get_visualizar_aluno(this)
-        )
-        jQuery(
-            ".botao_deletar_aluno"
-        ).off(
-            "click.botao_deletar_aluno"
-        ).on(
-            "click.botao_deletar_aluno",
-            lambda: self.get_deletar_aluno(this)
-        )
-        jQuery(
-            ".botao_deletar_matricula"
-        ).off(
-            "click.botao_revogar_matricula"
-        ).on(
-            "click.botao_revogar_matricula",
-            lambda: self.modal_confirmar_deletar_matricula(this)
-        )
-        jQuery(
-            ".botao_aluno_desistente"
-        ).off(
-            "click.botao_aluno_desistente"
-        ).on(
-            "click.botao_aluno_desistente",
-            lambda: self.abrir_modal_desistencia(this)
-        )
-        jQuery(
-            ".botao_transferir_aluno"
-        ).off(
-            "click.botao_transferir_aluno"
-        ).on(
-            "click.botao_transferir_aluno",
-            lambda: self.abrir_modal_transferencia(this)
         )
         jQuery(
             ".botao_visualizar_matricula"
@@ -926,37 +881,6 @@ class Matriculas(helpers.XmlConstructor):
             "visualizar",
             onComplete=lambda data, ajax_status: self.modal_add_alunos_visualizar(data, ajax_status)
         )
-
-    def get_deletar_aluno(self, widget_instance):
-        id_aluno = jQuery(widget_instance).data("id_aluno")
-        window.PhanterPWA.DELETE(
-            "api",
-            "aluno",
-            id_aluno,
-            onComplete=self.depois_de_deletar
-        )
-
-    def depois_de_deletar(self, data, ajax_status):
-        if ajax_status == "success":
-            json = data.responseJSON
-            if data.code == 202:
-                window.PhanterPWA.flash(json.message)
-            else:
-                window.PhanterPWA.flash(json.message)
-            window.PhanterPWA.GET(**{
-                'url_args': ["api", "alunos"],
-                'url_vars': {
-                    "search": self._search,
-                    "field": self._field,
-                    "orderby": self._orderby,
-                    "sort": self._sort,
-                    "page": self._page
-                },
-                'onComplete': self.after_get,
-                'get_cache': self.process_data
-            })
-        else:
-            window.PhanterPWA.flash(json.message)
 
     def modal_add_alunos_visualizar(self, data, ajax_status):
         json = data.responseJSON
@@ -1063,6 +987,7 @@ class Matriculas(helpers.XmlConstructor):
             numero_aluno = json.data.numero_aluno
             turma = json.data.turma
             id_turma = json.data.id_turma
+            turmas_disponiveis = json.data.turmas_disponiveis
             now = __new__(Date().getTime())
             card = DIV(
                 matriculas.Visualizar(
@@ -1093,6 +1018,39 @@ class Matriculas(helpers.XmlConstructor):
                     turma
                 )
             )
+            xml_btn_turma_aluno = ""
+            if str(id_turma).isdigit():
+                xml_btn_turma_aluno = A(
+                    I(_class="fas fa-chalkboard"),
+                    _class="icon_button botao_turma_matriculado",
+                    _title="Turma do aluno",
+                    _href=window.PhanterPWA.XWAY(
+                        "turmas",
+                        id_escola,
+                        ano_letivo,
+                        "especifico",
+                        id_turma
+                    )
+                )
+            xml_btn_turma_rema_aluno = ""
+            if turmas_disponiveis is not None:
+                tl_btn = "Alterar turma do aluno"
+                if id_turma is None:
+                    tl_btn = "Adicionar o aluno numa turma"
+                xml_btn_turma_rema_aluno = DIV(
+                    I(
+                        DIV(
+                            DIV(
+                                SPAN(I(_class="fas fa-user-graduate"), _class="icombine-container-first"),
+                                SPAN(I(_class="fas fa-chalkboard"), _class="icombine-container-last"),
+                                _class="icombine-container"
+                            ),
+                            _class="phanterpwa-snippet-icombine"
+                        ),
+                    ),
+                    _class="icon_button add_aluno_turma",
+                    _title=tl_btn,
+                )
 
             self.modal_visualizar_matricula = modal.Modal(
                 "#modal_visualizar_matricula",
@@ -1132,23 +1090,27 @@ class Matriculas(helpers.XmlConstructor):
                                 id_matricula
                             )
                         ),
-                        A(
-                            I(_class="fas fa-chalkboard"),
-                            _class="icon_button botao_turma_matriculado",
-                            _title="Turma do aluno",
-                            _href=window.PhanterPWA.XWAY(
-                                "turmas",
-                                id_escola,
-                                ano_letivo,
-                                "especifico",
-                                id_turma
-                            )
+                        DIV(
+                            I(
+                                DIV(
+                                    DIV(
+                                        SPAN(I(_class="fas fa-user-graduate"), _class="icombine-container-first"),
+                                        SPAN(I(_class="fas fa-eraser"), _class="icombine-container-last"),
+                                        _class="icombine-container"
+                                    ),
+                                    _class="phanterpwa-snippet-icombine"
+                                ),
+                            ),
+                            _title="Cancelar matrícula",
+                            _class="icon_button botao_deletar_matricula"
                         ),
+                        xml_btn_turma_aluno,
+                        xml_btn_turma_rema_aluno,
                         DIV(
                             I(_class="fas fa-print"),
                             _title="Imprimir documentos",
                             _class="icon_button botao_lista_de_documentos_disponiveis"
-                        )
+                        ),
                     )
                 }
             )
@@ -1160,7 +1122,8 @@ class Matriculas(helpers.XmlConstructor):
                 id_matricula,
                 id_aluno,
                 nome_do_aluno,
-                resultado_final
+                resultado_final,
+                turmas_disponiveis
             )
         else:
             window.PhanterPWA.flash("Não há alunos_visualizar matriculados para a série da turma")
@@ -1173,7 +1136,8 @@ class Matriculas(helpers.XmlConstructor):
             id_matricula,
             id_aluno,
             nome_do_aluno,
-            resultado_final
+            resultado_final,
+            turmas_disponiveis
         ):
 
         jQuery(".botao_lista_de_documentos_disponiveis").off(
@@ -1190,214 +1154,92 @@ class Matriculas(helpers.XmlConstructor):
                 resultado_final
             )
         )
-
-    def abrir_modal_desistencia(self, id_escola, ano_letivo, id_matricula, quant_unidades, nome_aluno, sexo, des_data):
-
-        texto1 = P(
-            "Informa abaixo quando o(a) aluno(a) ",
-            STRONG(nome_aluno),
-            " desistiu, ",
-            "com esta informação poderemos fazer o levantamento do indicador de desempenho."
+        jQuery(".add_aluno_turma").off(
+            "click.add_aluno_turma"
+        ).on(
+            "click.add_aluno_turma",
+            lambda: self.abrir_modal_add_aluno_turma(
+                id_escola,
+                ano_letivo,
+                id_turma,
+                id_matricula,
+                nome_do_aluno,
+                turmas_disponiveis,
+                id_turma
+            )
         )
-        texto2 = P(
-            "Se o(a) aluno(a) não desistiu, ",
-            "escolha a opção vazia.",
-            _style="color: red;"
+        jQuery(
+            ".botao_deletar_matricula"
+        ).off(
+            "click.botao_deletar_matricula"
+        ).on(
+            "click.botao_deletar_matricula",
+            lambda: self.modal_confirmar_deletar_matricula(id_escola, ano_letivo, id_matricula, nome_do_aluno)
         )
 
-        if sexo == 1:
-            texto1 = P(
-                "Informa abaixo quando o aluno ",
-                STRONG(nome_aluno),
-                " desistiu, ",
-                "com esta informação poderemos fazer o levantamento do indicador de desempenho."
-            )
-            texto2 = P(
-                "Se o aluno não desistiu, ",
-                "escolha a opção vazia.",
-                _style="color: red;"
-            )
-        elif sexo == 2:
-            texto1 = P(
-                "Informa abaixo quando a aluna ",
-                STRONG(nome_aluno),
-                " desistiu, ",
-                "com esta informação poderemos fazer o levantamento do indicador de desempenho."
-            )
-            texto2 = P(
-                "Se a aluna não desistiu, ",
-                "escolha a opção vazia.",
-                _style="color: red;"
-            )
-        data_set = [
-            "Início do Ano"
-        ]
-        corres_romanos = ["I", "II", "III", "IV", "V", "VI"]
-        for x in range(int(quant_unidades)):
-            data_set.append(
-                "Unidade {0} Completada".format(corres_romanos[x])
-            )
-        data_set.append("Fim de Curso")
-
-        content = CONCATENATE(
-            texto1,
-            texto2,
-            DIV(
-                widgets.Select(
-                    "unidade_des",
-                    label="Quando desistiu?",
-                    value=des_data,
-                    can_empty=True,
-                    data_set=data_set
-                ),
-                _id="phanterpwa-input-search_field-matriculas",
-                _class="p-col w1p100"
-            ),
+    def modal_confirmar_deletar_matricula(self, id_escola, ano_letivo, id_matricula, nome_do_aluno):
+        self.modal_visualizar_matricula.close()
+        content = DIV(
+            P("Atenção, a matrícula do aluno será deletada permanentemente, se ",
+                "o mesmo possuir notas, faltas, ficha individual, boletim, etc."
+                " Tudo isto será perdido, inclusive o mesmo sairá da turma permanentemente."),
+            P("Tem certeza que deseja deletar esta matrícula?"),
+            _class="p-row"
         )
         footer = DIV(
             forms.FormButton(
-                "confirmar_desistencia",
-                "Confirmar",
+                "deletar_matricula_sim",
+                "Sim",
+                _class="btn-autoresize wave_on_click waves-phanterpwa"
+            ),
+            forms.FormButton(
+                "deletar_matricula_nao",
+                "Não",
                 _class="btn-autoresize wave_on_click waves-phanterpwa"
             ),
             _class='phanterpwa-form-buttons-container'
         )
-        self.modal_desistencia = modal.Modal(
-            "#modal_desistencia_aluno",
+        self.modal_deletar_matricula = modal.Modal(
+            "#modal_deletar_matricula_detalhe_container",
             **{
-                "title": "Desistência de {0}".format(nome_aluno),
+                "title": "Deletar Matrícula do(a) aluno(a) {0}".format(nome_do_aluno),
                 "content": content,
                 "footer": footer,
+                "footer_height": 65,
+                "form": "deletar_matricula"
             }
         )
-        self.modal_desistencia.open()
-        jQuery("#phanterpwa-widget-form-form_button-confirmar_desistencia").off(
-            "click.confirmar_desistencia"
+        self.modal_deletar_matricula.open()
+        jQuery("#phanterpwa-widget-form-form_button-deletar_matricula_sim").off(
+            "click.adicionar_deletar_matricula_sim"
         ).on(
-            "click.confirmar_desistencia",
-            lambda: self._on_click_confirmar_desistencia(id_escola, ano_letivo, id_matricula)
+            "click.adicionar_deletar_matricula_sim",
+            lambda: self._on_click_deletar_matricula(id_escola, ano_letivo, id_matricula)
+        )
+        jQuery("#phanterpwa-widget-form-form_button-deletar_matricula_nao").off(
+            "click.adicionar_deletar_matricula_nao"
+        ).on(
+            "click.adicionar_deletar_matricula_nao",
+            lambda: self.modal_deletar_matricula.close()
         )
 
-    def _on_click_confirmar_desistencia(self, id_escola, ano_letivo, id_matricula):
-
-        formdata = __new__(FormData())
-        formdata.append(
-            "quando_desistiu",
-            jQuery("#phanterpwa-widget-select-input-unidade_des").val()
-        )
-        
-        window.PhanterPWA.PUT(
+    def _on_click_deletar_matricula(self, id_escola, ano_letivo, id_matricula):
+        window.PhanterPWA.DELETE(
             "api",
             "matricula",
-            "desistencia",
+            "deletar",
             id_escola,
             ano_letivo,
             id_matricula,
-            form_data=formdata,
-            onComplete=lambda data, ajax_status: self.depois_de_confirmar_desistencia(data, ajax_status)
+            onComplete=self.depois_de_revogar_matricula
         )
+        self.modal_deletar_matricula.close()
 
-    def depois_de_confirmar_desistencia(self, data, ajax_status):
+    def depois_de_revogar_matricula(self, data, ajax_status):
         if ajax_status == "success":
-            self.modal_desistencia.close()
-
-    def abrir_modal_transferencia(self, id_escola, ano_letivo, id_matricula, quant_unidades, trans_data, nome_aluno, sexo):
-
-        texto1 = P("Informa abaixo quando o(a) aluno(a) ", STRONG(nome_aluno), " foi transferido(a), ",
-            "com esta informação poderemos fazer o levantamento do indicador de desempenho.",
-            " Caso a transferencia seja no final do curso não haverá indicativo visual de que ",
-            " foi transferido(a)."
-        )
-        texto2 = P("Se o(a) aluno(a) não foi transferido(a), ",
-            "escolha a opção vazia.", _style="color: red;")
-
-        if sexo == 1:
-            texto1 = P("Informa abaixo quando o aluno ", STRONG(nome_aluno), " foi transferido, ",
-                "com esta informação poderemos fazer o levantamento do indicador de desempenho.",
-                " Caso a transferencia seja no final do curso não haverá indicativo visual de que ",
-                " foi transferido."
-            )
-            texto2 = P("Se o aluno não foi transferido, ",
-                "escolha a opção vazia.", _style="color: red;")
-        elif sexo == 2:
-            texto1 = P("Informa abaixo quando a aluna ", STRONG(nome_aluno), " foi transferida, ",
-                "com esta informação poderemos fazer o levantamento do indicador de desempenho.",
-                " Caso a transferencia seja no final do curso não haverá indicativo visual de que ",
-                " foi transferida."
-            )
-            texto2 = P("Se a aluna não foi transferida, ",
-                "escolha a opção vazia.", _style="color: red;")
-        data_set = [
-            "Início do Ano"
-        ]
-        corres_romanos = ["I", "II", "III", "IV", "V", "VI"]
-        for x in range(int(quant_unidades)):
-            data_set.append(
-                "Unidade {0} Completada".format(corres_romanos[x])
-            )
-        data_set.append("Fim de Curso")
-
-        content = CONCATENATE(
-            texto1,
-            texto2,
-            DIV(
-                widgets.Select(
-                    "unidade_trams",
-                    label="Quando foi a Transferência?",
-                    value=trans_data,
-                    can_empty=True,
-                    data_set=data_set
-                ),
-                _id="phanterpwa-input-search_field-matriculas",
-                _class="p-col w1p100"
-            ),
-        )
-        footer = DIV(
-            forms.FormButton(
-                "confirmar_transferencia",
-                "Confirmar",
-                _class="btn-autoresize wave_on_click waves-phanterpwa"
-            ),
-            _class='phanterpwa-form-buttons-container'
-        )
-        self.modal_transferencia = modal.Modal(
-            "#modal_transferencia_aluno",
-            **{
-                "title": "Transferência de {0}".format(nome_aluno),
-                "content": content,
-                "footer": footer,
-            }
-        )
-        self.modal_transferencia.open()
-        jQuery("#phanterpwa-widget-form-form_button-confirmar_transferencia").off(
-            "click.confirmar_transferencia"
-        ).on(
-            "click.confirmar_transferencia",
-            lambda: self._on_click_confirmar_transferencia(id_escola, ano_letivo, id_matricula)
-        )
-
-    def _on_click_confirmar_transferencia(self, id_escola, ano_letivo, id_matricula):
-
-        formdata = __new__(FormData())
-        formdata.append(
-            "quando_transferiu",
-            jQuery("#phanterpwa-widget-select-input-unidade_trams").val()
-        )
-
-        window.PhanterPWA.PUT(
-            "api",
-            "matricula",
-            "transferencia",
-            self.id_escola,
-            self.ano_letivo,
-            id_matricula,
-            form_data=formdata,
-            onComplete=lambda data, ajax_status: self.depois_de_confirmar_transferencia(data, ajax_status)
-        )
-
-    def depois_de_confirmar_transferencia(self, data, ajax_status):
-        if ajax_status == "success":
-            self.modal_transferencia.close()
+            self.modal_deletar_matricula.close()
+            window.PhanterPWA.flash("Matrícula cancelada com sucesso!")
+            window.location.reload()
 
     def abrir_modal_documentos(self, id_escola, ano_letivo, id_turma, id_matricula, id_aluno, nome_do_aluno, resultado_final):
         self.modal_visualizar_matricula.close()
@@ -1478,6 +1320,132 @@ class Matriculas(helpers.XmlConstructor):
             }
         )
         self.modal_documentos.open()
+
+    def abrir_modal_add_aluno_turma(self, id_escola, ano_letivo, id_turma, id_matricula, nome_do_aluno, turmas_disponiveis, id_turma_atual=None):
+        self.modal_visualizar_matricula.close()
+
+        html_turmas_disponiveis = XTABLE(
+            "tabela_turmas_disponiveis_aluno",
+            TR(
+                TH(
+                    "Escolha a turma a qual o aluno irá ingressar",
+                    _style="text-align: center;"
+                )
+            )
+        )
+        aluno_na_turma = False
+        for x in turmas_disponiveis:
+            _class_tur = ""
+            console.log(x[0], id_turma_atual)
+            if id_turma_atual == x[0]:
+                aluno_na_turma = True
+                _class_tur = " turma_atual_do_aluno"
+            html_turmas_disponiveis.append(
+                TR(
+                    TD(x[1], _style="text-align: center;"),
+                    **{
+                        "_data-id_matricula": id_matricula,
+                        "_data-id_escola": id_escola,
+                        "_data-ano_letivo": ano_letivo,
+                        "_data-id_turma": x[0],
+                        "_class": "link turma_disponiveis_para_o_aluno{0}".format(_class_tur)
+                    }
+                )
+            )
+        if aluno_na_turma:
+            html_turmas_disponiveis.append(
+                TR(
+                    TD("Retirar o(a) aluno(a) da turma", _style="text-align: center; color: red;"),
+                    **{
+                        "_data-id_matricula": id_matricula,
+                        "_data-id_escola": id_escola,
+                        "_data-ano_letivo": ano_letivo,
+                        "_data-id_turma": x[0],
+                        "_class": "link retirar_aluno_da_turma"
+                    }
+                )
+            )
+        titu = "Adicionar o(a) aluno(a) {0} em uma turma.".format(nome_do_aluno)
+        if aluno_na_turma:
+            titu = "Alterar turma do(a) aluno(a) {0}".format(nome_do_aluno)
+        self.modal_adicionar_aluno_turma = modal.Modal(
+            "#modal_adicionar_aluno_turma",
+            **{
+                "title": titu,
+                "content": html_turmas_disponiveis,
+            }
+        )
+        self.modal_adicionar_aluno_turma.open()
+        jQuery(".turma_disponiveis_para_o_aluno").off("click.turma_disponiveis_para_o_aluno").on(
+            "click.turma_disponiveis_para_o_aluno",
+            lambda: self._adicionar_aluno_na_turma(this)
+        )
+        jQuery(".retirar_aluno_da_turma").off("click.retirar_aluno_da_turma").on(
+            "click.retirar_aluno_da_turma",
+            lambda: self._remover_aluno_na_turma(this)
+        )
+
+    def _adicionar_aluno_na_turma(self, el):
+        id_matricula = jQuery(el).data("id_matricula")
+        id_escola = jQuery(el).data("id_escola")
+        ano_letivo = jQuery(el).data("ano_letivo")
+        id_turma = jQuery(el).data("id_turma")
+        formdata = __new__(FormData())
+        formdata.append(
+            "id_matricula",
+            id_matricula
+        )
+        formdata.append(
+            "id_turma",
+            id_turma
+        )
+        window.PhanterPWA.PUT(
+            "api",
+            "turma",
+            id_escola,
+            ano_letivo,
+            "remanejar",
+            id_turma,
+            id_matricula,
+            onComplete=self._depois_de_adicionar_a_turma,
+            form_data=formdata,
+        )
+
+    def _depois_de_adicionar_a_turma(self, data, ajax_status):
+        if ajax_status == "success":
+            self.modal_adicionar_aluno_turma.close()
+            window.PhanterPWA.flash("Edição da turma do(a) aluno(a) realizada com sucesso!")
+            window.location.reload()
+
+    def _remover_aluno_na_turma(self, el):
+        id_matricula = jQuery(el).data("id_matricula")
+        id_escola = jQuery(el).data("id_escola")
+        ano_letivo = jQuery(el).data("ano_letivo")
+        id_turma = jQuery(el).data("id_turma")
+        formdata = __new__(FormData())
+        formdata.append(
+            "id_matricula",
+            id_matricula
+        )
+        formdata.append(
+            "id_turma",
+            id_turma
+        )
+        window.PhanterPWA.PUT(
+            "api",
+            "matricula",
+            "remover-da-turma",
+            id_escola,
+            ano_letivo,
+            id_matricula,
+            onComplete=self._depois_de_remover_da_turma,
+        )
+
+    def _depois_de_remover_da_turma(self, data, ajax_status):
+        if ajax_status == "success":
+            self.modal_adicionar_aluno_turma.close()
+            window.PhanterPWA.flash("Aluno(a) retirado(a) da turma")
+            window.location.reload()
 
 
 __pragma__('nokwargs')
