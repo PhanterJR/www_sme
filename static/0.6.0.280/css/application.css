@@ -547,7 +547,7 @@ svg.logo_sme_svg .fil8 {
 #phanterpwa-snippet-phanterpwa-logo-wrapper {
   background: #020024;
   background: radial-gradient(circle, #007512 0%, #002418 87%, #000 100%);
-  background-image: url("/static/0.6.0.276/images/background.jpg");
+  background-image: url("/static/0.6.0.280/images/background.jpg");
   width: 100%;
   min-height: 400px;
   background-repeat-y: repeat;
@@ -990,7 +990,7 @@ body #text-inicio .button_container {
   text-align: center;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container .botao_expand {
+body.phanterpwa-flag-identificar-servidor #main-container .botao_expand, body.phanterpwa-flag-acesso-ao-aluno #main-container .botao_expand {
   position: absolute;
   top: 7px;
   right: 7px;
@@ -1005,7 +1005,7 @@ body.phanterpwa-flag-identificar-servidor #main-container .botao_expand {
   cursor: pointer;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container .separador_servidor {
+body.phanterpwa-flag-identificar-servidor #main-container .separador_servidor, body.phanterpwa-flag-acesso-ao-aluno #main-container .separador_servidor {
   width: 100%;
   padding: 0;
   bottom: 62px;
@@ -1013,12 +1013,12 @@ body.phanterpwa-flag-identificar-servidor #main-container .separador_servidor {
   left: 0;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container .servidor_atual_wrapper {
+body.phanterpwa-flag-identificar-servidor #main-container .servidor_atual_wrapper, body.phanterpwa-flag-acesso-ao-aluno #main-container .servidor_atual_wrapper {
   padding-right: 10px;
   padding-top: 5px;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container .servidor_atual {
+body.phanterpwa-flag-identificar-servidor #main-container .servidor_atual, body.phanterpwa-flag-acesso-ao-aluno #main-container .servidor_atual {
   position: absolute;
   bottom: 0;
   width: 100%;
@@ -1027,7 +1027,7 @@ body.phanterpwa-flag-identificar-servidor #main-container .servidor_atual {
   height: 62px;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container .servidor_atual .separador_servidor {
+body.phanterpwa-flag-identificar-servidor #main-container .servidor_atual .separador_servidor, body.phanterpwa-flag-acesso-ao-aluno #main-container .servidor_atual .separador_servidor {
   width: 100%;
   padding: 0;
   bottom: 62px;
@@ -1035,25 +1035,25 @@ body.phanterpwa-flag-identificar-servidor #main-container .servidor_atual .separ
   left: 0;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container .servidor_atual table {
+body.phanterpwa-flag-identificar-servidor #main-container .servidor_atual table, body.phanterpwa-flag-acesso-ao-aluno #main-container .servidor_atual table {
   margin-left: auto;
   margin-right: 0;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container .servidor_atual #nome_servidor_chat {
+body.phanterpwa-flag-identificar-servidor #main-container .servidor_atual #nome_servidor_chat, body.phanterpwa-flag-acesso-ao-aluno #main-container .servidor_atual #nome_servidor_chat {
   padding-left: 10px;
   padding-right: 10px;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container #phanterpwa-snippet-phanterpwa-logo-wrapper {
+body.phanterpwa-flag-identificar-servidor #main-container #phanterpwa-snippet-phanterpwa-logo-wrapper, body.phanterpwa-flag-acesso-ao-aluno #main-container #phanterpwa-snippet-phanterpwa-logo-wrapper {
   overflow: auto;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container #text-inicio {
+body.phanterpwa-flag-identificar-servidor #main-container #text-inicio, body.phanterpwa-flag-acesso-ao-aluno #main-container #text-inicio {
   margin-top: 81px;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container .background-robo {
+body.phanterpwa-flag-identificar-servidor #main-container .background-robo, body.phanterpwa-flag-acesso-ao-aluno #main-container .background-robo {
   width: 120px;
   overflow: hidden;
   border-radius: 100%;
@@ -1062,11 +1062,11 @@ body.phanterpwa-flag-identificar-servidor #main-container .background-robo {
   transition: width 0.5s ease, margin-left 0.5s ease;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container .background-robo img {
+body.phanterpwa-flag-identificar-servidor #main-container .background-robo img, body.phanterpwa-flag-acesso-ao-aluno #main-container .background-robo img {
   width: 100%;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container .container-questionario {
+body.phanterpwa-flag-identificar-servidor #main-container .container-questionario, body.phanterpwa-flag-acesso-ao-aluno #main-container .container-questionario {
   min-height: 570px;
   padding-top: 62px;
   padding-bottom: 62px;
@@ -1077,7 +1077,7 @@ body.phanterpwa-flag-identificar-servidor #main-container .container-questionari
   border-radius: 5px;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container .container-questionario .head-questionario {
+body.phanterpwa-flag-identificar-servidor #main-container .container-questionario .head-questionario, body.phanterpwa-flag-acesso-ao-aluno #main-container .container-questionario .head-questionario {
   padding: 10px 10px 0 10px;
   position: absolute;
   top: 0;
@@ -1085,7 +1085,7 @@ body.phanterpwa-flag-identificar-servidor #main-container .container-questionari
   width: 100%;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container .container-questionario .footer-questionario {
+body.phanterpwa-flag-identificar-servidor #main-container .container-questionario .footer-questionario, body.phanterpwa-flag-acesso-ao-aluno #main-container .container-questionario .footer-questionario {
   padding: 0px 10px 0px 10px;
   position: absolute;
   bottom: 0;
@@ -1093,7 +1093,7 @@ body.phanterpwa-flag-identificar-servidor #main-container .container-questionari
   width: 100%;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container .container-questionario .remsc {
+body.phanterpwa-flag-identificar-servidor #main-container .container-questionario .remsc, body.phanterpwa-flag-acesso-ao-aluno #main-container .container-questionario .remsc {
   position: relative;
   background-color: #eaefff;
   padding: 10px;
@@ -1105,7 +1105,7 @@ body.phanterpwa-flag-identificar-servidor #main-container .container-questionari
   box-shadow: 1px 1px 2px #808080;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container .container-questionario .remsc::before {
+body.phanterpwa-flag-identificar-servidor #main-container .container-questionario .remsc::before, body.phanterpwa-flag-acesso-ao-aluno #main-container .container-questionario .remsc::before {
   content: "\f0d9";
   position: absolute;
   font-family: "Font Awesome 5 Free";
@@ -1115,11 +1115,11 @@ body.phanterpwa-flag-identificar-servidor #main-container .container-questionari
   color: #161c79;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container .container-questionario .phanterpwa-widget-icon-wrapper:hover {
+body.phanterpwa-flag-identificar-servidor #main-container .container-questionario .phanterpwa-widget-icon-wrapper:hover, body.phanterpwa-flag-acesso-ao-aluno #main-container .container-questionario .phanterpwa-widget-icon-wrapper:hover {
   cursor: pointer;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container .container-questionario .rclient {
+body.phanterpwa-flag-identificar-servidor #main-container .container-questionario .rclient, body.phanterpwa-flag-acesso-ao-aluno #main-container .container-questionario .rclient {
   position: relative;
   background-color: #cfe1b9;
   padding: 10px;
@@ -1132,7 +1132,7 @@ body.phanterpwa-flag-identificar-servidor #main-container .container-questionari
   box-shadow: -1px -1px 2px #808080;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container .container-questionario .rclient::before {
+body.phanterpwa-flag-identificar-servidor #main-container .container-questionario .rclient::before, body.phanterpwa-flag-acesso-ao-aluno #main-container .container-questionario .rclient::before {
   content: "\f0da";
   position: absolute;
   font-family: "Font Awesome 5 Free";
@@ -1142,7 +1142,7 @@ body.phanterpwa-flag-identificar-servidor #main-container .container-questionari
   color: red;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container .container-questionario .rclient .button_editar {
+body.phanterpwa-flag-identificar-servidor #main-container .container-questionario .rclient .button_editar, body.phanterpwa-flag-acesso-ao-aluno #main-container .container-questionario .rclient .button_editar {
   position: absolute;
   left: -46px;
   top: 0;
@@ -1150,32 +1150,32 @@ body.phanterpwa-flag-identificar-servidor #main-container .container-questionari
   cursor: pointer;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container .container-questionario .rclient .button_editar:hover {
+body.phanterpwa-flag-identificar-servidor #main-container .container-questionario .rclient .button_editar:hover, body.phanterpwa-flag-acesso-ao-aluno #main-container .container-questionario .rclient .button_editar:hover {
   color: orange;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container .container-questionario .resp_sumario {
+body.phanterpwa-flag-identificar-servidor #main-container .container-questionario .resp_sumario, body.phanterpwa-flag-acesso-ao-aluno #main-container .container-questionario .resp_sumario {
   padding-left: 28px;
   font-style: italic;
   color: #b50707;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container .container-questionario .link_whastsapp {
+body.phanterpwa-flag-identificar-servidor #main-container .container-questionario .link_whastsapp, body.phanterpwa-flag-acesso-ao-aluno #main-container .container-questionario .link_whastsapp {
   text-align: center;
   font-size: 50pt;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container .container-questionario .link_whastsapp:hover i {
+body.phanterpwa-flag-identificar-servidor #main-container .container-questionario .link_whastsapp:hover i, body.phanterpwa-flag-acesso-ao-aluno #main-container .container-questionario .link_whastsapp:hover i {
   color: orange;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container .container-questionario .buttons_choice {
+body.phanterpwa-flag-identificar-servidor #main-container .container-questionario .buttons_choice, body.phanterpwa-flag-acesso-ao-aluno #main-container .container-questionario .buttons_choice {
   text-align: center;
   padding-bottom: 10px;
 }
 
 @media screen and (max-width: 301px) {
-  body.phanterpwa-flag-identificar-servidor #main-container .container-questionario .buttons_choice .btn {
+  body.phanterpwa-flag-identificar-servidor #main-container .container-questionario .buttons_choice .btn, body.phanterpwa-flag-acesso-ao-aluno #main-container .container-questionario .buttons_choice .btn {
     font-size: 10pt;
     line-height: 10pt;
     margin: 2px;
@@ -1183,7 +1183,7 @@ body.phanterpwa-flag-identificar-servidor #main-container .container-questionari
 }
 
 @media screen and (min-width: 300px) and (max-width: 601px) {
-  body.phanterpwa-flag-identificar-servidor #main-container .container-questionario .buttons_choice .btn {
+  body.phanterpwa-flag-identificar-servidor #main-container .container-questionario .buttons_choice .btn, body.phanterpwa-flag-acesso-ao-aluno #main-container .container-questionario .buttons_choice .btn {
     font-size: 10pt;
     line-height: 10pt;
     margin: 2px;
@@ -1191,14 +1191,14 @@ body.phanterpwa-flag-identificar-servidor #main-container .container-questionari
 }
 
 @media screen and (min-width: 600px) and (max-width: 901px) {
-  body.phanterpwa-flag-identificar-servidor #main-container .container-questionario .buttons_choice .btn {
+  body.phanterpwa-flag-identificar-servidor #main-container .container-questionario .buttons_choice .btn, body.phanterpwa-flag-acesso-ao-aluno #main-container .container-questionario .buttons_choice .btn {
     font-size: 10pt;
     line-height: 10pt;
     margin: 2px;
   }
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container .servidor_image {
+body.phanterpwa-flag-identificar-servidor #main-container .servidor_image, body.phanterpwa-flag-acesso-ao-aluno #main-container .servidor_image {
   width: 40px;
   height: 40px;
   border-radius: 20px;
@@ -1206,28 +1206,28 @@ body.phanterpwa-flag-identificar-servidor #main-container .servidor_image {
   box-shadow: 0px 0px 2px gray;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container .servidor_image img {
+body.phanterpwa-flag-identificar-servidor #main-container .servidor_image img, body.phanterpwa-flag-acesso-ao-aluno #main-container .servidor_image img {
   width: 100%;
   height: auto;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container .icon_button.button_sair {
+body.phanterpwa-flag-identificar-servidor #main-container .icon_button.button_sair, body.phanterpwa-flag-acesso-ao-aluno #main-container .icon_button.button_sair {
   width: 40px;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container #app-content-questionario.has_servidor .container-questionario {
+body.phanterpwa-flag-identificar-servidor #main-container #app-content-questionario.has_servidor .container-questionario, body.phanterpwa-flag-acesso-ao-aluno #main-container #app-content-questionario.has_servidor .container-questionario {
   padding-bottom: 124px;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container #app-content-questionario.has_servidor .footer-questionario {
+body.phanterpwa-flag-identificar-servidor #main-container #app-content-questionario.has_servidor .footer-questionario, body.phanterpwa-flag-acesso-ao-aluno #main-container #app-content-questionario.has_servidor .footer-questionario {
   margin-bottom: 62px;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container #app-content-questionario.has_servidor .servidor_atual {
+body.phanterpwa-flag-identificar-servidor #main-container #app-content-questionario.has_servidor .servidor_atual, body.phanterpwa-flag-acesso-ao-aluno #main-container #app-content-questionario.has_servidor .servidor_atual {
   display: block;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container #nome_escola_chat {
+body.phanterpwa-flag-identificar-servidor #main-container #nome_escola_chat, body.phanterpwa-flag-acesso-ao-aluno #main-container #nome_escola_chat {
   position: absolute;
   top: 10px;
   left: 95px;
@@ -1236,11 +1236,11 @@ body.phanterpwa-flag-identificar-servidor #main-container #nome_escola_chat {
   text-align: left;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container #nome_escola_chat td {
+body.phanterpwa-flag-identificar-servidor #main-container #nome_escola_chat td, body.phanterpwa-flag-acesso-ao-aluno #main-container #nome_escola_chat td {
   padding-right: 40px;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container.iniciar #row_content {
+body.phanterpwa-flag-identificar-servidor #main-container.iniciar #row_content, body.phanterpwa-flag-acesso-ao-aluno #main-container.iniciar #row_content {
   padding: 10px;
   background-color: white;
   overflow: auto;
@@ -1250,17 +1250,17 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar #row_content {
   transition: background-color 0.5s ease, max-height 0.5s ease;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container.iniciar .container-questionario {
+body.phanterpwa-flag-identificar-servidor #main-container.iniciar .container-questionario, body.phanterpwa-flag-acesso-ao-aluno #main-container.iniciar .container-questionario {
   background-color: #ececec;
   transition: background-color 0.5s ease;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container.iniciar .background-robo {
+body.phanterpwa-flag-identificar-servidor #main-container.iniciar .background-robo, body.phanterpwa-flag-acesso-ao-aluno #main-container.iniciar .background-robo {
   width: 44px;
   margin-left: 0;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand {
+body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand, body.phanterpwa-flag-acesso-ao-aluno #main-container.iniciar.expand {
   z-index: 2000;
   padding: 0;
   width: 100%;
@@ -1269,7 +1269,7 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand {
   top: 0;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-content-questionario {
+body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-content-questionario, body.phanterpwa-flag-acesso-ao-aluno #main-container.iniciar.expand #app-content-questionario {
   position: fixed;
   top: 0;
   padding: 0;
@@ -1278,13 +1278,13 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
   height: 100%;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-content-questionario #container-questionario {
+body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-content-questionario #container-questionario, body.phanterpwa-flag-acesso-ao-aluno #main-container.iniciar.expand #app-content-questionario #container-questionario {
   width: 100%;
   border-radius: 0;
   height: 100%;
 }
 
-body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-content-questionario #container-questionario #row_content {
+body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-content-questionario #container-questionario #row_content, body.phanterpwa-flag-acesso-ao-aluno #main-container.iniciar.expand #app-content-questionario #container-questionario #row_content {
   min-height: 100%;
   height: 100%;
   max-height: 100%;
@@ -1299,29 +1299,29 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
 
 @font-face {
   font-family: "Segoe UI Mono W01 Regular";
-  src: url("/static/0.6.0.276/fonts/88bdc70ec292cc29451932f9875b378a.eot");
-  src: url("/static/0.6.0.276/fonts/88bdc70ec292cc29451932f9875b378a.eot?#iefix") format("embedded-opentype"), url("/static/0.6.0.276/fonts/88bdc70ec292cc29451932f9875b378a.woff2") format("woff2"), url("/static/0.6.0.276/fonts/88bdc70ec292cc29451932f9875b378a.woff") format("woff"), url("/static/0.6.0.276/fonts/88bdc70ec292cc29451932f9875b378a.ttf") format("truetype"), url("/static/0.6.0.276/fonts/88bdc70ec292cc29451932f9875b378a.svg#Segoe UI Mono W01 Regular") format("svg");
+  src: url("/static/0.6.0.280/fonts/88bdc70ec292cc29451932f9875b378a.eot");
+  src: url("/static/0.6.0.280/fonts/88bdc70ec292cc29451932f9875b378a.eot?#iefix") format("embedded-opentype"), url("/static/0.6.0.280/fonts/88bdc70ec292cc29451932f9875b378a.woff2") format("woff2"), url("/static/0.6.0.280/fonts/88bdc70ec292cc29451932f9875b378a.woff") format("woff"), url("/static/0.6.0.280/fonts/88bdc70ec292cc29451932f9875b378a.ttf") format("truetype"), url("/static/0.6.0.280/fonts/88bdc70ec292cc29451932f9875b378a.svg#Segoe UI Mono W01 Regular") format("svg");
 }
 
 @font-face {
   font-family: "Segoe UI Italic";
   font-style: normal;
   font-weight: normal;
-  src: local("Segoe UI Italic"), url("/static/0.6.0.276/fonts/Segoe UI Italic.woff") format("woff");
+  src: local("Segoe UI Italic"), url("/static/0.6.0.280/fonts/Segoe UI Italic.woff") format("woff");
 }
 
 @font-face {
   font-family: "Segoe UI Bold";
   font-style: normal;
   font-weight: normal;
-  src: local("Segoe UI Bold"), url("/static/0.6.0.276/fonts/Segoe UI Bold.woff") format("woff");
+  src: local("Segoe UI Bold"), url("/static/0.6.0.280/fonts/Segoe UI Bold.woff") format("woff");
 }
 
 @font-face {
   font-family: "Segoe UI Bold Italic";
   font-style: normal;
   font-weight: normal;
-  src: local("Segoe UI Bold Italic"), url("/static/0.6.0.276/fonts/Segoe UI Bold Italic.woff") format("woff");
+  src: local("Segoe UI Bold Italic"), url("/static/0.6.0.280/fonts/Segoe UI Bold Italic.woff") format("woff");
 }
 
 /* roboto-thin - latin */
@@ -1330,8 +1330,8 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
   font-family: "Roboto";
   font-style: normal;
   font-weight: 400;
-  src: url("/static/0.6.0.276/fonts/roboto-v20-latin-regular.eot");
-  src: local("Roboto"), local("Roboto-Regular"), url("/static/0.6.0.276/fonts/roboto-v20-latin-regular.eot?#iefix") format("embedded-opentype"), url("/static/0.6.0.276/fonts/roboto-v20-latin-regular.woff2") format("woff2"), url("/static/0.6.0.276/fonts/roboto-v20-latin-regular.woff") format("woff"), url("/static/0.6.0.276/fonts/roboto-v20-latin-regular.ttf") format("truetype"), url("/static/0.6.0.276/fonts/roboto-v20-latin-regular.svg#Roboto") format("svg");
+  src: url("/static/0.6.0.280/fonts/roboto-v20-latin-regular.eot");
+  src: local("Roboto"), local("Roboto-Regular"), url("/static/0.6.0.280/fonts/roboto-v20-latin-regular.eot?#iefix") format("embedded-opentype"), url("/static/0.6.0.280/fonts/roboto-v20-latin-regular.woff2") format("woff2"), url("/static/0.6.0.280/fonts/roboto-v20-latin-regular.woff") format("woff"), url("/static/0.6.0.280/fonts/roboto-v20-latin-regular.ttf") format("truetype"), url("/static/0.6.0.280/fonts/roboto-v20-latin-regular.svg#Roboto") format("svg");
 }
 
 /* latin-ext */
@@ -1339,7 +1339,7 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
   font-family: "Roboto Mono";
   font-style: normal;
   font-weight: 400;
-  src: url("/static/0.6.0.276/fonts/L0x5DF4xlVMF-BfR8bXMIjhFq3-OXg.woff2") format("woff2");
+  src: url("/static/0.6.0.280/fonts/L0x5DF4xlVMF-BfR8bXMIjhFq3-OXg.woff2") format("woff2");
   unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
@@ -1348,7 +1348,7 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
   font-family: "Roboto Mono";
   font-style: normal;
   font-weight: 400;
-  src: url("/static/0.6.0.276/fonts/L0x5DF4xlVMF-BfR8bXMIjhLq38.woff2") format("woff2");
+  src: url("/static/0.6.0.280/fonts/L0x5DF4xlVMF-BfR8bXMIjhLq38.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
@@ -1357,7 +1357,7 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
   font-family: "Cousine";
   font-style: normal;
   font-weight: 400;
-  src: url("/static/0.6.0.276/fonts/d6lIkaiiRdih4SpP_SovzAbt.woff2") format("woff2");
+  src: url("/static/0.6.0.280/fonts/d6lIkaiiRdih4SpP_SovzAbt.woff2") format("woff2");
   unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
@@ -1366,15 +1366,15 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
   font-family: "Cousine";
   font-style: normal;
   font-weight: 400;
-  src: url("/static/0.6.0.276/fonts/d6lIkaiiRdih4SpP_SQvzA.woff2") format("woff2");
+  src: url("/static/0.6.0.280/fonts/d6lIkaiiRdih4SpP_SQvzA.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 /* DejaVu Sans */
 @font-face {
   font-family: "DejaVu Sans";
-  src: url("/static/0.6.0.276/fonts/DejaVuSans.eot");
-  src: url("/static/0.6.0.276/fonts/DejaVuSans.eot?#iefix") format("embedded-opentype"), url("/static/0.6.0.276/fonts/DejaVuSans.woff2") format("woff2"), url("/static/0.6.0.276/fonts/DejaVuSans.woff") format("woff"), url("/static/0.6.0.276/fonts/DejaVuSans.ttf") format("truetype"), url("/static/0.6.0.276/fonts/DejaVuSans.svg#Segoe UI Mono W01 Regular") format("svg");
+  src: url("/static/0.6.0.280/fonts/DejaVuSans.eot");
+  src: url("/static/0.6.0.280/fonts/DejaVuSans.eot?#iefix") format("embedded-opentype"), url("/static/0.6.0.280/fonts/DejaVuSans.woff2") format("woff2"), url("/static/0.6.0.280/fonts/DejaVuSans.woff") format("woff"), url("/static/0.6.0.280/fonts/DejaVuSans.ttf") format("truetype"), url("/static/0.6.0.280/fonts/DejaVuSans.svg#Segoe UI Mono W01 Regular") format("svg");
 }
 
 .phanterpwa-paper-sme {

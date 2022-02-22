@@ -34,6 +34,7 @@ import handlers.conselho_de_classe as conselho_de_classe
 import handlers.boletins as boletins
 import handlers.controle_de_atividades as controle_de_atividades
 import handlers.registro_de_atividades as registro_de_atividades
+import handlers.acesso_aluno as acesso_aluno
 import handlers.rootcmd as rootcmd
 import auto.config as config
 import plugins.servidor_sme as servidor_sme
@@ -88,6 +89,7 @@ gates = {
     'registro-de-faltas': registro_de_faltas.Index,
     'controle-de-atividades': controle_de_atividades.Index,
     'registro-de-atividades': registro_de_atividades.Index,
+    'acesso-ao-aluno': acesso_aluno.Index,
     'excepcional': excepcional.Index,
     'root-commands': rootcmd.Commands
 }

@@ -1050,7 +1050,7 @@ class TurmaEspecifica():
 
             resultado = "Em aberto"
             _cls_resul = None
-            if x.resultados is not None:
+            if x.resultados is not None and x.resultados is not js_undefined:
                 if x.resultados.resultado_final is not None and x.resultados.resultado_final != "":
                     resultado = x.resultados.resultado_final
 
@@ -1102,9 +1102,9 @@ class TurmaEspecifica():
                             "_href": window.PhanterPWA.XWAY(
                                 "matricula",
                                 x.alunos.id,
-                                "aluno-conferido",
                                 self.id_escola,
                                 self.ano_letivo,
+                                "editar",
                                 x.matriculas.id,
                                 **{
                                     "_turmas-detalhadas": "/turmas/{0}/{1}/detalhado/".format(self.id_escola, self.ano_letivo)
