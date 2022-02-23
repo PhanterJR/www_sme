@@ -38,6 +38,7 @@ H1 = helpers.XmlConstructor.tagger("h1")
 H2 = helpers.XmlConstructor.tagger("h2")
 H3 = helpers.XmlConstructor.tagger("h3")
 H4 = helpers.XmlConstructor.tagger("h4")
+TBODY = helpers.XmlConstructor.tagger("tbody")
 CANVAS = helpers.XmlConstructor.tagger("canvas")
 H5 = helpers.XmlConstructor.tagger("h5")
 HR = helpers.XmlConstructor.tagger("hr", True)
@@ -63,6 +64,8 @@ class Index(gatehandler.Handler):
         if arg0 == "matricula":
             self.Matriculas = Matricula()
             self.Matriculas.initialize()
+        elif arg0 == "turma":
+            self.Turma = Turma()
         elif arg0 == "declaracao-de-matricula":
             self.DeclaracaoDeMatricula = DeclaracaoDeMatricula()
         elif arg0 == "questionario-social":
@@ -135,7 +138,8 @@ class Index(gatehandler.Handler):
                     ),
 
                     _class="phanterpwa-container p-container"
-                )
+                ),
+
             )
             html.html_to("#main-container")
             BackButton = left_bar.LeftBarButton(
@@ -2264,6 +2268,302 @@ class AtaDeResultadosFinais():
         )
 
 
+class Turma():
+    @decorators.check_authorization(lambda: window.PhanterPWA.auth_user_has_role(["administrator", "root", "Administrador Master SME", "Administrador Master Escola"]))
+    def __init__(self):
+        self.id_escola = window.PhanterPWA.Request.get_arg(1)
+        self.ano_letivo = window.PhanterPWA.Request.get_arg(2)
+        self.id_turma = window.PhanterPWA.Request.get_arg(3)
+        self._fields_permitidos = [
+            "numero",
+            "aluno",
+            "sexo",
+            "data_nasc",
+            "nome_do_pai",
+            "nome_da_mae",
+            "responsavel",
+            "endereco",
+            "ponto_de_referencia",
+            "resultado",
+            "contatos",
+        ]
+        self._fields_names = {
+            "aluno": "Nome do(a) Aluno(a)",
+            "numero": "Nº",
+            "data_nasc": "Data de Nascimento",
+            "endereco": "Endereco",
+            "ponto_de_referencia": "Ponto de Refêrencia",
+            "contatos": "Contatos",
+            "nome_do_pai": "Nome do Pai",
+            "nome_da_mae": "Nome da Mãe",
+            "responsavel": "Responsável",
+            "sexo": "Sexo",
+            "resultado": "Resultado Final"
+        }
+        self._get_fields()
+
+        html = CONCATENATE(
+            DIV(
+                DIV(
+                    DIV(
+                        DIV("IMPRIMIR", _class="phanterpwa-breadcrumb"),
+                        DIV("TURMA", _class="phanterpwa-breadcrumb"),
+                        _class="phanterpwa-breadcrumb-wrapper"
+                    ),
+                    _class="p-container"),
+                _class='title_page_container card'
+            ),
+            DIV(
+                DIV(
+                    DIV(
+                        DIV(
+                            DIV(preloaders.android, _style="width: 300px; height: 300px; overflow: hidden; margin: auto;"),
+                            _style="text-align:center; padding: 50px 0;"
+                        ),
+                        _id="content-turma-imprimir",
+                        _class='p-row card e-padding_20'
+                    ),
+                    _class="phanterpwa-container p-container"
+                ),
+                _id="documentos-content",
+            ),
+            DIV(_id="botoes_de_comando_impressao"),
+            DIV(_id="escolha_de_campo_div")
+        )
+        html.html_to("#main-container")
+        BackButton = left_bar.LeftBarButton(
+            "back_imprimir_matricula",
+            "Voltar",
+            I(_class="fas fa-arrow-circle-left"),
+            **{"_phanterpwa-way": "area-do-servidor",
+                "position": "top",
+                "ways": [lambda r: True if r.startswith("documentos") or r.startswith("documentos/") else False]}
+        )
+        window.PhanterPWA.Components['left_bar'].add_button(BackButton)
+        self._get_data()
+
+    def _get_data(self):
+        window.PhanterPWA.GET(
+            "api",
+            "imprimir",
+            "turma",
+            self.id_escola,
+            self.ano_letivo,
+            self.id_turma,
+            _campos=self.str_fields,
+            onComplete=self.after_get
+        )
+
+    def after_get(self, data, ajax_status):
+        json = data.responseJSON
+        now = __new__(Date().getTime())
+        html_botoes = CONCATENATE(
+            widgets.FloatMenu(
+                "menu_impressao",
+                I(_class="fas fa-ellipsis-v"),
+                widgets.FloatButton(
+                    I(_class="fas fa-tasks"),
+                    _class="botao_escolher_campos",
+                    _title="Escolher Campos",
+                ),
+                # widgets.FloatButton(
+                #     I(_class="fas fa-file-pdf"),
+                #     _class="botao_gerar_pdf",
+                #     _title="Gerar PDF",
+                #     _href="{0}/api/pdfs/turma/{1}/{2}/{3}/?nocache={4}&campos={5}".format(
+                #         window.PhanterPWA.ApiServer.remote_address,
+                #         self.id_escola,
+                #         self.ano_letivo,
+                #         self.id_matricula,
+                #         now,
+                #         self.str_fields,
+                #     )
+                # ),
+                widgets.FloatButton(
+                    I(_class="fas fa-print"),
+                    _title="Imprimir documento",
+                    _class="botao_imprimir_diario_de_notas",
+                    _onclick="print();"
+                ),
+                onOpen=lambda: jQuery(".botao_escolher_campos").off("click.botao_escolher_campos").on("click", lambda: self.abrir_modal_escolher_campos())
+            )
+        )
+        html_botoes.html_to("#botoes_de_comando_impressao")
+
+        series_multi = []
+
+        tabela_dinamica = TABLE(
+            _class="tabela_dinamica_turma",
+        )
+        eh_multi = json.eh_multi
+        cont = 0
+        turma = json.turma
+        nome_escola = json.nome_escola
+        cabecalho_escola = json.cabecalho
+        for lin in json.data:
+            cont += 1
+            tbody = TBODY(_class="tabela_dinamica_turma-tbody")
+            if cont == 1:
+                tbody.append(TR(
+                    TH("Nº", _class="tabela_dinamica_turma-campo_cabecalho campo_numero"),
+                    TH("Nome do(a) aluno(a)", _class="tabela_dinamica_turma-campo_cabecalho campo_aluno"),
+                    *[TH(self._fields_names[cam], _class="tabela_dinamica_turma-campo_cabecalho campo_{0}".format(cam)) for cam in self.fields],
+                ))
+            if eh_multi and lin[2] not in series_multi:
+                series_multi.append(lin[2])
+                tbody.append(TR(
+                    TH(lin[2], _class="tabela_dinamica_turma-nome_da_serie", _colspan=len(self.fields) + 2),
+                    
+                ))
+            numero_aluno = lin[0]
+            nome_aluno = lin[1]
+            tbody.append(TR(
+                TD(numero_aluno, _class="campos_turma campo_numero"),
+                TD(nome_aluno, _class="campos_turma campo_aluno"),
+                *[TD(lin[3][cam], _class="campos_turma campo_{0}".format(cam)) for cam in self.fields]
+            ))
+            tabela_dinamica.append(tbody)
+
+
+        logo = "{0}/api/escolas/{1}/image".format(
+            window.PhanterPWA.ApiServer.remote_address,
+            self.id_escola
+        )
+        if ajax_status == "success":
+            html_turma_content = DIV(
+                DIV(
+                    DIV(
+                        DIV(
+                            DIV(
+                                DIV(
+                                    DIV(
+                                        DIV(
+                                            IMG(_src="/static/{0}/images/cabecalho_background.jpg".format(
+                                                window.PhanterPWA.VERSIONING)),
+                                            _class="back",
+                                        ),
+                                        DIV(
+                                            IMG(_src=logo, _style="width: 120px; height: 120px;"),
+                                            _class="front",
+                                        ),
+                                        _class="sme_cabecalho_sme"
+                                    ),
+                                    DIV(H3(nome_escola), _class="sme_cabecalho_sme_nome_escola"),
+                                    DIV(H5(cabecalho_escola), _class="sme_cabecalho_sme_dados_escola"),
+                                    DIV(DIV("LISTA DE ALUNOS DA TURMA ", STRONG(turma, _style="text-transform: uppercase;"), _class="tudo_centralizado titulo_tabela_dinamica"), _class="sme_cabecalho_titulo_documento"),
+                                    DIV(
+                                        tabela_dinamica if cont > 0 else "NÃO HÁ ALUNOS NA TURMA",
+                                        _class="sme_documento_conteudo"
+                                    ),
+                                    _id="pagina_{0}_declaracao".format(self.id_matricula),
+                                    _class="p-row"
+                                ),
+                                _class="imprimir_matricula_wrapper imprimir_documentos_wrapper"
+                            ),
+                            _class="imprimir_alunos_da_turma"
+                        ),
+                    ),
+
+                    _class="media-print-visible"
+                ),
+                _class="folhas_para_imprimir phanterpwa-simple-media-print"
+            )
+            html_turma_content.html_to("#documentos-content")
+
+
+    def _get_fields(self):
+        fields = window.PhanterPWA.Request.get_param("campos")
+        self.fields = ["data_nasc", "endereco", "contatos"]
+        self.str_fields = "data_nasc,endereco,contatos"
+        if fields is not None:
+            console.log(fields)
+            fsplit = fields.split(",")
+            console.log(fsplit)
+            lis_split = []
+            for x in fsplit:
+                console.log(x)
+                if x in self._fields_permitidos:
+
+                    lis_split.append(x)
+            console.log(lis_split)
+            if len(lis_split) > 0:
+                self.fields = lis_split
+                self.str_fields = ",".join(lis_split)
+
+
+    def abrir_modal_escolher_campos(self):
+        series = self.fields
+        fixo = ["Nº", "Nome do(a) Aluno(a)"]
+        lista_de_series = [["numero", "Nº"], ["aluno", "Nome do(a) Aluno(a)"]]
+        data_set = []
+        for x in self._fields_permitidos:
+            data_set.append([x, self._fields_names[x]])
+        for x in self.fields:
+            lista_de_series.append([x, self._fields_names[x]])
+        wg = widgets.ListString(
+            "lista_de_series_escola_ano",
+            label="Seleção de Séries/Anos",
+            placeholder="Escolha uma série/ano abaixo.",
+            value=lista_de_series,
+            data_set=data_set,
+            editable=False,
+            fixed=fixo
+        )
+        content = DIV(
+            H3("ESCOLHA OS CAMPOS QUE DESEJA ADICIONAR"),
+            DIV(
+               wg
+            ),
+            _class="p-row"
+        )
+        footer = DIV(
+            forms.FormButton(
+                "confirmar_escolha_de_campos",
+                "Confirmar",
+                _class="btn-autoresize wave_on_click waves-phanterpwa"
+            ),
+            _class='phanterpwa-form-buttons-container'
+        )
+        self.modal_escolher_campos = modal.Modal(
+            "#escolha_de_campo_div",
+            **{
+                "title": "Escolha os campos do documento",
+                "content": content,
+                "footer": footer
+            }
+        )
+        self.modal_escolher_campos.open()
+        jQuery("#phanterpwa-widget-form-form_button-confirmar_escolha_de_campos").off(
+            "click.confirmar_escolha_de_campos"
+        ).on(
+            "click.confirmar_escolha_de_campos",
+            lambda: self._on_confirmar_escolha_de_campos(wg)
+        )
+
+    def _on_confirmar_escolha_de_campos(self, wg):
+        wg.value()
+        li = []
+        for x in wg.value():
+            if x[0] not in ["aluno", "numero"]:
+                li.append(x[0])
+
+        self.fields = li
+        self.str_fields = ",".join(li)
+
+        window.PhanterPWA.set_push_way(
+            window.PhanterPWA.relative_way(
+                "imprimir",
+                "turma",
+                self.id_escola,
+                self.ano_letivo,
+                self.id_turma,
+                _campos=self.str_fields
+            )
+        )
+        self._get_data()
+        self.modal_escolher_campos.close()
+
+
 class TotalDeMatriculados():
     def __init__(self, parent, id_escola, ano_letivo):
         self.parent = parent
@@ -2292,7 +2592,7 @@ class TotalDeMatriculados():
                             DIV(preloaders.android, _style="width: 300px; height: 300px; overflow: hidden; margin: auto;"),
                             _style="text-align:center; padding: 50px 0;"
                         ),
-                        _id="content-matriculas-imprimir",
+                        _id="content-turma-imprimir",
                         _class='p-row card e-padding_20'
                     ),
                     _class="phanterpwa-container p-container"

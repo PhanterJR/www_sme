@@ -363,19 +363,6 @@ class TurmasSimples(helpers.XmlConstructor):
                     widgets.MenuBox(
                         "drop_{0}".format(x.id),
                         I(_class="fas fa-ellipsis-v"),
-                        widgets.MenuOption("Ata de resultados finais", **{
-                            "_class": "botao_diario_de_notas_turma wave_on_click",
-                            "_href": window.PhanterPWA.XWAY(
-                                "imprimir",
-                                "ata-de-resultados-finais",
-                                self.id_escola,
-                                self.ano_letivo,
-                                x.id,
-                                **{
-                                    "_retornar": "turma-simples"
-                                }
-                            )
-                        }),
                         widgets.MenuOption("Turma detalhada", **{
                             "_class": "botao_diario_de_notas_turma wave_on_click",
                             "_href": window.PhanterPWA.XWAY(
@@ -383,6 +370,19 @@ class TurmasSimples(helpers.XmlConstructor):
                                 self.id_escola,
                                 self.ano_letivo,
                                 "especifico",
+                                x.id,
+                                **{
+                                    "_retornar": "turma-simples"
+                                }
+                            )
+                        }),
+                        widgets.MenuOption("Ata de resultados finais", **{
+                            "_class": "botao_diario_de_notas_turma wave_on_click",
+                            "_href": window.PhanterPWA.XWAY(
+                                "imprimir",
+                                "ata-de-resultados-finais",
+                                self.id_escola,
+                                self.ano_letivo,
                                 x.id,
                                 **{
                                     "_retornar": "turma-simples"
@@ -478,6 +478,20 @@ class TurmasSimples(helpers.XmlConstructor):
                                     "_retornar": "turma-simples"
                                 }
                             )
+                        }),
+                        widgets.MenuOption("Imprimir lista de alunos", **{
+                            "_class": "botao_imprimir_lista_de_alunos_turma wave_on_click",
+                            "_href": window.PhanterPWA.XWAY(
+                                "imprimir",
+                                "turma",
+                                self.id_escola,
+                                self.ano_letivo,
+                                x.id,
+                                **{
+                                    "_retornar": "turma-simples"
+                                }
+                            ),
+                            "icon": icon_botao_diario
                         }),
                         **{
                             "onOpen": lambda: self.binds_escolha_de_turmas()
@@ -935,7 +949,7 @@ class TurmaEspecifica():
             )
         )
         html.html_to("#main-container")
-        self.get_dados_turma(self)
+        self.get_dados_turma()
 
     def get_dados_turma(self):
         window.PhanterPWA.GET(
@@ -1295,6 +1309,14 @@ class TurmaEspecifica():
                                 "_data-id_turma": data_turma.id,
                             }
                         ),
+                        A(
+                            I(_class="fas fa-print"),
+                            **{
+                                "_class": "botao_imprimir_lista_alunos_turma icon_button",
+                                "_title": "Imprimir lista de alunos",
+                                "_href": window.PhanterPWA.XWAY("imprimir", "turma", self.id_escola, self.ano_letivo, data_turma.id, **{"_retornar": "turma-especifica"})
+                            }
+                        ),
                         _class="phanterpwa-card-panel-control-buttons"
                     ),
                     _class="phanterpwa-card-panel-control-wrapper has_buttons"
@@ -1409,16 +1431,8 @@ class TurmaEspecifica():
             self.ano_letivo,
             "auto-ordenar",
             id_turma,
-            onComplete=lambda data, ajax_status: self.update_turma(data, ajax_status, id_turma)
+            onComplete=lambda: self.get_dados_turma()
         )
-
-    def deletar_turma(self, widget_instance):
-        id_turma = jQuery(widget_instance).data("id_turma")
-        id_turma = jQuery(widget_instance).data("id_turma")
-        window.PhanterPWA.ApiServer.DELETE(**{
-            'url_args': ["api", "turma", self.id_escola, self.ano_letivo, "turma", id_turma],
-            'onComplete': lambda data, ajax_status: self.update_turma(data, ajax_status, id_turma)
-        })
 
     def after_drop(self, ev, el):
         t_ordem = list()
@@ -1467,7 +1481,7 @@ class TurmaEspecifica():
             window.PhanterPWA.ApiServer.PUT(**{
                 'url_args': ["api", "turma", self.id_escola, self.ano_letivo, "ordenar", id_turma, id_matricula],
                 'form_data': formdata,
-                'onComplete': lambda data, ajax_status: self.update_turma(data, ajax_status, id_turma)
+                'onComplete': lambda: self.get_dados_turma()
             })
 
     def get_alunos_remanejar(self, widget_instance):
@@ -3312,6 +3326,15 @@ class TurmasDetalhadas(helpers.XmlConstructor):
                                 "_data-id_turma": data_turma.id,
                             }
                         ),
+                        A(
+                            I(_class="fas fa-print"),
+                            **{
+                                "_class": "botao_imprimir_lista_alunos_turma icon_button",
+                                "_title": "Imprimir lista de alunos",
+                                "_target": "_blank",
+                                "_href": window.PhanterPWA.XWAY("imprimir", "turma", self.id_escola, self.ano_letivo, data_turma.id, **{"_retornar": "turmas-detalhadas"})
+                            }
+                        ),
                         _class="phanterpwa-card-panel-control-buttons"
                     ),
                     _class="phanterpwa-card-panel-control-wrapper has_buttons"
@@ -4326,7 +4349,6 @@ class TurmasDetalhadas(helpers.XmlConstructor):
             "quando_transferiu",
             jQuery("#phanterpwa-widget-select-input-unidade_trams").val()
         )
-        
         window.PhanterPWA.PUT(
             "api",
             "matricula",

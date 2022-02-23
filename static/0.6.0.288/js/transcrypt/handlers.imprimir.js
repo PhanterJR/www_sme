@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2022-02-20 02:17:26
+// Transcrypt'ed from Python, 2022-02-22 15:11:35
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import * as anos_letivos from './handlers.anos_letivos.js';
 import * as escolas from './handlers.escolas.js';
@@ -33,6 +33,7 @@ export var H1 = helpers.XmlConstructor.tagger ('h1');
 export var H2 = helpers.XmlConstructor.tagger ('h2');
 export var H3 = helpers.XmlConstructor.tagger ('h3');
 export var H4 = helpers.XmlConstructor.tagger ('h4');
+export var TBODY = helpers.XmlConstructor.tagger ('tbody');
 export var CANVAS = helpers.XmlConstructor.tagger ('canvas');
 export var H5 = helpers.XmlConstructor.tagger ('h5');
 export var HR = helpers.XmlConstructor.tagger ('hr', true);
@@ -78,6 +79,9 @@ export var Index =  __class__ ('Index', [gatehandler.Handler], {
 		if (arg0 == 'matricula') {
 			self.Matriculas = Matricula ();
 			self.Matriculas.initialize ();
+		}
+		else if (arg0 == 'turma') {
+			self.Turma = Turma ();
 		}
 		else if (arg0 == 'declaracao-de-matricula') {
 			self.DeclaracaoDeMatricula = DeclaracaoDeMatricula ();
@@ -1268,6 +1272,268 @@ export var AtaDeResultadosFinais =  __class__ ('AtaDeResultadosFinais', [object]
 		window.PhanterPWA.GET ('api', 'imprimir', 'ata-de-resultados-finais', self.id_escola, self.ano_letivo, self.id_turma, __kwargtrans__ ({onComplete: self.after_get}));
 	});}
 });
+export var Turma =  __class__ ('Turma', [object], {
+	__module__: __name__,
+	get __init__ () {return __get__ (this, decorators.check_authorization ((function __lambda__ () {
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+				}
+			}
+		}
+		else {
+		}
+		return window.PhanterPWA.auth_user_has_role (['administrator', 'root', 'Administrador Master SME', 'Administrador Master Escola']);
+	})) (function (self) {
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+					switch (__attrib0__) {
+						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+					}
+				}
+			}
+		}
+		else {
+		}
+		self.id_escola = window.PhanterPWA.Request.get_arg (1);
+		self.ano_letivo = window.PhanterPWA.Request.get_arg (2);
+		self.id_turma = window.PhanterPWA.Request.get_arg (3);
+		self._fields_permitidos = ['numero', 'aluno', 'sexo', 'data_nasc', 'nome_do_pai', 'nome_da_mae', 'responsavel', 'endereco', 'ponto_de_referencia', 'resultado', 'contatos'];
+		self._fields_names = dict ({'aluno': 'Nome do(a) Aluno(a)', 'numero': 'Nº', 'data_nasc': 'Data de Nascimento', 'endereco': 'Endereco', 'ponto_de_referencia': 'Ponto de Refêrencia', 'contatos': 'Contatos', 'nome_do_pai': 'Nome do Pai', 'nome_da_mae': 'Nome da Mãe', 'responsavel': 'Responsável', 'sexo': 'Sexo', 'resultado': 'Resultado Final'});
+		self._get_fields ();
+		var html = CONCATENATE (DIV (DIV (DIV (DIV ('IMPRIMIR', __kwargtrans__ ({_class: 'phanterpwa-breadcrumb'})), DIV ('TURMA', __kwargtrans__ ({_class: 'phanterpwa-breadcrumb'})), __kwargtrans__ ({_class: 'phanterpwa-breadcrumb-wrapper'})), __kwargtrans__ ({_class: 'p-container'})), __kwargtrans__ ({_class: 'title_page_container card'})), DIV (DIV (DIV (DIV (DIV (preloaders.android, __kwargtrans__ ({_style: 'width: 300px; height: 300px; overflow: hidden; margin: auto;'})), __kwargtrans__ ({_style: 'text-align:center; padding: 50px 0;'})), __kwargtrans__ ({_id: 'content-turma-imprimir', _class: 'p-row card e-padding_20'})), __kwargtrans__ ({_class: 'phanterpwa-container p-container'})), __kwargtrans__ ({_id: 'documentos-content'})), DIV (__kwargtrans__ ({_id: 'botoes_de_comando_impressao'})), DIV (__kwargtrans__ ({_id: 'escolha_de_campo_div'})));
+		html.html_to ('#main-container');
+		var BackButton = left_bar.LeftBarButton ('back_imprimir_matricula', 'Voltar', I (__kwargtrans__ ({_class: 'fas fa-arrow-circle-left'})), __kwargtrans__ (dict ({'_phanterpwa-way': 'area-do-servidor', 'position': 'top', 'ways': [(function __lambda__ (r) {
+			if (arguments.length) {
+				var __ilastarg0__ = arguments.length - 1;
+				if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+					var __allkwargs0__ = arguments [__ilastarg0__--];
+					for (var __attrib0__ in __allkwargs0__) {
+						switch (__attrib0__) {
+							case 'r': var r = __allkwargs0__ [__attrib0__]; break;
+						}
+					}
+				}
+			}
+			else {
+			}
+			return (r.startswith ('documentos') || r.startswith ('documentos/') ? true : false);
+		})]})));
+		window.PhanterPWA.Components ['left_bar'].add_button (BackButton);
+		self._get_data ();
+	}));},
+	get _get_data () {return __get__ (this, function (self) {
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+					switch (__attrib0__) {
+						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+					}
+				}
+			}
+		}
+		else {
+		}
+		window.PhanterPWA.GET ('api', 'imprimir', 'turma', self.id_escola, self.ano_letivo, self.id_turma, __kwargtrans__ ({_campos: self.str_fields, onComplete: self.after_get}));
+	});},
+	get after_get () {return __get__ (this, function (self, data, ajax_status) {
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+					switch (__attrib0__) {
+						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+						case 'data': var data = __allkwargs0__ [__attrib0__]; break;
+						case 'ajax_status': var ajax_status = __allkwargs0__ [__attrib0__]; break;
+					}
+				}
+			}
+		}
+		else {
+		}
+		var json = data.responseJSON;
+		var now = new Date ().getTime ();
+		var html_botoes = CONCATENATE (widgets.FloatMenu ('menu_impressao', I (__kwargtrans__ ({_class: 'fas fa-ellipsis-v'})), widgets.FloatButton (I (__kwargtrans__ ({_class: 'fas fa-tasks'})), __kwargtrans__ ({_class: 'botao_escolher_campos', _title: 'Escolher Campos'})), widgets.FloatButton (I (__kwargtrans__ ({_class: 'fas fa-print'})), __kwargtrans__ ({_title: 'Imprimir documento', _class: 'botao_imprimir_diario_de_notas', _onclick: 'print();'})), __kwargtrans__ ({onOpen: (function __lambda__ () {
+			if (arguments.length) {
+				var __ilastarg0__ = arguments.length - 1;
+				if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+					var __allkwargs0__ = arguments [__ilastarg0__--];
+					for (var __attrib0__ in __allkwargs0__) {
+					}
+				}
+			}
+			else {
+			}
+			return $ ('.botao_escolher_campos').off ('click.botao_escolher_campos').on ('click', (function __lambda__ () {
+				if (arguments.length) {
+					var __ilastarg0__ = arguments.length - 1;
+					if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+						var __allkwargs0__ = arguments [__ilastarg0__--];
+						for (var __attrib0__ in __allkwargs0__) {
+						}
+					}
+				}
+				else {
+				}
+				return self.abrir_modal_escolher_campos ();
+			}));
+		})})));
+		html_botoes.html_to ('#botoes_de_comando_impressao');
+		var series_multi = [];
+		var tabela_dinamica = TABLE (__kwargtrans__ ({_class: 'tabela_dinamica_turma'}));
+		var eh_multi = json.eh_multi;
+		var cont = 0;
+		var turma = json.turma;
+		var nome_escola = json.nome_escola;
+		var cabecalho_escola = json.cabecalho;
+		for (var lin of json.data) {
+			cont++;
+			var tbody = TBODY (__kwargtrans__ ({_class: 'tabela_dinamica_turma-tbody'}));
+			if (cont == 1) {
+				tbody.append (TR (TH ('Nº', __kwargtrans__ ({_class: 'tabela_dinamica_turma-campo_cabecalho campo_numero'})), TH ('Nome do(a) aluno(a)', __kwargtrans__ ({_class: 'tabela_dinamica_turma-campo_cabecalho campo_aluno'})), ...(function () {
+					var __accu0__ = [];
+					for (var cam of self.fields) {
+						__accu0__.append (TH (self._fields_names [cam], __kwargtrans__ ({_class: 'tabela_dinamica_turma-campo_cabecalho campo_{0}'.format (cam)})));
+					}
+					return __accu0__;
+				}) ()));
+			}
+			if (eh_multi && !__in__ (lin [2], series_multi)) {
+				series_multi.append (lin [2]);
+				tbody.append (TR (TH (lin [2], __kwargtrans__ ({_class: 'tabela_dinamica_turma-nome_da_serie', _colspan: len (self.fields) + 2}))));
+			}
+			var numero_aluno = lin [0];
+			var nome_aluno = lin [1];
+			tbody.append (TR (TD (numero_aluno, __kwargtrans__ ({_class: 'campos_turma campo_numero'})), TD (nome_aluno, __kwargtrans__ ({_class: 'campos_turma campo_aluno'})), ...(function () {
+				var __accu0__ = [];
+				for (var cam of self.fields) {
+					__accu0__.append (TD (lin [3] [cam], __kwargtrans__ ({_class: 'campos_turma campo_{0}'.format (cam)})));
+				}
+				return __accu0__;
+			}) ()));
+			tabela_dinamica.append (tbody);
+		}
+		var logo = '{0}/api/escolas/{1}/image'.format (window.PhanterPWA.ApiServer.remote_address, self.id_escola);
+		if (ajax_status == 'success') {
+			var html_turma_content = DIV (DIV (DIV (DIV (DIV (DIV (DIV (DIV (IMG (__kwargtrans__ ({_src: '/static/{0}/images/cabecalho_background.jpg'.format (window.PhanterPWA.VERSIONING)})), __kwargtrans__ ({_class: 'back'})), DIV (IMG (__kwargtrans__ ({_src: logo, _style: 'width: 120px; height: 120px;'})), __kwargtrans__ ({_class: 'front'})), __kwargtrans__ ({_class: 'sme_cabecalho_sme'})), DIV (H3 (nome_escola), __kwargtrans__ ({_class: 'sme_cabecalho_sme_nome_escola'})), DIV (H5 (cabecalho_escola), __kwargtrans__ ({_class: 'sme_cabecalho_sme_dados_escola'})), DIV (DIV ('LISTA DE ALUNOS DA TURMA ', STRONG (turma, __kwargtrans__ ({_style: 'text-transform: uppercase;'})), __kwargtrans__ ({_class: 'tudo_centralizado titulo_tabela_dinamica'})), __kwargtrans__ ({_class: 'sme_cabecalho_titulo_documento'})), DIV ((cont > 0 ? tabela_dinamica : 'NÃO HÁ ALUNOS NA TURMA'), __kwargtrans__ ({_class: 'sme_documento_conteudo'})), __kwargtrans__ ({_id: 'pagina_{0}_declaracao'.format (self.id_matricula), _class: 'p-row'})), __kwargtrans__ ({_class: 'imprimir_matricula_wrapper imprimir_documentos_wrapper'})), __kwargtrans__ ({_class: 'imprimir_alunos_da_turma'}))), __kwargtrans__ ({_class: 'media-print-visible'})), __kwargtrans__ ({_class: 'folhas_para_imprimir phanterpwa-simple-media-print'}));
+			html_turma_content.html_to ('#documentos-content');
+		}
+	});},
+	get _get_fields () {return __get__ (this, function (self) {
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+					switch (__attrib0__) {
+						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+					}
+				}
+			}
+		}
+		else {
+		}
+		var fields = window.PhanterPWA.Request.get_param ('campos');
+		self.fields = ['data_nasc', 'endereco', 'contatos'];
+		self.str_fields = 'data_nasc,endereco,contatos';
+		if (fields !== null) {
+			console.log (fields);
+			var fsplit = fields.py_split (',');
+			console.log (fsplit);
+			var lis_split = [];
+			for (var x of fsplit) {
+				console.log (x);
+				if (__in__ (x, self._fields_permitidos)) {
+					lis_split.append (x);
+				}
+			}
+			console.log (lis_split);
+			if (len (lis_split) > 0) {
+				self.fields = lis_split;
+				self.str_fields = ','.join (lis_split);
+			}
+		}
+	});},
+	get abrir_modal_escolher_campos () {return __get__ (this, function (self) {
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+					switch (__attrib0__) {
+						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+					}
+				}
+			}
+		}
+		else {
+		}
+		var series = self.fields;
+		var fixo = ['Nº', 'Nome do(a) Aluno(a)'];
+		var lista_de_series = [['numero', 'Nº'], ['aluno', 'Nome do(a) Aluno(a)']];
+		var data_set = [];
+		for (var x of self._fields_permitidos) {
+			data_set.append ([x, self._fields_names [x]]);
+		}
+		for (var x of self.fields) {
+			lista_de_series.append ([x, self._fields_names [x]]);
+		}
+		var wg = widgets.ListString ('lista_de_series_escola_ano', __kwargtrans__ ({label: 'Seleção de Séries/Anos', placeholder: 'Escolha uma série/ano abaixo.', value: lista_de_series, data_set: data_set, editable: false, fixed: fixo}));
+		var content = DIV (H3 ('ESCOLHA OS CAMPOS QUE DESEJA ADICIONAR'), DIV (wg), __kwargtrans__ ({_class: 'p-row'}));
+		var footer = DIV (forms.FormButton ('confirmar_escolha_de_campos', 'Confirmar', __kwargtrans__ ({_class: 'btn-autoresize wave_on_click waves-phanterpwa'})), __kwargtrans__ ({_class: 'phanterpwa-form-buttons-container'}));
+		self.modal_escolher_campos = modal.Modal ('#escolha_de_campo_div', __kwargtrans__ (dict ({'title': 'Escolha os campos do documento', 'content': content, 'footer': footer})));
+		self.modal_escolher_campos.open ();
+		$ ('#phanterpwa-widget-form-form_button-confirmar_escolha_de_campos').off ('click.confirmar_escolha_de_campos').on ('click.confirmar_escolha_de_campos', (function __lambda__ () {
+			if (arguments.length) {
+				var __ilastarg0__ = arguments.length - 1;
+				if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+					var __allkwargs0__ = arguments [__ilastarg0__--];
+					for (var __attrib0__ in __allkwargs0__) {
+					}
+				}
+			}
+			else {
+			}
+			return self._on_confirmar_escolha_de_campos (wg);
+		}));
+	});},
+	get _on_confirmar_escolha_de_campos () {return __get__ (this, function (self, wg) {
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+					switch (__attrib0__) {
+						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+						case 'wg': var wg = __allkwargs0__ [__attrib0__]; break;
+					}
+				}
+			}
+		}
+		else {
+		}
+		wg.value ();
+		var li = [];
+		for (var x of wg.value ()) {
+			if (!__in__ (x [0], ['aluno', 'numero'])) {
+				li.append (x [0]);
+			}
+		}
+		self.fields = li;
+		self.str_fields = ','.join (li);
+		window.PhanterPWA.set_push_way (window.PhanterPWA.relative_way ('imprimir', 'turma', self.id_escola, self.ano_letivo, self.id_turma, __kwargtrans__ ({_campos: self.str_fields})));
+		self._get_data ();
+		self.modal_escolher_campos.close ();
+	});}
+});
 export var TotalDeMatriculados =  __class__ ('TotalDeMatriculados', [object], {
 	__module__: __name__,
 	get __init__ () {return __get__ (this, function (self, parent, id_escola, ano_letivo) {
@@ -1319,7 +1585,7 @@ export var TotalDeMatriculados =  __class__ ('TotalDeMatriculados', [object], {
 		else {
 		}
 		self.id_matricula = window.PhanterPWA.Request.get_arg (1);
-		var html = CONCATENATE (DIV (DIV (DIV (DIV ('IMPRIMIR', __kwargtrans__ ({_class: 'phanterpwa-breadcrumb'})), DIV ('TOTAL DE MATRÍCULAS', __kwargtrans__ ({_class: 'phanterpwa-breadcrumb'})), __kwargtrans__ ({_class: 'phanterpwa-breadcrumb-wrapper'})), __kwargtrans__ ({_class: 'p-container'})), __kwargtrans__ ({_class: 'title_page_container card'})), DIV (DIV (DIV (DIV (DIV (preloaders.android, __kwargtrans__ ({_style: 'width: 300px; height: 300px; overflow: hidden; margin: auto;'})), __kwargtrans__ ({_style: 'text-align:center; padding: 50px 0;'})), __kwargtrans__ ({_id: 'content-matriculas-imprimir', _class: 'p-row card e-padding_20'})), __kwargtrans__ ({_class: 'phanterpwa-container p-container'})), __kwargtrans__ ({_id: 'documentos-content'})), DIV (__kwargtrans__ ({_id: 'documento-lista-alunos'})), DIV (__kwargtrans__ ({_id: 'documento-lista-desistentes'})), DIV (__kwargtrans__ ({_id: 'documento-lista-transferidos'})), DIV (__kwargtrans__ ({_id: 'documento-lista-novatos'})));
+		var html = CONCATENATE (DIV (DIV (DIV (DIV ('IMPRIMIR', __kwargtrans__ ({_class: 'phanterpwa-breadcrumb'})), DIV ('TOTAL DE MATRÍCULAS', __kwargtrans__ ({_class: 'phanterpwa-breadcrumb'})), __kwargtrans__ ({_class: 'phanterpwa-breadcrumb-wrapper'})), __kwargtrans__ ({_class: 'p-container'})), __kwargtrans__ ({_class: 'title_page_container card'})), DIV (DIV (DIV (DIV (DIV (preloaders.android, __kwargtrans__ ({_style: 'width: 300px; height: 300px; overflow: hidden; margin: auto;'})), __kwargtrans__ ({_style: 'text-align:center; padding: 50px 0;'})), __kwargtrans__ ({_id: 'content-turma-imprimir', _class: 'p-row card e-padding_20'})), __kwargtrans__ ({_class: 'phanterpwa-container p-container'})), __kwargtrans__ ({_id: 'documentos-content'})), DIV (__kwargtrans__ ({_id: 'documento-lista-alunos'})), DIV (__kwargtrans__ ({_id: 'documento-lista-desistentes'})), DIV (__kwargtrans__ ({_id: 'documento-lista-transferidos'})), DIV (__kwargtrans__ ({_id: 'documento-lista-novatos'})));
 		html.html_to ('#main-container');
 		var BackButton = left_bar.LeftBarButton ('back_imprimir_matricula', 'Voltar', I (__kwargtrans__ ({_class: 'fas fa-arrow-circle-left'})), __kwargtrans__ (dict ({'_phanterpwa-way': 'area-do-servidor', 'position': 'top', 'ways': [(function __lambda__ (r) {
 			if (arguments.length) {

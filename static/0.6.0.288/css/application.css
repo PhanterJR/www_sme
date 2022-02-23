@@ -547,7 +547,7 @@ svg.logo_sme_svg .fil8 {
 #phanterpwa-snippet-phanterpwa-logo-wrapper {
   background: #020024;
   background: radial-gradient(circle, #007512 0%, #002418 87%, #000 100%);
-  background-image: url("/static/0.6.0.280/images/background.jpg");
+  background-image: url("/static/0.6.0.288/images/background.jpg");
   width: 100%;
   min-height: 400px;
   background-repeat-y: repeat;
@@ -1299,29 +1299,29 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
 
 @font-face {
   font-family: "Segoe UI Mono W01 Regular";
-  src: url("/static/0.6.0.280/fonts/88bdc70ec292cc29451932f9875b378a.eot");
-  src: url("/static/0.6.0.280/fonts/88bdc70ec292cc29451932f9875b378a.eot?#iefix") format("embedded-opentype"), url("/static/0.6.0.280/fonts/88bdc70ec292cc29451932f9875b378a.woff2") format("woff2"), url("/static/0.6.0.280/fonts/88bdc70ec292cc29451932f9875b378a.woff") format("woff"), url("/static/0.6.0.280/fonts/88bdc70ec292cc29451932f9875b378a.ttf") format("truetype"), url("/static/0.6.0.280/fonts/88bdc70ec292cc29451932f9875b378a.svg#Segoe UI Mono W01 Regular") format("svg");
+  src: url("/static/0.6.0.288/fonts/88bdc70ec292cc29451932f9875b378a.eot");
+  src: url("/static/0.6.0.288/fonts/88bdc70ec292cc29451932f9875b378a.eot?#iefix") format("embedded-opentype"), url("/static/0.6.0.288/fonts/88bdc70ec292cc29451932f9875b378a.woff2") format("woff2"), url("/static/0.6.0.288/fonts/88bdc70ec292cc29451932f9875b378a.woff") format("woff"), url("/static/0.6.0.288/fonts/88bdc70ec292cc29451932f9875b378a.ttf") format("truetype"), url("/static/0.6.0.288/fonts/88bdc70ec292cc29451932f9875b378a.svg#Segoe UI Mono W01 Regular") format("svg");
 }
 
 @font-face {
   font-family: "Segoe UI Italic";
   font-style: normal;
   font-weight: normal;
-  src: local("Segoe UI Italic"), url("/static/0.6.0.280/fonts/Segoe UI Italic.woff") format("woff");
+  src: local("Segoe UI Italic"), url("/static/0.6.0.288/fonts/Segoe UI Italic.woff") format("woff");
 }
 
 @font-face {
   font-family: "Segoe UI Bold";
   font-style: normal;
   font-weight: normal;
-  src: local("Segoe UI Bold"), url("/static/0.6.0.280/fonts/Segoe UI Bold.woff") format("woff");
+  src: local("Segoe UI Bold"), url("/static/0.6.0.288/fonts/Segoe UI Bold.woff") format("woff");
 }
 
 @font-face {
   font-family: "Segoe UI Bold Italic";
   font-style: normal;
   font-weight: normal;
-  src: local("Segoe UI Bold Italic"), url("/static/0.6.0.280/fonts/Segoe UI Bold Italic.woff") format("woff");
+  src: local("Segoe UI Bold Italic"), url("/static/0.6.0.288/fonts/Segoe UI Bold Italic.woff") format("woff");
 }
 
 /* roboto-thin - latin */
@@ -1330,8 +1330,8 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
   font-family: "Roboto";
   font-style: normal;
   font-weight: 400;
-  src: url("/static/0.6.0.280/fonts/roboto-v20-latin-regular.eot");
-  src: local("Roboto"), local("Roboto-Regular"), url("/static/0.6.0.280/fonts/roboto-v20-latin-regular.eot?#iefix") format("embedded-opentype"), url("/static/0.6.0.280/fonts/roboto-v20-latin-regular.woff2") format("woff2"), url("/static/0.6.0.280/fonts/roboto-v20-latin-regular.woff") format("woff"), url("/static/0.6.0.280/fonts/roboto-v20-latin-regular.ttf") format("truetype"), url("/static/0.6.0.280/fonts/roboto-v20-latin-regular.svg#Roboto") format("svg");
+  src: url("/static/0.6.0.288/fonts/roboto-v20-latin-regular.eot");
+  src: local("Roboto"), local("Roboto-Regular"), url("/static/0.6.0.288/fonts/roboto-v20-latin-regular.eot?#iefix") format("embedded-opentype"), url("/static/0.6.0.288/fonts/roboto-v20-latin-regular.woff2") format("woff2"), url("/static/0.6.0.288/fonts/roboto-v20-latin-regular.woff") format("woff"), url("/static/0.6.0.288/fonts/roboto-v20-latin-regular.ttf") format("truetype"), url("/static/0.6.0.288/fonts/roboto-v20-latin-regular.svg#Roboto") format("svg");
 }
 
 /* latin-ext */
@@ -1339,7 +1339,7 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
   font-family: "Roboto Mono";
   font-style: normal;
   font-weight: 400;
-  src: url("/static/0.6.0.280/fonts/L0x5DF4xlVMF-BfR8bXMIjhFq3-OXg.woff2") format("woff2");
+  src: url("/static/0.6.0.288/fonts/L0x5DF4xlVMF-BfR8bXMIjhFq3-OXg.woff2") format("woff2");
   unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
@@ -1348,7 +1348,7 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
   font-family: "Roboto Mono";
   font-style: normal;
   font-weight: 400;
-  src: url("/static/0.6.0.280/fonts/L0x5DF4xlVMF-BfR8bXMIjhLq38.woff2") format("woff2");
+  src: url("/static/0.6.0.288/fonts/L0x5DF4xlVMF-BfR8bXMIjhLq38.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
@@ -1357,7 +1357,7 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
   font-family: "Cousine";
   font-style: normal;
   font-weight: 400;
-  src: url("/static/0.6.0.280/fonts/d6lIkaiiRdih4SpP_SovzAbt.woff2") format("woff2");
+  src: url("/static/0.6.0.288/fonts/d6lIkaiiRdih4SpP_SovzAbt.woff2") format("woff2");
   unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
@@ -1366,15 +1366,15 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
   font-family: "Cousine";
   font-style: normal;
   font-weight: 400;
-  src: url("/static/0.6.0.280/fonts/d6lIkaiiRdih4SpP_SQvzA.woff2") format("woff2");
+  src: url("/static/0.6.0.288/fonts/d6lIkaiiRdih4SpP_SQvzA.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 /* DejaVu Sans */
 @font-face {
   font-family: "DejaVu Sans";
-  src: url("/static/0.6.0.280/fonts/DejaVuSans.eot");
-  src: url("/static/0.6.0.280/fonts/DejaVuSans.eot?#iefix") format("embedded-opentype"), url("/static/0.6.0.280/fonts/DejaVuSans.woff2") format("woff2"), url("/static/0.6.0.280/fonts/DejaVuSans.woff") format("woff"), url("/static/0.6.0.280/fonts/DejaVuSans.ttf") format("truetype"), url("/static/0.6.0.280/fonts/DejaVuSans.svg#Segoe UI Mono W01 Regular") format("svg");
+  src: url("/static/0.6.0.288/fonts/DejaVuSans.eot");
+  src: url("/static/0.6.0.288/fonts/DejaVuSans.eot?#iefix") format("embedded-opentype"), url("/static/0.6.0.288/fonts/DejaVuSans.woff2") format("woff2"), url("/static/0.6.0.288/fonts/DejaVuSans.woff") format("woff"), url("/static/0.6.0.288/fonts/DejaVuSans.ttf") format("truetype"), url("/static/0.6.0.288/fonts/DejaVuSans.svg#Segoe UI Mono W01 Regular") format("svg");
 }
 
 .phanterpwa-paper-sme {
@@ -3226,7 +3226,7 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
 }
 
 /* SASS Source Code: /var/www/tornado/SME/frontapps/secretaria/sources/styles/handlers/imprimir.sass */
-.imprimir_matricula_container, .imprimir_questionario_social, .imprimir_comprovante_social, .imprimir_ata_de_resultados, .imprimir_diario_de_aulas {
+.imprimir_matricula_container, .imprimir_questionario_social, .imprimir_comprovante_social, .imprimir_ata_de_resultados, .imprimir_diario_de_aulas, .imprimir_alunos_da_turma {
   font-family: "Segoe UI","DejaVu Sans","Roboto";
   padding: 40px;
   width: 855px;
@@ -3235,101 +3235,101 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
   line-height: 1;
 }
 
-.imprimir_matricula_container.quebra-de-pagina-depois, .imprimir_questionario_social.quebra-de-pagina-depois, .imprimir_comprovante_social.quebra-de-pagina-depois, .imprimir_ata_de_resultados.quebra-de-pagina-depois, .imprimir_diario_de_aulas.quebra-de-pagina-depois {
+.imprimir_matricula_container.quebra-de-pagina-depois, .imprimir_questionario_social.quebra-de-pagina-depois, .imprimir_comprovante_social.quebra-de-pagina-depois, .imprimir_ata_de_resultados.quebra-de-pagina-depois, .imprimir_diario_de_aulas.quebra-de-pagina-depois, .imprimir_alunos_da_turma.quebra-de-pagina-depois {
   clear: both;
   page-break-after: always;
 }
 
-.imprimir_matricula_container.quebra-de-pagina-antes, .imprimir_questionario_social.quebra-de-pagina-antes, .imprimir_comprovante_social.quebra-de-pagina-antes, .imprimir_ata_de_resultados.quebra-de-pagina-antes, .imprimir_diario_de_aulas.quebra-de-pagina-antes {
+.imprimir_matricula_container.quebra-de-pagina-antes, .imprimir_questionario_social.quebra-de-pagina-antes, .imprimir_comprovante_social.quebra-de-pagina-antes, .imprimir_ata_de_resultados.quebra-de-pagina-antes, .imprimir_diario_de_aulas.quebra-de-pagina-antes, .imprimir_alunos_da_turma.quebra-de-pagina-antes {
   clear: both;
   page-break-before: always;
 }
 
-.imprimir_matricula_container .imprimir_documentos_wrapper, .imprimir_questionario_social .imprimir_documentos_wrapper, .imprimir_comprovante_social .imprimir_documentos_wrapper, .imprimir_ata_de_resultados .imprimir_documentos_wrapper, .imprimir_diario_de_aulas .imprimir_documentos_wrapper {
+.imprimir_matricula_container .imprimir_documentos_wrapper, .imprimir_questionario_social .imprimir_documentos_wrapper, .imprimir_comprovante_social .imprimir_documentos_wrapper, .imprimir_ata_de_resultados .imprimir_documentos_wrapper, .imprimir_diario_de_aulas .imprimir_documentos_wrapper, .imprimir_alunos_da_turma .imprimir_documentos_wrapper {
   page-break-inside: avoid;
 }
 
-.imprimir_matricula_container h1, .imprimir_matricula_container h2, .imprimir_matricula_container h3, .imprimir_matricula_container h4, .imprimir_matricula_container h5, .imprimir_matricula_container h6, .imprimir_questionario_social h1, .imprimir_questionario_social h2, .imprimir_questionario_social h3, .imprimir_questionario_social h4, .imprimir_questionario_social h5, .imprimir_questionario_social h6, .imprimir_comprovante_social h1, .imprimir_comprovante_social h2, .imprimir_comprovante_social h3, .imprimir_comprovante_social h4, .imprimir_comprovante_social h5, .imprimir_comprovante_social h6, .imprimir_ata_de_resultados h1, .imprimir_ata_de_resultados h2, .imprimir_ata_de_resultados h3, .imprimir_ata_de_resultados h4, .imprimir_ata_de_resultados h5, .imprimir_ata_de_resultados h6, .imprimir_diario_de_aulas h1, .imprimir_diario_de_aulas h2, .imprimir_diario_de_aulas h3, .imprimir_diario_de_aulas h4, .imprimir_diario_de_aulas h5, .imprimir_diario_de_aulas h6 {
+.imprimir_matricula_container h1, .imprimir_matricula_container h2, .imprimir_matricula_container h3, .imprimir_matricula_container h4, .imprimir_matricula_container h5, .imprimir_matricula_container h6, .imprimir_questionario_social h1, .imprimir_questionario_social h2, .imprimir_questionario_social h3, .imprimir_questionario_social h4, .imprimir_questionario_social h5, .imprimir_questionario_social h6, .imprimir_comprovante_social h1, .imprimir_comprovante_social h2, .imprimir_comprovante_social h3, .imprimir_comprovante_social h4, .imprimir_comprovante_social h5, .imprimir_comprovante_social h6, .imprimir_ata_de_resultados h1, .imprimir_ata_de_resultados h2, .imprimir_ata_de_resultados h3, .imprimir_ata_de_resultados h4, .imprimir_ata_de_resultados h5, .imprimir_ata_de_resultados h6, .imprimir_diario_de_aulas h1, .imprimir_diario_de_aulas h2, .imprimir_diario_de_aulas h3, .imprimir_diario_de_aulas h4, .imprimir_diario_de_aulas h5, .imprimir_diario_de_aulas h6, .imprimir_alunos_da_turma h1, .imprimir_alunos_da_turma h2, .imprimir_alunos_da_turma h3, .imprimir_alunos_da_turma h4, .imprimir_alunos_da_turma h5, .imprimir_alunos_da_turma h6 {
   font-family: "Roboto Thin","Segoe UI","DejaVu Sans","Roboto";
 }
 
-.imprimir_matricula_container .sme_cabecalho_sme, .imprimir_questionario_social .sme_cabecalho_sme, .imprimir_comprovante_social .sme_cabecalho_sme, .imprimir_ata_de_resultados .sme_cabecalho_sme, .imprimir_diario_de_aulas .sme_cabecalho_sme {
+.imprimir_matricula_container .sme_cabecalho_sme, .imprimir_questionario_social .sme_cabecalho_sme, .imprimir_comprovante_social .sme_cabecalho_sme, .imprimir_ata_de_resultados .sme_cabecalho_sme, .imprimir_diario_de_aulas .sme_cabecalho_sme, .imprimir_alunos_da_turma .sme_cabecalho_sme {
   position: relative;
 }
 
-.imprimir_matricula_container .sme_cabecalho_sme .back, .imprimir_questionario_social .sme_cabecalho_sme .back, .imprimir_comprovante_social .sme_cabecalho_sme .back, .imprimir_ata_de_resultados .sme_cabecalho_sme .back, .imprimir_diario_de_aulas .sme_cabecalho_sme .back {
+.imprimir_matricula_container .sme_cabecalho_sme .back, .imprimir_questionario_social .sme_cabecalho_sme .back, .imprimir_comprovante_social .sme_cabecalho_sme .back, .imprimir_ata_de_resultados .sme_cabecalho_sme .back, .imprimir_diario_de_aulas .sme_cabecalho_sme .back, .imprimir_alunos_da_turma .sme_cabecalho_sme .back {
   width: 100%;
   text-align: center;
 }
 
-.imprimir_matricula_container .sme_cabecalho_sme .back > img, .imprimir_questionario_social .sme_cabecalho_sme .back > img, .imprimir_comprovante_social .sme_cabecalho_sme .back > img, .imprimir_ata_de_resultados .sme_cabecalho_sme .back > img, .imprimir_diario_de_aulas .sme_cabecalho_sme .back > img {
+.imprimir_matricula_container .sme_cabecalho_sme .back > img, .imprimir_questionario_social .sme_cabecalho_sme .back > img, .imprimir_comprovante_social .sme_cabecalho_sme .back > img, .imprimir_ata_de_resultados .sme_cabecalho_sme .back > img, .imprimir_diario_de_aulas .sme_cabecalho_sme .back > img, .imprimir_alunos_da_turma .sme_cabecalho_sme .back > img {
   height: 120px;
   width: auto;
 }
 
-.imprimir_matricula_container .sme_cabecalho_sme .front, .imprimir_questionario_social .sme_cabecalho_sme .front, .imprimir_comprovante_social .sme_cabecalho_sme .front, .imprimir_ata_de_resultados .sme_cabecalho_sme .front, .imprimir_diario_de_aulas .sme_cabecalho_sme .front {
+.imprimir_matricula_container .sme_cabecalho_sme .front, .imprimir_questionario_social .sme_cabecalho_sme .front, .imprimir_comprovante_social .sme_cabecalho_sme .front, .imprimir_ata_de_resultados .sme_cabecalho_sme .front, .imprimir_diario_de_aulas .sme_cabecalho_sme .front, .imprimir_alunos_da_turma .sme_cabecalho_sme .front {
   position: absolute;
   width: 100%;
   text-align: center;
   top: 0;
 }
 
-.imprimir_matricula_container .sme_cabecalho_sme_nome_escola h3, .imprimir_questionario_social .sme_cabecalho_sme_nome_escola h3, .imprimir_comprovante_social .sme_cabecalho_sme_nome_escola h3, .imprimir_ata_de_resultados .sme_cabecalho_sme_nome_escola h3, .imprimir_diario_de_aulas .sme_cabecalho_sme_nome_escola h3 {
+.imprimir_matricula_container .sme_cabecalho_sme_nome_escola h3, .imprimir_questionario_social .sme_cabecalho_sme_nome_escola h3, .imprimir_comprovante_social .sme_cabecalho_sme_nome_escola h3, .imprimir_ata_de_resultados .sme_cabecalho_sme_nome_escola h3, .imprimir_diario_de_aulas .sme_cabecalho_sme_nome_escola h3, .imprimir_alunos_da_turma .sme_cabecalho_sme_nome_escola h3 {
   text-transform: uppercase;
   text-align: center;
   margin: 5px 0;
 }
 
-.imprimir_matricula_container .sme_cabecalho_sme_dados_escola h5, .imprimir_questionario_social .sme_cabecalho_sme_dados_escola h5, .imprimir_comprovante_social .sme_cabecalho_sme_dados_escola h5, .imprimir_ata_de_resultados .sme_cabecalho_sme_dados_escola h5, .imprimir_diario_de_aulas .sme_cabecalho_sme_dados_escola h5 {
+.imprimir_matricula_container .sme_cabecalho_sme_dados_escola h5, .imprimir_questionario_social .sme_cabecalho_sme_dados_escola h5, .imprimir_comprovante_social .sme_cabecalho_sme_dados_escola h5, .imprimir_ata_de_resultados .sme_cabecalho_sme_dados_escola h5, .imprimir_diario_de_aulas .sme_cabecalho_sme_dados_escola h5, .imprimir_alunos_da_turma .sme_cabecalho_sme_dados_escola h5 {
   text-transform: uppercase;
   text-align: center;
   margin: 4px 0;
 }
 
-.imprimir_matricula_container .sme_cabecalho_titulo_documento h2, .imprimir_questionario_social .sme_cabecalho_titulo_documento h2, .imprimir_comprovante_social .sme_cabecalho_titulo_documento h2, .imprimir_ata_de_resultados .sme_cabecalho_titulo_documento h2, .imprimir_diario_de_aulas .sme_cabecalho_titulo_documento h2 {
+.imprimir_matricula_container .sme_cabecalho_titulo_documento h2, .imprimir_questionario_social .sme_cabecalho_titulo_documento h2, .imprimir_comprovante_social .sme_cabecalho_titulo_documento h2, .imprimir_ata_de_resultados .sme_cabecalho_titulo_documento h2, .imprimir_diario_de_aulas .sme_cabecalho_titulo_documento h2, .imprimir_alunos_da_turma .sme_cabecalho_titulo_documento h2 {
   text-transform: uppercase;
   text-align: center;
   margin: 15px 0;
 }
 
-.imprimir_matricula_container .sme_documento_conteudo, .imprimir_questionario_social .sme_documento_conteudo, .imprimir_comprovante_social .sme_documento_conteudo, .imprimir_ata_de_resultados .sme_documento_conteudo, .imprimir_diario_de_aulas .sme_documento_conteudo {
+.imprimir_matricula_container .sme_documento_conteudo, .imprimir_questionario_social .sme_documento_conteudo, .imprimir_comprovante_social .sme_documento_conteudo, .imprimir_ata_de_resultados .sme_documento_conteudo, .imprimir_diario_de_aulas .sme_documento_conteudo, .imprimir_alunos_da_turma .sme_documento_conteudo {
   font-size: 10pt;
 }
 
-.imprimir_matricula_container .sme_documento_conteudo.conteudo_declaracao, .imprimir_questionario_social .sme_documento_conteudo.conteudo_declaracao, .imprimir_comprovante_social .sme_documento_conteudo.conteudo_declaracao, .imprimir_ata_de_resultados .sme_documento_conteudo.conteudo_declaracao, .imprimir_diario_de_aulas .sme_documento_conteudo.conteudo_declaracao {
+.imprimir_matricula_container .sme_documento_conteudo.conteudo_declaracao, .imprimir_questionario_social .sme_documento_conteudo.conteudo_declaracao, .imprimir_comprovante_social .sme_documento_conteudo.conteudo_declaracao, .imprimir_ata_de_resultados .sme_documento_conteudo.conteudo_declaracao, .imprimir_diario_de_aulas .sme_documento_conteudo.conteudo_declaracao, .imprimir_alunos_da_turma .sme_documento_conteudo.conteudo_declaracao {
   font-size: 14pt;
 }
 
-.imprimir_matricula_container .sme_documento_conteudo table, .imprimir_questionario_social .sme_documento_conteudo table, .imprimir_comprovante_social .sme_documento_conteudo table, .imprimir_ata_de_resultados .sme_documento_conteudo table, .imprimir_diario_de_aulas .sme_documento_conteudo table {
+.imprimir_matricula_container .sme_documento_conteudo table, .imprimir_questionario_social .sme_documento_conteudo table, .imprimir_comprovante_social .sme_documento_conteudo table, .imprimir_ata_de_resultados .sme_documento_conteudo table, .imprimir_diario_de_aulas .sme_documento_conteudo table, .imprimir_alunos_da_turma .sme_documento_conteudo table {
   margin: auto;
   min-width: 750px;
   width: 100%;
 }
 
-.imprimir_matricula_container .sme_documento_conteudo p, .imprimir_questionario_social .sme_documento_conteudo p, .imprimir_comprovante_social .sme_documento_conteudo p, .imprimir_ata_de_resultados .sme_documento_conteudo p, .imprimir_diario_de_aulas .sme_documento_conteudo p {
+.imprimir_matricula_container .sme_documento_conteudo p, .imprimir_questionario_social .sme_documento_conteudo p, .imprimir_comprovante_social .sme_documento_conteudo p, .imprimir_ata_de_resultados .sme_documento_conteudo p, .imprimir_diario_de_aulas .sme_documento_conteudo p, .imprimir_alunos_da_turma .sme_documento_conteudo p {
   text-indent: 40px;
   text-align: justify;
 }
 
-.imprimir_matricula_container .sme_documento_conteudo .miudinho, .imprimir_questionario_social .sme_documento_conteudo .miudinho, .imprimir_comprovante_social .sme_documento_conteudo .miudinho, .imprimir_ata_de_resultados .sme_documento_conteudo .miudinho, .imprimir_diario_de_aulas .sme_documento_conteudo .miudinho {
+.imprimir_matricula_container .sme_documento_conteudo .miudinho, .imprimir_questionario_social .sme_documento_conteudo .miudinho, .imprimir_comprovante_social .sme_documento_conteudo .miudinho, .imprimir_ata_de_resultados .sme_documento_conteudo .miudinho, .imprimir_diario_de_aulas .sme_documento_conteudo .miudinho, .imprimir_alunos_da_turma .sme_documento_conteudo .miudinho {
   font-size: 8pt;
 }
 
-.imprimir_matricula_container .sme_documento_conteudo .cidade_e_data, .imprimir_questionario_social .sme_documento_conteudo .cidade_e_data, .imprimir_comprovante_social .sme_documento_conteudo .cidade_e_data, .imprimir_ata_de_resultados .sme_documento_conteudo .cidade_e_data, .imprimir_diario_de_aulas .sme_documento_conteudo .cidade_e_data {
+.imprimir_matricula_container .sme_documento_conteudo .cidade_e_data, .imprimir_questionario_social .sme_documento_conteudo .cidade_e_data, .imprimir_comprovante_social .sme_documento_conteudo .cidade_e_data, .imprimir_ata_de_resultados .sme_documento_conteudo .cidade_e_data, .imprimir_diario_de_aulas .sme_documento_conteudo .cidade_e_data, .imprimir_alunos_da_turma .sme_documento_conteudo .cidade_e_data {
   margin: 20px 0 40px 0;
 }
 
-.imprimir_matricula_container .tudo_centralizado, .imprimir_questionario_social .tudo_centralizado, .imprimir_comprovante_social .tudo_centralizado, .imprimir_ata_de_resultados .tudo_centralizado, .imprimir_diario_de_aulas .tudo_centralizado {
+.imprimir_matricula_container .tudo_centralizado, .imprimir_questionario_social .tudo_centralizado, .imprimir_comprovante_social .tudo_centralizado, .imprimir_ata_de_resultados .tudo_centralizado, .imprimir_diario_de_aulas .tudo_centralizado, .imprimir_alunos_da_turma .tudo_centralizado {
   text-align: center;
 }
 
-.imprimir_matricula_container .phanterpwa-xsection h4, .imprimir_questionario_social .phanterpwa-xsection h4, .imprimir_comprovante_social .phanterpwa-xsection h4, .imprimir_ata_de_resultados .phanterpwa-xsection h4, .imprimir_diario_de_aulas .phanterpwa-xsection h4 {
+.imprimir_matricula_container .phanterpwa-xsection h4, .imprimir_questionario_social .phanterpwa-xsection h4, .imprimir_comprovante_social .phanterpwa-xsection h4, .imprimir_ata_de_resultados .phanterpwa-xsection h4, .imprimir_diario_de_aulas .phanterpwa-xsection h4, .imprimir_alunos_da_turma .phanterpwa-xsection h4 {
   text-transform: uppercase;
   text-align: center;
   margin: 4px 0;
 }
 
-.imprimir_matricula_container .phanterpwa-xsection-container, .imprimir_questionario_social .phanterpwa-xsection-container, .imprimir_comprovante_social .phanterpwa-xsection-container, .imprimir_ata_de_resultados .phanterpwa-xsection-container, .imprimir_diario_de_aulas .phanterpwa-xsection-container {
+.imprimir_matricula_container .phanterpwa-xsection-container, .imprimir_questionario_social .phanterpwa-xsection-container, .imprimir_comprovante_social .phanterpwa-xsection-container, .imprimir_ata_de_resultados .phanterpwa-xsection-container, .imprimir_diario_de_aulas .phanterpwa-xsection-container, .imprimir_alunos_da_turma .phanterpwa-xsection-container {
   position: relative;
   display: block;
   padding: 10px 0;
@@ -3337,7 +3337,7 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
   overflow: auto;
 }
 
-.imprimir_matricula_container .phanterpwa-xsection-container .phanterpwa-xsection, .imprimir_questionario_social .phanterpwa-xsection-container .phanterpwa-xsection, .imprimir_comprovante_social .phanterpwa-xsection-container .phanterpwa-xsection, .imprimir_ata_de_resultados .phanterpwa-xsection-container .phanterpwa-xsection, .imprimir_diario_de_aulas .phanterpwa-xsection-container .phanterpwa-xsection {
+.imprimir_matricula_container .phanterpwa-xsection-container .phanterpwa-xsection, .imprimir_questionario_social .phanterpwa-xsection-container .phanterpwa-xsection, .imprimir_comprovante_social .phanterpwa-xsection-container .phanterpwa-xsection, .imprimir_ata_de_resultados .phanterpwa-xsection-container .phanterpwa-xsection, .imprimir_diario_de_aulas .phanterpwa-xsection-container .phanterpwa-xsection, .imprimir_alunos_da_turma .phanterpwa-xsection-container .phanterpwa-xsection {
   border: 1px solid #d7d7d7;
   overflow: auto;
   border-radius: 5px;
@@ -3345,13 +3345,13 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
   padding: 15px 0px 10px 0px;
 }
 
-.imprimir_matricula_container .phanterpwa-xsection-container .phanterpwa-xsection .phanterpwa-xsection-menu_buttom, .imprimir_questionario_social .phanterpwa-xsection-container .phanterpwa-xsection .phanterpwa-xsection-menu_buttom, .imprimir_comprovante_social .phanterpwa-xsection-container .phanterpwa-xsection .phanterpwa-xsection-menu_buttom, .imprimir_ata_de_resultados .phanterpwa-xsection-container .phanterpwa-xsection .phanterpwa-xsection-menu_buttom, .imprimir_diario_de_aulas .phanterpwa-xsection-container .phanterpwa-xsection .phanterpwa-xsection-menu_buttom {
+.imprimir_matricula_container .phanterpwa-xsection-container .phanterpwa-xsection .phanterpwa-xsection-menu_buttom, .imprimir_questionario_social .phanterpwa-xsection-container .phanterpwa-xsection .phanterpwa-xsection-menu_buttom, .imprimir_comprovante_social .phanterpwa-xsection-container .phanterpwa-xsection .phanterpwa-xsection-menu_buttom, .imprimir_ata_de_resultados .phanterpwa-xsection-container .phanterpwa-xsection .phanterpwa-xsection-menu_buttom, .imprimir_diario_de_aulas .phanterpwa-xsection-container .phanterpwa-xsection .phanterpwa-xsection-menu_buttom, .imprimir_alunos_da_turma .phanterpwa-xsection-container .phanterpwa-xsection .phanterpwa-xsection-menu_buttom {
   position: absolute;
   top: 15px;
   right: 7px;
 }
 
-.imprimir_matricula_container .phanterpwa-xsection-container .phanterpwa-xsection > label, .imprimir_questionario_social .phanterpwa-xsection-container .phanterpwa-xsection > label, .imprimir_comprovante_social .phanterpwa-xsection-container .phanterpwa-xsection > label, .imprimir_ata_de_resultados .phanterpwa-xsection-container .phanterpwa-xsection > label, .imprimir_diario_de_aulas .phanterpwa-xsection-container .phanterpwa-xsection > label {
+.imprimir_matricula_container .phanterpwa-xsection-container .phanterpwa-xsection > label, .imprimir_questionario_social .phanterpwa-xsection-container .phanterpwa-xsection > label, .imprimir_comprovante_social .phanterpwa-xsection-container .phanterpwa-xsection > label, .imprimir_ata_de_resultados .phanterpwa-xsection-container .phanterpwa-xsection > label, .imprimir_diario_de_aulas .phanterpwa-xsection-container .phanterpwa-xsection > label, .imprimir_alunos_da_turma .phanterpwa-xsection-container .phanterpwa-xsection > label {
   white-space: nowrap;
   padding: 5px;
   color: #4e6eaa;
@@ -3367,11 +3367,11 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
   font-size: 10pt;
 }
 
-.imprimir_matricula_container .phanterpwa-xsection-container .phanterpwa-xsection > hr, .imprimir_questionario_social .phanterpwa-xsection-container .phanterpwa-xsection > hr, .imprimir_comprovante_social .phanterpwa-xsection-container .phanterpwa-xsection > hr, .imprimir_ata_de_resultados .phanterpwa-xsection-container .phanterpwa-xsection > hr, .imprimir_diario_de_aulas .phanterpwa-xsection-container .phanterpwa-xsection > hr {
+.imprimir_matricula_container .phanterpwa-xsection-container .phanterpwa-xsection > hr, .imprimir_questionario_social .phanterpwa-xsection-container .phanterpwa-xsection > hr, .imprimir_comprovante_social .phanterpwa-xsection-container .phanterpwa-xsection > hr, .imprimir_ata_de_resultados .phanterpwa-xsection-container .phanterpwa-xsection > hr, .imprimir_diario_de_aulas .phanterpwa-xsection-container .phanterpwa-xsection > hr, .imprimir_alunos_da_turma .phanterpwa-xsection-container .phanterpwa-xsection > hr {
   border: 0.5px solid #eeeded;
 }
 
-.imprimir_matricula_container .phanterpwa-xsection-container .phanterpwa-xsection .phanterpwa-xsection-title, .imprimir_questionario_social .phanterpwa-xsection-container .phanterpwa-xsection .phanterpwa-xsection-title, .imprimir_comprovante_social .phanterpwa-xsection-container .phanterpwa-xsection .phanterpwa-xsection-title, .imprimir_ata_de_resultados .phanterpwa-xsection-container .phanterpwa-xsection .phanterpwa-xsection-title, .imprimir_diario_de_aulas .phanterpwa-xsection-container .phanterpwa-xsection .phanterpwa-xsection-title {
+.imprimir_matricula_container .phanterpwa-xsection-container .phanterpwa-xsection .phanterpwa-xsection-title, .imprimir_questionario_social .phanterpwa-xsection-container .phanterpwa-xsection .phanterpwa-xsection-title, .imprimir_comprovante_social .phanterpwa-xsection-container .phanterpwa-xsection .phanterpwa-xsection-title, .imprimir_ata_de_resultados .phanterpwa-xsection-container .phanterpwa-xsection .phanterpwa-xsection-title, .imprimir_diario_de_aulas .phanterpwa-xsection-container .phanterpwa-xsection .phanterpwa-xsection-title, .imprimir_alunos_da_turma .phanterpwa-xsection-container .phanterpwa-xsection .phanterpwa-xsection-title {
   width: 100%;
   text-align: center;
   color: white;
@@ -3381,43 +3381,43 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
   padding: 16px 20px;
 }
 
-.imprimir_matricula_container .phanterpwa-xsection-container.has_menu_button .phanterpwa-xsection, .imprimir_questionario_social .phanterpwa-xsection-container.has_menu_button .phanterpwa-xsection, .imprimir_comprovante_social .phanterpwa-xsection-container.has_menu_button .phanterpwa-xsection, .imprimir_ata_de_resultados .phanterpwa-xsection-container.has_menu_button .phanterpwa-xsection, .imprimir_diario_de_aulas .phanterpwa-xsection-container.has_menu_button .phanterpwa-xsection {
+.imprimir_matricula_container .phanterpwa-xsection-container.has_menu_button .phanterpwa-xsection, .imprimir_questionario_social .phanterpwa-xsection-container.has_menu_button .phanterpwa-xsection, .imprimir_comprovante_social .phanterpwa-xsection-container.has_menu_button .phanterpwa-xsection, .imprimir_ata_de_resultados .phanterpwa-xsection-container.has_menu_button .phanterpwa-xsection, .imprimir_diario_de_aulas .phanterpwa-xsection-container.has_menu_button .phanterpwa-xsection, .imprimir_alunos_da_turma .phanterpwa-xsection-container.has_menu_button .phanterpwa-xsection {
   padding: 50px 0px 10px 0px;
 }
 
-.imprimir_matricula_container .phanterpwa-xsection-container.has_menu_button .phanterpwa-xsection-title, .imprimir_questionario_social .phanterpwa-xsection-container.has_menu_button .phanterpwa-xsection-title, .imprimir_comprovante_social .phanterpwa-xsection-container.has_menu_button .phanterpwa-xsection-title, .imprimir_ata_de_resultados .phanterpwa-xsection-container.has_menu_button .phanterpwa-xsection-title, .imprimir_diario_de_aulas .phanterpwa-xsection-container.has_menu_button .phanterpwa-xsection-title {
+.imprimir_matricula_container .phanterpwa-xsection-container.has_menu_button .phanterpwa-xsection-title, .imprimir_questionario_social .phanterpwa-xsection-container.has_menu_button .phanterpwa-xsection-title, .imprimir_comprovante_social .phanterpwa-xsection-container.has_menu_button .phanterpwa-xsection-title, .imprimir_ata_de_resultados .phanterpwa-xsection-container.has_menu_button .phanterpwa-xsection-title, .imprimir_diario_de_aulas .phanterpwa-xsection-container.has_menu_button .phanterpwa-xsection-title, .imprimir_alunos_da_turma .phanterpwa-xsection-container.has_menu_button .phanterpwa-xsection-title {
   margin-top: -50px;
 }
 
-.imprimir_matricula_container .phanterpwa-xsection-container.e-padding_20 .phanterpwa-xsection, .imprimir_questionario_social .phanterpwa-xsection-container.e-padding_20 .phanterpwa-xsection, .imprimir_comprovante_social .phanterpwa-xsection-container.e-padding_20 .phanterpwa-xsection, .imprimir_ata_de_resultados .phanterpwa-xsection-container.e-padding_20 .phanterpwa-xsection, .imprimir_diario_de_aulas .phanterpwa-xsection-container.e-padding_20 .phanterpwa-xsection {
+.imprimir_matricula_container .phanterpwa-xsection-container.e-padding_20 .phanterpwa-xsection, .imprimir_questionario_social .phanterpwa-xsection-container.e-padding_20 .phanterpwa-xsection, .imprimir_comprovante_social .phanterpwa-xsection-container.e-padding_20 .phanterpwa-xsection, .imprimir_ata_de_resultados .phanterpwa-xsection-container.e-padding_20 .phanterpwa-xsection, .imprimir_diario_de_aulas .phanterpwa-xsection-container.e-padding_20 .phanterpwa-xsection, .imprimir_alunos_da_turma .phanterpwa-xsection-container.e-padding_20 .phanterpwa-xsection {
   padding: 20px;
 }
 
-.imprimir_matricula_container .phanterpwa-xsection-container.e-padding_10 .phanterpwa-xsection, .imprimir_questionario_social .phanterpwa-xsection-container.e-padding_10 .phanterpwa-xsection, .imprimir_comprovante_social .phanterpwa-xsection-container.e-padding_10 .phanterpwa-xsection, .imprimir_ata_de_resultados .phanterpwa-xsection-container.e-padding_10 .phanterpwa-xsection, .imprimir_diario_de_aulas .phanterpwa-xsection-container.e-padding_10 .phanterpwa-xsection {
+.imprimir_matricula_container .phanterpwa-xsection-container.e-padding_10 .phanterpwa-xsection, .imprimir_questionario_social .phanterpwa-xsection-container.e-padding_10 .phanterpwa-xsection, .imprimir_comprovante_social .phanterpwa-xsection-container.e-padding_10 .phanterpwa-xsection, .imprimir_ata_de_resultados .phanterpwa-xsection-container.e-padding_10 .phanterpwa-xsection, .imprimir_diario_de_aulas .phanterpwa-xsection-container.e-padding_10 .phanterpwa-xsection, .imprimir_alunos_da_turma .phanterpwa-xsection-container.e-padding_10 .phanterpwa-xsection {
   padding: 10px;
 }
 
-.imprimir_matricula_container .tabela_ficha_individual .resultado_final, .imprimir_questionario_social .tabela_ficha_individual .resultado_final, .imprimir_comprovante_social .tabela_ficha_individual .resultado_final, .imprimir_ata_de_resultados .tabela_ficha_individual .resultado_final, .imprimir_diario_de_aulas .tabela_ficha_individual .resultado_final {
+.imprimir_matricula_container .tabela_ficha_individual .resultado_final, .imprimir_questionario_social .tabela_ficha_individual .resultado_final, .imprimir_comprovante_social .tabela_ficha_individual .resultado_final, .imprimir_ata_de_resultados .tabela_ficha_individual .resultado_final, .imprimir_diario_de_aulas .tabela_ficha_individual .resultado_final, .imprimir_alunos_da_turma .tabela_ficha_individual .resultado_final {
   text-align: center;
   font-weight: bold;
   text-transform: uppercase;
   font-size: 12pt;
 }
 
-.imprimir_matricula_container .tabela_diario_registo_de_aulas, .imprimir_questionario_social .tabela_diario_registo_de_aulas, .imprimir_comprovante_social .tabela_diario_registo_de_aulas, .imprimir_ata_de_resultados .tabela_diario_registo_de_aulas, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas {
+.imprimir_matricula_container .tabela_diario_registo_de_aulas, .imprimir_questionario_social .tabela_diario_registo_de_aulas, .imprimir_comprovante_social .tabela_diario_registo_de_aulas, .imprimir_ata_de_resultados .tabela_diario_registo_de_aulas, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas, .imprimir_alunos_da_turma .tabela_diario_registo_de_aulas {
   border-collapse: collapse;
   margin-bottom: 5px !important;
 }
 
-.imprimir_matricula_container .tabela_diario_registo_de_aulas .diario_aulas_titulo_mes, .imprimir_questionario_social .tabela_diario_registo_de_aulas .diario_aulas_titulo_mes, .imprimir_comprovante_social .tabela_diario_registo_de_aulas .diario_aulas_titulo_mes, .imprimir_ata_de_resultados .tabela_diario_registo_de_aulas .diario_aulas_titulo_mes, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas .diario_aulas_titulo_mes {
+.imprimir_matricula_container .tabela_diario_registo_de_aulas .diario_aulas_titulo_mes, .imprimir_questionario_social .tabela_diario_registo_de_aulas .diario_aulas_titulo_mes, .imprimir_comprovante_social .tabela_diario_registo_de_aulas .diario_aulas_titulo_mes, .imprimir_ata_de_resultados .tabela_diario_registo_de_aulas .diario_aulas_titulo_mes, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas .diario_aulas_titulo_mes, .imprimir_alunos_da_turma .tabela_diario_registo_de_aulas .diario_aulas_titulo_mes {
   text-transform: uppercase;
 }
 
-.imprimir_matricula_container .tabela_diario_registo_de_aulas .diario_aulas_dia_da_semana, .imprimir_questionario_social .tabela_diario_registo_de_aulas .diario_aulas_dia_da_semana, .imprimir_comprovante_social .tabela_diario_registo_de_aulas .diario_aulas_dia_da_semana, .imprimir_ata_de_resultados .tabela_diario_registo_de_aulas .diario_aulas_dia_da_semana, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas .diario_aulas_dia_da_semana {
+.imprimir_matricula_container .tabela_diario_registo_de_aulas .diario_aulas_dia_da_semana, .imprimir_questionario_social .tabela_diario_registo_de_aulas .diario_aulas_dia_da_semana, .imprimir_comprovante_social .tabela_diario_registo_de_aulas .diario_aulas_dia_da_semana, .imprimir_ata_de_resultados .tabela_diario_registo_de_aulas .diario_aulas_dia_da_semana, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas .diario_aulas_dia_da_semana, .imprimir_alunos_da_turma .tabela_diario_registo_de_aulas .diario_aulas_dia_da_semana {
   font-size: 7pt;
 }
 
-.imprimir_matricula_container .tabela_diario_registo_de_aulas td, .imprimir_matricula_container .tabela_diario_registo_de_aulas th, .imprimir_questionario_social .tabela_diario_registo_de_aulas td, .imprimir_questionario_social .tabela_diario_registo_de_aulas th, .imprimir_comprovante_social .tabela_diario_registo_de_aulas td, .imprimir_comprovante_social .tabela_diario_registo_de_aulas th, .imprimir_ata_de_resultados .tabela_diario_registo_de_aulas td, .imprimir_ata_de_resultados .tabela_diario_registo_de_aulas th, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas td, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas th {
+.imprimir_matricula_container .tabela_diario_registo_de_aulas td, .imprimir_matricula_container .tabela_diario_registo_de_aulas th, .imprimir_questionario_social .tabela_diario_registo_de_aulas td, .imprimir_questionario_social .tabela_diario_registo_de_aulas th, .imprimir_comprovante_social .tabela_diario_registo_de_aulas td, .imprimir_comprovante_social .tabela_diario_registo_de_aulas th, .imprimir_ata_de_resultados .tabela_diario_registo_de_aulas td, .imprimir_ata_de_resultados .tabela_diario_registo_de_aulas th, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas td, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas th, .imprimir_alunos_da_turma .tabela_diario_registo_de_aulas td, .imprimir_alunos_da_turma .tabela_diario_registo_de_aulas th {
   border: solid 1px black;
   border-top: solid 1px black;
   border-left: solid 1px black;
@@ -3427,15 +3427,15 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
   border-collapse: collapse;
 }
 
-.imprimir_matricula_container .tabela_diario_registo_de_aulas thead, .imprimir_questionario_social .tabela_diario_registo_de_aulas thead, .imprimir_comprovante_social .tabela_diario_registo_de_aulas thead, .imprimir_ata_de_resultados .tabela_diario_registo_de_aulas thead, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas thead {
+.imprimir_matricula_container .tabela_diario_registo_de_aulas thead, .imprimir_questionario_social .tabela_diario_registo_de_aulas thead, .imprimir_comprovante_social .tabela_diario_registo_de_aulas thead, .imprimir_ata_de_resultados .tabela_diario_registo_de_aulas thead, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas thead, .imprimir_alunos_da_turma .tabela_diario_registo_de_aulas thead {
   display: none;
 }
 
-.imprimir_matricula_container .tabela_diario_registo_de_aulas tfoot, .imprimir_questionario_social .tabela_diario_registo_de_aulas tfoot, .imprimir_comprovante_social .tabela_diario_registo_de_aulas tfoot, .imprimir_ata_de_resultados .tabela_diario_registo_de_aulas tfoot, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas tfoot {
+.imprimir_matricula_container .tabela_diario_registo_de_aulas tfoot, .imprimir_questionario_social .tabela_diario_registo_de_aulas tfoot, .imprimir_comprovante_social .tabela_diario_registo_de_aulas tfoot, .imprimir_ata_de_resultados .tabela_diario_registo_de_aulas tfoot, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas tfoot, .imprimir_alunos_da_turma .tabela_diario_registo_de_aulas tfoot {
   display: none;
 }
 
-.imprimir_matricula_container .tabela_diario_registo_de_aulas tbody td, .imprimir_matricula_container .tabela_diario_registo_de_aulas tbody th, .imprimir_questionario_social .tabela_diario_registo_de_aulas tbody td, .imprimir_questionario_social .tabela_diario_registo_de_aulas tbody th, .imprimir_comprovante_social .tabela_diario_registo_de_aulas tbody td, .imprimir_comprovante_social .tabela_diario_registo_de_aulas tbody th, .imprimir_ata_de_resultados .tabela_diario_registo_de_aulas tbody td, .imprimir_ata_de_resultados .tabela_diario_registo_de_aulas tbody th, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas tbody td, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas tbody th {
+.imprimir_matricula_container .tabela_diario_registo_de_aulas tbody td, .imprimir_matricula_container .tabela_diario_registo_de_aulas tbody th, .imprimir_questionario_social .tabela_diario_registo_de_aulas tbody td, .imprimir_questionario_social .tabela_diario_registo_de_aulas tbody th, .imprimir_comprovante_social .tabela_diario_registo_de_aulas tbody td, .imprimir_comprovante_social .tabela_diario_registo_de_aulas tbody th, .imprimir_ata_de_resultados .tabela_diario_registo_de_aulas tbody td, .imprimir_ata_de_resultados .tabela_diario_registo_de_aulas tbody th, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas tbody td, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas tbody th, .imprimir_alunos_da_turma .tabela_diario_registo_de_aulas tbody td, .imprimir_alunos_da_turma .tabela_diario_registo_de_aulas tbody th {
   border: solid 1px black;
   border-top: solid 1px black;
   border-left: solid 1px black;
@@ -3443,18 +3443,58 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
   border-bottom: solid 1px black;
 }
 
-.imprimir_matricula_container .tabela_diario_registo_de_aulas .conteudo_registro_de_aulas_diario ul, .imprimir_matricula_container .tabela_diario_registo_de_aulas .conteudo_registro_de_aulas_diario p, .imprimir_questionario_social .tabela_diario_registo_de_aulas .conteudo_registro_de_aulas_diario ul, .imprimir_questionario_social .tabela_diario_registo_de_aulas .conteudo_registro_de_aulas_diario p, .imprimir_comprovante_social .tabela_diario_registo_de_aulas .conteudo_registro_de_aulas_diario ul, .imprimir_comprovante_social .tabela_diario_registo_de_aulas .conteudo_registro_de_aulas_diario p, .imprimir_ata_de_resultados .tabela_diario_registo_de_aulas .conteudo_registro_de_aulas_diario ul, .imprimir_ata_de_resultados .tabela_diario_registo_de_aulas .conteudo_registro_de_aulas_diario p, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas .conteudo_registro_de_aulas_diario ul, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas .conteudo_registro_de_aulas_diario p {
+.imprimir_matricula_container .tabela_diario_registo_de_aulas .conteudo_registro_de_aulas_diario ul, .imprimir_matricula_container .tabela_diario_registo_de_aulas .conteudo_registro_de_aulas_diario p, .imprimir_questionario_social .tabela_diario_registo_de_aulas .conteudo_registro_de_aulas_diario ul, .imprimir_questionario_social .tabela_diario_registo_de_aulas .conteudo_registro_de_aulas_diario p, .imprimir_comprovante_social .tabela_diario_registo_de_aulas .conteudo_registro_de_aulas_diario ul, .imprimir_comprovante_social .tabela_diario_registo_de_aulas .conteudo_registro_de_aulas_diario p, .imprimir_ata_de_resultados .tabela_diario_registo_de_aulas .conteudo_registro_de_aulas_diario ul, .imprimir_ata_de_resultados .tabela_diario_registo_de_aulas .conteudo_registro_de_aulas_diario p, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas .conteudo_registro_de_aulas_diario ul, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas .conteudo_registro_de_aulas_diario p, .imprimir_alunos_da_turma .tabela_diario_registo_de_aulas .conteudo_registro_de_aulas_diario ul, .imprimir_alunos_da_turma .tabela_diario_registo_de_aulas .conteudo_registro_de_aulas_diario p {
   margin: 0;
   text-align: justify;
 }
 
-.imprimir_matricula_container .tabela_diario_registo_de_aulas .mark-titulo, .imprimir_questionario_social .tabela_diario_registo_de_aulas .mark-titulo, .imprimir_comprovante_social .tabela_diario_registo_de_aulas .mark-titulo, .imprimir_ata_de_resultados .tabela_diario_registo_de_aulas .mark-titulo, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas .mark-titulo {
+.imprimir_matricula_container .tabela_diario_registo_de_aulas .mark-titulo, .imprimir_questionario_social .tabela_diario_registo_de_aulas .mark-titulo, .imprimir_comprovante_social .tabela_diario_registo_de_aulas .mark-titulo, .imprimir_ata_de_resultados .tabela_diario_registo_de_aulas .mark-titulo, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas .mark-titulo, .imprimir_alunos_da_turma .tabela_diario_registo_de_aulas .mark-titulo {
   text-indent: 0px !important;
   color: green;
 }
 
-.imprimir_matricula_container .tabela_diario_registo_de_aulas .conteudo_do_registro, .imprimir_questionario_social .tabela_diario_registo_de_aulas .conteudo_do_registro, .imprimir_comprovante_social .tabela_diario_registo_de_aulas .conteudo_do_registro, .imprimir_ata_de_resultados .tabela_diario_registo_de_aulas .conteudo_do_registro, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas .conteudo_do_registro {
+.imprimir_matricula_container .tabela_diario_registo_de_aulas .conteudo_do_registro, .imprimir_questionario_social .tabela_diario_registo_de_aulas .conteudo_do_registro, .imprimir_comprovante_social .tabela_diario_registo_de_aulas .conteudo_do_registro, .imprimir_ata_de_resultados .tabela_diario_registo_de_aulas .conteudo_do_registro, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas .conteudo_do_registro, .imprimir_alunos_da_turma .tabela_diario_registo_de_aulas .conteudo_do_registro {
   white-space: pre-line;
+}
+
+.imprimir_matricula_container .titulo_tabela_dinamica, .imprimir_questionario_social .titulo_tabela_dinamica, .imprimir_comprovante_social .titulo_tabela_dinamica, .imprimir_ata_de_resultados .titulo_tabela_dinamica, .imprimir_diario_de_aulas .titulo_tabela_dinamica, .imprimir_alunos_da_turma .titulo_tabela_dinamica {
+  margin-bottom: 13px;
+  text-align: center;
+}
+
+.imprimir_matricula_container .titulo_tabela_dinamica strong, .imprimir_questionario_social .titulo_tabela_dinamica strong, .imprimir_comprovante_social .titulo_tabela_dinamica strong, .imprimir_ata_de_resultados .titulo_tabela_dinamica strong, .imprimir_diario_de_aulas .titulo_tabela_dinamica strong, .imprimir_alunos_da_turma .titulo_tabela_dinamica strong {
+  color: red;
+}
+
+.imprimir_matricula_container .tabela_dinamica_turma, .imprimir_questionario_social .tabela_dinamica_turma, .imprimir_comprovante_social .tabela_dinamica_turma, .imprimir_ata_de_resultados .tabela_dinamica_turma, .imprimir_diario_de_aulas .tabela_dinamica_turma, .imprimir_alunos_da_turma .tabela_dinamica_turma {
+  border-collapse: collapse;
+}
+
+.imprimir_matricula_container .tabela_dinamica_turma td, .imprimir_matricula_container .tabela_dinamica_turma th, .imprimir_questionario_social .tabela_dinamica_turma td, .imprimir_questionario_social .tabela_dinamica_turma th, .imprimir_comprovante_social .tabela_dinamica_turma td, .imprimir_comprovante_social .tabela_dinamica_turma th, .imprimir_ata_de_resultados .tabela_dinamica_turma td, .imprimir_ata_de_resultados .tabela_dinamica_turma th, .imprimir_diario_de_aulas .tabela_dinamica_turma td, .imprimir_diario_de_aulas .tabela_dinamica_turma th, .imprimir_alunos_da_turma .tabela_dinamica_turma td, .imprimir_alunos_da_turma .tabela_dinamica_turma th {
+  border: solid 1px black;
+  border-top: solid 1px black;
+  border-left: solid 1px black;
+  border-right: solid 1px black;
+  border-bottom: solid 1px black;
+  padding: 5px;
+  border-collapse: collapse;
+}
+
+.imprimir_matricula_container .tabela_dinamica_turma .campos_turma.campo_numero, .imprimir_questionario_social .tabela_dinamica_turma .campos_turma.campo_numero, .imprimir_comprovante_social .tabela_dinamica_turma .campos_turma.campo_numero, .imprimir_ata_de_resultados .tabela_dinamica_turma .campos_turma.campo_numero, .imprimir_diario_de_aulas .tabela_dinamica_turma .campos_turma.campo_numero, .imprimir_alunos_da_turma .tabela_dinamica_turma .campos_turma.campo_numero {
+  text-align: center;
+  font-weight: bold;
+}
+
+.imprimir_matricula_container .tabela_dinamica_turma .campo_data_nasc, .imprimir_matricula_container .tabela_dinamica_turma .campo_sexo, .imprimir_matricula_container .tabela_dinamica_turma .campo_resultado, .imprimir_questionario_social .tabela_dinamica_turma .campo_data_nasc, .imprimir_questionario_social .tabela_dinamica_turma .campo_sexo, .imprimir_questionario_social .tabela_dinamica_turma .campo_resultado, .imprimir_comprovante_social .tabela_dinamica_turma .campo_data_nasc, .imprimir_comprovante_social .tabela_dinamica_turma .campo_sexo, .imprimir_comprovante_social .tabela_dinamica_turma .campo_resultado, .imprimir_ata_de_resultados .tabela_dinamica_turma .campo_data_nasc, .imprimir_ata_de_resultados .tabela_dinamica_turma .campo_sexo, .imprimir_ata_de_resultados .tabela_dinamica_turma .campo_resultado, .imprimir_diario_de_aulas .tabela_dinamica_turma .campo_data_nasc, .imprimir_diario_de_aulas .tabela_dinamica_turma .campo_sexo, .imprimir_diario_de_aulas .tabela_dinamica_turma .campo_resultado, .imprimir_alunos_da_turma .tabela_dinamica_turma .campo_data_nasc, .imprimir_alunos_da_turma .tabela_dinamica_turma .campo_sexo, .imprimir_alunos_da_turma .tabela_dinamica_turma .campo_resultado {
+  text-align: center;
+}
+
+.imprimir_matricula_container .tabela_dinamica_turma .tabela_dinamica_turma-campo_cabecalho, .imprimir_questionario_social .tabela_dinamica_turma .tabela_dinamica_turma-campo_cabecalho, .imprimir_comprovante_social .tabela_dinamica_turma .tabela_dinamica_turma-campo_cabecalho, .imprimir_ata_de_resultados .tabela_dinamica_turma .tabela_dinamica_turma-campo_cabecalho, .imprimir_diario_de_aulas .tabela_dinamica_turma .tabela_dinamica_turma-campo_cabecalho, .imprimir_alunos_da_turma .tabela_dinamica_turma .tabela_dinamica_turma-campo_cabecalho {
+  background-color: #ffdb98;
+}
+
+.imprimir_matricula_container .tabela_dinamica_turma .tabela_dinamica_turma-nome_da_serie, .imprimir_questionario_social .tabela_dinamica_turma .tabela_dinamica_turma-nome_da_serie, .imprimir_comprovante_social .tabela_dinamica_turma .tabela_dinamica_turma-nome_da_serie, .imprimir_ata_de_resultados .tabela_dinamica_turma .tabela_dinamica_turma-nome_da_serie, .imprimir_diario_de_aulas .tabela_dinamica_turma .tabela_dinamica_turma-nome_da_serie, .imprimir_alunos_da_turma .tabela_dinamica_turma .tabela_dinamica_turma-nome_da_serie {
+  background-color: #d9d6d6;
 }
 
 .imprimir_questionario_social .pergunta, .imprimir_comprovante_social .pergunta {
@@ -3599,49 +3639,49 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
 }
 
 @media print {
-  .imprimir_matricula_container, .imprimir_questionario_social, .imprimir_comprovante_social, .imprimir_diario_de_aulas {
+  .imprimir_matricula_container, .imprimir_questionario_social, .imprimir_comprovante_social, .imprimir_diario_de_aulas, .imprimir_alunos_da_turma {
     width: auto;
     margin: auto;
     background-color: transparent;
   }
-  .imprimir_matricula_container.quebra-de-pagina-depois, .imprimir_questionario_social.quebra-de-pagina-depois, .imprimir_comprovante_social.quebra-de-pagina-depois, .imprimir_diario_de_aulas.quebra-de-pagina-depois {
+  .imprimir_matricula_container.quebra-de-pagina-depois, .imprimir_questionario_social.quebra-de-pagina-depois, .imprimir_comprovante_social.quebra-de-pagina-depois, .imprimir_diario_de_aulas.quebra-de-pagina-depois, .imprimir_alunos_da_turma.quebra-de-pagina-depois {
     clear: both;
     page-break-after: always;
   }
-  .imprimir_matricula_container.quebra-de-pagina-antes, .imprimir_questionario_social.quebra-de-pagina-antes, .imprimir_comprovante_social.quebra-de-pagina-antes, .imprimir_diario_de_aulas.quebra-de-pagina-antes {
+  .imprimir_matricula_container.quebra-de-pagina-antes, .imprimir_questionario_social.quebra-de-pagina-antes, .imprimir_comprovante_social.quebra-de-pagina-antes, .imprimir_diario_de_aulas.quebra-de-pagina-antes, .imprimir_alunos_da_turma.quebra-de-pagina-antes {
     clear: both;
     page-break-before: always;
   }
-  .imprimir_matricula_container .imprimir_documentos_wrapper, .imprimir_questionario_social .imprimir_documentos_wrapper, .imprimir_comprovante_social .imprimir_documentos_wrapper, .imprimir_diario_de_aulas .imprimir_documentos_wrapper {
+  .imprimir_matricula_container .imprimir_documentos_wrapper, .imprimir_questionario_social .imprimir_documentos_wrapper, .imprimir_comprovante_social .imprimir_documentos_wrapper, .imprimir_diario_de_aulas .imprimir_documentos_wrapper, .imprimir_alunos_da_turma .imprimir_documentos_wrapper {
     page-break-inside: avoid;
   }
-  .imprimir_matricula_container .tabela_diario_registo_de_aulas thead, .imprimir_questionario_social .tabela_diario_registo_de_aulas thead, .imprimir_comprovante_social .tabela_diario_registo_de_aulas thead, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas thead {
+  .imprimir_matricula_container .tabela_diario_registo_de_aulas thead, .imprimir_questionario_social .tabela_diario_registo_de_aulas thead, .imprimir_comprovante_social .tabela_diario_registo_de_aulas thead, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas thead, .imprimir_alunos_da_turma .tabela_diario_registo_de_aulas thead {
     display: table-header-group !important;
   }
-  .imprimir_matricula_container .tabela_diario_registo_de_aulas thead td, .imprimir_questionario_social .tabela_diario_registo_de_aulas thead td, .imprimir_comprovante_social .tabela_diario_registo_de_aulas thead td, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas thead td {
+  .imprimir_matricula_container .tabela_diario_registo_de_aulas thead td, .imprimir_questionario_social .tabela_diario_registo_de_aulas thead td, .imprimir_comprovante_social .tabela_diario_registo_de_aulas thead td, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas thead td, .imprimir_alunos_da_turma .tabela_diario_registo_de_aulas thead td {
     border-left: 1px solid black;
     border-right: 1px solid black;
     border-top: 1px solid black;
   }
-  .imprimir_matricula_container .tabela_diario_registo_de_aulas thead td.espacador_diario_de_registro_de_aulas, .imprimir_questionario_social .tabela_diario_registo_de_aulas thead td.espacador_diario_de_registro_de_aulas, .imprimir_comprovante_social .tabela_diario_registo_de_aulas thead td.espacador_diario_de_registro_de_aulas, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas thead td.espacador_diario_de_registro_de_aulas {
+  .imprimir_matricula_container .tabela_diario_registo_de_aulas thead td.espacador_diario_de_registro_de_aulas, .imprimir_questionario_social .tabela_diario_registo_de_aulas thead td.espacador_diario_de_registro_de_aulas, .imprimir_comprovante_social .tabela_diario_registo_de_aulas thead td.espacador_diario_de_registro_de_aulas, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas thead td.espacador_diario_de_registro_de_aulas, .imprimir_alunos_da_turma .tabela_diario_registo_de_aulas thead td.espacador_diario_de_registro_de_aulas {
     border-left: none;
     border-right: none;
     border-top: none;
   }
-  .imprimir_matricula_container .tabela_diario_registo_de_aulas tfoot, .imprimir_questionario_social .tabela_diario_registo_de_aulas tfoot, .imprimir_comprovante_social .tabela_diario_registo_de_aulas tfoot, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas tfoot {
+  .imprimir_matricula_container .tabela_diario_registo_de_aulas tfoot, .imprimir_questionario_social .tabela_diario_registo_de_aulas tfoot, .imprimir_comprovante_social .tabela_diario_registo_de_aulas tfoot, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas tfoot, .imprimir_alunos_da_turma .tabela_diario_registo_de_aulas tfoot {
     display: table-footer-group !important;
   }
-  .imprimir_matricula_container .tabela_diario_registo_de_aulas tfoot td, .imprimir_questionario_social .tabela_diario_registo_de_aulas tfoot td, .imprimir_comprovante_social .tabela_diario_registo_de_aulas tfoot td, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas tfoot td {
+  .imprimir_matricula_container .tabela_diario_registo_de_aulas tfoot td, .imprimir_questionario_social .tabela_diario_registo_de_aulas tfoot td, .imprimir_comprovante_social .tabela_diario_registo_de_aulas tfoot td, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas tfoot td, .imprimir_alunos_da_turma .tabela_diario_registo_de_aulas tfoot td {
     border-left: 1px solid black;
     border-right: 1px solid black;
     border-bottom: 1px solid black;
   }
-  .imprimir_matricula_container .tabela_diario_registo_de_aulas tfoot td.espacador_diario_de_registro_de_aulas, .imprimir_questionario_social .tabela_diario_registo_de_aulas tfoot td.espacador_diario_de_registro_de_aulas, .imprimir_comprovante_social .tabela_diario_registo_de_aulas tfoot td.espacador_diario_de_registro_de_aulas, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas tfoot td.espacador_diario_de_registro_de_aulas {
+  .imprimir_matricula_container .tabela_diario_registo_de_aulas tfoot td.espacador_diario_de_registro_de_aulas, .imprimir_questionario_social .tabela_diario_registo_de_aulas tfoot td.espacador_diario_de_registro_de_aulas, .imprimir_comprovante_social .tabela_diario_registo_de_aulas tfoot td.espacador_diario_de_registro_de_aulas, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas tfoot td.espacador_diario_de_registro_de_aulas, .imprimir_alunos_da_turma .tabela_diario_registo_de_aulas tfoot td.espacador_diario_de_registro_de_aulas {
     border-left: none;
     border-right: none;
     border-bottom: none;
   }
-  .imprimir_matricula_container .tabela_diario_registo_de_aulas tbody, .imprimir_questionario_social .tabela_diario_registo_de_aulas tbody, .imprimir_comprovante_social .tabela_diario_registo_de_aulas tbody, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas tbody {
+  .imprimir_matricula_container .tabela_diario_registo_de_aulas tbody, .imprimir_questionario_social .tabela_diario_registo_de_aulas tbody, .imprimir_comprovante_social .tabela_diario_registo_de_aulas tbody, .imprimir_diario_de_aulas .tabela_diario_registo_de_aulas tbody, .imprimir_alunos_da_turma .tabela_diario_registo_de_aulas tbody {
     page-break-inside: avoid;
   }
 }
