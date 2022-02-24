@@ -98,7 +98,7 @@ class Index(gatehandler.Handler):
                     "back_localizar_vinculos",
                     "Voltar",
                     I(_class="fas fa-arrow-circle-left"),
-                    **{"_phanterpwa-way": window.PhanterPWA.Request.get_param("retornar") ,
+                    **{"_phanterpwa-way": window.PhanterPWA.Request.get_param("retornar"),
                         "position": "top",
                         "ways": [lambda r: True if r.startswith("vinculos") or r.startswith("vinculos/") else False]}
                 )
@@ -391,6 +391,19 @@ class VinculosUsuarioSME(helpers.XmlConstructor):
 
                     for eda in x[4]:
                         bool_equipe_de_apoio = True
+                        wg_renovar = []
+                        if str(json.ultimo_ano).isdigit() and eda.tem_vinculo_ultimo_ano is False:
+                            wg_renovar.append(widgets.MenuOption("Renovar Vínculo para {0}".format(json.ultimo_ano), **{
+                                "_class": "botao_vinculo_ultimo_ano wave_on_click",
+                                "_href": "#_phanterpwa:/vinculos/novo/{0}/{1}/{2}/{3}?retornar={4}{5}".format(
+                                    eda.id_funcionario,
+                                    eda.id_escola,
+                                    json.ultimo_ano,
+                                    eda.id_atribuicao,
+                                    window.PhanterPWA._get_way_from_url_hash(),
+                                    "&autorizacao={0}".format(eda.autorizacao_especial) if eda.autorizacao_especial != "" else ""
+                                )
+                            }))
                         if eda.id_funcionario is not None:
                             endereco_imagem_funcionario = "{0}/api/funcionarios/{1}/image".format(
                                 window.PhanterPWA.ApiServer.remote_address,
@@ -427,6 +440,7 @@ class VinculosUsuarioSME(helpers.XmlConstructor):
                                         "_class": "botao_prover_acesso_vinculo wave_on_click",
                                         "_data-id_funcionario": eda.id_funcionario
                                     }),
+                                    *wg_renovar,
                                     onOpen=self.bind_menu_option
                                 ),
                                 **{"drag_and_drop": False}
@@ -981,7 +995,21 @@ class VinculosEscola(helpers.XmlConstructor):
                         )
 
                     for cd in x[3]:
+                        console.log(json.ultimo_ano, cd.tem_vinculo_ultimo_ano)
                         bool_corpo_docente = True
+                        wg_renovar = []
+                        if str(json.ultimo_ano).isdigit() and cd.tem_vinculo_ultimo_ano is False:
+                            wg_renovar.append(widgets.MenuOption("Renovar Vínculo para {0}".format(json.ultimo_ano), **{
+                                "_class": "botao_vinculo_ultimo_ano wave_on_click",
+                                "_href": "#_phanterpwa:/vinculos/novo/{0}/{1}/{2}/{3}?retornar={4}{5}".format(
+                                    cd.id_funcionario,
+                                    cd.id_escola,
+                                    json.ultimo_ano,
+                                    cd.id_atribuicao,
+                                    window.PhanterPWA._get_way_from_url_hash(),
+                                    "&autorizacao={0}".format(cd.autorizacao_especial) if cd.autorizacao_especial != "" else ""
+                                )
+                            }))
                         if cd.id_funcionario is not None:
                             endereco_imagem_funcionario = "{0}/api/funcionarios/{1}/image".format(
                                 window.PhanterPWA.ApiServer.remote_address,
@@ -1023,6 +1051,7 @@ class VinculosEscola(helpers.XmlConstructor):
                                         "_class": "botao_prover_acesso_vinculo wave_on_click",
                                         "_data-id_funcionario": cd.id_funcionario
                                     }),
+                                    *wg_renovar,
                                     onOpen=self.bind_menu_option
                                 ),
                                 **{"drag_and_drop": False}
@@ -1031,6 +1060,19 @@ class VinculosEscola(helpers.XmlConstructor):
 
                     for eda in x[4]:
                         bool_equipe_de_apoio = True
+                        wg_renovar = []
+                        if str(json.ultimo_ano).isdigit() and eda.tem_vinculo_ultimo_ano is False:
+                            wg_renovar.append(widgets.MenuOption("Renovar Vínculo para {0}".format(json.ultimo_ano), **{
+                                "_class": "botao_vinculo_ultimo_ano wave_on_click",
+                                "_href": "#_phanterpwa:/vinculos/novo/{0}/{1}/{2}/{3}?retornar={4}{5}".format(
+                                    eda.id_funcionario,
+                                    eda.id_escola,
+                                    json.ultimo_ano,
+                                    eda.id_atribuicao,
+                                    window.PhanterPWA._get_way_from_url_hash(),
+                                    "&autorizacao={0}".format(eda.autorizacao_especial) if eda.autorizacao_especial != "" else ""
+                                )
+                            }))
                         if eda.id_funcionario is not None:
                             endereco_imagem_funcionario = "{0}/api/funcionarios/{1}/image".format(
                                 window.PhanterPWA.ApiServer.remote_address,
@@ -1067,6 +1109,7 @@ class VinculosEscola(helpers.XmlConstructor):
                                         "_class": "botao_prover_acesso_vinculo wave_on_click",
                                         "_data-id_funcionario": eda.id_funcionario
                                     }),
+                                    *wg_renovar,
                                     onOpen=self.bind_menu_option
                                 ),
                                 **{"drag_and_drop": False}
