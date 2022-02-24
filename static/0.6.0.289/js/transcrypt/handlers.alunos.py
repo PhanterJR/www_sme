@@ -253,6 +253,7 @@ class Alunos(helpers.XmlConstructor):
             DIV(_id="modal_visualizar_aluno"),
             DIV(_id="modal_visualizar_matricula"),
             DIV(_id="modal_documentos"),
+            DIV(_id="modal_deletar_matricula_detalhe_container"),
             _class='alunos-container phanterpwa-card-container'
         )
         return html
@@ -781,7 +782,24 @@ class Alunos(helpers.XmlConstructor):
                     turma
                 )
             )
-
+            botao_deletar_matricula = []
+            if turma is None:
+                botao_deletar_matricula.append(
+                    DIV(
+                        I(
+                            DIV(
+                                DIV(
+                                    SPAN(I(_class="fas fa-user-graduate"), _class="icombine-container-first"),
+                                    SPAN(I(_class="fas fa-eraser"), _class="icombine-container-last"),
+                                    _class="icombine-container"
+                                ),
+                                _class="phanterpwa-snippet-icombine"
+                            ),
+                        ),
+                        _title="Cancelar matrícula",
+                        _class="icon_button botao_deletar_matricula"
+                    )
+                )
             self.modal_visualizar_matricula = modal.Modal(
                 "#modal_visualizar_matricula",
                 **{
@@ -809,6 +827,7 @@ class Alunos(helpers.XmlConstructor):
                                 id_aluno
                             )
                         ),
+                        *botao_deletar_matricula,
                         A(
                             I(_class="fas fa-edit"),
                             _class="icon_button botao_editar_matricula",
@@ -880,6 +899,104 @@ class Alunos(helpers.XmlConstructor):
                 nome_do_aluno,
                 resultado_final
             )
+        )
+        jQuery(
+            ".botao_deletar_matricula"
+        ).off(
+            "click.botao_deletar_matricula"
+        ).on(
+            "click.botao_deletar_matricula",
+            lambda: self.modal_confirmar_deletar_matricula(id_escola, ano_letivo, id_matricula, nome_do_aluno)
+        )
+
+    def modal_confirmar_deletar_matricula(self, id_escola, ano_letivo, id_matricula, nome_do_aluno):
+        self.modal_visualizar_matricula.close()
+        content = DIV(
+            P("Atenção, a matrícula do aluno será deletada permanentemente, se ",
+                "o mesmo possuir notas, faltas, ficha individual, boletim, etc."
+                " Tudo isto será perdido, inclusive o mesmo sairá da turma permanentemente."),
+            P("Tem certeza que deseja deletar esta matrícula?"),
+            _class="p-row"
+        )
+        footer = DIV(
+            forms.FormButton(
+                "deletar_matricula_sim",
+                "Sim",
+                _class="btn-autoresize wave_on_click waves-phanterpwa"
+            ),
+            forms.FormButton(
+                "deletar_matricula_nao",
+                "Não",
+                _class="btn-autoresize wave_on_click waves-phanterpwa"
+            ),
+            _class='phanterpwa-form-buttons-container'
+        )
+        self.modal_deletar_matricula = modal.Modal(
+            "#modal_deletar_matricula_detalhe_container",
+            **{
+                "title": "Deletar Matrícula do(a) aluno(a) {0}".format(nome_do_aluno),
+                "content": content,
+                "footer": footer,
+                "footer_height": 65,
+                "form": "deletar_matricula"
+            }
+        )
+        self.modal_deletar_matricula.open()
+        jQuery("#phanterpwa-widget-form-form_button-deletar_matricula_sim").off(
+            "click.adicionar_deletar_matricula_sim"
+        ).on(
+            "click.adicionar_deletar_matricula_sim",
+            lambda: self._on_click_deletar_matricula(id_escola, ano_letivo, id_matricula)
+        )
+        jQuery("#phanterpwa-widget-form-form_button-deletar_matricula_nao").off(
+            "click.adicionar_deletar_matricula_nao"
+        ).on(
+            "click.adicionar_deletar_matricula_nao",
+            lambda: self.modal_deletar_matricula.close()
+        )
+
+    def _on_click_deletar_matricula(self, id_escola, ano_letivo, id_matricula):
+        window.PhanterPWA.DELETE(
+            "api",
+            "matricula",
+            "deletar",
+            id_escola,
+            ano_letivo,
+            id_matricula,
+            onComplete=self.search_inicial
+        )
+        self.modal_deletar_matricula.close()
+
+    def search_inicial(self):
+        campos = [
+            "id",
+            "aluno",
+            "data_nasc",
+            "nome_do_pai",
+            "nome_da_mae",
+        ]
+        parametro_valor = window.PhanterPWA.Request.get_param("valor", "")
+        parametro_campo = window.PhanterPWA.Request.get_param("campo", "aluno")
+        if parametro_campo not in campos:
+            parametro_campo = "aluno"
+        parametro_pagina = window.PhanterPWA.Request.get_param("pagina", 1)
+        if not str(parametro_pagina).isdigit():
+            parametro_pagina = 1
+
+        parametro_ordernar = window.PhanterPWA.Request.get_param("ordernar", "aluno")
+        if parametro_ordernar not in campos:
+            parametro_ordernar = "aluno"
+
+
+        parametro_sentido = window.PhanterPWA.Request.get_param("sentido", "asc")
+        if parametro_sentido not in ["asc", "desc"]:
+            parametro_sentido = "asc"
+        self._get_data_search(
+            search=str(parametro_valor),
+            field=parametro_campo,
+            orderby=parametro_ordernar,
+            sort=parametro_sentido,
+            page=parametro_pagina
         )
 
     def abrir_modal_desistencia(self, id_escola, ano_letivo, id_matricula, quant_unidades, nome_aluno, sexo, des_data):

@@ -33,15 +33,14 @@ class Index(gatehandler.Handler):
                         DIV(
                             DIV(
                                 DIV(
-                                    I(_class="fas fa-file-download promo-icon"),
-                                    H1("Documentos", _class="promo-title"),
+                                    I(_class="fas fa-user-graduate promo-icon"),
+                                    H1("Área do Aluno", _class="promo-title"),
                                     **{
                                         "_class": "link",
-                                        "_phanterpwa-way": "documentos_publicos"
+                                        "_phanterpwa-way": "acesso-ao-aluno"
                                     }
                                 ),
-                                DIV("Documentos de interesse público referentes",
-                                    " a educação do município de Fátima.", _class='promo-content'),
+                                DIV("Aqui está disponível o acesso a área do aluno, nela é possível acompanhar o desempenho do mesmo.", _class='promo-content'),
                                 **{
                                     "_class": "promo-container",
                                 }
