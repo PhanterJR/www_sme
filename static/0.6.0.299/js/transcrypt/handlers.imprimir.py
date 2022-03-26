@@ -39,11 +39,13 @@ H2 = helpers.XmlConstructor.tagger("h2")
 H3 = helpers.XmlConstructor.tagger("h3")
 H4 = helpers.XmlConstructor.tagger("h4")
 TBODY = helpers.XmlConstructor.tagger("tbody")
+THEAD = helpers.XmlConstructor.tagger("thead")
 CANVAS = helpers.XmlConstructor.tagger("canvas")
 H5 = helpers.XmlConstructor.tagger("h5")
 HR = helpers.XmlConstructor.tagger("hr", True)
 P = helpers.XmlConstructor.tagger("p")
 LABEL = helpers.XmlConstructor.tagger("label")
+IFRAME = helpers.XmlConstructor.tagger("iframe")
 XSECTION = helpers.XSECTION
 XTABLE = widgets.Table
 XML = helpers.XML
@@ -1945,10 +1947,15 @@ class FichaIndividualDoAluno():
 class AtaDeResultadosFinais():
     @decorators.check_authorization(lambda: window.PhanterPWA.auth_user_has_role(["administrator", "root", "Administrador Master SME", "Administrador Master Escola", "Coordenação SME"]))
     def __init__(self):
+        window.addEventListener('DOMContentLoaded', lambda: self.ajustar_iframe())
         self.id_escola = window.PhanterPWA.Request.get_arg(1)
         self.ano_letivo = window.PhanterPWA.Request.get_arg(2)
         self.id_turma = window.PhanterPWA.Request.get_arg(3)
-        
+        self.diretor = ""
+        self.assinante = ""
+        self.data_ata = ""
+        self.json_ata = None
+        now = __new__(Date().getTime())
         html = CONCATENATE(
             DIV(
                 DIV(
@@ -1962,19 +1969,50 @@ class AtaDeResultadosFinais():
             ),
             DIV(
                 DIV(
-                    DIV(
-                        DIV(
-                            DIV(preloaders.android, _style="width: 300px; height: 300px; overflow: hidden; margin: auto;"),
-                            _style="text-align:center; padding: 50px 0;"
-                        ),
-                        _id="content-matriculas-imprimir",
-                        _class='p-row card e-padding_20'
-                    ),
-                    _class="phanterpwa-container p-container"
+                    DIV(preloaders.android, _style="width: 300px; height: 300px; overflow: hidden; margin: auto;"),
+                    _style="text-align:center; padding: 50px 0;"
                 ),
                 _id="documentos-content",
             ),
-            DIV(_id="botoes_de_comando_impressao")
+            DIV(
+                widgets.FloatMenu(
+                    "menu_impressao",
+                    I(_class="fas fa-ellipsis-v"),
+                    widgets.FloatButton(
+                        I(_class="fas fa-cog"),
+                        _class="botao_abrir_modal_configuracoes",
+                        _title="Configurar Documento",
+                    ),
+                    widgets.FloatButton(
+                        I(_class="fas fa-file-pdf"),
+                        _class="botao_gerar_pdf",
+                        _title="Gerar PDF",
+                        _href="{0}/api/pdfs/ata-de-resultados-finais/{1}/{2}/{3}?nocache={4}".format(
+                            window.PhanterPWA.ApiServer.remote_address,
+                            self.id_escola,
+                            self.ano_letivo,
+                            self.id_turma,
+                            now
+                        ),
+                        _target="_blank"
+                    ),
+                    widgets.FloatButton(
+                        I(_class="fas fa-print"),
+                        _title="Imprimir documento",
+                        _class="botao_imprimir_diario_de_notas",
+                        _href="{0}/api/pdfs/ata-de-resultados-finais/{1}/{2}/{3}?nocache={4}&show_html=true&print=true".format(
+                            window.PhanterPWA.ApiServer.remote_address,
+                            self.id_escola,
+                            self.ano_letivo,
+                            self.id_turma,
+                            now
+                        ),
+                        _target="iframe_ata_turma"
+                    )
+                ),
+                _id="botoes_menu_impressao_ata"
+            ),
+            DIV(_id="container_modal_configuracoes")
         )
         html.html_to("#main-container")
         BackButton = left_bar.LeftBarButton(
@@ -1986,286 +2024,190 @@ class AtaDeResultadosFinais():
                 "ways": [lambda r: True if r.startswith("documentos") or r.startswith("documentos/") else False]}
         )
         window.PhanterPWA.Components['left_bar'].add_button(BackButton)
-        self._get_data()
+        self.iframe()
+        
 
-    def after_get(self, data, ajax_status):
-        json = data.responseJSON
-        self.id_escola = json.data.id_escola
-        self.ano_letivo = json.data.ano_letivo
-        self.id_aluno = json.data.id_aluno
-        meses = [
-            "janeiro",
-            "fevereiro",
-            "março",
-            "abril",
-            "maio",
-            "junho",
-            "julho",
-            "agosto",
-            "setembro",
-            "outubro",
-            "novembro",
-            "dezembro"
-        ]
+
+    def resize_frame(self):
+        h = jQuery(window).height();
+        jQuery("#iframe_ata_turma").height(h - 64 - 58 - 66)
+
+    def binds(self):
+        jQuery(".botao_abrir_modal_configuracoes").off("click.modal_cfg").on(
+            "click.modal_cfg",
+            lambda: self.get_informacao_turma()
+        )
+
+    def get_informacao_turma(self):
+        if self.json_ata is None:
+            window.PhanterPWA.GET(
+                "api",
+                "escola",
+                "informacoes",
+                self.id_escola,
+                self.ano_letivo,
+                onComplete=self._after_get_info
+            )
+        else:
+            self.abrir_modal_configuracoes()
+
+    def _after_get_info(self, data, ajax_status):
+        if ajax_status == "success":
+            self.json_ata = data.responseJSON
+            self.abrir_modal_configuracoes()
+
+    def iframe(self):
         now = __new__(Date().getTime())
+        add = ""
+        if self.data_ata != "":
+            dia, mes, ano = self.data_ata.split("/")
+            add += "&data={0}-{1}-{2}".format(ano, mes, dia)
+        if self.assinante != "":
+            add += "&assinante={0}".format(self.assinante)
+        if self.diretor != "":
+            add += "&diretor={0}".format(self.diretor)
+        ifr = IFRAME(
+            _id="iframe_ata_turma",
+            _name="iframe_ata_turma",
+            _src="{0}/api/pdfs/ata-de-resultados-finais/{1}/{2}/{3}?nocache={4}&show_html=true{5}".format(
+                window.PhanterPWA.ApiServer.remote_address,
+                self.id_escola,
+                self.ano_letivo,
+                self.id_turma,
+                now,
+                add
+            ),
+            _class="iframe_impressao"
+        )
+        ifr.html_to("#documentos-content")
+        self.resize_frame()
+        
+        jQuery(window).resize(
+            lambda: self.resize_frame()
+        )
+        widgets.FloatMenu(
+            "menu_impressao",
+            I(_class="fas fa-ellipsis-v"),
+            widgets.FloatButton(
+                I(_class="fas fa-cog"),
+                _class="botao_abrir_modal_configuracoes",
+                _title="Configurar Documento",
+            ),
+            widgets.FloatButton(
+                I(_class="fas fa-file-pdf"),
+                _class="botao_gerar_pdf",
+                _title="Gerar PDF",
+                _href="{0}/api/pdfs/ata-de-resultados-finais/{1}/{2}/{3}?nocache={4}{5}".format(
+                    window.PhanterPWA.ApiServer.remote_address,
+                    self.id_escola,
+                    self.ano_letivo,
+                    self.id_turma,
+                    now,
+                    add
+                ),
+                _target="_blank"
+            ),
+            widgets.FloatButton(
+                I(_class="fas fa-print"),
+                _title="Imprimir documento",
+                _class="botao_imprimir_diario_de_notas",
+                _href="{0}/api/pdfs/ata-de-resultados-finais/{1}/{2}/{3}?nocache={4}&show_html=true&print=true{5}".format(
+                window.PhanterPWA.ApiServer.remote_address,
+                    self.id_escola,
+                    self.ano_letivo,
+                    self.id_turma,
+                    now,
+                    add
+                ),
+                _target="iframe_ata_turma"
+            )
+        ).html_to("#botoes_menu_impressao_ata")
+        self.binds()
+
+    def abrir_modal_configuracoes(self):
+        diretor = self.diretor
+        secretario = self.assinante
+        data_set_diretor = []
+        data_set_secretario = []
+        for x in self.json_ata.equipe_diretiva:
+            if x.atribuicoes in ["Diretor", "Diretor(a)", "Diretora", "Vice-Diretor", "Vice-Diretora", "Vice-Diretor(a)"]:
+                if diretor == "":
+                    diretor = "{0}-{1}".format(x.nome_funcionario, x.atribuicoes)
+                data_set_diretor.append("{0}-{1}".format(x.nome_funcionario, x.atribuicoes))
+            if x.atribuicoes in ["Secretaria", "Secretario", "Secretario(a)"]:
+                if secretario == "":
+                    secretario = "{0}-{1}".format(x.nome_funcionario, x.atribuicoes)
+            data_set_secretario.append("{0}-{1}".format(x.nome_funcionario, x.atribuicoes))
+        if diretor != "" and diretor not in data_set_diretor:
+            data_set_diretor.append(diretor)
+        if secretario != "" and secretario not in data_set_secretario:
+            data_set_secretario.append(secretario)
         dia = __new__(Date().getDate())
         mes_int = __new__(Date().getMonth())
+        mes = validations.zfill(mes_int + 1, 2)
         ano = __new__(Date().getFullYear())
-        mes = meses[int(mes_int)]
-        data_assinatura = "{0} de {1} de {2}".format(dia, mes, ano)
+        if self.data_ata == "":
+            self.data_ata = "{0}/{1}/{2}".format(dia, mes, ano)
 
-        html_botoes = CONCATENATE(
-            widgets.FloatMenu(
-                "menu_impressao",
-                I(_class="fas fa-ellipsis-v"),
-                widgets.FloatButton(
-                    I(_class="fas fa-file-pdf"),
-                    _class="botao_gerar_pdf",
-                    _title="Gerar PDF",
-                    _href="{0}/api/pdfs/declaracao-de-transferencia/{1}?nocache={2}".format(
-                        window.PhanterPWA.ApiServer.remote_address,
-                        self.id_matricula,
-                        now
-                    )
-                ),
-                widgets.FloatButton(
-                    I(_class="fas fa-print"),
-                    _title="Imprimir documento",
-                    _class="botao_imprimir_diario_de_notas",
-                    _onclick="print();"
-                )
-            )
-        )
-        html_botoes.html_to("#botoes_de_comando_impressao")
-        nome_escola = json.data.nome_escola
-        dados_escola = json.data.dados_escola
-        ano_letivo = json.data.ano_letivo
-        eh_multi = json.data.ata_de_resultados_finais.eh_multi
-        naturalidade = json.data.naturalidade
-        nome_do_pai = json.data.nome_do_pai
-        nome_da_mae = json.data.nome_da_mae
-        sexo = json.data.sexo
-        data_de_nascimento_formatada = json.data.data_de_nascimento_formatada
-        nome_autoridade = json.data.nome_autoridade
-        cargo_autoridade = json.data.cargo_autoridade
-        turma = json.data.turma
-        turno = json.data.turno
-        serie_e_ensino = json.data.serie_e_ensino
-        resultado_final = json.data.resultado_final
-        oa_alunoa = "o(a) aluno(a)"
-        filho = "filho(a)"
-        nasc = "nascido(a)"
-        mats = "matriculado(a)"
-        considerado = "considerado(a)"
-        if nome_do_pai is None or nome_do_pai == "":
-            nome_do_pai = ""
-
-        series_multi = []
-        anunciado = XML(json.data.anunciado)
-        dados_serie = ""
-        disciplinas = json.data.ata_de_resultados_finais.disciplinas_ordem
-        linha_cabecalho_educacao = TR(
-            TH("Nº", _class="disciplina_atas_ed"),
-            TH("Nome do(a) aluno(a)", _class="disciplina_atas_ed"),
-            TH("Parecer Final", _class="disciplina_atas_ed"),
-        )
-        tabela_educacao = TABLE(
-            linha_cabecalho_educacao,
-            _class="tabela_educacao_infantil tabela_resultados_ata",
-        )
-        tem_dados_educacao_infantil = False
-        for c in json.data.ata_de_resultados_finais.resultados_finais_educacao:
-            tem_dados_educacao_infantil = True
-            numero_aluno = c[0].numero_do_aluno
-            nome_aluno = c[0].nome_do_aluno
-            colunas = [TH(numero_aluno, _class="nome_do_aluno_atas"), TH(nome_aluno, _class="nome_do_aluno_atas")]
-            if eh_multi and c[0].serie not in series_multi:
-                tabela_educacao.append(TR(
-                    TH(
-                        c[0].serie,
-                        _class="serie_multisseriada_cabecalho",
-                        _colspan=3
-                    )
-                ))
-                series_multi.append(c[0].serie)
-            if c[1] == "Desistente" or c[1] == "Transferido(a)":
-                class_add = " transferido" if c[1] == "Transferido(a)" else " desistente"
-                colunas.append(TH(c[1], _class="desistente_transferido_atas{0}".format(class_add)))
-            else:
-                if c[2] is not None:
-                    colunas.append(TD(c[2], _class="notas_disciplina_atas"))
-                else:
-                    colunas.append(TD("Não foi atribuido um parecer final a(o) referente aluno(a)!", _class="notas_disciplina_atas sem_dados"))
-            linha = TR(*colunas)
-            tabela_educacao.append(linha)
-
-        linha_cabecalho = TR(
-            TH(DIV("Número do(a) aluno(a)", _class="rotate"), _class="disciplina_atas_rotate cabecalho_rotate disciplina_atas_ed"),
-            TH(
-                CANVAS(_id="myCanvas", _width=300, _height=300),
-                DIV("NOME DO(A) ALUNO(A)", _class="rotulo_alunos_atas"),
-                DIV("DISCIPLINAS", _class="rotulo_disciplinas_atas"),
-                _class="caixa_vazia rotulo_diciplinas_alunos_atas disciplina_atas_ed"
+        content = DIV(
+            widgets.Select(
+                "diretores",
+                label="Escolha o diretor/vice-diretor da escola",
+                value=diretor,
+                can_empty=True,
+                editable=True,
+                data_set=data_set_diretor,
+                placeholder="Diretor/Vice-diretor"
             ),
-            *[TH(DIV(x, _class="rotate"), _class="disciplina_atas_rotate cabecalho_rotate disciplina_atas_ed") for x in disciplinas]
-        )
-        tabela_fundamental = TABLE(
-            linha_cabecalho,
-            _class="tabela_fundamental tabela_resultados_ata",
-        )
-        linha_cabecalho.append(TH(DIV("Resultado", _class="rotate"), _class="disciplina_atas_rotate cabecalho_rotate disciplina_atas_ed"))
-        tem_aluno_fundamental = False
-        for c in json.data.ata_de_resultados_finais.resultados_finais:
-            tem_aluno_fundamental = True
-            numero_aluno = c[0].numero_do_aluno
-            nome_aluno = c[0].nome_do_aluno
-            colunas = [TH(numero_aluno, _class="nome_do_aluno_atas"), TH(nome_aluno, _class="nome_do_aluno_atas")]
-            if eh_multi and c[0].serie not in series_multi:
-                tabela_fundamental.append(TR(
-                    TH(
-                        c[0].serie,
-                        _class="serie_multisseriada_cabecalho",
-                        _colspan=len(disciplinas) + 3
-                    )
-                ))
-                series_multi.append(c[0].serie)
-            if c[1] == "Desistente" or c[1] == "Transferido(a)":
-                class_add = " transferido" if c[1] == "Transferido(a)" else " desistente"
-                colunas.append(TH(c[1], _class="desistente_transferido_atas{0}".format(class_add), _colspan=len(disciplinas) + 1))
-            else:
-                if c[2] is not None:
-                    dict_dis_al = dict(c[2])
-                    for x in disciplinas:
-                        if x in dict_dis_al:
-                            class_add = " vermelho" if dict_dis_al[x].vermelho else ""
-                            colunas.append(TD(dict_dis_al[x].nota, _class="notas_disciplina_atas{0}".format(class_add)))
-                        else:
-                            colunas.append(TD("", _class="notas_disciplina_atas sem_dados"))
-                else:
-                    for x in disciplinas:
-                        colunas.append(TD("", _class="notas_disciplina_atas sem_dados"))
-                legenda = "?"
-                if "Aprovado(a)" == c[1]:
-                    legenda = "AP"
-                elif "Reprovado(a)" == c[1]:
-                    legenda = "RP"
-                elif "Aprovado(a) no Conselho" == c[1]:
-                    legenda = "APC"
-                elif "Reprovado(a) no Conselho" == c[1]:
-                    legenda = "RPC"
-                colunas.append(TD(legenda, _class="resultado_legenda"))
-            linha = TR(*colunas)
-            tabela_fundamental.append(linha)
-        tabela_fundamental.append(
-            TR(
-                TD(
-                    DIV(
-                        DIV(
-                            STRONG("LEGENDA")
-                        ),
-                        DIV(
-                            DIV(STRONG("AP"), " - APROVADO(A)", _class="p-col w1p50"),
-                            DIV(STRONG("APC"), " - APROVADO(A) NO CONSELHO", _class="p-col w1p50"),
-                            DIV(STRONG("RP"), " - REPROVADO(A)", _class="p-col w1p50"),
-                            DIV(STRONG("RPC"), " - REPROVADO(A) NO CONSELHO", _class="p-col w1p50"),
-                            DIV(STRONG("*"), " -  MÉDIA CONFORME PARECER DO CONSELHO DE CLASSE", _class="p-col w1p100"),
-                            _class="p-row"
-                        ),
-                        _class="painel_legenda_ata"
-                    ),
-                    _colspan=len(disciplinas) + 3
-                )
+            widgets.Select(
+                "assinante",
+                label="Escolha o funcionário que lavrou a ata",
+                value=secretario,
+                can_empty=True,
+                editable=True,
+                data_set=data_set_secretario,
+                placeholder="Funcionário-Cargo"
+            ),
+            widgets.Input(
+                "data_lavrado",
+                label="Escolha a data que a ata foi lavrada",
+                value=self.data_ata,
+                format="dd/MM/yyyy",
+                kind="date",
+                mask="##/##/####",
+                icon=I(_class="fas fa-calendar-alt")
             )
         )
-
-        logo = "{0}/api/escolas/{1}/image".format(
-            window.PhanterPWA.ApiServer.remote_address,
-            self.id_escola
+        footer = DIV(
+            forms.FormButton(
+                "botao_salvar_config",
+                "Aplicar mudanças",
+                _class="btn-autoresize wave_on_click waves-phanterpwa"
+            ),
+            _class='phanterpwa-form-buttons-container'
         )
-        if ajax_status == "success":
-            declaracao_matricula_content = DIV(
-                DIV(
-                    DIV(
-                        DIV(
-                            DIV(
-                                DIV(
-                                    DIV(
-                                        DIV(
-                                            IMG(_src="/static/{0}/images/cabecalho_background.jpg".format(
-                                                window.PhanterPWA.VERSIONING)),
-                                            _class="back",
-                                        ),
-                                        DIV(
-                                            IMG(_src=logo, _style="width: 120px; height: 120px;"),
-                                            _class="front",
-                                        ),
-                                        _class="sme_cabecalho_sme"
-                                    ),
-                                    DIV(H3(nome_escola), _class="sme_cabecalho_sme_nome_escola"),
-                                    DIV(H5(dados_escola), _class="sme_cabecalho_sme_dados_escola"),
-                                    DIV(H3("ATA DE RESULTADOS FINAIS", _class="tudo_centralizado"), _class="sme_cabecalho_titulo_documento"),
-                                    DIV(
-                                        P(anunciado),
-                                        tabela_educacao if tem_dados_educacao_infantil else "",
-                                        tabela_fundamental if tem_aluno_fundamental else "",
-                                        P("E, Para constar, eu, ", "__________________________________________________",
-                                            ", Secretário(a), lavrei a presente ata que vai assinada ",
-                                            "por mim e pelo(a) Diretor(a) do estabelecimento."),
-                                        BR(),
-                                        BR(),
-                                        DIV(
-                                            TABLE(
-                                                TR(
-                                                    TD("___________________________________________"),
-                                                    TD("___________________________________________"),
-                                                ),
-                                                TR(
-                                                    TD("Diretor(a)", _class="miudinho"),
-                                                    TD("Secretário)", _class="miudinho"),
-                                                ),
-                                                _class="tudo_centralizado"
-                                            ),
-                                            _class="p-row"
-                                        ),
-                                        _class="sme_documento_conteudo"
-                                    ),
-                                    _id="pagina_{0}_declaracao".format(self.id_matricula),
-                                    _class="p-row"
-                                ),
-                                _class="imprimir_matricula_wrapper imprimir_documentos_wrapper"
-                            ),
-                            _class="imprimir_ata_de_resultados"
-                        ),
-                    ),
-
-                    _class="media-print-visible"
-                ),
-                _class="folhas_para_imprimir phanterpwa-simple-media-print"
-            )
-            CONCATENATE(declaracao_matricula_content).html_to("#documentos-content")
-
-            c = jQuery("#myCanvas")[0]
-            ctx = c.getContext("2d")
-            ctx.lineWidth = 1
-            ctx.beginPath()
-            ctx.moveTo(0, 0)
-            ctx.lineTo(300, 300)
-            ctx.stroke()
-            altura = jQuery('.caixa_vazia.rotulo_diciplinas_alunos_atas').height()
-            largura = jQuery('.caixa_vazia.rotulo_diciplinas_alunos_atas').width()
-            jQuery('#myCanvas').width(largura).height(altura)
-
-
-    def _get_data(self):
-        window.PhanterPWA.GET(
-            "api",
-            "imprimir",
-            "ata-de-resultados-finais",
-            self.id_escola,
-            self.ano_letivo,
-            self.id_turma,
-            onComplete=self.after_get
+        self.modal_conf_atas = modal.Modal(
+            "#container_modal_configuracoes",
+            **{
+                "title": "O que deseja modificar?",
+                "content": content,
+                "footer": footer
+            }
         )
+        self.modal_conf_atas.open()
+        jQuery("#phanterpwa-widget-form-form_button-botao_salvar_config").off(
+            "click.salvar_config"
+        ).on(
+            "click.salvar_config",
+            lambda: self._on_click_salvar_config()
+        )
+
+    def _on_click_salvar_config(self):
+        self.diretor = window.PhanterPWA.get_widget("diretores").value()
+        self.data_ata = window.PhanterPWA.get_widget("data_lavrado").value()
+        self.assinante = window.PhanterPWA.get_widget("assinante").value()
+        self.iframe()
+        self.modal_conf_atas.close()
 
 
 class Turma():

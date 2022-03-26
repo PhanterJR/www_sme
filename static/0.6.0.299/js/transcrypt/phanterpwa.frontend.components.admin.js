@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2022-03-14 09:15:27
+// Transcrypt'ed from Python, 2022-03-25 05:20:27
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import * as modal from './phanterpwa.frontend.components.modal.js';
 import * as forms from './phanterpwa.frontend.forms.js';
@@ -442,7 +442,7 @@ export var UsersList =  __class__ ('UsersList', [helpers.XmlConstructor], {
 			}
 			else {
 			}
-			return self._active_account (this);
+			return self._modal_active_account (this);
 		}));
 	});},
 	get _modal_temporary_password () {return __get__ (this, function (self, el) {
@@ -877,6 +877,137 @@ export var UsersList =  __class__ ('UsersList', [helpers.XmlConstructor], {
 		}
 		else {
 			window.PhanterPWA.flash (__kwargtrans__ ({html: 'Problem deleting'}));
+		}
+	});},
+	get _modal_active_account () {return __get__ (this, function (self, el) {
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+					switch (__attrib0__) {
+						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+						case 'el': var el = __allkwargs0__ [__attrib0__]; break;
+					}
+				}
+			}
+		}
+		else {
+		}
+		var email = $ (el).data ('email');
+		var id_user = $ (el).data ('id');
+		var content = DIV ("With this action you will be abruptly active the user's account", '. Do you want continue?', DIV (forms.FormWidget ('auth_user', 'fake_email', __kwargtrans__ (dict ({'value': email, 'label': 'Email', 'data_view': true, 'type': 'string', 'form': 'auth_user', '_placeholder': 'Email', '_class': 'p-col w1p100'}))), forms.FormWidget ('auth_user', 'email', __kwargtrans__ (dict ({'value': email, 'label': 'Email', 'type': 'hidden', 'form': 'auth_user', '_placeholder': 'Email', '_class': 'p-col w1p100'}))), forms.FormWidget ('auth_user', 'activated', __kwargtrans__ (dict ({'value': true, 'label': 'Activated', 'type': 'hidden', 'form': 'auth_user', '_placeholder': 'Activated', '_class': 'p-col w1p100'})))), __kwargtrans__ ({_class: 'p-row'}));
+		var footer = DIV (forms.SubmitButton ('yes_change', 'Yes', __kwargtrans__ ({_class: 'btn-autoresize wave_on_click waves-phanterpwa'})), forms.FormButton ('no_change', 'No', __kwargtrans__ ({_class: 'btn-autoresize wave_on_click waves-phanterpwa'})), __kwargtrans__ ({_class: 'phanterpwa-form-buttons-container'}));
+		self.modal_active_account = modal.Modal ('#modal_user', __kwargtrans__ (dict ({'title': 'Active account ({0})'.format (email), 'content': content, 'footer': footer, 'form': 'auth_user'})));
+		self.modal_active_account.open ();
+		$ ('#phanterpwa-widget-form-submit_button-yes_change').off ('click.yes_change').on ('click.yes_change', (function __lambda__ () {
+			if (arguments.length) {
+				var __ilastarg0__ = arguments.length - 1;
+				if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+					var __allkwargs0__ = arguments [__ilastarg0__--];
+					for (var __attrib0__ in __allkwargs0__) {
+					}
+				}
+			}
+			else {
+			}
+			return self._request_active_account (id_user);
+		}));
+		$ ('#phanterpwa-widget-form-form_button-no_change').off ('click.no_change').on ('click.no_change', (function __lambda__ () {
+			if (arguments.length) {
+				var __ilastarg0__ = arguments.length - 1;
+				if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+					var __allkwargs0__ = arguments [__ilastarg0__--];
+					for (var __attrib0__ in __allkwargs0__) {
+					}
+				}
+			}
+			else {
+			}
+			return self.modal_active_account.close ();
+		}));
+		forms.SignForm ('#form-auth_user', __kwargtrans__ ({after_sign: (function __lambda__ () {
+			if (arguments.length) {
+				var __ilastarg0__ = arguments.length - 1;
+				if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+					var __allkwargs0__ = arguments [__ilastarg0__--];
+					for (var __attrib0__ in __allkwargs0__) {
+					}
+				}
+			}
+			else {
+			}
+			return forms.ValidateForm ('#form-auth_user');
+		})}));
+	});},
+	get _request_active_account () {return __get__ (this, function (self, id_user) {
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+					switch (__attrib0__) {
+						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+						case 'id_user': var id_user = __allkwargs0__ [__attrib0__]; break;
+					}
+				}
+			}
+		}
+		else {
+		}
+		var form_active_account = $ ('#form-auth_user') [0];
+		var form_active_account = new FormData (form_active_account);
+		window.PhanterPWA.PUT ('api', 'admin', 'usermanager', id_user, __kwargtrans__ ({form_data: form_active_account, onComplete: (function __lambda__ (data, ajax_status) {
+			if (arguments.length) {
+				var __ilastarg0__ = arguments.length - 1;
+				if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+					var __allkwargs0__ = arguments [__ilastarg0__--];
+					for (var __attrib0__ in __allkwargs0__) {
+						switch (__attrib0__) {
+							case 'data': var data = __allkwargs0__ [__attrib0__]; break;
+							case 'ajax_status': var ajax_status = __allkwargs0__ [__attrib0__]; break;
+						}
+					}
+				}
+			}
+			else {
+			}
+			return self._after_request_active_account (data, ajax_status);
+		})}));
+	});},
+	get _after_request_active_account () {return __get__ (this, function (self, data, ajax_status) {
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+					switch (__attrib0__) {
+						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+						case 'data': var data = __allkwargs0__ [__attrib0__]; break;
+						case 'ajax_status': var ajax_status = __allkwargs0__ [__attrib0__]; break;
+					}
+				}
+			}
+		}
+		else {
+		}
+		if (ajax_status == 'success') {
+			self.modal_active_account.close ();
+		}
+		else {
+			forms.SignForm ('#form-auth_user', __kwargtrans__ ({after_sign: (function __lambda__ () {
+				if (arguments.length) {
+					var __ilastarg0__ = arguments.length - 1;
+					if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+						var __allkwargs0__ = arguments [__ilastarg0__--];
+						for (var __attrib0__ in __allkwargs0__) {
+						}
+					}
+				}
+				else {
+				}
+				return forms.ValidateForm ('#form-auth_user');
+			})}));
 		}
 	});}
 });

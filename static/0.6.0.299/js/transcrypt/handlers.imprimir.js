@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2022-03-14 09:39:57
+// Transcrypt'ed from Python, 2022-03-25 05:30:07
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import * as anos_letivos from './handlers.anos_letivos.js';
 import * as escolas from './handlers.escolas.js';
@@ -34,11 +34,13 @@ export var H2 = helpers.XmlConstructor.tagger ('h2');
 export var H3 = helpers.XmlConstructor.tagger ('h3');
 export var H4 = helpers.XmlConstructor.tagger ('h4');
 export var TBODY = helpers.XmlConstructor.tagger ('tbody');
+export var THEAD = helpers.XmlConstructor.tagger ('thead');
 export var CANVAS = helpers.XmlConstructor.tagger ('canvas');
 export var H5 = helpers.XmlConstructor.tagger ('h5');
 export var HR = helpers.XmlConstructor.tagger ('hr', true);
 export var P = helpers.XmlConstructor.tagger ('p');
 export var LABEL = helpers.XmlConstructor.tagger ('label');
+export var IFRAME = helpers.XmlConstructor.tagger ('iframe');
 export var XSECTION = helpers.XSECTION;
 export var XTABLE = widgets.Table;
 export var XML = helpers.XML;
@@ -1074,10 +1076,28 @@ export var AtaDeResultadosFinais =  __class__ ('AtaDeResultadosFinais', [object]
 		}
 		else {
 		}
+		window.addEventListener ('DOMContentLoaded', (function __lambda__ () {
+			if (arguments.length) {
+				var __ilastarg0__ = arguments.length - 1;
+				if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+					var __allkwargs0__ = arguments [__ilastarg0__--];
+					for (var __attrib0__ in __allkwargs0__) {
+					}
+				}
+			}
+			else {
+			}
+			return self.ajustar_iframe ();
+		}));
 		self.id_escola = window.PhanterPWA.Request.get_arg (1);
 		self.ano_letivo = window.PhanterPWA.Request.get_arg (2);
 		self.id_turma = window.PhanterPWA.Request.get_arg (3);
-		var html = CONCATENATE (DIV (DIV (DIV (DIV ('IMPRIMIR', __kwargtrans__ ({_class: 'phanterpwa-breadcrumb'})), DIV ('ATAS DE RESULTADOS FINAIS', __kwargtrans__ ({_class: 'phanterpwa-breadcrumb'})), __kwargtrans__ ({_class: 'phanterpwa-breadcrumb-wrapper'})), __kwargtrans__ ({_class: 'p-container'})), __kwargtrans__ ({_class: 'title_page_container card'})), DIV (DIV (DIV (DIV (DIV (preloaders.android, __kwargtrans__ ({_style: 'width: 300px; height: 300px; overflow: hidden; margin: auto;'})), __kwargtrans__ ({_style: 'text-align:center; padding: 50px 0;'})), __kwargtrans__ ({_id: 'content-matriculas-imprimir', _class: 'p-row card e-padding_20'})), __kwargtrans__ ({_class: 'phanterpwa-container p-container'})), __kwargtrans__ ({_id: 'documentos-content'})), DIV (__kwargtrans__ ({_id: 'botoes_de_comando_impressao'})));
+		self.diretor = '';
+		self.assinante = '';
+		self.data_ata = '';
+		self.json_ata = null;
+		var now = new Date ().getTime ();
+		var html = CONCATENATE (DIV (DIV (DIV (DIV ('IMPRIMIR', __kwargtrans__ ({_class: 'phanterpwa-breadcrumb'})), DIV ('ATAS DE RESULTADOS FINAIS', __kwargtrans__ ({_class: 'phanterpwa-breadcrumb'})), __kwargtrans__ ({_class: 'phanterpwa-breadcrumb-wrapper'})), __kwargtrans__ ({_class: 'p-container'})), __kwargtrans__ ({_class: 'title_page_container card'})), DIV (DIV (DIV (preloaders.android, __kwargtrans__ ({_style: 'width: 300px; height: 300px; overflow: hidden; margin: auto;'})), __kwargtrans__ ({_style: 'text-align:center; padding: 50px 0;'})), __kwargtrans__ ({_id: 'documentos-content'})), DIV (widgets.FloatMenu ('menu_impressao', I (__kwargtrans__ ({_class: 'fas fa-ellipsis-v'})), widgets.FloatButton (I (__kwargtrans__ ({_class: 'fas fa-cog'})), __kwargtrans__ ({_class: 'botao_abrir_modal_configuracoes', _title: 'Configurar Documento'})), widgets.FloatButton (I (__kwargtrans__ ({_class: 'fas fa-file-pdf'})), __kwargtrans__ ({_class: 'botao_gerar_pdf', _title: 'Gerar PDF', _href: '{0}/api/pdfs/ata-de-resultados-finais/{1}/{2}/{3}?nocache={4}'.format (window.PhanterPWA.ApiServer.remote_address, self.id_escola, self.ano_letivo, self.id_turma, now), _target: '_blank'})), widgets.FloatButton (I (__kwargtrans__ ({_class: 'fas fa-print'})), __kwargtrans__ ({_title: 'Imprimir documento', _class: 'botao_imprimir_diario_de_notas', _href: '{0}/api/pdfs/ata-de-resultados-finais/{1}/{2}/{3}?nocache={4}&show_html=true&print=true'.format (window.PhanterPWA.ApiServer.remote_address, self.id_escola, self.ano_letivo, self.id_turma, now), _target: 'iframe_ata_turma'}))), __kwargtrans__ ({_id: 'botoes_menu_impressao_ata'})), DIV (__kwargtrans__ ({_id: 'container_modal_configuracoes'})));
 		html.html_to ('#main-container');
 		var BackButton = left_bar.LeftBarButton ('back_imprimir_matricula', 'Voltar', I (__kwargtrans__ ({_class: 'fas fa-arrow-circle-left'})), __kwargtrans__ (dict ({'_phanterpwa-way': 'area-do-servidor', 'position': 'top', 'ways': [(function __lambda__ (r) {
 			if (arguments.length) {
@@ -1096,9 +1116,75 @@ export var AtaDeResultadosFinais =  __class__ ('AtaDeResultadosFinais', [object]
 			return (r.startswith ('documentos') || r.startswith ('documentos/') ? true : false);
 		})]})));
 		window.PhanterPWA.Components ['left_bar'].add_button (BackButton);
-		self._get_data ();
+		self.iframe ();
 	}));},
-	get after_get () {return __get__ (this, function (self, data, ajax_status) {
+	get resize_frame () {return __get__ (this, function (self) {
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+					switch (__attrib0__) {
+						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+					}
+				}
+			}
+		}
+		else {
+		}
+		var h = $ (window).height ();
+		$ ('#iframe_ata_turma').height (((h - 64) - 58) - 66);
+	});},
+	get binds () {return __get__ (this, function (self) {
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+					switch (__attrib0__) {
+						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+					}
+				}
+			}
+		}
+		else {
+		}
+		$ ('.botao_abrir_modal_configuracoes').off ('click.modal_cfg').on ('click.modal_cfg', (function __lambda__ () {
+			if (arguments.length) {
+				var __ilastarg0__ = arguments.length - 1;
+				if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+					var __allkwargs0__ = arguments [__ilastarg0__--];
+					for (var __attrib0__ in __allkwargs0__) {
+					}
+				}
+			}
+			else {
+			}
+			return self.get_informacao_turma ();
+		}));
+	});},
+	get get_informacao_turma () {return __get__ (this, function (self) {
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+					switch (__attrib0__) {
+						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+					}
+				}
+			}
+		}
+		else {
+		}
+		if (self.json_ata === null) {
+			window.PhanterPWA.GET ('api', 'escola', 'informacoes', self.id_escola, self.ano_letivo, __kwargtrans__ ({onComplete: self._after_get_info}));
+		}
+		else {
+			self.abrir_modal_configuracoes ();
+		}
+	});},
+	get _after_get_info () {return __get__ (this, function (self, data, ajax_status) {
 		if (arguments.length) {
 			var __ilastarg0__ = arguments.length - 1;
 			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
@@ -1114,148 +1200,12 @@ export var AtaDeResultadosFinais =  __class__ ('AtaDeResultadosFinais', [object]
 		}
 		else {
 		}
-		var json = data.responseJSON;
-		self.id_escola = json.data.id_escola;
-		self.ano_letivo = json.data.ano_letivo;
-		self.id_aluno = json.data.id_aluno;
-		var meses = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
-		var now = new Date ().getTime ();
-		var dia = new Date ().getDate ();
-		var mes_int = new Date ().getMonth ();
-		var ano = new Date ().getFullYear ();
-		var mes = meses [int (mes_int)];
-		var data_assinatura = '{0} de {1} de {2}'.format (dia, mes, ano);
-		var html_botoes = CONCATENATE (widgets.FloatMenu ('menu_impressao', I (__kwargtrans__ ({_class: 'fas fa-ellipsis-v'})), widgets.FloatButton (I (__kwargtrans__ ({_class: 'fas fa-file-pdf'})), __kwargtrans__ ({_class: 'botao_gerar_pdf', _title: 'Gerar PDF', _href: '{0}/api/pdfs/declaracao-de-transferencia/{1}?nocache={2}'.format (window.PhanterPWA.ApiServer.remote_address, self.id_matricula, now)})), widgets.FloatButton (I (__kwargtrans__ ({_class: 'fas fa-print'})), __kwargtrans__ ({_title: 'Imprimir documento', _class: 'botao_imprimir_diario_de_notas', _onclick: 'print();'}))));
-		html_botoes.html_to ('#botoes_de_comando_impressao');
-		var nome_escola = json.data.nome_escola;
-		var dados_escola = json.data.dados_escola;
-		var ano_letivo = json.data.ano_letivo;
-		var eh_multi = json.data.ata_de_resultados_finais.eh_multi;
-		var naturalidade = json.data.naturalidade;
-		var nome_do_pai = json.data.nome_do_pai;
-		var nome_da_mae = json.data.nome_da_mae;
-		var sexo = json.data.sexo;
-		var data_de_nascimento_formatada = json.data.data_de_nascimento_formatada;
-		var nome_autoridade = json.data.nome_autoridade;
-		var cargo_autoridade = json.data.cargo_autoridade;
-		var turma = json.data.turma;
-		var turno = json.data.turno;
-		var serie_e_ensino = json.data.serie_e_ensino;
-		var resultado_final = json.data.resultado_final;
-		var oa_alunoa = 'o(a) aluno(a)';
-		var filho = 'filho(a)';
-		var nasc = 'nascido(a)';
-		var mats = 'matriculado(a)';
-		var considerado = 'considerado(a)';
-		if (nome_do_pai === null || nome_do_pai == '') {
-			var nome_do_pai = '';
-		}
-		var series_multi = [];
-		var anunciado = XML (json.data.anunciado);
-		var dados_serie = '';
-		var disciplinas = json.data.ata_de_resultados_finais.disciplinas_ordem;
-		var linha_cabecalho_educacao = TR (TH ('Nº', __kwargtrans__ ({_class: 'disciplina_atas_ed'})), TH ('Nome do(a) aluno(a)', __kwargtrans__ ({_class: 'disciplina_atas_ed'})), TH ('Parecer Final', __kwargtrans__ ({_class: 'disciplina_atas_ed'})));
-		var tabela_educacao = TABLE (linha_cabecalho_educacao, __kwargtrans__ ({_class: 'tabela_educacao_infantil tabela_resultados_ata'}));
-		var tem_dados_educacao_infantil = false;
-		for (var c of json.data.ata_de_resultados_finais.resultados_finais_educacao) {
-			var tem_dados_educacao_infantil = true;
-			var numero_aluno = c [0].numero_do_aluno;
-			var nome_aluno = c [0].nome_do_aluno;
-			var colunas = [TH (numero_aluno, __kwargtrans__ ({_class: 'nome_do_aluno_atas'})), TH (nome_aluno, __kwargtrans__ ({_class: 'nome_do_aluno_atas'}))];
-			if (eh_multi && !__in__ (c [0].serie, series_multi)) {
-				tabela_educacao.append (TR (TH (c [0].serie, __kwargtrans__ ({_class: 'serie_multisseriada_cabecalho', _colspan: 3}))));
-				series_multi.append (c [0].serie);
-			}
-			if (c [1] == 'Desistente' || c [1] == 'Transferido(a)') {
-				var class_add = (c [1] == 'Transferido(a)' ? ' transferido' : ' desistente');
-				colunas.append (TH (c [1], __kwargtrans__ ({_class: 'desistente_transferido_atas{0}'.format (class_add)})));
-			}
-			else if (c [2] !== null) {
-				colunas.append (TD (c [2], __kwargtrans__ ({_class: 'notas_disciplina_atas'})));
-			}
-			else {
-				colunas.append (TD ('Não foi atribuido um parecer final a(o) referente aluno(a)!', __kwargtrans__ ({_class: 'notas_disciplina_atas sem_dados'})));
-			}
-			var linha = TR (...colunas);
-			tabela_educacao.append (linha);
-		}
-		var linha_cabecalho = TR (TH (DIV ('Número do(a) aluno(a)', __kwargtrans__ ({_class: 'rotate'})), __kwargtrans__ ({_class: 'disciplina_atas_rotate cabecalho_rotate disciplina_atas_ed'})), TH (CANVAS (__kwargtrans__ ({_id: 'myCanvas', _width: 300, _height: 300})), DIV ('NOME DO(A) ALUNO(A)', __kwargtrans__ ({_class: 'rotulo_alunos_atas'})), DIV ('DISCIPLINAS', __kwargtrans__ ({_class: 'rotulo_disciplinas_atas'})), __kwargtrans__ ({_class: 'caixa_vazia rotulo_diciplinas_alunos_atas disciplina_atas_ed'})), ...(function () {
-			var __accu0__ = [];
-			for (var x of disciplinas) {
-				__accu0__.append (TH (DIV (x, __kwargtrans__ ({_class: 'rotate'})), __kwargtrans__ ({_class: 'disciplina_atas_rotate cabecalho_rotate disciplina_atas_ed'})));
-			}
-			return __accu0__;
-		}) ());
-		var tabela_fundamental = TABLE (linha_cabecalho, __kwargtrans__ ({_class: 'tabela_fundamental tabela_resultados_ata'}));
-		linha_cabecalho.append (TH (DIV ('Resultado', __kwargtrans__ ({_class: 'rotate'})), __kwargtrans__ ({_class: 'disciplina_atas_rotate cabecalho_rotate disciplina_atas_ed'})));
-		var tem_aluno_fundamental = false;
-		for (var c of json.data.ata_de_resultados_finais.resultados_finais) {
-			var tem_aluno_fundamental = true;
-			var numero_aluno = c [0].numero_do_aluno;
-			var nome_aluno = c [0].nome_do_aluno;
-			var colunas = [TH (numero_aluno, __kwargtrans__ ({_class: 'nome_do_aluno_atas'})), TH (nome_aluno, __kwargtrans__ ({_class: 'nome_do_aluno_atas'}))];
-			if (eh_multi && !__in__ (c [0].serie, series_multi)) {
-				tabela_fundamental.append (TR (TH (c [0].serie, __kwargtrans__ ({_class: 'serie_multisseriada_cabecalho', _colspan: len (disciplinas) + 3}))));
-				series_multi.append (c [0].serie);
-			}
-			if (c [1] == 'Desistente' || c [1] == 'Transferido(a)') {
-				var class_add = (c [1] == 'Transferido(a)' ? ' transferido' : ' desistente');
-				colunas.append (TH (c [1], __kwargtrans__ ({_class: 'desistente_transferido_atas{0}'.format (class_add), _colspan: len (disciplinas) + 1})));
-			}
-			else {
-				if (c [2] !== null) {
-					var dict_dis_al = dict (c [2]);
-					for (var x of disciplinas) {
-						if (__in__ (x, dict_dis_al)) {
-							var class_add = (dict_dis_al [x].vermelho ? ' vermelho' : '');
-							colunas.append (TD (dict_dis_al [x].nota, __kwargtrans__ ({_class: 'notas_disciplina_atas{0}'.format (class_add)})));
-						}
-						else {
-							colunas.append (TD ('', __kwargtrans__ ({_class: 'notas_disciplina_atas sem_dados'})));
-						}
-					}
-				}
-				else {
-					for (var x of disciplinas) {
-						colunas.append (TD ('', __kwargtrans__ ({_class: 'notas_disciplina_atas sem_dados'})));
-					}
-				}
-				var legenda = '?';
-				if ('Aprovado(a)' == c [1]) {
-					var legenda = 'AP';
-				}
-				else if ('Reprovado(a)' == c [1]) {
-					var legenda = 'RP';
-				}
-				else if ('Aprovado(a) no Conselho' == c [1]) {
-					var legenda = 'APC';
-				}
-				else if ('Reprovado(a) no Conselho' == c [1]) {
-					var legenda = 'RPC';
-				}
-				colunas.append (TD (legenda, __kwargtrans__ ({_class: 'resultado_legenda'})));
-			}
-			var linha = TR (...colunas);
-			tabela_fundamental.append (linha);
-		}
-		tabela_fundamental.append (TR (TD (DIV (DIV (STRONG ('LEGENDA')), DIV (DIV (STRONG ('AP'), ' - APROVADO(A)', __kwargtrans__ ({_class: 'p-col w1p50'})), DIV (STRONG ('APC'), ' - APROVADO(A) NO CONSELHO', __kwargtrans__ ({_class: 'p-col w1p50'})), DIV (STRONG ('RP'), ' - REPROVADO(A)', __kwargtrans__ ({_class: 'p-col w1p50'})), DIV (STRONG ('RPC'), ' - REPROVADO(A) NO CONSELHO', __kwargtrans__ ({_class: 'p-col w1p50'})), DIV (STRONG ('*'), ' -  MÉDIA CONFORME PARECER DO CONSELHO DE CLASSE', __kwargtrans__ ({_class: 'p-col w1p100'})), __kwargtrans__ ({_class: 'p-row'})), __kwargtrans__ ({_class: 'painel_legenda_ata'})), __kwargtrans__ ({_colspan: len (disciplinas) + 3}))));
-		var logo = '{0}/api/escolas/{1}/image'.format (window.PhanterPWA.ApiServer.remote_address, self.id_escola);
 		if (ajax_status == 'success') {
-			var declaracao_matricula_content = DIV (DIV (DIV (DIV (DIV (DIV (DIV (DIV (IMG (__kwargtrans__ ({_src: '/static/{0}/images/cabecalho_background.jpg'.format (window.PhanterPWA.VERSIONING)})), __kwargtrans__ ({_class: 'back'})), DIV (IMG (__kwargtrans__ ({_src: logo, _style: 'width: 120px; height: 120px;'})), __kwargtrans__ ({_class: 'front'})), __kwargtrans__ ({_class: 'sme_cabecalho_sme'})), DIV (H3 (nome_escola), __kwargtrans__ ({_class: 'sme_cabecalho_sme_nome_escola'})), DIV (H5 (dados_escola), __kwargtrans__ ({_class: 'sme_cabecalho_sme_dados_escola'})), DIV (H3 ('ATA DE RESULTADOS FINAIS', __kwargtrans__ ({_class: 'tudo_centralizado'})), __kwargtrans__ ({_class: 'sme_cabecalho_titulo_documento'})), DIV (P (anunciado), (tem_dados_educacao_infantil ? tabela_educacao : ''), (tem_aluno_fundamental ? tabela_fundamental : ''), P ('E, Para constar, eu, ', '__________________________________________________', ', Secretário(a), lavrei a presente ata que vai assinada ', 'por mim e pelo(a) Diretor(a) do estabelecimento.'), BR (), BR (), DIV (TABLE (TR (TD ('___________________________________________'), TD ('___________________________________________')), TR (TD ('Diretor(a)', __kwargtrans__ ({_class: 'miudinho'})), TD ('Secretário)', __kwargtrans__ ({_class: 'miudinho'}))), __kwargtrans__ ({_class: 'tudo_centralizado'})), __kwargtrans__ ({_class: 'p-row'})), __kwargtrans__ ({_class: 'sme_documento_conteudo'})), __kwargtrans__ ({_id: 'pagina_{0}_declaracao'.format (self.id_matricula), _class: 'p-row'})), __kwargtrans__ ({_class: 'imprimir_matricula_wrapper imprimir_documentos_wrapper'})), __kwargtrans__ ({_class: 'imprimir_ata_de_resultados'}))), __kwargtrans__ ({_class: 'media-print-visible'})), __kwargtrans__ ({_class: 'folhas_para_imprimir phanterpwa-simple-media-print'}));
-			CONCATENATE (declaracao_matricula_content).html_to ('#documentos-content');
-			var c = $ ('#myCanvas') [0];
-			var ctx = c.getContext ('2d');
-			ctx.lineWidth = 1;
-			ctx.beginPath ();
-			ctx.moveTo (0, 0);
-			ctx.lineTo (300, 300);
-			ctx.stroke ();
-			var altura = $ ('.caixa_vazia.rotulo_diciplinas_alunos_atas').height ();
-			var largura = $ ('.caixa_vazia.rotulo_diciplinas_alunos_atas').width ();
-			$ ('#myCanvas').width (largura).height (altura);
+			self.json_ata = data.responseJSON;
+			self.abrir_modal_configuracoes ();
 		}
 	});},
-	get _get_data () {return __get__ (this, function (self) {
+	get iframe () {return __get__ (this, function (self) {
 		if (arguments.length) {
 			var __ilastarg0__ = arguments.length - 1;
 			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
@@ -1269,7 +1219,122 @@ export var AtaDeResultadosFinais =  __class__ ('AtaDeResultadosFinais', [object]
 		}
 		else {
 		}
-		window.PhanterPWA.GET ('api', 'imprimir', 'ata-de-resultados-finais', self.id_escola, self.ano_letivo, self.id_turma, __kwargtrans__ ({onComplete: self.after_get}));
+		var now = new Date ().getTime ();
+		var add = '';
+		if (self.data_ata != '') {
+			var __left0__ = self.data_ata.py_split ('/');
+			var dia = __left0__ [0];
+			var mes = __left0__ [1];
+			var ano = __left0__ [2];
+			add += '&data={0}-{1}-{2}'.format (ano, mes, dia);
+		}
+		if (self.assinante != '') {
+			add += '&assinante={0}'.format (self.assinante);
+		}
+		if (self.diretor != '') {
+			add += '&diretor={0}'.format (self.diretor);
+		}
+		var ifr = IFRAME (__kwargtrans__ ({_id: 'iframe_ata_turma', _name: 'iframe_ata_turma', _src: '{0}/api/pdfs/ata-de-resultados-finais/{1}/{2}/{3}?nocache={4}&show_html=true{5}'.format (window.PhanterPWA.ApiServer.remote_address, self.id_escola, self.ano_letivo, self.id_turma, now, add), _class: 'iframe_impressao'}));
+		ifr.html_to ('#documentos-content');
+		self.resize_frame ();
+		$ (window).resize ((function __lambda__ () {
+			if (arguments.length) {
+				var __ilastarg0__ = arguments.length - 1;
+				if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+					var __allkwargs0__ = arguments [__ilastarg0__--];
+					for (var __attrib0__ in __allkwargs0__) {
+					}
+				}
+			}
+			else {
+			}
+			return self.resize_frame ();
+		}));
+		widgets.FloatMenu ('menu_impressao', I (__kwargtrans__ ({_class: 'fas fa-ellipsis-v'})), widgets.FloatButton (I (__kwargtrans__ ({_class: 'fas fa-cog'})), __kwargtrans__ ({_class: 'botao_abrir_modal_configuracoes', _title: 'Configurar Documento'})), widgets.FloatButton (I (__kwargtrans__ ({_class: 'fas fa-file-pdf'})), __kwargtrans__ ({_class: 'botao_gerar_pdf', _title: 'Gerar PDF', _href: '{0}/api/pdfs/ata-de-resultados-finais/{1}/{2}/{3}?nocache={4}{5}'.format (window.PhanterPWA.ApiServer.remote_address, self.id_escola, self.ano_letivo, self.id_turma, now, add), _target: '_blank'})), widgets.FloatButton (I (__kwargtrans__ ({_class: 'fas fa-print'})), __kwargtrans__ ({_title: 'Imprimir documento', _class: 'botao_imprimir_diario_de_notas', _href: '{0}/api/pdfs/ata-de-resultados-finais/{1}/{2}/{3}?nocache={4}&show_html=true&print=true{5}'.format (window.PhanterPWA.ApiServer.remote_address, self.id_escola, self.ano_letivo, self.id_turma, now, add), _target: 'iframe_ata_turma'}))).html_to ('#botoes_menu_impressao_ata');
+		self.binds ();
+	});},
+	get abrir_modal_configuracoes () {return __get__ (this, function (self) {
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+					switch (__attrib0__) {
+						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+					}
+				}
+			}
+		}
+		else {
+		}
+		var diretor = self.diretor;
+		var secretario = self.assinante;
+		var data_set_diretor = [];
+		var data_set_secretario = [];
+		for (var x of self.json_ata.equipe_diretiva) {
+			if (__in__ (x.atribuicoes, ['Diretor', 'Diretor(a)', 'Diretora', 'Vice-Diretor', 'Vice-Diretora', 'Vice-Diretor(a)'])) {
+				if (diretor == '') {
+					var diretor = '{0}-{1}'.format (x.nome_funcionario, x.atribuicoes);
+				}
+				data_set_diretor.append ('{0}-{1}'.format (x.nome_funcionario, x.atribuicoes));
+			}
+			if (__in__ (x.atribuicoes, ['Secretaria', 'Secretario', 'Secretario(a)'])) {
+				if (secretario == '') {
+					var secretario = '{0}-{1}'.format (x.nome_funcionario, x.atribuicoes);
+				}
+			}
+			data_set_secretario.append ('{0}-{1}'.format (x.nome_funcionario, x.atribuicoes));
+		}
+		if (diretor != '' && !__in__ (diretor, data_set_diretor)) {
+			data_set_diretor.append (diretor);
+		}
+		if (secretario != '' && !__in__ (secretario, data_set_secretario)) {
+			data_set_secretario.append (secretario);
+		}
+		var dia = new Date ().getDate ();
+		var mes_int = new Date ().getMonth ();
+		var mes = validations.zfill (mes_int + 1, 2);
+		var ano = new Date ().getFullYear ();
+		if (self.data_ata == '') {
+			self.data_ata = '{0}/{1}/{2}'.format (dia, mes, ano);
+		}
+		var content = DIV (widgets.Select ('diretores', __kwargtrans__ ({label: 'Escolha o diretor/vice-diretor da escola', value: diretor, can_empty: true, editable: true, data_set: data_set_diretor, placeholder: 'Diretor/Vice-diretor'})), widgets.Select ('assinante', __kwargtrans__ ({label: 'Escolha o funcionário que lavrou a ata', value: secretario, can_empty: true, editable: true, data_set: data_set_secretario, placeholder: 'Funcionário-Cargo'})), widgets.Input ('data_lavrado', __kwargtrans__ ({label: 'Escolha a data que a ata foi lavrada', value: self.data_ata, format: 'dd/MM/yyyy', kind: 'date', mask: '##/##/####', icon: I (__kwargtrans__ ({_class: 'fas fa-calendar-alt'}))})));
+		var footer = DIV (forms.FormButton ('botao_salvar_config', 'Aplicar mudanças', __kwargtrans__ ({_class: 'btn-autoresize wave_on_click waves-phanterpwa'})), __kwargtrans__ ({_class: 'phanterpwa-form-buttons-container'}));
+		self.modal_conf_atas = modal.Modal ('#container_modal_configuracoes', __kwargtrans__ (dict ({'title': 'O que deseja modificar?', 'content': content, 'footer': footer})));
+		self.modal_conf_atas.open ();
+		$ ('#phanterpwa-widget-form-form_button-botao_salvar_config').off ('click.salvar_config').on ('click.salvar_config', (function __lambda__ () {
+			if (arguments.length) {
+				var __ilastarg0__ = arguments.length - 1;
+				if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+					var __allkwargs0__ = arguments [__ilastarg0__--];
+					for (var __attrib0__ in __allkwargs0__) {
+					}
+				}
+			}
+			else {
+			}
+			return self._on_click_salvar_config ();
+		}));
+	});},
+	get _on_click_salvar_config () {return __get__ (this, function (self) {
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+					switch (__attrib0__) {
+						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+					}
+				}
+			}
+		}
+		else {
+		}
+		self.diretor = window.PhanterPWA.get_widget ('diretores').value ();
+		self.data_ata = window.PhanterPWA.get_widget ('data_lavrado').value ();
+		self.assinante = window.PhanterPWA.get_widget ('assinante').value ();
+		self.iframe ();
+		self.modal_conf_atas.close ();
 	});}
 });
 export var Turma =  __class__ ('Turma', [object], {

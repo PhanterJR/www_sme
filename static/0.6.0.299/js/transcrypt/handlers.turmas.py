@@ -72,7 +72,7 @@ class Index(gatehandler.Handler):
                         DIV("TURMAS", _class="phanterpwa-breadcrumb"),
                         _class="phanterpwa-breadcrumb-wrapper"
                     ),
-                    _class="p-container"),
+                    _class="p-container extend"),
                 _class='title_page_container card'
             ),
             DIV(
@@ -85,7 +85,7 @@ class Index(gatehandler.Handler):
                     _class='p-row card e-padding_20'
                 ),
 
-                _class="phanterpwa-container p-container"
+                _class="phanterpwa-container p-container extend"
             )
         )
         html.html_to("#main-container")
@@ -191,7 +191,7 @@ class TurmasSimples(helpers.XmlConstructor):
                         DIV("TURMAS", _class="phanterpwa-breadcrumb"),
                         _class="phanterpwa-breadcrumb-wrapper"
                     ),
-                    _class="p-container"),
+                    _class="p-container extend"),
                 _class='title_page_container card'
             ),
             DIV(
@@ -204,7 +204,7 @@ class TurmasSimples(helpers.XmlConstructor):
                     _class='p-row card e-padding_20'
                 ),
                 DIV(_id="modal_estatisticas_unidades_registro_de_atividades"),
-                _class="phanterpwa-container p-container"
+                _class="phanterpwa-container p-container extend"
             )
         )
         html.html_to("#main-container")
@@ -933,7 +933,7 @@ class TurmaEspecifica():
                         DIV("TURMA ESPECÍFICA", _class="phanterpwa-breadcrumb"),
                         _class="phanterpwa-breadcrumb-wrapper"
                     ),
-                    _class="p-container"),
+                    _class="p-container extend"),
                 _class='title_page_container card'
             ),
             DIV(
@@ -945,7 +945,7 @@ class TurmaEspecifica():
                     _id="content-turmas",
                     _class='p-row card e-padding_20'
                 ),
-                _class="phanterpwa-container p-container"
+                _class="phanterpwa-container p-container extend"
             )
         )
         html.html_to("#main-container")
@@ -2842,7 +2842,7 @@ class DisciplinaProfessor():
                         DIV("DISCIPLINAS E PROFESSORES", _class="phanterpwa-breadcrumb"),
                         _class="phanterpwa-breadcrumb-wrapper"
                     ),
-                    _class="p-container"),
+                    _class="p-container extend"),
                 _class='title_page_container card'
             ),
             DIV(
@@ -2854,7 +2854,7 @@ class DisciplinaProfessor():
                     _id="content-turmas",
                     _class='p-row card e-padding_20'
                 ),
-                _class="phanterpwa-container p-container"
+                _class="phanterpwa-container p-container extend"
             )
         )
         html.html_to("#main-container")
@@ -2882,7 +2882,7 @@ class TurmasDetalhadas(helpers.XmlConstructor):
                         DIV("DETALHADAS", _class="phanterpwa-breadcrumb"),
                         _class="phanterpwa-breadcrumb-wrapper"
                     ),
-                    _class="p-container"),
+                    _class="p-container extend"),
                 _class='title_page_container card'
             ),
             DIV(
@@ -2895,7 +2895,7 @@ class TurmasDetalhadas(helpers.XmlConstructor):
                     _class='p-row card e-padding_20'
                 ),
 
-                _class="phanterpwa-container p-container"
+                _class="phanterpwa-container p-container extend"
             ),
             BR()
         )
