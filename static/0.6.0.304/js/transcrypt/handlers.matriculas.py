@@ -1243,7 +1243,7 @@ class Matriculas(helpers.XmlConstructor):
 
     def abrir_modal_documentos(self, id_escola, ano_letivo, id_turma, id_matricula, id_aluno, nome_do_aluno, resultado_final):
         self.modal_visualizar_matricula.close()
-        lista_de_resultados_validos = ['Aprovado(a)', 'Reprovado(a)', 'Reprovado(a) - Falta a Recuperação', 'Aprovado(a) no Conselho', 'Reprovado(a) no Conselho', 'Desistente']
+        lista_de_resultados_validos = ['Aprovado(a)', 'Reprovado(a)', 'Reprovado(a) - Falta a Recuperação', 'Aprovado(a) no Conselho', 'Reprovado(a) no Conselho', 'Desistente', 'Transferido(a)']
         html_botao_declaracao_de_transferencia = ""
         if resultado_final in lista_de_resultados_validos:
             html_botao_declaracao_de_transferencia = A(

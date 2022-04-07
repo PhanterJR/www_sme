@@ -2747,7 +2747,7 @@ class TurmaEspecifica():
         id_aluno = jQuery(el).data("id_aluno")
         nome_aluno = jQuery(el).data("nome_aluno")
         resultado = jQuery(el).data("resultado")
-        lista_de_resultados_validos = ['Aprovado(a)', 'Reprovado(a)', 'Reprovado(a) - Falta a Recuperação', 'Aprovado(a) no Conselho', 'Reprovado(a) no Conselho', 'Desistente']
+        lista_de_resultados_validos = ['Aprovado(a)', 'Reprovado(a)', 'Reprovado(a) - Falta a Recuperação', 'Aprovado(a) no Conselho', 'Reprovado(a) no Conselho', 'Desistente', 'Transferido(a)']
         html_botao_declaracao_de_transferencia = ""
         if resultado in lista_de_resultados_validos:
             html_botao_declaracao_de_transferencia = DIV(
@@ -4791,7 +4791,7 @@ class TurmasDetalhadas(helpers.XmlConstructor):
         id_aluno = jQuery(el).data("id_aluno")
         nome_aluno = jQuery(el).data("nome_aluno")
         resultado = jQuery(el).data("resultado")
-        lista_de_resultados_validos = ['Aprovado(a)', 'Reprovado(a)', 'Reprovado(a) - Falta a Recuperação', 'Aprovado(a) no Conselho', 'Reprovado(a) no Conselho', 'Desistente']
+        lista_de_resultados_validos = ['Aprovado(a)', 'Reprovado(a)', 'Reprovado(a) - Falta a Recuperação', 'Aprovado(a) no Conselho', 'Reprovado(a) no Conselho', 'Desistente', 'Transferido(a)']
         html_botao_declaracao_de_transferencia = ""
         if resultado in lista_de_resultados_validos:
             html_botao_declaracao_de_transferencia = DIV(
