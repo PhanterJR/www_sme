@@ -845,7 +845,7 @@ class DiarioRegistroDeAulas():
                     TR(
                         TH(
                             DIV(json.data_aula), DIV(json.dia_da_semana, _class="diario_aulas_dia_da_semana")
-                        ), 
+                        ),
                         TD(
                             result1
                         )

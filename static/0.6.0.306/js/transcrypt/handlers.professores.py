@@ -202,12 +202,6 @@ class TurmasSimples(helpers.XmlConstructor):
             window.PhanterPWA.ApiServer.remote_address,
             self.id_escola
         )
-        aviso_temporario = ""
-        if self.tem_multisseriado:
-            aviso_temporario = H2("Professor(a), a sua turma multisseriada está passando por um processo de mudança no registro de aulas."
-                " Tentarei adaptar as aulas já registradas para o novo modelo. Este processo é totalmente reversível caso não dê certo."
-                " Evite alterar registros feitos anteriormente por enquanto, mas você pode tentar fazer novos registros para tentar se adaptar ao novo modelo. Agradeçemos a sua compreensão.", _style="color: red")
-        aviso_temporario
         html = DIV(
             DIV(
                 DIV(
@@ -231,7 +225,6 @@ class TurmasSimples(helpers.XmlConstructor):
                 _class="p-row"
             ),
             DIV(
-                aviso_temporario,
                 self.xml_tabela_turmas(),
                 DIV(_id="modal_turma_case"),
                 _class="p-row"
@@ -305,7 +298,6 @@ class TurmasSimples(helpers.XmlConstructor):
                             self.id_escola,
                             self.ano_letivo,
                             x.id,
-                            x.id_disciplina,
                             **{
                                 "_retornar": window.PhanterPWA.XWAY("professores", "turmas", self.id_escola, self.ano_letivo)
                             }

@@ -64,7 +64,7 @@ class Index(gatehandler.Handler):
         arg1 = window.PhanterPWA.Request.get_arg(1)
         arg2 = window.PhanterPWA.Request.get_arg(2)
         arg3 = window.PhanterPWA.Request.get_arg(3)
-        arg4 = window.PhanterPWA.Request.get_arg(4)
+        arg4 = window.PhanterPWA.Request.get_param("mes")
 
         if arg0 is None or arg0 is js_undefined:
             html = escolas.EscolherEscola(
@@ -78,37 +78,10 @@ class Index(gatehandler.Handler):
             )
         elif str(arg0).isdigit() and str(arg1).isdigit():
             self.RegistroDeFaltas = RegistroDeFaltas(self, arg0, arg1, arg2, arg3, arg4)
-        if window.PhanterPWA.Request.get_param("retornar") is None:
-            BackButton1 = left_bar.LeftBarButton(
-                "back_registro_de_faltas",
-                "Voltar",
-                I(_class="fas fa-arrow-circle-left"),
-                **{
-                    "tag": "a",
-                    "_href": window.PhanterPWA.XWAY("professores", "turmas", arg0, arg1),
-                    "position": "top",
-                    "show_if_way_match": r"^registro-de-faltas\/[0-9]{1,}\/[0-9]{1,}.*$"
-                }
-            )
-
-        else:
-
-            BackButton1 = left_bar.LeftBarButton(
-                "back_registro_de_faltas",
-                "Voltar",
-                I(_class="fas fa-arrow-circle-left"),
-                **{
-                    "tag": "a",
-                    "_href": window.PhanterPWA.Request.get_param("retornar"),
-                    "position": "top",
-                    "show_if_way_match": r"^registro-de-faltas\/[0-9]{1,}\/[0-9]{1,}.*$"
-                }
-            )
-        window.PhanterPWA.Components['left_bar'].add_button(BackButton1)
 
 
 class RegistroDeFaltas():
-    def __init__(self, index_instance, escola, ano_letivo, turma, id_disciplina, rotulo_mes_ano):
+    def __init__(self, index_instance, escola, ano_letivo, turma, id_disciplina=None, rotulo_mes_ano=None):
         self.id_escola = escola
         self.ano_letivo = ano_letivo
         self.id_turma = turma
@@ -132,38 +105,25 @@ class RegistroDeFaltas():
         }
 
     def _get_registro_de_faltas(self):
-
+        args = [
+            "api",
+            "registro-de-faltas",
+            self.id_escola,
+            self.ano_letivo,
+            self.id_turma
+        ]
+        params = {
+            "onComplete": self.after_get
+        }
         if self.id_disciplina is not None and self.id_disciplina is not js_undefined:
-            if self.rotulo_mes_ano is not None and self.rotulo_mes_ano is not js_undefined:
-                window.PhanterPWA.GET(
-                    "api",
-                    "registro-de-faltas",
-                    self.id_escola,
-                    self.ano_letivo,
-                    self.id_turma,
-                    self.id_disciplina,
-                    self.rotulo_mes_ano,
-                    onComplete=self.after_get
-                )
-            else:
-                window.PhanterPWA.GET(
-                    "api",
-                    "registro-de-faltas",
-                    self.id_escola,
-                    self.ano_letivo,
-                    self.id_turma,
-                    self.id_disciplina,
-                    onComplete=self.after_get
-                )
-        else:
-            window.PhanterPWA.GET(
-                "api",
-                "registro-de-faltas",
-                self.id_escola,
-                self.ano_letivo,
-                self.id_turma,
-                onComplete=self.after_get
-            )
+            args.append(self.id_disciplina)
+        if self.rotulo_mes_ano is not None and self.rotulo_mes_ano is not js_undefined:
+            params["_mes"] = self.rotulo_mes_ano
+
+        window.PhanterPWA.GET(
+            *args,
+            **params
+        )
 
     def after_get(self, data, ajax_status):
         if ajax_status == "success":
@@ -185,14 +145,18 @@ class RegistroDeFaltas():
                 "registro-de-faltas",
                 self.id_escola,
                 self.ano_letivo,
-                self.id_turma,
-                self.id_disciplina,
-                x
+                self.id_turma
             ]
+            if self.id_disciplina is not None:
+                xway.append(self.id_disciplina)
+
+            dict_way = {
+                "_mes": x.split(" - ")[1]
+            }
 
             op = widgets.MenuOption(x, **{
                 "_class": "botao_meses_referencia wave_on_click",
-                "_href": window.PhanterPWA.XWAY(*xway),
+                "_href": window.PhanterPWA.XWAY(*xway, **dict_way),
             })
             xway_meses_referencia.append(op)
         html = CONCATENATE(
@@ -215,6 +179,7 @@ class RegistroDeFaltas():
                     _class='p-row card e-padding_auto'
                 ),
                 DIV(_id="modal_faltas_container"),
+                DIV(_id="modal_justificar_container"),
                 _class="phanterpwa-container p-container extend"
             )
         )
@@ -233,13 +198,13 @@ class RegistroDeFaltas():
             TR(TH("Nº", _class="rotulo", _rowspan=2), TH("NOME ALUNO(A)", _class="rotulo", _rowspan=2), TH("DIAS LETIVOS", _colspan=self.quant_dias, _class="rotulo")),
             _class='tabela_registro_de_faltas'
         )
-
+        self.mapa_justificativas = {}
         for x in registro_de_faltas:
             # data = x[0][0]
             # ano, mes, dia = data.split("-")
             # mes_ext = self.meses[mes]
             # data_ext = "{0} de {1} de {2}".format(dia, mes_ext, ano)
-            linha = TR()
+            linha = TR(_class="linha_registro_de_faltas")
             for y in x:
                 if y[1]['tipo'] == "cabecalho":
                     celula = TH(
@@ -247,7 +212,16 @@ class RegistroDeFaltas():
                         **y[1]
                     )
                 elif y[1]['tipo'] == "botao":
-                    bas_nas = "" if y[0] is False or y[0] == "false" else I(y[0], _class="numero_de_faltas")
+                    fal = y[0]
+                    if fal == "false" or fal == False:
+                        bas_nas = DIV(y[1]["_data-data_falta"][-2:], _class="apagadinho")
+                    elif fal == "J":
+                        key_mapa_jus = y[1]["_id"]
+                        self.mapa_justificativas[key_mapa_jus] = y[1]["just"]
+                        bas_nas = I(y[0], _class="faltas_justificadas")
+                    else:
+                        bas_nas = I(y[0], _class="numero_de_faltas")
+
                     celula = TD(
                         bas_nas,
                         **y[1]
@@ -282,14 +256,18 @@ class RegistroDeFaltas():
             "registro-de-faltas",
             self.id_escola,
             self.ano_letivo,
-            self.id_turma,
-            self.id_disciplina
+            self.id_turma
         ]
+        if self.id_disciplina is not None:
+            way.append(self.id_disciplina)
         if self.anterior is not None and self.anterior is not js_undefined:
+            dict_mes_ant = {
+                "_mes": self.anterior.split(" - ")[1]
+            }
             nway = list(way)
-            nway.append(
-                self.anterior
-            )
+            # nway.append(
+            #     self.anterior
+            # )
 
             botao_mes_anterior = A(
                 I(_class="fas fa-angle-double-left"),
@@ -297,21 +275,27 @@ class RegistroDeFaltas():
                     "_class": "botao_mes_anterior icon_button",
                     "_title": "Mês anterior",
                     "_href": window.PhanterPWA.XWAY(
-                        *nway
+                        *nway,
+                        **dict_mes_ant
                     )
                 }
             )
         if self.proximo is not None and self.proximo is not js_undefined:
-            way.append(
-                self.proximo
-            )
+            dict_mes_pro = {
+                "_mes": self.proximo.split(" - ")[1]
+            }
+            # way.append(
+            #     self.proximo
+            # )
             botao_proximo_mes = A(
                 I(_class="fas fa-angle-double-right"),
                 **{
                     "_class": "botao_proximo_mes icon_button",
                     "_title": "Próximo mês",
                     "_href": window.PhanterPWA.XWAY(
-                        *way
+                        *way,
+                        **dict_mes_pro
+
                     )
                 }
             )
@@ -364,6 +348,14 @@ class RegistroDeFaltas():
             lambda: self.modal_confirmar_faltas(jQuery(this))
         )
 
+        jQuery(
+            ".faltas.celula_registro_justificadas"
+        ).off(
+            "click.enviar_faltas_rg_jus"
+        ).on(
+            "click.enviar_faltas_rg_jus",
+            lambda: self.abrir_modal_justificar(jQuery(this), self.mapa_justificativas.get(jQuery(this).attr("id"), ""))
+        )
 
     def abrir_diario(self, url):
         window.location = url
@@ -424,27 +416,50 @@ class RegistroDeFaltas():
                     ),
                     _class="p-row"
                 )
+            footer = DIV(
+                forms.FormButton(
+                    "confirmar_falta",
+                    "Confirmar{0}".format(complement),
+                    _class="btn-autoresize wave_on_click waves-phanterpwa"
+                ),
+                forms.FormButton(
+                    "cancelar",
+                    "Cancelar",
+                    _class="btn-autoresize wave_on_click waves-phanterpwa"
+                ),
+                _class='phanterpwa-form-buttons-container'
+            )
         else:
             complement = " remoção da Falta"
             falta = False
             content = DIV(
-                P("Confirme a ", STRONG("REMOÇÃO DA FALTA", _style="color: orange"),
-                    " do presente aluno no dia de ", STRONG(data_ext),"."),
+                P(
+                    "O(A) aluno(a) possui ",
+                    STRONG(tem_falta, " FALTA" if str(tem_falta) == "1" else " FALTAS", _style="color: orange"),
+                    " em ",
+                    STRONG(data_ext),
+                    ". Você pode Justificar ou Remover estas faltas."
+                ),
                 _class="p-row"
             )
-        footer = DIV(
-            forms.FormButton(
-                "confirmar_falta",
-                "Confirmar{0}".format(complement),
-                _class="btn-autoresize wave_on_click waves-phanterpwa"
-            ),
-            forms.FormButton(
-                "cancelar",
-                "Cancelar",
-                _class="btn-autoresize wave_on_click waves-phanterpwa"
-            ),
-            _class='phanterpwa-form-buttons-container'
-        )
+            footer = DIV(
+                forms.FormButton(
+                    "justificar_falta",
+                    "Justificar",
+                    _class="btn-autoresize wave_on_click waves-phanterpwa"
+                ),
+                forms.FormButton(
+                    "confirmar_falta",
+                    "Remover Falta(s)",
+                    _class="btn-autoresize wave_on_click waves-phanterpwa"
+                ),
+                forms.FormButton(
+                    "cancelar",
+                    "Cancelar",
+                    _class="btn-autoresize wave_on_click waves-phanterpwa"
+                ),
+                _class='phanterpwa-form-buttons-container'
+            )
         self.modal_faltas = modal.Modal(
             "#modal_faltas_container",
             **{
@@ -455,6 +470,12 @@ class RegistroDeFaltas():
             }
         )
         self.modal_faltas.open()
+        jQuery("#phanterpwa-widget-form-form_button-justificar_falta").off(
+            "click.adicionar_justificar"
+        ).on(
+            "click.adicionar_justificar",
+            lambda: self.abrir_modal_justificar(el)
+        )
         jQuery("#phanterpwa-widget-form-form_button-confirmar_falta").off(
             "click.adicionar_faltas_sim"
         ).on(
@@ -510,7 +531,6 @@ class RegistroDeFaltas():
             )
         self.modal_faltas.close()
 
-
     def depois_de_enviar_registro(self, data, ajax_status):
         if ajax_status == "success":
             json = data.responseJSON
@@ -523,6 +543,129 @@ class RegistroDeFaltas():
                     valor = json.celula_update[2]
                     bas_nas = I(valor, _class="numero_de_faltas").jquery()
                     jQuery("#{0}".format(json.celula_update[0])).html(bas_nas)
+                    jQuery("#{0}".format(json.celula_update[0])).attr("data-tem_falta", str(valor))
+            self.diario_binds()
+
+    def abrir_modal_justificar(self, el, justificativa=""):
+        if self.modal_faltas is not js_undefined:
+            self.modal_faltas.close()
+        id_matricula = jQuery(el).data("id_matricula")
+        tem_falta = jQuery(el).attr("data-tem_falta")
+        nome_aluno = jQuery(el).data("nome_aluno")
+        eh_educacao_infantil = jQuery(el).data("eh_educacao_infantil")
+        data = jQuery(el).data("data_falta")
+        ano, mes, dia = data.split("-")
+        mes_ext = self.meses[mes]
+        data_ext = "{0} de {1} de {2}".format(dia, mes_ext, ano)
+        id_disciplina = jQuery(el).data("id_disciplina")
+        if id_disciplina is None or id_disciplina is js_undefined:
+            id_disciplina = None
+
+        falta = False
+        content = DIV(
+            P(
+                "O(A) aluno(a) possui ",
+                STRONG(tem_falta, " FALTA" if str(tem_falta) == "1" else " FALTAS", _style="color: orange"),
+                " em ",
+                STRONG(data_ext),
+                ". Adicione abaixo a justificativa desta(s) falta(s)."
+            ),
+            DIV(
+                DIV(
+                    widgets.Textarea(
+                        "justificativa",
+                        value=justificativa,
+                    )
+                ),
+                _class="p-col w1p100"
+            ),
+            _class="p-row"
+        )
+        footer = DIV(
+            forms.FormButton(
+                "submit_justificar_falta",
+                "Justificar",
+                _class="btn-autoresize wave_on_click waves-phanterpwa"
+            ),
+            forms.FormButton(
+                "cancelar",
+                "Cancelar",
+                _class="btn-autoresize wave_on_click waves-phanterpwa"
+            ),
+            _class='phanterpwa-form-buttons-container'
+        )
+        self.modal_justificar = modal.Modal(
+            "#modal_justificar_container",
+            **{
+                "title": nome_aluno,
+                "content": content,
+                "footer": footer,
+                "form": "justificar"
+            }
+        )
+        self.modal_justificar.open()
+        jQuery("#phanterpwa-widget-form-form_button-submit_justificar_falta").off(
+            "click.adicionar_justificar"
+        ).on(
+            "click.adicionar_justificar",
+            lambda: self._on_click_justificar(id_matricula, id_disciplina, data)
+        )
+        jQuery("#phanterpwa-widget-form-form_button-cancelar").off(
+            "click.cancelar_falta"
+        ).on(
+            "click.cancelar_falta",
+            lambda: self.modal_justificar.close()
+        )
+
+    def _on_click_justificar(self, id_matricula, id_disciplina, data):
+        justificativa = jQuery("#phanterpwa-widget-textarea-textarea-justificativa").val()
+        formdata = __new__(FormData())
+
+        formdata.append(
+            "justificativa",
+            justificativa
+        )
+        formdata.append(
+            "data",
+            data
+        )
+        if self.id_disciplina is not None and self.id_disciplina is not js_undefined:
+            window.PhanterPWA.PUT(
+                "api",
+                "justificar-faltas",
+                self.id_escola,
+                self.ano_letivo,
+                id_matricula,
+                id_disciplina,
+                form_data=formdata,
+                onComplete=lambda data, ajax_status: self.depois_de_enviar_justificativa(data, ajax_status)
+            )
+        else:
+            window.PhanterPWA.PUT(
+                "api",
+                "justificar-faltas",
+                self.id_escola,
+                self.ano_letivo,
+                id_matricula,
+                form_data=formdata,
+                onComplete=lambda data, ajax_status: self.depois_de_enviar_justificativa(data, ajax_status)
+            )
+
+    def depois_de_enviar_justificativa(self, data, ajax_status):
+        if ajax_status == "success":
+            self.modal_justificar.close()
+            json = data.responseJSON
+            json.celula_update
+            if json.celula_update is not None and json.celula_update is not js_undefined:
+                if json.celula_update[1] == "J":
+                    bas_nas = I("J", _class="faltas_justificadas").jquery()
+                    jQuery("#{0}".format(json.celula_update[0])).html(bas_nas).removeClass("celula_registro_faltas").addClass("celula_registro_justificadas")
+                    jQuery("#{0}".format(json.celula_update[0])).attr("data-tem_falta", "J")
+
+                else:
+                    valor = json.celula_update[2]
+                    bas_nas = I(valor, _class="numero_de_faltas").jquery()
+                    jQuery("#{0}".format(json.celula_update[0])).html(bas_nas).addClass("celula_registro_faltas").removeClass("celula_registro_justificadas")
                     jQuery("#{0}".format(json.celula_update[0])).attr("data-tem_falta", str(valor))
             self.diario_binds()
 

@@ -974,6 +974,8 @@ class TurmaEspecifica():
             }
             self.ids_matriculas_por_turma[int(self.id_turma)] = []
             self.tem_alunos = True
+            self.lista_de_disciplinas = json.data.turma.lista_de_disciplinas
+
             logo = "{0}/api/escolas/{1}/image".format(
                 window.PhanterPWA.ApiServer.remote_address,
                 self.id_escola
@@ -1011,6 +1013,7 @@ class TurmaEspecifica():
                 DIV(_id="modal_visualizar_escola_funcionario"),
                 DIV(_id="modal_modal_resultados_container"),
                 DIV(_id="modal_documentos"),
+                DIV(_id="modal_faltas_disciplinas"),
                 _class='turmas-turmas-container'
             )
             html.append(DIV(_id="modal_remover_matricula_da_turma_detalhe_container"))
@@ -1034,7 +1037,6 @@ class TurmaEspecifica():
         )
         linha_serie = []
         cont_alunos = 0
-
         for x in data_turma.alunos:
             self.matriculas[int(x.matriculas.id)] = x
             self.ids_matriculas_por_turma[int(self.id_turma)].append(int(x.matriculas.id))
@@ -1208,6 +1210,51 @@ class TurmaEspecifica():
                     )
                 )
 
+        html_botao_falta = A(
+            I(_class="fas fa-calendar-check"),
+            **{
+                "_class": "botao_faltas icon_button",
+                "_title": "Faltas dos Alunos",
+                "_data-id_escola": self.id_escola,
+                "_data-id_ano_letivo": self.ano_letivo,
+                "_data-id_turma": data_turma.id,
+                "_href": window.PhanterPWA.XWAY("registro-de-faltas", self.id_escola, self.ano_letivo, data_turma.id, **{"_retornar": "turma-especifica"})
+
+            }
+        )
+        self.lista_de_disciplinas = None
+        if data_turma.lista_de_disciplinas is not None:
+            self.lista_de_disciplinas = data_turma.lista_de_disciplinas
+            if "Educação Infantil" in data_turma.ensinos:
+                if len(data_turma.ensinos) > 1:
+                    html_botao_falta = DIV(
+                        I(_class="fas fa-calendar-check"),
+                        **{
+                            "_class": "botao_faltas_modal icon_button",
+                            "_title": "Faltas dos Alunos",
+                            "_data-id_escola": self.id_escola,
+                            "_data-id_ano_letivo": self.ano_letivo,
+                            "_data-id_turma": data_turma.id,
+                            "_data-tem_educacao_infantil": True,
+                            "_href": window.PhanterPWA.XWAY("registro-de-faltas", self.id_escola, self.ano_letivo, data_turma.id, **{"_retornar": "turma-especifica"})
+
+                        }
+                    )
+            else:
+                html_botao_falta = DIV(
+                    I(_class="fas fa-calendar-check"),
+                    **{
+                        "_class": "botao_faltas_modal icon_button",
+                        "_title": "Faltas dos Alunos",
+                        "_data-id_escola": self.id_escola,
+                        "_data-id_ano_letivo": self.ano_letivo,
+                        "_data-id_turma": data_turma.id,
+                        "_data-tem_educacao_infantil": False,
+                        "_href": window.PhanterPWA.XWAY("registro-de-faltas", self.id_escola, self.ano_letivo, data_turma.id, **{"_retornar": "turma-especifica"})
+
+                    }
+                )
+
         card = DIV(
             LABEL(data_turma.turma, " (", data_turma.quant_alunos, " Alunos)", _for="phanterpwa-card-panel-control-{0}".format(data_turma.id)),
             DIV(
@@ -1257,17 +1304,7 @@ class TurmaEspecifica():
 
                             }
                         ),
-                        DIV(
-                            I(_class="fas fa-calendar-check"),
-                            **{
-                                "_class": "botao_faltas icon_button",
-                                "_title": "Registro de Presença",
-                                "_data-id_escola": self.id_escola,
-                                "_data-id_ano_letivo": self.ano_letivo,
-                                "_data-id_turma": data_turma.id,
-                                "_disabled": disabled
-                            }
-                        ),
+                        html_botao_falta,
                         DIV(
                             I(_class="fas fa-chalkboard-teacher"),
                             **{
@@ -1420,6 +1457,14 @@ class TurmaEspecifica():
         ).on(
             "click.botao_definir_resultados",
             lambda: self.modal_definir_resultados(this)
+        )
+        jQuery(
+            ".botao_faltas_modal"
+        ).off(
+            "click.botao_faltas_modal"
+        ).on(
+            "click.botao_faltas_modal",
+            lambda: self.abrir_modal_faltas(this)
         )
 
     def ordenagem_automatica(self, widget_instance):
@@ -2826,6 +2871,64 @@ class TurmaEspecifica():
         )
         self.modal_documentos.open()
 
+    def abrir_modal_faltas(self, el):
+        tem_educacao_infantil = jQuery(el).data("tem_educacao_infantil")
+        id_escola = self.id_escola
+        ano_letivo = self.ano_letivo
+        id_turma = self.id_turma
+        html_disciplinas = DIV(
+        )
+        console.log(str(tem_educacao_infantil) == "true", str(tem_educacao_infantil))
+        if str(tem_educacao_infantil).lower() == "true":
+            console.log("veio aqui")
+            link = window.PhanterPWA.XWAY(
+                "registro-de-faltas",
+                id_escola,
+                ano_letivo,
+                id_turma
+            )
+            html_disciplinas.append(
+                A(
+                    DIV(
+                        "Faltas da Educação Infantil",
+                        _class="btn btn-autoresize wave_on_click waves-phanterpwa",
+                        _style="background-image: linear-gradient(black, #894eaa)"
+                    ),
+                    _href=link,
+                    _style="text-decoration: none !important;"
+                )
+            )
+
+        console.log(html_disciplinas)
+        for x in self.lista_de_disciplinas:
+            link = window.PhanterPWA.XWAY(
+                "registro-de-faltas",
+                id_escola,
+                ano_letivo,
+                id_turma,
+                x.id
+            )
+            html_disciplinas.append(
+                A(
+                    DIV(
+                        x.disciplina,
+                        _class="btn btn-autoresize wave_on_click waves-phanterpwa"
+                    ),
+                    _href=link,
+                    _style="text-decoration: none !important;"
+                )
+
+            )
+
+        self.modal_faltas_disciplinas = modal.Modal(
+            "#modal_faltas_disciplinas",
+            **{
+                "title": "Escolha a disciplina",
+                "content": html_disciplinas,
+            }
+        )
+        self.modal_faltas_disciplinas.open()
+
 
 class DisciplinaProfessor():
     def __init__(self, parent, id_escola, ano_letivo, id_turma):
@@ -3482,24 +3585,25 @@ class TurmasDetalhadas(helpers.XmlConstructor):
         )
 
     def get_dados_de_turma_especifica(self, id_turma):
-
-        window.PhanterPWA.GET(
-            "api",
-            "turma",
-            self.id_escola,
-            self.ano_letivo,
-            "especifica",
-            id_turma,
-            onComplete=lambda data, ajax_status: (self.update_turma_especifica(data, ajax_status), self.processar_listas_de_turmas())
-        )
+        if window.PhanterPWA.get_current_gate() == "turmas" and window.PhanterPWA.Request.get_arg(2) == "detalhado":
+            window.PhanterPWA.GET(
+                "api",
+                "turma",
+                self.id_escola,
+                self.ano_letivo,
+                "especifica",
+                id_turma,
+                onComplete=lambda data, ajax_status: (self.update_turma_especifica(data, ajax_status), self.processar_listas_de_turmas())
+            )
 
     def update_turma_especifica(self, data, ajax_status, id_turma, json):
         json = data.responseJSON
         if ajax_status == "success":
-            self.proximo_ano = json.data.proximo_ano
-            card = self.xml_card(json.data.turma, json.data.turma.id)
-            card.html_to("#turma_e_turmas_{0}".format(json.data.turma.id))
-            self.binds_painel_da_turma()
+            if window.PhanterPWA.get_current_gate() == "turmas" and window.PhanterPWA.Request.get_arg(2) == "detalhado":
+                self.proximo_ano = json.data.proximo_ano
+                card = self.xml_card(json.data.turma, json.data.turma.id)
+                card.html_to("#turma_e_turmas_{0}".format(json.data.turma.id))
+                self.binds_painel_da_turma()
 
     def update_turma(self, data, ajax_status, id_turma, json):
         json = data.responseJSON
@@ -4784,7 +4888,6 @@ class TurmasDetalhadas(helpers.XmlConstructor):
         valor = jQuery(el).data("valor")
         id_matricula = jQuery(el).data("id_matricula")
         self.resultados_finais_computados.append([id_matricula, valor])
- 
 
     def abrir_modal_documentos(self, el):
         id_matricula = jQuery(el).data("id_matricula")

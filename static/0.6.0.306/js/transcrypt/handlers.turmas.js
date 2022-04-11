@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2022-04-07 13:17:22
+// Transcrypt'ed from Python, 2022-04-10 17:38:39
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import * as anos_letivos from './handlers.anos_letivos.js';
 import * as escolas from './handlers.escolas.js';
@@ -935,8 +935,9 @@ export var TurmaEspecifica =  __class__ ('TurmaEspecifica', [object], {
 			self.turmas_info [int (self.id_turma)] = dict ({'id': int (self.id_turma), 'turma': json.data.turma.turma});
 			self.ids_matriculas_por_turma [int (self.id_turma)] = [];
 			self.tem_alunos = true;
+			self.lista_de_disciplinas = json.data.turma.lista_de_disciplinas;
 			var logo = '{0}/api/escolas/{1}/image'.format (window.PhanterPWA.ApiServer.remote_address, self.id_escola);
-			var html = DIV (DIV (DIV (DIV (IMG (__kwargtrans__ ({_src: logo})), __kwargtrans__ ({_class: 'escolas-container-info-image', _style: 'text-align: center;'})), __kwargtrans__ ({_class: 'p-col w1p100 w4p30'})), DIV (H2 ('AQUI É POSSÍVEL VISUALIZAR MAIS DETALHES SOBRE A TURMA, COMO POR EXEMPLO OS ALUNOS.'), P ('Para adicionar um aluno que foi matriculado em uma turma, basta clicar em ', I (__kwargtrans__ ({_class: 'fas fa-user-graduate'})), '.'), P ('Além de visualizar a lista de alunos, pode-se ver as disciplinas e os respectivos', ' professores em ', I (__kwargtrans__ ({_class: 'fas fa-chalkboard-teacher'})), '. Observe que é possível', 'ordenar os alunos arrastando-os.'), P ('Já as outras opções são atalhos para o Horário, Diário de Notas, Ficha Avaliativa ', 'e o Diário de Faltas.'), __kwargtrans__ ({_class: 'p-col w1p100 w4p70', _id: 'u_informacao_series'})), __kwargtrans__ ({_class: 'p-row'})), DIV (self.xml_card (json.data.turma), __kwargtrans__ ({_id: 'turma_e_turmas_{0}'.format (json.data.turma.id)})), DIV (__kwargtrans__ ({_id: 'modal_turma_case'})), DIV (__kwargtrans__ ({_id: 'modal_disciplinas_professores'})), DIV (__kwargtrans__ ({_id: 'modal_visualizar_aluno'})), DIV (__kwargtrans__ ({_id: 'modal_desistencia_aluno'})), DIV (__kwargtrans__ ({_id: 'modal_transferencia_aluno'})), DIV (__kwargtrans__ ({_id: 'modal_visualizar_escola_funcionario'})), DIV (__kwargtrans__ ({_id: 'modal_modal_resultados_container'})), DIV (__kwargtrans__ ({_id: 'modal_documentos'})), __kwargtrans__ ({_class: 'turmas-turmas-container'}));
+			var html = DIV (DIV (DIV (DIV (IMG (__kwargtrans__ ({_src: logo})), __kwargtrans__ ({_class: 'escolas-container-info-image', _style: 'text-align: center;'})), __kwargtrans__ ({_class: 'p-col w1p100 w4p30'})), DIV (H2 ('AQUI É POSSÍVEL VISUALIZAR MAIS DETALHES SOBRE A TURMA, COMO POR EXEMPLO OS ALUNOS.'), P ('Para adicionar um aluno que foi matriculado em uma turma, basta clicar em ', I (__kwargtrans__ ({_class: 'fas fa-user-graduate'})), '.'), P ('Além de visualizar a lista de alunos, pode-se ver as disciplinas e os respectivos', ' professores em ', I (__kwargtrans__ ({_class: 'fas fa-chalkboard-teacher'})), '. Observe que é possível', 'ordenar os alunos arrastando-os.'), P ('Já as outras opções são atalhos para o Horário, Diário de Notas, Ficha Avaliativa ', 'e o Diário de Faltas.'), __kwargtrans__ ({_class: 'p-col w1p100 w4p70', _id: 'u_informacao_series'})), __kwargtrans__ ({_class: 'p-row'})), DIV (self.xml_card (json.data.turma), __kwargtrans__ ({_id: 'turma_e_turmas_{0}'.format (json.data.turma.id)})), DIV (__kwargtrans__ ({_id: 'modal_turma_case'})), DIV (__kwargtrans__ ({_id: 'modal_disciplinas_professores'})), DIV (__kwargtrans__ ({_id: 'modal_visualizar_aluno'})), DIV (__kwargtrans__ ({_id: 'modal_desistencia_aluno'})), DIV (__kwargtrans__ ({_id: 'modal_transferencia_aluno'})), DIV (__kwargtrans__ ({_id: 'modal_visualizar_escola_funcionario'})), DIV (__kwargtrans__ ({_id: 'modal_modal_resultados_container'})), DIV (__kwargtrans__ ({_id: 'modal_documentos'})), DIV (__kwargtrans__ ({_id: 'modal_faltas_disciplinas'})), __kwargtrans__ ({_class: 'turmas-turmas-container'}));
 			html.append (DIV (__kwargtrans__ ({_id: 'modal_remover_matricula_da_turma_detalhe_container'})));
 			html.append (DIV (__kwargtrans__ ({_id: 'modal_deletar_matricula_detalhe_container'})));
 			html.html_to ('#content-turmas');
@@ -1044,7 +1045,20 @@ export var TurmaEspecifica =  __class__ ('TurmaEspecifica', [object], {
 				table_docente.append (XTRD ('docentes-table-data-{0}'.format (doce [2]), doce [0], doce [1], widgets.MenuBox ('menu_funcionario_vinculado_{0}'.format (doce [2]), I (__kwargtrans__ ({_class: 'fas fa-ellipsis-v'})), widgets.MenuOption ('Visualizar', __kwargtrans__ (dict ({'_class': 'botao_visualizar_funcionario wave_on_click', '_data-id_funcionario': doce [2]}))), __kwargtrans__ ({onOpen: self.bind_menu_docente})), __kwargtrans__ (dict ({'drag_and_drop': false}))));
 			}
 		}
-		var card = DIV (LABEL (data_turma.turma, ' (', data_turma.quant_alunos, ' Alunos)', __kwargtrans__ ({_for: 'phanterpwa-card-panel-control-{0}'.format (data_turma.id)})), DIV (DIV (DIV (DIV (H3 ('Corpo Discente'), table, __kwargtrans__ ({_class: 'p-row'})), corpo_docente, __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-content'})), DIV (DIV (I (__kwargtrans__ ({_class: 'fas fa-user-graduate'})), __kwargtrans__ (dict ({'_class': 'botao_alunos icon_button actived', '_title': 'Adicione alunos à turma', '_data-id_escola': self.id_escola, '_data-id_ano_letivo': self.ano_letivo, '_data-id_turma': data_turma.id}))), A (I (__kwargtrans__ ({_class: 'fas fa-table'})), __kwargtrans__ (dict ({'_class': 'botao_diario_notas icon_button', '_title': 'Diário de Notas da Turma', '_data-id_escola': self.id_escola, '_data-id_ano_letivo': self.ano_letivo, '_data-id_turma': data_turma.id, '_disabled': disabled, '_href': window.PhanterPWA.XWAY ('diario-de-notas', self.id_escola, self.ano_letivo, data_turma.id, __kwargtrans__ (dict ({'_retornar': 'turma-especifica'})))}))), A (I (__kwargtrans__ ({_class: 'fas fa-clipboard-list'})), __kwargtrans__ (dict ({'_class': 'botao_ficha_avaliativa icon_button', '_title': 'Ficha Avaliativa', '_data-id_escola': self.id_escola, '_data-id_ano_letivo': self.ano_letivo, '_data-id_turma': data_turma.id, '_disabled': disabled, '_href': window.PhanterPWA.XWAY ('ficha-avaliativa', self.id_escola, self.ano_letivo, data_turma.id, __kwargtrans__ (dict ({'_retornar': 'turma-especifica'})))}))), DIV (I (__kwargtrans__ ({_class: 'fas fa-calendar-check'})), __kwargtrans__ (dict ({'_class': 'botao_faltas icon_button', '_title': 'Registro de Presença', '_data-id_escola': self.id_escola, '_data-id_ano_letivo': self.ano_letivo, '_data-id_turma': data_turma.id, '_disabled': disabled}))), DIV (I (__kwargtrans__ ({_class: 'fas fa-chalkboard-teacher'})), __kwargtrans__ (dict ({'_class': 'botao_professores icon_button', '_title': 'Disciplinas e seus respectivos professores', '_data-id_escola': self.id_escola, '_data-id_ano_letivo': self.ano_letivo, '_data-id_turma': data_turma.id}))), DIV (I (__kwargtrans__ ({_class: 'fas fa-clock'})), __kwargtrans__ (dict ({'_class': 'botao_horario icon_button', '_title': 'Horário da Turma', '_data-id_escola': self.id_escola, '_data-id_ano_letivo': self.ano_letivo, '_data-id_turma': data_turma.id, '_disabled': 'disabled'}))), DIV (I (__kwargtrans__ ({_class: 'fas fa-sort-alpha-up'})), __kwargtrans__ (dict ({'_class': 'botao_auto_ordernar icon_button', '_title': 'Ordenar alunos automaticamente', '_data-id_escola': self.id_escola, '_data-id_ano_letivo': self.ano_letivo, '_data-id_turma': data_turma.id}))), DIV (I (__kwargtrans__ ({_class: 'fas fa-award'})), __kwargtrans__ (dict ({'_class': 'botao_definir_resultados icon_button', '_title': 'Definir os resultados finais dos alunos', '_data-id_escola': self.id_escola, '_data-id_ano_letivo': self.ano_letivo, '_data-id_turma': data_turma.id}))), A (I (__kwargtrans__ ({_class: 'fas fa-print'})), __kwargtrans__ (dict ({'_class': 'botao_imprimir_lista_alunos_turma icon_button', '_title': 'Imprimir lista de alunos', '_href': window.PhanterPWA.XWAY ('imprimir', 'turma', self.id_escola, self.ano_letivo, data_turma.id, __kwargtrans__ (dict ({'_retornar': 'turma-especifica'})))}))), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-buttons'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-wrapper has_buttons'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-container'})), __kwargtrans__ ({_id: 'phanterpwa-card-panel-control-{0}'.format (data_turma.id), _class: 'phanterpwa-card-panel-control'}));
+		var html_botao_falta = A (I (__kwargtrans__ ({_class: 'fas fa-calendar-check'})), __kwargtrans__ (dict ({'_class': 'botao_faltas icon_button', '_title': 'Faltas dos Alunos', '_data-id_escola': self.id_escola, '_data-id_ano_letivo': self.ano_letivo, '_data-id_turma': data_turma.id, '_href': window.PhanterPWA.XWAY ('registro-de-faltas', self.id_escola, self.ano_letivo, data_turma.id, __kwargtrans__ (dict ({'_retornar': 'turma-especifica'})))})));
+		self.lista_de_disciplinas = null;
+		if (data_turma.lista_de_disciplinas !== null) {
+			self.lista_de_disciplinas = data_turma.lista_de_disciplinas;
+			if (__in__ ('Educação Infantil', data_turma.ensinos)) {
+				if (len (data_turma.ensinos) > 1) {
+					var html_botao_falta = DIV (I (__kwargtrans__ ({_class: 'fas fa-calendar-check'})), __kwargtrans__ (dict ({'_class': 'botao_faltas_modal icon_button', '_title': 'Faltas dos Alunos', '_data-id_escola': self.id_escola, '_data-id_ano_letivo': self.ano_letivo, '_data-id_turma': data_turma.id, '_data-tem_educacao_infantil': true, '_href': window.PhanterPWA.XWAY ('registro-de-faltas', self.id_escola, self.ano_letivo, data_turma.id, __kwargtrans__ (dict ({'_retornar': 'turma-especifica'})))})));
+				}
+			}
+			else {
+				var html_botao_falta = DIV (I (__kwargtrans__ ({_class: 'fas fa-calendar-check'})), __kwargtrans__ (dict ({'_class': 'botao_faltas_modal icon_button', '_title': 'Faltas dos Alunos', '_data-id_escola': self.id_escola, '_data-id_ano_letivo': self.ano_letivo, '_data-id_turma': data_turma.id, '_data-tem_educacao_infantil': false, '_href': window.PhanterPWA.XWAY ('registro-de-faltas', self.id_escola, self.ano_letivo, data_turma.id, __kwargtrans__ (dict ({'_retornar': 'turma-especifica'})))})));
+			}
+		}
+		var card = DIV (LABEL (data_turma.turma, ' (', data_turma.quant_alunos, ' Alunos)', __kwargtrans__ ({_for: 'phanterpwa-card-panel-control-{0}'.format (data_turma.id)})), DIV (DIV (DIV (DIV (H3 ('Corpo Discente'), table, __kwargtrans__ ({_class: 'p-row'})), corpo_docente, __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-content'})), DIV (DIV (I (__kwargtrans__ ({_class: 'fas fa-user-graduate'})), __kwargtrans__ (dict ({'_class': 'botao_alunos icon_button actived', '_title': 'Adicione alunos à turma', '_data-id_escola': self.id_escola, '_data-id_ano_letivo': self.ano_letivo, '_data-id_turma': data_turma.id}))), A (I (__kwargtrans__ ({_class: 'fas fa-table'})), __kwargtrans__ (dict ({'_class': 'botao_diario_notas icon_button', '_title': 'Diário de Notas da Turma', '_data-id_escola': self.id_escola, '_data-id_ano_letivo': self.ano_letivo, '_data-id_turma': data_turma.id, '_disabled': disabled, '_href': window.PhanterPWA.XWAY ('diario-de-notas', self.id_escola, self.ano_letivo, data_turma.id, __kwargtrans__ (dict ({'_retornar': 'turma-especifica'})))}))), A (I (__kwargtrans__ ({_class: 'fas fa-clipboard-list'})), __kwargtrans__ (dict ({'_class': 'botao_ficha_avaliativa icon_button', '_title': 'Ficha Avaliativa', '_data-id_escola': self.id_escola, '_data-id_ano_letivo': self.ano_letivo, '_data-id_turma': data_turma.id, '_disabled': disabled, '_href': window.PhanterPWA.XWAY ('ficha-avaliativa', self.id_escola, self.ano_letivo, data_turma.id, __kwargtrans__ (dict ({'_retornar': 'turma-especifica'})))}))), html_botao_falta, DIV (I (__kwargtrans__ ({_class: 'fas fa-chalkboard-teacher'})), __kwargtrans__ (dict ({'_class': 'botao_professores icon_button', '_title': 'Disciplinas e seus respectivos professores', '_data-id_escola': self.id_escola, '_data-id_ano_letivo': self.ano_letivo, '_data-id_turma': data_turma.id}))), DIV (I (__kwargtrans__ ({_class: 'fas fa-clock'})), __kwargtrans__ (dict ({'_class': 'botao_horario icon_button', '_title': 'Horário da Turma', '_data-id_escola': self.id_escola, '_data-id_ano_letivo': self.ano_letivo, '_data-id_turma': data_turma.id, '_disabled': 'disabled'}))), DIV (I (__kwargtrans__ ({_class: 'fas fa-sort-alpha-up'})), __kwargtrans__ (dict ({'_class': 'botao_auto_ordernar icon_button', '_title': 'Ordenar alunos automaticamente', '_data-id_escola': self.id_escola, '_data-id_ano_letivo': self.ano_letivo, '_data-id_turma': data_turma.id}))), DIV (I (__kwargtrans__ ({_class: 'fas fa-award'})), __kwargtrans__ (dict ({'_class': 'botao_definir_resultados icon_button', '_title': 'Definir os resultados finais dos alunos', '_data-id_escola': self.id_escola, '_data-id_ano_letivo': self.ano_letivo, '_data-id_turma': data_turma.id}))), A (I (__kwargtrans__ ({_class: 'fas fa-print'})), __kwargtrans__ (dict ({'_class': 'botao_imprimir_lista_alunos_turma icon_button', '_title': 'Imprimir lista de alunos', '_href': window.PhanterPWA.XWAY ('imprimir', 'turma', self.id_escola, self.ano_letivo, data_turma.id, __kwargtrans__ (dict ({'_retornar': 'turma-especifica'})))}))), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-buttons'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-wrapper has_buttons'})), __kwargtrans__ ({_class: 'phanterpwa-card-panel-control-container'})), __kwargtrans__ ({_id: 'phanterpwa-card-panel-control-{0}'.format (data_turma.id), _class: 'phanterpwa-card-panel-control'}));
 		return card;
 	});},
 	get bind_menu_docente () {return __get__ (this, function (self) {
@@ -1233,6 +1247,19 @@ export var TurmaEspecifica =  __class__ ('TurmaEspecifica', [object], {
 			else {
 			}
 			return self.modal_definir_resultados (this);
+		}));
+		$ ('.botao_faltas_modal').off ('click.botao_faltas_modal').on ('click.botao_faltas_modal', (function __lambda__ () {
+			if (arguments.length) {
+				var __ilastarg0__ = arguments.length - 1;
+				if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+					var __allkwargs0__ = arguments [__ilastarg0__--];
+					for (var __attrib0__ in __allkwargs0__) {
+					}
+				}
+			}
+			else {
+			}
+			return self.abrir_modal_faltas (this);
 		}));
 	});},
 	get ordenagem_automatica () {return __get__ (this, function (self, widget_instance) {
@@ -2760,6 +2787,40 @@ export var TurmaEspecifica =  __class__ ('TurmaEspecifica', [object], {
 		var html_documentos = DIV (DIV (DIV (I (__kwargtrans__ ({_class: 'fas fa-file-alt'})), __kwargtrans__ ({_class: 'icon_documentos_button'})), DIV ('Matrícula', __kwargtrans__ ({_class: 'descricao_documentos_button'})), __kwargtrans__ (__mergekwargtrans__ ({_class: 'p-col w4p33 w1p50 link'}, dict ({'_phanterpwa-way': 'imprimir/matricula/{0}?_retornar=turmas/{1}/{2}/especifico/{3}'.format (id_matricula, self.id_escola, self.ano_letivo, self.id_turma)})))), DIV (DIV (I (__kwargtrans__ ({_class: 'fas fa-file-alt'})), __kwargtrans__ ({_class: 'icon_documentos_button'})), DIV ('Questionário Social', __kwargtrans__ ({_class: 'descricao_documentos_button'})), __kwargtrans__ (__mergekwargtrans__ ({_class: 'p-col w4p34 w1p50 link'}, dict ({'_phanterpwa-way': 'imprimir/questionario-social/{0}/{1}/{2}?_retornar=turmas/{0}/{1}/especifico/{3}'.format (self.id_escola, self.ano_letivo, id_aluno, self.id_turma)})))), DIV (DIV (I (__kwargtrans__ ({_class: 'fas fa-file-alt'})), __kwargtrans__ ({_class: 'icon_documentos_button'})), DIV ('Declaração de Matrícula', __kwargtrans__ ({_class: 'descricao_documentos_button'})), __kwargtrans__ (__mergekwargtrans__ ({_class: 'p-col w4p33 w1p50 link'}, dict ({'_phanterpwa-way': 'imprimir/declaracao-de-matricula/{0}?_retornar=turmas/{1}/{2}/especifico/{3}'.format (id_matricula, self.id_escola, self.ano_letivo, self.id_turma)})))), html_botao_declaracao_de_transferencia, DIV (DIV (I (__kwargtrans__ ({_class: 'fas fa-file-alt'})), __kwargtrans__ ({_class: 'icon_documentos_button'})), DIV ('Ficha Individual', __kwargtrans__ ({_class: 'descricao_documentos_button'})), __kwargtrans__ (__mergekwargtrans__ ({_class: 'p-col w4p33 w1p50 link'}, dict ({'_phanterpwa-way': 'imprimir/ficha-individual-do-aluno/{0}?_retornar=turmas/{1}/{2}/detalhado'.format (id_matricula, self.id_escola, self.ano_letivo)})))), __kwargtrans__ ({_class: 'p-row documentos_buttons_container'}));
 		self.modal_documentos = modal.Modal ('#modal_documentos', __kwargtrans__ (dict ({'title': 'Documentos do(a) aluno(a) {0}'.format (nome_aluno), 'content': html_documentos})));
 		self.modal_documentos.open ();
+	});},
+	get abrir_modal_faltas () {return __get__ (this, function (self, el) {
+		if (arguments.length) {
+			var __ilastarg0__ = arguments.length - 1;
+			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+				var __allkwargs0__ = arguments [__ilastarg0__--];
+				for (var __attrib0__ in __allkwargs0__) {
+					switch (__attrib0__) {
+						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
+						case 'el': var el = __allkwargs0__ [__attrib0__]; break;
+					}
+				}
+			}
+		}
+		else {
+		}
+		var tem_educacao_infantil = $ (el).data ('tem_educacao_infantil');
+		var id_escola = self.id_escola;
+		var ano_letivo = self.ano_letivo;
+		var id_turma = self.id_turma;
+		var html_disciplinas = DIV ();
+		console.log (str (tem_educacao_infantil) == 'true', str (tem_educacao_infantil));
+		if (str (tem_educacao_infantil).lower () == 'true') {
+			console.log ('veio aqui');
+			var link = window.PhanterPWA.XWAY ('registro-de-faltas', id_escola, ano_letivo, id_turma);
+			html_disciplinas.append (A (DIV ('Faltas da Educação Infantil', __kwargtrans__ ({_class: 'btn btn-autoresize wave_on_click waves-phanterpwa', _style: 'background-image: linear-gradient(black, #894eaa)'})), __kwargtrans__ ({_href: link, _style: 'text-decoration: none !important;'})));
+		}
+		console.log (html_disciplinas);
+		for (var x of self.lista_de_disciplinas) {
+			var link = window.PhanterPWA.XWAY ('registro-de-faltas', id_escola, ano_letivo, id_turma, x.id);
+			html_disciplinas.append (A (DIV (x.disciplina, __kwargtrans__ ({_class: 'btn btn-autoresize wave_on_click waves-phanterpwa'})), __kwargtrans__ ({_href: link, _style: 'text-decoration: none !important;'})));
+		}
+		self.modal_faltas_disciplinas = modal.Modal ('#modal_faltas_disciplinas', __kwargtrans__ (dict ({'title': 'Escolha a disciplina', 'content': html_disciplinas})));
+		self.modal_faltas_disciplinas.open ();
 	});}
 });
 export var DisciplinaProfessor =  __class__ ('DisciplinaProfessor', [object], {
@@ -3375,23 +3436,25 @@ export var TurmasDetalhadas =  __class__ ('TurmasDetalhadas', [helpers.XmlConstr
 		}
 		else {
 		}
-		window.PhanterPWA.GET ('api', 'turma', self.id_escola, self.ano_letivo, 'especifica', id_turma, __kwargtrans__ ({onComplete: (function __lambda__ (data, ajax_status) {
-			if (arguments.length) {
-				var __ilastarg0__ = arguments.length - 1;
-				if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
-					var __allkwargs0__ = arguments [__ilastarg0__--];
-					for (var __attrib0__ in __allkwargs0__) {
-						switch (__attrib0__) {
-							case 'data': var data = __allkwargs0__ [__attrib0__]; break;
-							case 'ajax_status': var ajax_status = __allkwargs0__ [__attrib0__]; break;
+		if (window.PhanterPWA.get_current_gate () == 'turmas' && window.PhanterPWA.Request.get_arg (2) == 'detalhado') {
+			window.PhanterPWA.GET ('api', 'turma', self.id_escola, self.ano_letivo, 'especifica', id_turma, __kwargtrans__ ({onComplete: (function __lambda__ (data, ajax_status) {
+				if (arguments.length) {
+					var __ilastarg0__ = arguments.length - 1;
+					if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+						var __allkwargs0__ = arguments [__ilastarg0__--];
+						for (var __attrib0__ in __allkwargs0__) {
+							switch (__attrib0__) {
+								case 'data': var data = __allkwargs0__ [__attrib0__]; break;
+								case 'ajax_status': var ajax_status = __allkwargs0__ [__attrib0__]; break;
+							}
 						}
 					}
 				}
-			}
-			else {
-			}
-			return tuple ([self.update_turma_especifica (data, ajax_status), self.processar_listas_de_turmas ()]);
-		})}));
+				else {
+				}
+				return tuple ([self.update_turma_especifica (data, ajax_status), self.processar_listas_de_turmas ()]);
+			})}));
+		}
 	});},
 	get update_turma_especifica () {return __get__ (this, function (self, data, ajax_status, id_turma, json) {
 		if (arguments.length) {
@@ -3413,10 +3476,12 @@ export var TurmasDetalhadas =  __class__ ('TurmasDetalhadas', [helpers.XmlConstr
 		}
 		var json = data.responseJSON;
 		if (ajax_status == 'success') {
-			self.proximo_ano = json.data.proximo_ano;
-			var card = self.xml_card (json.data.turma, json.data.turma.id);
-			card.html_to ('#turma_e_turmas_{0}'.format (json.data.turma.id));
-			self.binds_painel_da_turma ();
+			if (window.PhanterPWA.get_current_gate () == 'turmas' && window.PhanterPWA.Request.get_arg (2) == 'detalhado') {
+				self.proximo_ano = json.data.proximo_ano;
+				var card = self.xml_card (json.data.turma, json.data.turma.id);
+				card.html_to ('#turma_e_turmas_{0}'.format (json.data.turma.id));
+				self.binds_painel_da_turma ();
+			}
 		}
 	});},
 	get update_turma () {return __get__ (this, function (self, data, ajax_status, id_turma, json) {
