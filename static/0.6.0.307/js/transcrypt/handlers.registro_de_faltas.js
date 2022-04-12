@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2022-04-10 17:38:37
+// Transcrypt'ed from Python, 2022-04-11 10:24:30
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import * as anos_letivos from './handlers.anos_letivos.js';
 import * as escolas from './handlers.escolas.js';
@@ -391,7 +391,7 @@ export var RegistroDeFaltas =  __class__ ('RegistroDeFaltas', [object], {
 			else {
 				var content = DIV (P ('Confirme a inserção de ', STRONG ('FALTA', __kwargtrans__ ({_style: 'color: red;'})), ' no presente aluno no dia de ', STRONG (data_ext), '.'), P ('Escolha a quantidade de faltas abaixo'), DIV (widgets.Select ('quanti_faltas', __kwargtrans__ ({value: '1', data_set: [['1', '1'], ['2', '2'], ['3', '3'], ['4', '4'], ['5', '5'], ['6', '6'], ['7', '7'], ['8', '8'], ['9', '9'], ['10', '10']]})), __kwargtrans__ ({_style: 'margin:auto; width: 100px;'})), __kwargtrans__ ({_class: 'p-row'}));
 			}
-			var footer = DIV (forms.FormButton ('confirmar_falta', 'Confirmar{0}'.format (complement), __kwargtrans__ ({_class: 'btn-autoresize wave_on_click waves-phanterpwa'})), forms.FormButton ('cancelar', 'Cancelar', __kwargtrans__ ({_class: 'btn-autoresize wave_on_click waves-phanterpwa'})), __kwargtrans__ ({_class: 'phanterpwa-form-buttons-container'}));
+			var footer = DIV (forms.FormButton ('confirmar_falta', 'Confirmar{0}'.format (complement), __kwargtrans__ ({_class: 'btn-autoresize wave_on_click waves-phanterpwa'})), forms.FormButton ('confirmar_falta_e_justificar', 'Confirmar falta e Justificar'.format (complement), __kwargtrans__ ({_class: 'btn-autoresize wave_on_click waves-phanterpwa'})), forms.FormButton ('cancelar', 'Cancelar', __kwargtrans__ ({_class: 'btn-autoresize wave_on_click waves-phanterpwa'})), __kwargtrans__ ({_class: 'phanterpwa-form-buttons-container'}));
 		}
 		else {
 			var complement = ' remoção da Falta';
@@ -427,6 +427,19 @@ export var RegistroDeFaltas =  __class__ ('RegistroDeFaltas', [object], {
 			}
 			return self._on_click_faltas (id_matricula, id_disciplina, falta, data);
 		}));
+		$ ('#phanterpwa-widget-form-form_button-confirmar_falta_e_justificar').off ('click.adicionar_faltas_e_just').on ('click.adicionar_faltas_e_just', (function __lambda__ () {
+			if (arguments.length) {
+				var __ilastarg0__ = arguments.length - 1;
+				if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
+					var __allkwargs0__ = arguments [__ilastarg0__--];
+					for (var __attrib0__ in __allkwargs0__) {
+					}
+				}
+			}
+			else {
+			}
+			return self._on_click_faltas (id_matricula, id_disciplina, falta, data, __kwargtrans__ ({justificar: true}));
+		}));
 		$ ('#phanterpwa-widget-form-form_button-cancelar').off ('click.cancelar_falta').on ('click.cancelar_falta', (function __lambda__ () {
 			if (arguments.length) {
 				var __ilastarg0__ = arguments.length - 1;
@@ -441,7 +454,10 @@ export var RegistroDeFaltas =  __class__ ('RegistroDeFaltas', [object], {
 			return self.modal_faltas.close ();
 		}));
 	});},
-	get _on_click_faltas () {return __get__ (this, function (self, id_matricula, id_disciplina, falta, data) {
+	get _on_click_faltas () {return __get__ (this, function (self, id_matricula, id_disciplina, falta, data, justificar) {
+		if (typeof justificar == 'undefined' || (justificar != null && justificar.hasOwnProperty ("__kwargtrans__"))) {;
+			var justificar = false;
+		};
 		if (arguments.length) {
 			var __ilastarg0__ = arguments.length - 1;
 			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
@@ -453,6 +469,7 @@ export var RegistroDeFaltas =  __class__ ('RegistroDeFaltas', [object], {
 						case 'id_disciplina': var id_disciplina = __allkwargs0__ [__attrib0__]; break;
 						case 'falta': var falta = __allkwargs0__ [__attrib0__]; break;
 						case 'data': var data = __allkwargs0__ [__attrib0__]; break;
+						case 'justificar': var justificar = __allkwargs0__ [__attrib0__]; break;
 					}
 				}
 			}
@@ -485,7 +502,7 @@ export var RegistroDeFaltas =  __class__ ('RegistroDeFaltas', [object], {
 				}
 				else {
 				}
-				return self.depois_de_enviar_registro (data, ajax_status);
+				return self.depois_de_enviar_registro (data, ajax_status, justificar);
 			})}));
 		}
 		else {
@@ -504,12 +521,15 @@ export var RegistroDeFaltas =  __class__ ('RegistroDeFaltas', [object], {
 				}
 				else {
 				}
-				return self.depois_de_enviar_registro (data, ajax_status);
+				return self.depois_de_enviar_registro (data, ajax_status, justificar);
 			})}));
 		}
 		self.modal_faltas.close ();
 	});},
-	get depois_de_enviar_registro () {return __get__ (this, function (self, data, ajax_status) {
+	get depois_de_enviar_registro () {return __get__ (this, function (self, data, ajax_status, justificar) {
+		if (typeof justificar == 'undefined' || (justificar != null && justificar.hasOwnProperty ("__kwargtrans__"))) {;
+			var justificar = false;
+		};
 		if (arguments.length) {
 			var __ilastarg0__ = arguments.length - 1;
 			if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
@@ -519,6 +539,7 @@ export var RegistroDeFaltas =  __class__ ('RegistroDeFaltas', [object], {
 						case 'self': var self = __allkwargs0__ [__attrib0__]; break;
 						case 'data': var data = __allkwargs0__ [__attrib0__]; break;
 						case 'ajax_status': var ajax_status = __allkwargs0__ [__attrib0__]; break;
+						case 'justificar': var justificar = __allkwargs0__ [__attrib0__]; break;
 					}
 				}
 			}
@@ -541,6 +562,9 @@ export var RegistroDeFaltas =  __class__ ('RegistroDeFaltas', [object], {
 				}
 			}
 			self.diario_binds ();
+			if (justificar === true) {
+				self.abrir_modal_justificar ($ ('#{0}'.format (json.celula_update [0])));
+			}
 		}
 	});},
 	get abrir_modal_justificar () {return __get__ (this, function (self, el, justificativa) {
@@ -582,7 +606,7 @@ export var RegistroDeFaltas =  __class__ ('RegistroDeFaltas', [object], {
 		}
 		var falta = false;
 		var content = DIV (P ('O(A) aluno(a) possui ', STRONG (tem_falta, (str (tem_falta) == '1' ? ' FALTA' : ' FALTAS'), __kwargtrans__ ({_style: 'color: orange'})), ' em ', STRONG (data_ext), '. Adicione abaixo a justificativa desta(s) falta(s).'), DIV (DIV (widgets.Textarea ('justificativa', __kwargtrans__ ({value: justificativa}))), __kwargtrans__ ({_class: 'p-col w1p100'})), __kwargtrans__ ({_class: 'p-row'}));
-		var footer = DIV (forms.FormButton ('submit_justificar_falta', 'Justificar', __kwargtrans__ ({_class: 'btn-autoresize wave_on_click waves-phanterpwa'})), forms.FormButton ('cancelar', 'Cancelar', __kwargtrans__ ({_class: 'btn-autoresize wave_on_click waves-phanterpwa'})), __kwargtrans__ ({_class: 'phanterpwa-form-buttons-container'}));
+		var footer = DIV (forms.FormButton ('submit_justificar_falta', 'Justificar', __kwargtrans__ ({_class: 'btn-autoresize wave_on_click waves-phanterpwa'})), forms.FormButton ('cancelar_just', 'Cancelar', __kwargtrans__ ({_class: 'btn-autoresize wave_on_click waves-phanterpwa'})), __kwargtrans__ ({_class: 'phanterpwa-form-buttons-container'}));
 		self.modal_justificar = modal.Modal ('#modal_justificar_container', __kwargtrans__ (dict ({'title': nome_aluno, 'content': content, 'footer': footer, 'form': 'justificar'})));
 		self.modal_justificar.open ();
 		$ ('#phanterpwa-widget-form-form_button-submit_justificar_falta').off ('click.adicionar_justificar').on ('click.adicionar_justificar', (function __lambda__ () {
@@ -598,7 +622,7 @@ export var RegistroDeFaltas =  __class__ ('RegistroDeFaltas', [object], {
 			}
 			return self._on_click_justificar (id_matricula, id_disciplina, data);
 		}));
-		$ ('#phanterpwa-widget-form-form_button-cancelar').off ('click.cancelar_falta').on ('click.cancelar_falta', (function __lambda__ () {
+		$ ('#phanterpwa-widget-form-form_button-cancelar_just').off ('click.cancelar_just').on ('click.cancelar_just', (function __lambda__ () {
 			if (arguments.length) {
 				var __ilastarg0__ = arguments.length - 1;
 				if (arguments [__ilastarg0__] && arguments [__ilastarg0__].hasOwnProperty ("__kwargtrans__")) {
@@ -697,6 +721,7 @@ export var RegistroDeFaltas =  __class__ ('RegistroDeFaltas', [object], {
 					var bas_nas = I ('J', __kwargtrans__ ({_class: 'faltas_justificadas'})).jquery ();
 					$ ('#{0}'.format (json.celula_update [0])).html (bas_nas).removeClass ('celula_registro_faltas').addClass ('celula_registro_justificadas');
 					$ ('#{0}'.format (json.celula_update [0])).attr ('data-tem_falta', 'J');
+					self.mapa_justificativas [json.celula_update [0]] = json.celula_update [3];
 				}
 				else {
 					var valor = json.celula_update [2];

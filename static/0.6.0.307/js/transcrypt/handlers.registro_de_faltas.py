@@ -423,6 +423,11 @@ class RegistroDeFaltas():
                     _class="btn-autoresize wave_on_click waves-phanterpwa"
                 ),
                 forms.FormButton(
+                    "confirmar_falta_e_justificar",
+                    "Confirmar falta e Justificar".format(complement),
+                    _class="btn-autoresize wave_on_click waves-phanterpwa"
+                ),                
+                forms.FormButton(
                     "cancelar",
                     "Cancelar",
                     _class="btn-autoresize wave_on_click waves-phanterpwa"
@@ -482,6 +487,12 @@ class RegistroDeFaltas():
             "click.adicionar_faltas_sim",
             lambda: self._on_click_faltas(id_matricula, id_disciplina, falta, data)
         )
+        jQuery("#phanterpwa-widget-form-form_button-confirmar_falta_e_justificar").off(
+            "click.adicionar_faltas_e_just"
+        ).on(
+            "click.adicionar_faltas_e_just",
+            lambda: self._on_click_faltas(id_matricula, id_disciplina, falta, data, justificar=True)
+        )
         jQuery("#phanterpwa-widget-form-form_button-cancelar").off(
             "click.cancelar_falta"
         ).on(
@@ -489,7 +500,7 @@ class RegistroDeFaltas():
             lambda: self.modal_faltas.close()
         )
 
-    def _on_click_faltas(self, id_matricula, id_disciplina, falta, data):
+    def _on_click_faltas(self, id_matricula, id_disciplina, falta, data, justificar=False):
         formdata = __new__(FormData())
         formdata.append(
             "falta",
@@ -517,7 +528,7 @@ class RegistroDeFaltas():
                 id_matricula,
                 id_disciplina,
                 form_data=formdata,
-                onComplete=lambda data, ajax_status: self.depois_de_enviar_registro(data, ajax_status)
+                onComplete=lambda data, ajax_status: self.depois_de_enviar_registro(data, ajax_status, justificar)
             )
         else:
             window.PhanterPWA.PUT(
@@ -527,11 +538,11 @@ class RegistroDeFaltas():
                 self.ano_letivo,
                 id_matricula,
                 form_data=formdata,
-                onComplete=lambda data, ajax_status: self.depois_de_enviar_registro(data, ajax_status)
+                onComplete=lambda data, ajax_status: self.depois_de_enviar_registro(data, ajax_status, justificar)
             )
         self.modal_faltas.close()
 
-    def depois_de_enviar_registro(self, data, ajax_status):
+    def depois_de_enviar_registro(self, data, ajax_status, justificar=False):
         if ajax_status == "success":
             json = data.responseJSON
             json.celula_update
@@ -545,6 +556,8 @@ class RegistroDeFaltas():
                     jQuery("#{0}".format(json.celula_update[0])).html(bas_nas)
                     jQuery("#{0}".format(json.celula_update[0])).attr("data-tem_falta", str(valor))
             self.diario_binds()
+            if justificar is True:
+                self.abrir_modal_justificar(jQuery("#{0}".format(json.celula_update[0])))
 
     def abrir_modal_justificar(self, el, justificativa=""):
         if self.modal_faltas is not js_undefined:
@@ -588,7 +601,7 @@ class RegistroDeFaltas():
                 _class="btn-autoresize wave_on_click waves-phanterpwa"
             ),
             forms.FormButton(
-                "cancelar",
+                "cancelar_just",
                 "Cancelar",
                 _class="btn-autoresize wave_on_click waves-phanterpwa"
             ),
@@ -610,10 +623,10 @@ class RegistroDeFaltas():
             "click.adicionar_justificar",
             lambda: self._on_click_justificar(id_matricula, id_disciplina, data)
         )
-        jQuery("#phanterpwa-widget-form-form_button-cancelar").off(
-            "click.cancelar_falta"
+        jQuery("#phanterpwa-widget-form-form_button-cancelar_just").off(
+            "click.cancelar_just"
         ).on(
-            "click.cancelar_falta",
+            "click.cancelar_just",
             lambda: self.modal_justificar.close()
         )
 
@@ -661,7 +674,7 @@ class RegistroDeFaltas():
                     bas_nas = I("J", _class="faltas_justificadas").jquery()
                     jQuery("#{0}".format(json.celula_update[0])).html(bas_nas).removeClass("celula_registro_faltas").addClass("celula_registro_justificadas")
                     jQuery("#{0}".format(json.celula_update[0])).attr("data-tem_falta", "J")
-
+                    self.mapa_justificativas[json.celula_update[0]] = json.celula_update[3]
                 else:
                     valor = json.celula_update[2]
                     bas_nas = I(valor, _class="numero_de_faltas").jquery()

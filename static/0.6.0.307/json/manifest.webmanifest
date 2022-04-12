@@ -4,22 +4,22 @@
     "description": "Aplicativo da Secretaria Municipal de Educa\u00e7\u00e3o do Munic\u00edpio de F\u00e1tima/BA",
     "icons": [
         {
-            "src": "/static/0.6.0.306/favicons/android-chrome-192x192.png",
+            "src": "/static/0.6.0.307/favicons/android-chrome-192x192.png",
             "type": "image/png",
             "sizes": "192x192"
         },
         {
-            "src": "/static/0.6.0.306/favicons/android-chrome-144x144.png",
+            "src": "/static/0.6.0.307/favicons/android-chrome-144x144.png",
             "type": "image/png",
             "sizes": "144x144"
         },
         {
-            "src": "/static/0.6.0.306/favicons/android-chrome-256x256.png",
+            "src": "/static/0.6.0.307/favicons/android-chrome-256x256.png",
             "type": "image/png",
             "sizes": "256x256"
         },
         {
-            "src": "/static/0.6.0.306/favicons/android-chrome-512x512.png",
+            "src": "/static/0.6.0.307/favicons/android-chrome-512x512.png",
             "type": "image/png",
             "sizes": "512x512"
         }
