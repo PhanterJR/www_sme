@@ -587,6 +587,7 @@ class RegistroDeFaltas():
                 DIV(
                     widgets.Textarea(
                         "justificativa",
+                        label="Digite aqui a justificativa da falta",
                         value=justificativa,
                     )
                 ),
