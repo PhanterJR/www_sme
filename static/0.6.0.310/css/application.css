@@ -547,7 +547,7 @@ svg.logo_sme_svg .fil8 {
 #phanterpwa-snippet-phanterpwa-logo-wrapper {
   background: #020024;
   background: radial-gradient(circle, #007512 0%, #002418 87%, #000 100%);
-  background-image: url("/static/0.6.0.309/images/background.jpg");
+  background-image: url("/static/0.6.0.310/images/background.jpg");
   width: 100%;
   min-height: 400px;
   background-repeat-y: repeat;
@@ -1299,29 +1299,29 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
 
 @font-face {
   font-family: "Segoe UI Mono W01 Regular";
-  src: url("/static/0.6.0.309/fonts/88bdc70ec292cc29451932f9875b378a.eot");
-  src: url("/static/0.6.0.309/fonts/88bdc70ec292cc29451932f9875b378a.eot?#iefix") format("embedded-opentype"), url("/static/0.6.0.309/fonts/88bdc70ec292cc29451932f9875b378a.woff2") format("woff2"), url("/static/0.6.0.309/fonts/88bdc70ec292cc29451932f9875b378a.woff") format("woff"), url("/static/0.6.0.309/fonts/88bdc70ec292cc29451932f9875b378a.ttf") format("truetype"), url("/static/0.6.0.309/fonts/88bdc70ec292cc29451932f9875b378a.svg#Segoe UI Mono W01 Regular") format("svg");
+  src: url("/static/0.6.0.310/fonts/88bdc70ec292cc29451932f9875b378a.eot");
+  src: url("/static/0.6.0.310/fonts/88bdc70ec292cc29451932f9875b378a.eot?#iefix") format("embedded-opentype"), url("/static/0.6.0.310/fonts/88bdc70ec292cc29451932f9875b378a.woff2") format("woff2"), url("/static/0.6.0.310/fonts/88bdc70ec292cc29451932f9875b378a.woff") format("woff"), url("/static/0.6.0.310/fonts/88bdc70ec292cc29451932f9875b378a.ttf") format("truetype"), url("/static/0.6.0.310/fonts/88bdc70ec292cc29451932f9875b378a.svg#Segoe UI Mono W01 Regular") format("svg");
 }
 
 @font-face {
   font-family: "Segoe UI Italic";
   font-style: normal;
   font-weight: normal;
-  src: local("Segoe UI Italic"), url("/static/0.6.0.309/fonts/Segoe UI Italic.woff") format("woff");
+  src: local("Segoe UI Italic"), url("/static/0.6.0.310/fonts/Segoe UI Italic.woff") format("woff");
 }
 
 @font-face {
   font-family: "Segoe UI Bold";
   font-style: normal;
   font-weight: normal;
-  src: local("Segoe UI Bold"), url("/static/0.6.0.309/fonts/Segoe UI Bold.woff") format("woff");
+  src: local("Segoe UI Bold"), url("/static/0.6.0.310/fonts/Segoe UI Bold.woff") format("woff");
 }
 
 @font-face {
   font-family: "Segoe UI Bold Italic";
   font-style: normal;
   font-weight: normal;
-  src: local("Segoe UI Bold Italic"), url("/static/0.6.0.309/fonts/Segoe UI Bold Italic.woff") format("woff");
+  src: local("Segoe UI Bold Italic"), url("/static/0.6.0.310/fonts/Segoe UI Bold Italic.woff") format("woff");
 }
 
 /* roboto-thin - latin */
@@ -1330,8 +1330,8 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
   font-family: "Roboto";
   font-style: normal;
   font-weight: 400;
-  src: url("/static/0.6.0.309/fonts/roboto-v20-latin-regular.eot");
-  src: local("Roboto"), local("Roboto-Regular"), url("/static/0.6.0.309/fonts/roboto-v20-latin-regular.eot?#iefix") format("embedded-opentype"), url("/static/0.6.0.309/fonts/roboto-v20-latin-regular.woff2") format("woff2"), url("/static/0.6.0.309/fonts/roboto-v20-latin-regular.woff") format("woff"), url("/static/0.6.0.309/fonts/roboto-v20-latin-regular.ttf") format("truetype"), url("/static/0.6.0.309/fonts/roboto-v20-latin-regular.svg#Roboto") format("svg");
+  src: url("/static/0.6.0.310/fonts/roboto-v20-latin-regular.eot");
+  src: local("Roboto"), local("Roboto-Regular"), url("/static/0.6.0.310/fonts/roboto-v20-latin-regular.eot?#iefix") format("embedded-opentype"), url("/static/0.6.0.310/fonts/roboto-v20-latin-regular.woff2") format("woff2"), url("/static/0.6.0.310/fonts/roboto-v20-latin-regular.woff") format("woff"), url("/static/0.6.0.310/fonts/roboto-v20-latin-regular.ttf") format("truetype"), url("/static/0.6.0.310/fonts/roboto-v20-latin-regular.svg#Roboto") format("svg");
 }
 
 /* latin-ext */
@@ -1339,7 +1339,7 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
   font-family: "Roboto Mono";
   font-style: normal;
   font-weight: 400;
-  src: url("/static/0.6.0.309/fonts/L0x5DF4xlVMF-BfR8bXMIjhFq3-OXg.woff2") format("woff2");
+  src: url("/static/0.6.0.310/fonts/L0x5DF4xlVMF-BfR8bXMIjhFq3-OXg.woff2") format("woff2");
   unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
@@ -1348,7 +1348,7 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
   font-family: "Roboto Mono";
   font-style: normal;
   font-weight: 400;
-  src: url("/static/0.6.0.309/fonts/L0x5DF4xlVMF-BfR8bXMIjhLq38.woff2") format("woff2");
+  src: url("/static/0.6.0.310/fonts/L0x5DF4xlVMF-BfR8bXMIjhLq38.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
@@ -1357,7 +1357,7 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
   font-family: "Cousine";
   font-style: normal;
   font-weight: 400;
-  src: url("/static/0.6.0.309/fonts/d6lIkaiiRdih4SpP_SovzAbt.woff2") format("woff2");
+  src: url("/static/0.6.0.310/fonts/d6lIkaiiRdih4SpP_SovzAbt.woff2") format("woff2");
   unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
@@ -1366,15 +1366,15 @@ body.phanterpwa-flag-identificar-servidor #main-container.iniciar.expand #app-co
   font-family: "Cousine";
   font-style: normal;
   font-weight: 400;
-  src: url("/static/0.6.0.309/fonts/d6lIkaiiRdih4SpP_SQvzA.woff2") format("woff2");
+  src: url("/static/0.6.0.310/fonts/d6lIkaiiRdih4SpP_SQvzA.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 /* DejaVu Sans */
 @font-face {
   font-family: "DejaVu Sans";
-  src: url("/static/0.6.0.309/fonts/DejaVuSans.eot");
-  src: url("/static/0.6.0.309/fonts/DejaVuSans.eot?#iefix") format("embedded-opentype"), url("/static/0.6.0.309/fonts/DejaVuSans.woff2") format("woff2"), url("/static/0.6.0.309/fonts/DejaVuSans.woff") format("woff"), url("/static/0.6.0.309/fonts/DejaVuSans.ttf") format("truetype"), url("/static/0.6.0.309/fonts/DejaVuSans.svg#Segoe UI Mono W01 Regular") format("svg");
+  src: url("/static/0.6.0.310/fonts/DejaVuSans.eot");
+  src: url("/static/0.6.0.310/fonts/DejaVuSans.eot?#iefix") format("embedded-opentype"), url("/static/0.6.0.310/fonts/DejaVuSans.woff2") format("woff2"), url("/static/0.6.0.310/fonts/DejaVuSans.woff") format("woff"), url("/static/0.6.0.310/fonts/DejaVuSans.ttf") format("truetype"), url("/static/0.6.0.310/fonts/DejaVuSans.svg#Segoe UI Mono W01 Regular") format("svg");
 }
 
 .phanterpwa-paper-sme {

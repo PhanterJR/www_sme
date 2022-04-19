@@ -1139,17 +1139,11 @@ class VinculosEscola(helpers.XmlConstructor):
                                 ),
                                 DIV(
                                     A(
-                                        I(_class="fas fa-puzzle-piece"),
+                                        I(_class="fas fa-print"),
                                         **{
-                                            "_class": "botao_separar_unidade_escolar icon_button",
-                                            "_title": "Separar esta unidade escolar",
-                                            "_href": window.PhanterPWA.XWAY(
-                                                "vinculos",
-                                                "escola",
-                                                x[0],
-                                                self.arg1,
-                                                **{"_vinculos-funcionarios": "vinculos/escolas/{0}/".format(self.arg1)}
-                                            )
+                                            "_class": "botao_imprimir_lista_alunos_turma icon_button",
+                                            "_title": "Imprimir lista de alunos",
+                                            "_href": window.PhanterPWA.XWAY("imprimir", "vinculos", self.arg1, self.arg2)
                                         }
                                     ),
                                     # DIV(
