@@ -343,6 +343,8 @@ class RegistroDeFaltas():
             ".faltas.celula_registro_faltas"
         ).off(
             "click.enviar_faltas"
+        ).off(
+            "click.enviar_faltas_rg_jus"
         ).on(
             "click.enviar_faltas",
             lambda: self.modal_confirmar_faltas(jQuery(this))
@@ -352,6 +354,8 @@ class RegistroDeFaltas():
             ".faltas.celula_registro_justificadas"
         ).off(
             "click.enviar_faltas_rg_jus"
+        ).off(
+            "click.enviar_faltas"
         ).on(
             "click.enviar_faltas_rg_jus",
             lambda: self.abrir_modal_justificar(jQuery(this), self.mapa_justificativas.get(jQuery(this).attr("id"), ""))
@@ -365,6 +369,7 @@ class RegistroDeFaltas():
         tem_falta = jQuery(el).attr("data-tem_falta")
         nome_aluno = jQuery(el).data("nome_aluno")
         eh_educacao_infantil = jQuery(el).data("eh_educacao_infantil")
+        console.log(eh_educacao_infantil)
         data = jQuery(el).data("data_falta")
         ano, mes, dia = data.split("-")
         mes_ext = self.meses[mes]
@@ -375,7 +380,7 @@ class RegistroDeFaltas():
         if tem_falta is False or tem_falta == "false":
             complement = " Falta"
             falta = True
-            if eh_educacao_infantil is True or eh_educacao_infantil == "true":
+            if str(eh_educacao_infantil).lower() == "true":
                 content = DIV(
                     P("Confirme a inserção de ", STRONG("FALTA", _style="color: red;"),
                         " no presente aluno no dia de ", STRONG(data_ext),"."
@@ -449,7 +454,7 @@ class RegistroDeFaltas():
             )
             footer = DIV(
                 forms.FormButton(
-                    "justificar_falta",
+                    "justificar_falta_novo",
                     "Justificar",
                     _class="btn-autoresize wave_on_click waves-phanterpwa"
                 ),
@@ -475,10 +480,10 @@ class RegistroDeFaltas():
             }
         )
         self.modal_faltas.open()
-        jQuery("#phanterpwa-widget-form-form_button-justificar_falta").off(
-            "click.adicionar_justificar"
+        jQuery("#phanterpwa-widget-form-form_button-justificar_falta_novo").off(
+            "click.adicionar_justificar_novo"
         ).on(
-            "click.adicionar_justificar",
+            "click.adicionar_justificar_novo",
             lambda: self.abrir_modal_justificar(el)
         )
         jQuery("#phanterpwa-widget-form-form_button-confirmar_falta").off(
@@ -548,7 +553,7 @@ class RegistroDeFaltas():
             json.celula_update
             if json.celula_update is not None and json.celula_update is not js_undefined:
                 if json.celula_update[1] is False or json.celula_update[1] == "false":
-                    jQuery("#{0}".format(json.celula_update[0])).html("")
+                    jQuery("#{0}".format(json.celula_update[0])).html(DIV(json.celula_update[0][8:10], _class="apagadinho").jquery())
                     jQuery("#{0}".format(json.celula_update[0])).attr("data-tem_falta", "false")
                 else:
                     valor = json.celula_update[2]
@@ -565,7 +570,6 @@ class RegistroDeFaltas():
         id_matricula = jQuery(el).data("id_matricula")
         tem_falta = jQuery(el).attr("data-tem_falta")
         nome_aluno = jQuery(el).data("nome_aluno")
-        eh_educacao_infantil = jQuery(el).data("eh_educacao_infantil")
         data = jQuery(el).data("data_falta")
         ano, mes, dia = data.split("-")
         mes_ext = self.meses[mes]
@@ -575,14 +579,31 @@ class RegistroDeFaltas():
             id_disciplina = None
 
         falta = False
-        content = DIV(
-            P(
+        extra_btn = []
+        if tem_falta == "J":
+            extra_btn = [
+                forms.FormButton(
+                    "remover_justificativa",
+                    "Remover Justificativa",
+                    _class="btn-autoresize wave_on_click waves-phanterpwa"
+                )
+            ]
+            just_text = P(
+                "O(A) aluno(a) justificou a(s) falta(s) em ",
+                STRONG(data_ext),
+                ". Você pode editar a justificativa ou excluir a mesma."
+            )
+        else:
+            just_text = P(
                 "O(A) aluno(a) possui ",
                 STRONG(tem_falta, " FALTA" if str(tem_falta) == "1" else " FALTAS", _style="color: orange"),
                 " em ",
                 STRONG(data_ext),
                 ". Adicione abaixo a justificativa desta(s) falta(s)."
-            ),
+            )
+
+        content = DIV(
+            just_text,
             DIV(
                 DIV(
                     widgets.Textarea(
@@ -595,12 +616,14 @@ class RegistroDeFaltas():
             ),
             _class="p-row"
         )
+
         footer = DIV(
             forms.FormButton(
                 "submit_justificar_falta",
                 "Justificar",
                 _class="btn-autoresize wave_on_click waves-phanterpwa"
             ),
+            *extra_btn,
             forms.FormButton(
                 "cancelar_just",
                 "Cancelar",
@@ -624,6 +647,12 @@ class RegistroDeFaltas():
             "click.adicionar_justificar",
             lambda: self._on_click_justificar(id_matricula, id_disciplina, data)
         )
+        jQuery("#phanterpwa-widget-form-form_button-remover_justificativa").off(
+            "click.adicionar_justificar_remover"
+        ).on(
+            "click.adicionar_justificar_remover",
+            lambda: self._on_click_remover_justificativa(id_matricula, id_disciplina, data)
+        )
         jQuery("#phanterpwa-widget-form-form_button-cancelar_just").off(
             "click.cancelar_just"
         ).on(
@@ -638,6 +667,45 @@ class RegistroDeFaltas():
         formdata.append(
             "justificativa",
             justificativa
+        )
+        formdata.append(
+            "data",
+            data
+        )
+        if self.id_disciplina is not None and self.id_disciplina is not js_undefined:
+            window.PhanterPWA.PUT(
+                "api",
+                "justificar-faltas",
+                self.id_escola,
+                self.ano_letivo,
+                id_matricula,
+                id_disciplina,
+                form_data=formdata,
+                onComplete=lambda data, ajax_status: self.depois_de_enviar_justificativa(data, ajax_status)
+            )
+        else:
+            window.PhanterPWA.PUT(
+                "api",
+                "justificar-faltas",
+                self.id_escola,
+                self.ano_letivo,
+                id_matricula,
+                form_data=formdata,
+                onComplete=lambda data, ajax_status: self.depois_de_enviar_justificativa(data, ajax_status)
+            )
+
+    def _on_click_remover_justificativa(self, id_matricula, id_disciplina, data):
+        justificativa = jQuery("#phanterpwa-widget-textarea-textarea-justificativa").val()
+        formdata = __new__(FormData())
+
+        formdata.append(
+            "justificativa",
+            justificativa
+        )
+
+        formdata.append(
+            "deletar_justificativa",
+            True
         )
         formdata.append(
             "data",
@@ -681,6 +749,7 @@ class RegistroDeFaltas():
                     bas_nas = I(valor, _class="numero_de_faltas").jquery()
                     jQuery("#{0}".format(json.celula_update[0])).html(bas_nas).addClass("celula_registro_faltas").removeClass("celula_registro_justificadas")
                     jQuery("#{0}".format(json.celula_update[0])).attr("data-tem_falta", str(valor))
+                    del self.mapa_justificativas[json.celula_update[0]]
             self.diario_binds()
 
 

@@ -2260,6 +2260,8 @@ class Turma():
             "ponto_de_referencia",
             "resultado",
             "contatos",
+            "nis",
+            "cpf"
         ]
         self._fields_names = {
             "aluno": "Nome do(a) Aluno(a)",
@@ -2272,7 +2274,9 @@ class Turma():
             "nome_da_mae": "Nome da Mãe",
             "responsavel": "Responsável",
             "sexo": "Sexo",
-            "resultado": "Resultado Final"
+            "resultado": "Resultado Final",
+            "nis": "NIS",
+            "cpf": "CPF"
         }
         self._get_fields()
 
