@@ -29,6 +29,7 @@ import handlers.ficha_avaliativa as ficha_avaliativa
 import handlers.registro_de_aulas as registro_de_aulas
 import handlers.registro_de_aulas_educacao_infantil as registro_de_aulas_educacao_infantil
 import handlers.registro_de_faltas as registro_de_faltas
+import handlers.frequencia_escolar as frequencia_escolar
 import handlers.diario_integrado as diario_integrado
 import handlers.conselho_de_classe as conselho_de_classe
 import handlers.boletins as boletins
@@ -86,6 +87,7 @@ gates = {
     'diario-integrado': diario_integrado.Index,
     'conselho-de-classe': conselho_de_classe.Index,
     'boletins': boletins.Index,
+    'frequencia': frequencia_escolar.Index,
     'registro-de-faltas': registro_de_faltas.Index,
     'controle-de-atividades': controle_de_atividades.Index,
     'registro-de-atividades': registro_de_atividades.Index,

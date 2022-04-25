@@ -275,6 +275,15 @@ class TurmasSimples(helpers.XmlConstructor):
                                     "_href": window.PhanterPWA.XWAY("indicadores-de-desempenho", self.id_escola, self.ano_letivo)
                                 }
                             ),
+                            A(
+                                I(_class="fas fa-calculator"),
+                                **{
+                                    "_class": "icon_button",
+                                    "_title": "Total de Faltas",
+                                    "_href": window.PhanterPWA.XWAY("frequencia", "total-de-faltas", self.id_escola, self.ano_letivo, **{"_retornar": "turma-simples"})
+
+                                }
+                            ),
                             DIV(
                                 I(_class="fas fa-chart-pie"),
                                 **{
@@ -407,6 +416,11 @@ class TurmasSimples(helpers.XmlConstructor):
                             "_data-id_turma": x.id,
                             "_data-bloquear": bloquear,
                             "icon": icon_botao_diario
+                        }),
+                        widgets.MenuOption("Total de Faltas", **{
+                            "_class": "wave_on_click",
+                            "_href": window.PhanterPWA.XWAY("frequencia", "total-de-faltas", self.id_escola, self.ano_letivo, x.id, **{"_retornar": "turma-simples"}),
+
                         }),
                         widgets.MenuOption("Diário de notas", **{
                             "_class": "botao_diario_de_notas_turma wave_on_click",
@@ -1305,6 +1319,15 @@ class TurmaEspecifica():
                             }
                         ),
                         html_botao_falta,
+                        A(
+                            I(_class="fas fa-calculator"),
+                            **{
+                                "_class": "icon_button",
+                                "_title": "Total de Faltas",
+                                "_href": window.PhanterPWA.XWAY("frequencia", "total-de-faltas", self.id_escola, self.ano_letivo, data_turma.id, **{"_retornar": "turma-especifica"})
+
+                            }
+                        ),
                         DIV(
                             I(_class="fas fa-chalkboard-teacher"),
                             **{
@@ -3352,15 +3375,12 @@ class TurmasDetalhadas(helpers.XmlConstructor):
                             }
                         ),
                         A(
-                            I(_class="fas fa-table"),
+                            I(_class="fas fa-calculator"),
                             **{
-                                "_class": "botao_diario_notas icon_button",
-                                "_title": "Diário de Notas da Turma",
-                                "_data-id_escola": self.id_escola,
-                                "_data-id_ano_letivo": self.ano_letivo,
-                                "_data-id_turma": data_turma.id,
-                                "_disabled": disabled,
-                                "_href": window.PhanterPWA.XWAY("diario-de-notas", self.id_escola, self.ano_letivo, data_turma.id, **{"_turma": data_turma.turma})
+                                "_class": "icon_button",
+                                "_title": "Total de Faltas",
+                                "_href": window.PhanterPWA.XWAY("frequencia", "total-de-faltas", self.id_escola, self.ano_letivo, data_turma.id, **{"_retornar": "turma-especifica"})
+
                             }
                         ),
                         A(

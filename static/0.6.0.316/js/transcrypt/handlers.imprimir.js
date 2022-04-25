@@ -1,4 +1,4 @@
-// Transcrypt'ed from Python, 2022-04-19 19:23:37
+// Transcrypt'ed from Python, 2022-04-21 10:56:36
 import {AssertionError, AttributeError, BaseException, DeprecationWarning, Exception, IndexError, IterableError, KeyError, NotImplementedError, RuntimeWarning, StopIteration, UserWarning, ValueError, Warning, __JsIterator__, __PyIterator__, __Terminal__, __add__, __and__, __call__, __class__, __envir__, __eq__, __floordiv__, __ge__, __get__, __getcm__, __getitem__, __getslice__, __getsm__, __gt__, __i__, __iadd__, __iand__, __idiv__, __ijsmod__, __ilshift__, __imatmul__, __imod__, __imul__, __in__, __init__, __ior__, __ipow__, __irshift__, __isub__, __ixor__, __jsUsePyNext__, __jsmod__, __k__, __kwargtrans__, __le__, __lshift__, __lt__, __matmul__, __mergefields__, __mergekwargtrans__, __mod__, __mul__, __ne__, __neg__, __nest__, __or__, __pow__, __pragma__, __proxy__, __pyUseJsNext__, __rshift__, __setitem__, __setproperty__, __setslice__, __sort__, __specialattrib__, __sub__, __super__, __t__, __terminal__, __truediv__, __withblock__, __xor__, abs, all, any, assert, bool, bytearray, bytes, callable, chr, copy, deepcopy, delattr, dict, dir, divmod, enumerate, filter, float, getattr, hasattr, input, int, isinstance, issubclass, len, list, map, max, min, object, ord, pow, print, property, py_TypeError, py_iter, py_metatype, py_next, py_reversed, py_typeof, range, repr, round, set, setattr, sorted, str, sum, tuple, zip} from './org.transcrypt.__runtime__.js';
 import * as alunos from './handlers.alunos.js';
 import * as anos_letivos from './handlers.anos_letivos.js';
@@ -2040,42 +2040,86 @@ export var Vinculos =  __class__ ('Vinculos', [object], {
 		})})));
 		html_botoes.html_to ('#botoes_de_comando_impressao');
 		var series_multi = [];
-		var tabela_dinamica = TABLE (__kwargtrans__ ({_class: 'tabela_dinamica_turma'}));
-		var eh_multi = json.eh_multi;
+		var tabela_funcionarios = DIV (__kwargtrans__ ({_class: 'tabela_impressao_container'}));
 		var cont = 0;
 		var turma = json.turma;
 		var nome_escola = json.nome_escola;
 		var cabecalho_escola = json.cabecalho;
-		for (var lin of json.data) {
+		var tem_func = false;
+		for (var lin of json.data [0]) {
+			var tem_func = true;
 			cont++;
-			var tbody = TBODY (__kwargtrans__ ({_class: 'tabela_dinamica_turma-tbody'}));
+			var tbody = DIV (__kwargtrans__ ({_class: 'tabela_impressao_void_container'}));
 			if (cont == 1) {
-				tbody.append (TR (TH ('Nº', __kwargtrans__ ({_class: 'tabela_dinamica_turma-campo_cabecalho campo_numero'})), TH ('Nome do(a) aluno(a)', __kwargtrans__ ({_class: 'tabela_dinamica_turma-campo_cabecalho campo_aluno'})), ...(function () {
+				tbody.append (TABLE (TR (TH ('EQUIPE DIRETIVA', __kwargtrans__ ({_class: 'tabela_impressao-coluna_expandida'}))), __kwargtrans__ ({_class: 'tabela_impressao'})));
+				tbody.append (TABLE (TR (TH ('ID', __kwargtrans__ ({_class: 'tabela_impressao-cabecalho campo_id'})), TH ('Nome do(a) Funcionário(a)', __kwargtrans__ ({_class: 'tabela_impressao-cabecalho campo_nome_completo'})), ...(function () {
 					var __accu0__ = [];
 					for (var cam of self.fields) {
-						__accu0__.append (TH (self._fields_names [cam], __kwargtrans__ ({_class: 'tabela_dinamica_turma-campo_cabecalho campo_{0}'.format (cam)})));
+						__accu0__.append (TH (self._fields_names [cam], __kwargtrans__ ({_class: 'tabela_impressao-cabecalho campo_{0}'.format (cam)})));
 					}
 					return __accu0__;
-				}) ()));
+				}) ()), __kwargtrans__ ({_class: 'tabela_impressao'})));
 			}
-			if (eh_multi && !__in__ (lin [2], series_multi)) {
-				series_multi.append (lin [2]);
-				tbody.append (TR (TH (lin [2], __kwargtrans__ ({_class: 'tabela_dinamica_turma-nome_da_serie', _colspan: len (self.fields) + 2}))));
-			}
-			var numero_aluno = lin [0];
-			var nome_aluno = lin [1];
-			tbody.append (TR (TD (numero_aluno, __kwargtrans__ ({_class: 'campos_turma campo_numero'})), TD (nome_aluno, __kwargtrans__ ({_class: 'campos_turma campo_aluno'})), ...(function () {
+			tbody.append (TABLE (TR (TD (lin ['id'], __kwargtrans__ ({_class: 'tabela_impressao-campo campo_id'})), TD (lin ['nome_completo'], __kwargtrans__ ({_class: 'tabela_impressao-campo campo_nome_completo'})), ...(function () {
 				var __accu0__ = [];
 				for (var cam of self.fields) {
-					__accu0__.append (TD (lin [3] [cam], __kwargtrans__ ({_class: 'campos_turma campo_{0}'.format (cam)})));
+					__accu0__.append (TD (lin [cam], __kwargtrans__ ({_class: 'tabela_impressao-campo campo_{0}'.format (cam)})));
 				}
 				return __accu0__;
-			}) ()));
-			tabela_dinamica.append (tbody);
+			}) ()), __kwargtrans__ ({_class: 'tabela_impressao'})));
+			tabela_funcionarios.append (tbody);
+		}
+		var cont = 0;
+		for (var lin of json.data [1]) {
+			var tem_func = true;
+			cont++;
+			var tbody = DIV (__kwargtrans__ ({_class: 'tabela_impressao_void_container'}));
+			if (cont == 1) {
+				tbody.append (TABLE (TR (TH ('CORPO DOCENTE', __kwargtrans__ ({_class: 'tabela_impressao-coluna_expandida'}))), __kwargtrans__ ({_class: 'tabela_impressao'})));
+				tbody.append (TABLE (TR (TH ('ID', __kwargtrans__ ({_class: 'tabela_impressao-cabecalho campo_id'})), TH ('Nome do(a) Funcionário(a)', __kwargtrans__ ({_class: 'tabela_impressao-cabecalho campo_nome_completo'})), ...(function () {
+					var __accu0__ = [];
+					for (var cam of self.fields) {
+						__accu0__.append (TH (self._fields_names [cam], __kwargtrans__ ({_class: 'tabela_impressao-cabecalho campo_{0}'.format (cam)})));
+					}
+					return __accu0__;
+				}) ()), __kwargtrans__ ({_class: 'tabela_impressao'})));
+			}
+			tbody.append (TABLE (TR (TD (lin ['id'], __kwargtrans__ ({_class: 'tabela_impressao-campo campo_id'})), TD (lin ['nome_completo'], __kwargtrans__ ({_class: 'tabela_impressao-campo campo_nome_completo'})), ...(function () {
+				var __accu0__ = [];
+				for (var cam of self.fields) {
+					__accu0__.append (TD (lin [cam], __kwargtrans__ ({_class: 'tabela_impressao-campo campo_{0}'.format (cam)})));
+				}
+				return __accu0__;
+			}) ()), __kwargtrans__ ({_class: 'tabela_impressao'})));
+			tabela_funcionarios.append (tbody);
+		}
+		var cont = 0;
+		for (var lin of json.data [2]) {
+			var tem_func = true;
+			cont++;
+			var tbody = DIV (__kwargtrans__ ({_class: 'tabela_impressao_void_container'}));
+			if (cont == 1) {
+				tbody.append (TABLE (TR (TH ('EQUIPE DE APOIO', __kwargtrans__ ({_class: 'tabela_impressao-coluna_expandida'}))), __kwargtrans__ ({_class: 'tabela_impressao'})));
+				tbody.append (TABLE (TR (TH ('ID', __kwargtrans__ ({_class: 'tabela_impressao-cabecalho campo_id'})), TH ('Nome do(a) Funcionário(a)', __kwargtrans__ ({_class: 'tabela_impressao-cabecalho campo_nome_completo'})), ...(function () {
+					var __accu0__ = [];
+					for (var cam of self.fields) {
+						__accu0__.append (TH (self._fields_names [cam], __kwargtrans__ ({_class: 'tabela_impressao-cabecalho campo_{0}'.format (cam)})));
+					}
+					return __accu0__;
+				}) ()), __kwargtrans__ ({_class: 'tabela_impressao'})));
+			}
+			tbody.append (TABLE (TR (TD (lin ['id'], __kwargtrans__ ({_class: 'tabela_impressao-campo campo_id'})), TD (lin ['nome_completo'], __kwargtrans__ ({_class: 'tabela_impressao-campo campo_nome_completo'})), ...(function () {
+				var __accu0__ = [];
+				for (var cam of self.fields) {
+					__accu0__.append (TD (lin [cam], __kwargtrans__ ({_class: 'tabela_impressao-campo campo_{0}'.format (cam)})));
+				}
+				return __accu0__;
+			}) ()), __kwargtrans__ ({_class: 'tabela_impressao'})));
+			tabela_funcionarios.append (tbody);
 		}
 		var logo = '{0}/api/escolas/{1}/image'.format (window.PhanterPWA.ApiServer.remote_address, self.id_escola);
 		if (ajax_status == 'success') {
-			var html_turma_content = DIV (DIV (DIV (DIV (DIV (DIV (DIV (DIV (IMG (__kwargtrans__ ({_src: '/static/{0}/images/cabecalho_background.jpg'.format (window.PhanterPWA.VERSIONING)})), __kwargtrans__ ({_class: 'back'})), DIV (IMG (__kwargtrans__ ({_src: logo, _style: 'width: 120px; height: 120px;'})), __kwargtrans__ ({_class: 'front'})), __kwargtrans__ ({_class: 'sme_cabecalho_sme'})), DIV (H3 (nome_escola), __kwargtrans__ ({_class: 'sme_cabecalho_sme_nome_escola'})), DIV (H5 (cabecalho_escola), __kwargtrans__ ({_class: 'sme_cabecalho_sme_dados_escola'})), DIV (DIV ('LISTA DE ALUNOS DA TURMA ', STRONG (turma, __kwargtrans__ ({_style: 'text-transform: uppercase;'})), __kwargtrans__ ({_class: 'tudo_centralizado titulo_tabela_dinamica'})), __kwargtrans__ ({_class: 'sme_cabecalho_titulo_documento'})), DIV ((cont > 0 ? tabela_dinamica : 'NÃO HÁ ALUNOS NA TURMA'), __kwargtrans__ ({_class: 'sme_documento_conteudo'})), __kwargtrans__ ({_id: 'pagina_{0}_declaracao'.format (self.id_matricula), _class: 'p-row'})), __kwargtrans__ ({_class: 'imprimir_matricula_wrapper imprimir_documentos_wrapper'})), __kwargtrans__ ({_class: 'imprimir_alunos_da_turma'}))), __kwargtrans__ ({_class: 'media-print-visible'})), __kwargtrans__ ({_class: 'folhas_para_imprimir phanterpwa-simple-media-print'}));
+			var html_turma_content = DIV (DIV (DIV (DIV (DIV (DIV (DIV (DIV (IMG (__kwargtrans__ ({_src: '/static/{0}/images/cabecalho_background.jpg'.format (window.PhanterPWA.VERSIONING)})), __kwargtrans__ ({_class: 'back'})), DIV (IMG (__kwargtrans__ ({_src: logo, _style: 'width: 120px; height: 120px;'})), __kwargtrans__ ({_class: 'front'})), __kwargtrans__ ({_class: 'sme_cabecalho_sme'})), DIV (H3 (nome_escola), __kwargtrans__ ({_class: 'sme_cabecalho_sme_nome_escola'})), DIV (H5 (cabecalho_escola), __kwargtrans__ ({_class: 'sme_cabecalho_sme_dados_escola'})), DIV (DIV ('LISTA DE FUNCIONÁRIOS ', self.ano_letivo, __kwargtrans__ ({_style: 'text-transform: uppercase;', _class: 'tudo_centralizado titulo_tabela_dinamica'})), __kwargtrans__ ({_class: 'sme_cabecalho_titulo_documento'})), DIV ((tem_func ? tabela_funcionarios : 'NÃO HÁ ALUNOS NA TURMA'), __kwargtrans__ ({_class: 'sme_documento_conteudo'})), __kwargtrans__ ({_id: 'pagina_{0}_lista_funcionarios'.format (self.id_escola), _class: 'p-row'})), __kwargtrans__ ({_class: 'documento_impressao_wrapper'})))), __kwargtrans__ ({_class: 'media-print-visible'})), __kwargtrans__ ({_class: 'folhas_para_imprimir phanterpwa-simple-media-print'}));
 			html_turma_content.html_to ('#documentos-content');
 		}
 	});},

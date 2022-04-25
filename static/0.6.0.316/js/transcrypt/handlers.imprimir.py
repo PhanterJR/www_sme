@@ -3073,39 +3073,73 @@ class Vinculos():
         html_botoes.html_to("#botoes_de_comando_impressao")
 
         series_multi = []
-
-        tabela_dinamica = TABLE(
-            _class="tabela_dinamica_turma",
+        tabela_funcionarios = DIV(
+            _class="tabela_impressao_container",
         )
-        eh_multi = json.eh_multi
         cont = 0
         turma = json.turma
         nome_escola = json.nome_escola
         cabecalho_escola = json.cabecalho
-        for lin in json.data:
+        tem_func = False
+        for lin in json.data[0]:
+            tem_func = True
             cont += 1
-            tbody = TBODY(_class="tabela_dinamica_turma-tbody")
+            tbody = DIV(_class="tabela_impressao_void_container")
             if cont == 1:
-                tbody.append(TR(
-                    TH("Nº", _class="tabela_dinamica_turma-campo_cabecalho campo_numero"),
-                    TH("Nome do(a) aluno(a)", _class="tabela_dinamica_turma-campo_cabecalho campo_aluno"),
-                    *[TH(self._fields_names[cam], _class="tabela_dinamica_turma-campo_cabecalho campo_{0}".format(cam)) for cam in self.fields],
-                ))
-            if eh_multi and lin[2] not in series_multi:
-                series_multi.append(lin[2])
-                tbody.append(TR(
-                    TH(lin[2], _class="tabela_dinamica_turma-nome_da_serie", _colspan=len(self.fields) + 2),
-                    
-                ))
-            numero_aluno = lin[0]
-            nome_aluno = lin[1]
-            tbody.append(TR(
-                TD(numero_aluno, _class="campos_turma campo_numero"),
-                TD(nome_aluno, _class="campos_turma campo_aluno"),
-                *[TD(lin[3][cam], _class="campos_turma campo_{0}".format(cam)) for cam in self.fields]
-            ))
-            tabela_dinamica.append(tbody)
-
+                tbody.append(TABLE(TR(
+                    TH("EQUIPE DIRETIVA", _class="tabela_impressao-coluna_expandida"),
+                ), _class="tabela_impressao"))
+                tbody.append(TABLE(TR(
+                    TH("ID", _class="tabela_impressao-cabecalho campo_id"),
+                    TH("Nome do(a) Funcionário(a)", _class="tabela_impressao-cabecalho campo_nome_completo"),
+                    *[TH(self._fields_names[cam], _class="tabela_impressao-cabecalho campo_{0}".format(cam)) for cam in self.fields],
+                ), _class="tabela_impressao"))
+            tbody.append(TABLE(TR(
+                TD(lin["id"], _class="tabela_impressao-campo campo_id"),
+                TD(lin["nome_completo"], _class="tabela_impressao-campo campo_nome_completo"),
+                *[TD(lin[cam], _class="tabela_impressao-campo campo_{0}".format(cam)) for cam in self.fields]
+            ), _class="tabela_impressao"))
+            tabela_funcionarios.append(tbody)
+        cont = 0
+        for lin in json.data[1]:
+            tem_func = True
+            cont += 1
+            tbody = DIV(_class="tabela_impressao_void_container")
+            if cont == 1:
+                tbody.append(TABLE(TR(
+                    TH("CORPO DOCENTE", _class="tabela_impressao-coluna_expandida"),
+                ), _class="tabela_impressao"))
+                tbody.append(TABLE(TR(
+                    TH("ID", _class="tabela_impressao-cabecalho campo_id"),
+                    TH("Nome do(a) Funcionário(a)", _class="tabela_impressao-cabecalho campo_nome_completo"),
+                    *[TH(self._fields_names[cam], _class="tabela_impressao-cabecalho campo_{0}".format(cam)) for cam in self.fields],
+                ), _class="tabela_impressao"))
+            tbody.append(TABLE(TR(
+                TD(lin["id"], _class="tabela_impressao-campo campo_id"),
+                TD(lin["nome_completo"], _class="tabela_impressao-campo campo_nome_completo"),
+                *[TD(lin[cam], _class="tabela_impressao-campo campo_{0}".format(cam)) for cam in self.fields]
+            ), _class="tabela_impressao"))
+            tabela_funcionarios.append(tbody)
+        cont = 0
+        for lin in json.data[2]:
+            tem_func = True
+            cont += 1
+            tbody = DIV(_class="tabela_impressao_void_container")
+            if cont == 1:
+                tbody.append(TABLE(TR(
+                    TH("EQUIPE DE APOIO", _class="tabela_impressao-coluna_expandida"),
+                ), _class="tabela_impressao"))
+                tbody.append(TABLE(TR(
+                    TH("ID", _class="tabela_impressao-cabecalho campo_id"),
+                    TH("Nome do(a) Funcionário(a)", _class="tabela_impressao-cabecalho campo_nome_completo"),
+                    *[TH(self._fields_names[cam], _class="tabela_impressao-cabecalho campo_{0}".format(cam)) for cam in self.fields],
+                ), _class="tabela_impressao"))
+            tbody.append(TABLE(TR(
+                TD(lin["id"], _class="tabela_impressao-campo campo_id"),
+                TD(lin["nome_completo"], _class="tabela_impressao-campo campo_nome_completo"),
+                *[TD(lin[cam], _class="tabela_impressao-campo campo_{0}".format(cam)) for cam in self.fields]
+            ), _class="tabela_impressao"))
+            tabela_funcionarios.append(tbody)
 
         logo = "{0}/api/escolas/{1}/image".format(
             window.PhanterPWA.ApiServer.remote_address,
@@ -3132,17 +3166,16 @@ class Vinculos():
                                     ),
                                     DIV(H3(nome_escola), _class="sme_cabecalho_sme_nome_escola"),
                                     DIV(H5(cabecalho_escola), _class="sme_cabecalho_sme_dados_escola"),
-                                    DIV(DIV("LISTA DE ALUNOS DA TURMA ", STRONG(turma, _style="text-transform: uppercase;"), _class="tudo_centralizado titulo_tabela_dinamica"), _class="sme_cabecalho_titulo_documento"),
+                                    DIV(DIV("LISTA DE FUNCIONÁRIOS ", self.ano_letivo, _style="text-transform: uppercase;", _class="tudo_centralizado titulo_tabela_dinamica"), _class="sme_cabecalho_titulo_documento"),
                                     DIV(
-                                        tabela_dinamica if cont > 0 else "NÃO HÁ ALUNOS NA TURMA",
+                                        tabela_funcionarios if tem_func else "NÃO HÁ ALUNOS NA TURMA",
                                         _class="sme_documento_conteudo"
                                     ),
-                                    _id="pagina_{0}_declaracao".format(self.id_matricula),
+                                    _id="pagina_{0}_lista_funcionarios".format(self.id_escola),
                                     _class="p-row"
                                 ),
-                                _class="imprimir_matricula_wrapper imprimir_documentos_wrapper"
+                                _class="documento_impressao_wrapper"
                             ),
-                            _class="imprimir_alunos_da_turma"
                         ),
                     ),
 

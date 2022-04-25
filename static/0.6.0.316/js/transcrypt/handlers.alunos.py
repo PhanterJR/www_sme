@@ -1558,11 +1558,12 @@ class Aluno(helpers.XmlConstructor):
         window.PhanterPWA.get_widget("alunos-naturalidades").set_on_click_new_button(self.modal_add_naturalidade)
 
     def _switch_escolaridade(self, el, target):
-        value = jQuery(el).val()
-        if "Incompleto" in str(value):
-            window.PhanterPWA.get_widget(target).set_enabled()
-        else:
-            window.PhanterPWA.get_widget(target).set_disabled()
+        if window.PhanterPWA.get_widget(target) is not None:
+            value = jQuery(el).val()
+            if "Incompleto" in str(value):
+                window.PhanterPWA.get_widget(target).set_enabled()
+            else:
+                window.PhanterPWA.get_widget(target).set_disabled()
 
     def _switch_sim_ou_nao(self, el, target):
         value = jQuery(el).val()
@@ -1923,10 +1924,11 @@ class Social(helpers.XmlConstructor):
 
     def _switch_escolaridade(self, el, target):
         value = jQuery(el).val()
-        if "Incompleto" in str(value):
-            window.PhanterPWA.get_widget(target).set_enabled()
-        else:
-            window.PhanterPWA.get_widget(target).set_disabled()
+        if window.PhanterPWA.get_widget(target) is not None:
+            if "Incompleto" in str(value):
+                window.PhanterPWA.get_widget(target).set_enabled()
+            else:
+                window.PhanterPWA.get_widget(target).set_disabled()
 
     def _switch_sim_ou_nao(self, el, target):
         value = jQuery(el).val()
